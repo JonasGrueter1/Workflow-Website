@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design B | Fahrschule Kälin und Burkhard AG</title>
+  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Kälin und Burkhard AG in Luzern.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0e0e0d">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="b">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></symbol>
+    <symbol id="i-first-aid" viewBox="0 0 24 24"><path d="M8 8v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"/><path d="M4 10a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M10 14h4"/><path d="M12 12v4"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6l0 13"/><path d="M12 6l0 13"/><path d="M21 6l0 13"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"/></symbol>
+    <symbol id="i-bus" viewBox="0 0 24 24"><path d="M4 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M16 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M4 17h-2v-11a1 1 0 0 1 1 -1h14a5 7 0 0 1 5 7v5h-2m-4 0h-8"/><path d="M16 5l1.5 7l4.5 0"/><path d="M2 10l15 0"/><path d="M7 5l0 5"/><path d="M12 5l0 5"/></symbol>
+    <symbol id="i-hand-swipe" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M15 16l4 -4"/><path d="M15 8l4 4"/><path d="M9 8l-4 4"/><path d="M9 16l-4 -4"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Fahrschule Kälin, Startseite">
+        <span class="logo-mark" aria-hidden="true">L</span>
+        <span class="logo-word"><strong>Kälin</strong><small>Burkhard · Luzern</small></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Kategorien">Kategorien</a></li>
+          <li><a href="#" data-soon="Kurse">Kurse</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Team">Team</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-yellow nav-cta" href="#" data-soon="Anmeldung">Anmelden</a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="eyebrow">Fahrschule Kälin · Luzern</p>
+          <h1><span class="h1-top">Theoretisch sehr gut.</span> <span class="h1-main">Praktisch <em>unschlagbar.</em></span></h1>
+          <p class="hero-lead">Vom Auto bis zum Reisebus: Mit neusten Fahrzeugen und viel Energie wartet ein engagiertes Fahrlehrerteam auf dich. Mitten in Luzern.</p>
+          <div class="hero-cta">
+            <a class="btn btn-yellow btn-lg" href="#" data-soon="Anmeldung">Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <a class="btn btn-glass btn-lg" href="tel:+41412404400"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 041 240 44 00</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-frame">
+            <img src="../assets/img/team-lastwagen.webp" width="759" height="452" fetchpriority="high"
+                 alt="Fahrlehrerteam in gelben Shirts vor dem schwarzen Lastwagen der Fahrschule Kälin">
+          </div>
+          <span class="sticker" aria-hidden="true"><small>Seit über</small><strong>40</strong><small>Jahren</small></span>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="wrap">
+          <ul>
+            <li><strong>4,8</strong><span>Sterne bei<br>Google (146)</span></li>
+            <li><strong>85</strong><span>Franken pro<br>Lektion im Abo</span></li>
+            <li><strong>45</strong><span>Minuten pro<br>Fahrlektion</span></li>
+            <li><strong>99</strong><span>Franken<br>Nothelferkurs</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="road" aria-hidden="true"></div>
+
+    <!-- Klassen -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Wähle deine <em>Klasse.</em></h2>
+          <p>Vom ersten Auto bis zum Reisecar: Wähle die Kategorie, die zu dir passt.</p>
+        </div>
+      </div>
+      <div class="tiles-scroll">
+        <div class="wrap tiles">
+          <a class="tile reveal" href="#" data-soon="Auto Kat. B">
+            <img src="../assets/img/auto-mercedes.webp" width="506" height="380" loading="lazy" alt="Zwei Fahrschulautos von Mercedes">
+            <span class="tile-tag">Kat. B</span>
+            <span class="tile-body">
+              <span class="tile-title">Auto</span>
+              <span class="tile-text">Ab 17 Jahren. Fahrlektion à 45 Minuten für CHF 90.–</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Anhänger Kat. BE">
+            <img src="../assets/img/anhaenger-be.webp" width="506" height="335" loading="lazy" alt="Rotes Auto mit gelbem Fahrschul-Anhänger">
+            <span class="tile-tag">Kat. BE</span>
+            <span class="tile-body">
+              <span class="tile-title">Anhänger</span>
+              <span class="tile-text">Für Anhänger über 750 kg oder Züge über 3500 kg.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Lastwagen Kat. C">
+            <img src="../assets/img/lastwagen-ce.webp" width="523" height="346" loading="lazy" alt="Gelber Lastwagen mit Anhänger">
+            <span class="tile-tag">Kat. C · CE</span>
+            <span class="tile-body">
+              <span class="tile-title">Lastwagen</span>
+              <span class="tile-text">Ab 18 Jahren, für Inhaber der Kategorie B.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Kleinbus Kat. C1/D1">
+            <img src="../assets/img/kleinbus.webp" width="506" height="335" loading="lazy" alt="Silberner Kleinbus von Mercedes">
+            <span class="tile-tag">Kat. C1 · D1</span>
+            <span class="tile-body">
+              <span class="tile-title">Kleinbus</span>
+              <span class="tile-text">C1 ab 18, D1 ab 21 Jahren.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Reisebus Kat. D">
+            <img src="../assets/img/reisebus.webp" width="523" height="286" loading="lazy" alt="Grauer Reisebus mit Tiger-Motiv">
+            <span class="tile-tag">Kat. D</span>
+            <span class="tile-body">
+              <span class="tile-title">Reisebus</span>
+              <span class="tile-text">Ab 21 Jahren, mit Kategorie B oder C.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Auto Kontrollfahrten">
+            <img src="../assets/img/auto-eqa.webp" width="523" height="346" loading="lazy" alt="Weisses Fahrschulauto Mercedes EQA">
+            <span class="tile-tag">Ausweis umschreiben</span>
+            <span class="tile-body">
+              <span class="tile-title">Kontrollfahrt</span>
+              <span class="tile-text">Ausländischen Ausweis umschreiben, auch mit Automat.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+      <div class="wrap">
+        <p class="tiles-more reveal">
+          <span class="swipe-hint"><svg class="i" aria-hidden="true"><use href="#i-hand-swipe"/></svg> Wischen für mehr</span>
+          <span>Ausserdem:</span>
+          <a href="#" data-soon="Taxi Kat. BPT">Taxi Kat. BPT</a>
+          <a href="#" data-soon="Fahren im Alter">Fahren im Alter</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Etappen -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>In 5 Etappen<br>zum <em>Ausweis.</em></h2>
+          <a class="link-arrow" href="#" data-soon="Auto Kat. B">Ganzer Ablauf <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="stages">
+          <li class="reveal"><span class="stage-no">01</span><h3>Nothelferkurs</h3><p>10 Stunden an 2 Tagen, online buchbar für CHF 99.–</p></li>
+          <li class="reveal"><span class="stage-no">02</span><h3>Lernfahrausweis</h3><p>Mit dem Nothelferausweis das Gesuch einreichen.</p></li>
+          <li class="reveal"><span class="stage-no">03</span><h3>Theorieprüfung</h3><p>Wir helfen dir beim Lernen, in der Gruppe oder einzeln.</p></li>
+          <li class="reveal"><span class="stage-no">04</span><h3>Fahrstunden und VKU</h3><p>Üben mit deinem Fahrlehrer, dazu der Verkehrskundekurs.</p></li>
+          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>Prüfung</h3><p>Bestanden! Danach gibts den Ausweis auf Probe.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Profis -->
+    <section class="pro">
+      <div class="pano reveal" tabindex="0" role="img" aria-label="Die ganze Flotte der Fahrschule Kälin: Anhänger, Autos, Reisebus, Kleinbus und Lastwagen mit dem Team">
+        <img src="../assets/img/flotte-panorama.webp" width="1275" height="202" loading="lazy" alt="">
+      </div>
+      <div class="wrap pro-grid">
+        <div class="pro-text reveal">
+          <p class="label">Profis am Steuer</p>
+          <h2>Lastwagen.<br>Car. <em>Kleinbus.</em></h2>
+          <p class="pro-lead">Lernfahrten vom Anhänger bis zum Car, dazu LKW-Theoriekurs und CZV-Kurse. Die Kategorie BE bilden wir schon seit vielen Jahren aus.</p>
+          <div class="highlight">
+            <strong>LKW-Theoriekurs Kat. C</strong>
+            <span>Intensivkurs in 4 Tagen, 32 Lektionen für CHF 950.–, inklusive Unterlagen und Online-Theorie.</span>
+          </div>
+        </div>
+        <div class="reveal">
+          <table class="spec">
+            <caption>Preis pro Lektion à 45 Minuten</caption>
+            <tr><th scope="row">BE</th><td>Auto mit Anhänger</td><td>CHF 140.–</td></tr>
+            <tr><th scope="row">C</th><td>Lastwagen, ab 18</td><td>CHF 180.–</td></tr>
+            <tr><th scope="row">CE</th><td>Lastwagen mit Anhänger</td><td>CHF 210.–</td></tr>
+            <tr><th scope="row">C1/D1</th><td>Kleinbus, ab 18 und 21</td><td>CHF 170.–</td></tr>
+            <tr><th scope="row">D</th><td>Reisebus, ab 21</td><td>CHF 210.–</td></tr>
+          </table>
+          <p class="spec-note">Für C, CE, C1/D1 und D kommt die obligatorische Versicherung von CHF 100.– dazu.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preise und Kurse -->
+    <section class="sec sec-light">
+      <div class="wrap price-wrap">
+        <div class="sec-head sec-head-stack reveal">
+          <h2>Klare <em>Preise.</em></h2>
+          <p>Im Abo kostet dich die Fahrlektion nur CHF 85.–. Dazu gibts die Kälin Ausbildungs App und einen Gutschein über CHF 30 für den VKU.</p>
+          <a class="link-arrow" href="#" data-soon="Preise">Alle Preise <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ul class="pricelist reveal">
+          <li><span class="pl-name">Einzellektion<small>45 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>90</span></li>
+          <li><span class="pl-name">5er Abo<small>CHF 85.– pro Lektion</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>425</span></li>
+          <li class="pl-top"><span class="pl-name">10er Abo<small>CHF 85.– pro Lektion</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>850</span></li>
+          <li><span class="pl-name">Anhänger Kat. BE<small>pro Lektion à 45 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>140</span></li>
+        </ul>
+      </div>
+
+      <div class="wrap">
+        <div class="courses-head reveal">
+          <h2>Kurse. <em>Online buchbar.</em></h2>
+        </div>
+        <div class="courses">
+          <a class="course reveal" href="#" data-soon="Nothelferkurs">
+            <span class="course-ico"><svg class="i" aria-hidden="true"><use href="#i-first-aid"/></svg></span>
+            <h3>Nothelferkurs</h3>
+            <p>10 Stunden an 2 Tagen, 6 Jahre gültig. Anerkannt für den Führerausweis.</p>
+            <span class="course-foot"><strong>CHF 99.–</strong><span>Buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
+          <a class="course reveal" href="#" data-soon="Verkehrskunde">
+            <span class="course-ico"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span>
+            <h3>Verkehrskunde</h3>
+            <p>VKU in 2 Teilen, samstags von 8 bis 12 Uhr, in unserem Büro in Luzern.</p>
+            <span class="course-foot"><strong>CHF 150.–</strong><span>Buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
+          <a class="course reveal" href="#" data-soon="LKW-Theoriekurs">
+            <span class="course-ico"><svg class="i" aria-hidden="true"><use href="#i-truck"/></svg></span>
+            <h3>LKW-Theorie</h3>
+            <p>Intensiv-Theoriekurs Kategorie C: 4 Tage, 32 Lektionen, mit Betreuung bei Theoriefragen.</p>
+            <span class="course-foot"><strong>CHF 950.–</strong><span>Buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
+          <a class="course reveal" href="#" data-soon="CZV">
+            <span class="course-ico"><svg class="i" aria-hidden="true"><use href="#i-bus"/></svg></span>
+            <h3>CZV</h3>
+            <p>Grundausbildung in 6 Tagen. Die Weiterbildung buchst du tageweise oder als ganze Woche.</p>
+            <span class="course-foot"><strong>CHF 240.–<small>/Tag</small></strong><span>Buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Wir sind für<br><em>dich da.</em></h2>
+          <p>Unser Ziel: dich in freundlicher, ruhiger Atmosphäre auf deinem Weg zu begleiten. Bis zur bestandenen Prüfung.</p>
+        </div>
+        <div class="crew">
+          <article class="member reveal">
+            <img src="../assets/img/team-sabine.webp" width="312" height="343" loading="lazy" alt="Porträt von Sabine Kälin">
+            <div class="member-body"><h3>Sabine Kälin</h3><p>Inhaberin, Fahrlehrerin<br>Kategorie B und VKU</p></div>
+          </article>
+          <article class="member reveal">
+            <img src="../assets/img/team-ryan.webp" width="312" height="343" loading="lazy" alt="Porträt von Ryan Aguilar-Castro">
+            <div class="member-body"><h3>Ryan Aguilar-Castro</h3><p>Inhaber, Fahrlehrer<br>B, BE, BPT, Kontrollfahrten, VKU</p></div>
+          </article>
+          <article class="member reveal">
+            <img src="../assets/img/team-daniel.webp" width="312" height="343" loading="lazy" alt="Porträt von Daniel Schubert">
+            <div class="member-body"><h3>Daniel Schubert</h3><p>Fahrlehrer<br>Kategorie B</p></div>
+          </article>
+          <article class="member reveal">
+            <span class="member-initials" aria-hidden="true">AD</span>
+            <div class="member-body"><h3>Antonio Dichiera</h3><p>Fahrlehrer<br>Kategorie B und Taxi</p></div>
+          </article>
+        </div>
+        <ul class="contacts reveal">
+          <li><span>Büro</span><a href="tel:+41412404400">041 240 44 00</a></li>
+          <li><span>Sabine Kälin</span><a href="tel:+41794004307">079 400 43 07</a></li>
+          <li><span>Ryan Aguilar-Castro</span><a href="tel:+41792111664">079 211 16 64</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Bereit zum<br>Losfahren?</h2>
+        <div class="cta-side">
+          <a class="cta-phone" href="tel:+41412404400">041 240 44 00</a>
+          <p>Ruf an oder melde dich online an. Kasimir-Pfyffer-Strasse 2, mitten in Luzern.</p>
+          <a class="btn btn-black btn-lg" href="#" data-soon="Anmeldung">Jetzt anmelden <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <span class="logo">
+          <span class="logo-mark" aria-hidden="true">L</span>
+          <span class="logo-word"><strong>Kälin</strong><small>Burkhard · Luzern</small></span>
+        </span>
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <p>Fahrschule Kälin und Burkhard AG<br>Kasimir-Pfyffer-Strasse 2<br>6003 Luzern</p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+41412404400">041 240 44 00</a><br><a href="mailto:info@fahrschule-kaelin.ch">info@fahrschule-kaelin.ch</a></p>
+      </div>
+      <div>
+        <h3>Angebot</h3>
+        <p><a href="#" data-soon="Kategorien">Kategorien</a><br><a href="#" data-soon="Kurse">Kurse</a><br><a href="#" data-soon="Lokalitäten">Lokalitäten</a><br><a href="#" data-soon="Videos">Videos</a></p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Fahrschule Kälin und Burkhard AG</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>

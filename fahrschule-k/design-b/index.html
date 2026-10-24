@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design B | Fahrschule Koch Sempach</title>
+  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Koch in Sempach: Fahrstunden Auto, VKU und WAB in der Region Sempach und Sursee.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#121212">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/img/golf-fahrend.webp" as="image" media="(min-width: 761px) and (min-aspect-ratio: 4 / 5)">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="b">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Fahrschule Koch, Startseite">
+        <img src="../assets/img/logo-hell.svg" alt="Fahrschule Koch" width="296" height="50">
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Lernfahrausweis">Lernfahrausweis</a></li>
+          <li><a href="#" data-soon="VKU">VKU</a></li>
+          <li><a href="#" data-soon="WAB">WAB</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Über uns">Über uns</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-orange nav-cta" href="#" data-soon="Kontakt">Anfragen</a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <picture>
+        <source media="(max-width: 760px), (max-aspect-ratio: 4 / 5)" srcset="../assets/img/cockpit-hoch.webp">
+        <img class="hero-bg" src="../assets/img/golf-fahrend.webp" width="1920" height="700" fetchpriority="high"
+             alt="Der weisse VW Golf der Fahrschule Koch in Fahrt">
+      </picture>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Fahrschule · Sempach · Sursee</p>
+        <h1>Ab ans <em>Steuer.</em></h1>
+        <p class="hero-lead">Kompetente und auf Ihre Bedürfnisse angepasste Fahrausbildung in der Region Sempach und Sursee. Seit 2006.</p>
+        <div class="hero-cta">
+          <a class="btn btn-orange btn-lg" href="#" data-soon="Kontakt">Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="btn btn-glass btn-lg" href="tel:+41797758917"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 775 89 17</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="wrap">
+          <ul>
+            <li><strong>2006</strong><span>gegründet<br>in Sempach</span></li>
+            <li><strong>50</strong><span>Minuten pro<br>Fahrlektion</span></li>
+            <li><strong>4</strong><span>Abende VKU<br>bei uns</span></li>
+            <li><strong>88.–</strong><span>CHF pro Lektion<br>im 5er-Abo</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="road" aria-hidden="true"></div>
+
+    <!-- Angebot -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Ihr <em>Programm.</em></h2>
+          <p>Fahrstunden, Verkehrskunde und der Weg zum definitiven Ausweis. Das Wichtigste auf einen Blick.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile reveal" href="#" data-soon="Preise">
+            <img src="../assets/img/kachel-front.webp" width="680" height="850" loading="lazy" alt="Front des weissen VW Golf mit Luzerner Kontrollschild">
+            <span class="tile-tag">Kat. B</span>
+            <span class="tile-body">
+              <span class="tile-title">Fahrstunden</span>
+              <span class="tile-text">Lektion à 50 Minuten, ganz auf Ihre Bedürfnisse angepasst.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="VKU">
+            <img src="../assets/img/kachel-cockpit.webp" width="640" height="800" loading="lazy" alt="Lenkrad und Cockpit des Fahrschulautos">
+            <span class="tile-tag">Obligatorisch</span>
+            <span class="tile-body">
+              <span class="tile-title">VKU</span>
+              <span class="tile-text">Verkehrskunde bei uns im Kurs: vier Abende zu zwei Lektionen.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="WAB">
+            <img src="../assets/img/kachel-heck.webp" width="760" height="950" loading="lazy" alt="Heck des weissen VW Golf der Fahrschule Koch">
+            <span class="tile-tag">Nach der Prüfung</span>
+            <span class="tile-body">
+              <span class="tile-title">WAB</span>
+              <span class="tile-text">Weiterbildungstag mit WAB Zentralschweiz. Für den Kurs erhalten Sie von uns CHF 50.– als Gutschein.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Etappen -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>In 5 Etappen<br>zum <em>Ausweis.</em></h2>
+          <a class="link-arrow" href="#" data-soon="Lernfahrausweis">Alles zum Lernfahrausweis <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="stages">
+          <li class="reveal"><span class="stage-no">01</span><h3>Gesuch</h3><p>Formular Nr. 12 beim Strassenverkehrsamt Luzern einreichen.</p></li>
+          <li class="reveal"><span class="stage-no">02</span><h3>Theorie</h3><p>Theorieprüfung bestehen, dann gibt es den Lernfahrausweis.</p></li>
+          <li class="reveal"><span class="stage-no">03</span><h3>Fahren und VKU</h3><p>Fahrstunden bei uns, dazu der VKU an vier Abenden.</p></li>
+          <li class="reveal"><span class="stage-no">04</span><h3>Prüfung</h3><p>Bestanden! Sie erhalten den Ausweis auf Probe für 3 Jahre.</p></li>
+          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>WAB</h3><p>Weiterbildungstag im ersten Jahr, dann wird der Ausweis definitiv.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Auto -->
+    <section class="car">
+      <div class="wrap">
+        <div class="car-head reveal">
+          <div>
+            <p class="label">Unser Fahrschulauto</p>
+            <h2>Weisser<br><em>VW Golf.</em></h2>
+          </div>
+          <a class="link-arrow" href="#" data-soon="Bildergalerie">Zur Bildergalerie <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+      <div class="car-media reveal">
+        <img src="../assets/img/golf-seite.webp" width="1600" height="800" loading="lazy" alt="Seitenansicht des weissen VW Golf der Fahrschule Koch">
+      </div>
+      <div class="wrap">
+        <ul class="specs reveal">
+          <li><strong>125</strong><span>PS, 92 kW</span></li>
+          <li><strong>1400</strong><span>ccm Hubraum</span></li>
+          <li><strong>4</strong><span>Zylinder</span></li>
+          <li><strong>TSI</strong><span>Benzin</span></li>
+        </ul>
+        <div class="highlight reveal">
+          <div>
+            <strong>Schon einen Ausweis?</strong>
+            <span>Sie fühlen sich auf der Strasse unsicher? Wir bieten Ihnen individuelle Unterstützung an oder machen Sie fit für eine Kontrollfahrt.</span>
+          </div>
+          <a class="btn btn-outline" href="#" data-soon="Kontakt">Termin vereinbaren <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preise -->
+    <section class="sec sec-light">
+      <div class="wrap price-wrap">
+        <div class="sec-head sec-head-stack reveal">
+          <h2>Klare <em>Preise.</em></h2>
+          <p>Bei bestandener Führerprüfung erhalten Sie von uns einen Gutschein im Wert von CHF 50.– für den WAB-Kurs.</p>
+          <a class="link-arrow" href="#" data-soon="Preise">Alle Preise <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ul class="pricelist reveal">
+          <li><span class="pl-name">Einzelfahrstunde<small>Lektion à 50 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>90</span></li>
+          <li><span class="pl-name">5er-Abo<small>CHF 88.– pro Lektion</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>440</span></li>
+          <li><span class="pl-name">Administrationsgebühr<small>einmalig</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>100</span></li>
+          <li><span class="pl-name">Theorie-Lernsoftware<small>Angebot und Preise</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price pl-text">auf Anfrage</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="sec sec-dark">
+      <div class="wrap team">
+        <div class="team-photo reveal">
+          <img src="../assets/img/irene-martin-koch.webp" width="800" height="800" loading="lazy" alt="Irene und Martin Koch neben dem Fahrschulauto">
+        </div>
+        <div class="team-text reveal">
+          <p class="label">Über uns</p>
+          <h2>Irene &amp; Martin <em>Koch.</em></h2>
+          <p class="team-lead">Seit 2006 in Sempach. Dank regelmässigen Aus- und Weiterbildungen immer auf dem neusten Stand, mit einem angenehmen und freundlichen Umgangston. So kommen Sie motiviert ans Ziel.</p>
+          <ul class="contacts">
+            <li><span>Irene Koch</span><a href="tel:+41797758917">079 775 89 17</a></li>
+            <li><span>Martin Koch</span><a href="tel:+41797755647">079 775 56 47</a></li>
+            <li><span>E-Mail</span><a class="contacts-mail" href="mailto:info@fahrschule-k.ch">info@fahrschule-k.ch</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Bereit zum<br>Losfahren?</h2>
+        <div class="cta-side">
+          <a class="cta-phone" href="tel:+41797758917">079 775 89 17</a>
+          <p>Rufen Sie an oder schreiben Sie uns. Wir freuen uns auf Sie!</p>
+          <a class="btn btn-black btn-lg" href="mailto:info@fahrschule-k.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail schreiben</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img class="footer-logo" src="../assets/img/logo-hell.svg" alt="Fahrschule Koch" width="296" height="50" loading="lazy">
+        <p class="footer-claim">Ihre Fahrschule in der Region Sempach und Sursee.</p>
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <p>Fahrschule Koch<br>Alte Grenzstrasse 33<br>6204 Sempach</p>
+        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Alte+Grenzstrasse+33%2C+6204+Sempach" target="_blank" rel="noopener">Route planen</a></p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+41797758917">079 775 89 17</a><br><a href="tel:+41797755647">079 775 56 47</a><br><a href="mailto:info@fahrschule-k.ch">info@fahrschule-k.ch</a></p>
+      </div>
+      <div>
+        <h3>WAB-Partner</h3>
+        <p><a class="partner-link" href="https://wabzentralschweiz.ch/" target="_blank" rel="noopener">WAB Zentralschweiz <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Fahrschule Koch</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>

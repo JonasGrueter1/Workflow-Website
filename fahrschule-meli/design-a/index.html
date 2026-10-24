@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design A | Meli’s Fahrschule</title>
+  <meta name="description" content="Designvorschlag A für die Startseite von Meli Jost’s Fahrschule: Fahrstunden für die Kategorie B in der Region Willisau.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#faf8f6">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="a">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
+    <symbol id="i-steering" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14l0 7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 15h-3a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v3"/><path d="M7 10a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1l0 -8"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/></symbol>
+    <symbol id="i-ipad" viewBox="0 0 24 24"><path d="M18 3h-12a2 2 0 0 0 -2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-14a2 2 0 0 0 -2 -2z"/><path d="M9 18h6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06"/><path d="M15 19l2 2l4 -4"/></symbol>
+    <symbol id="i-license" viewBox="0 0 24 24"><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"/><path d="M9 7l4 0"/><path d="M9 11l4 0"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M16.5 7.5v.01"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"/></symbol>
+    <symbol id="i-arc" viewBox="0 0 120 84"><path d="M10.3 75.2A52 52 0 1 1 109.7 75.2" stroke-width="4"/><path d="M25.4 40h.01M37.6 26.8h.01M54.4 20.4h.01M72.4 22h.01M86.8 30.3h.01M96.5 43.7h.01M100 58.6h.01M98.8 69.7h.01" stroke-width="6"/></symbol>
+    <symbol id="i-tacho" viewBox="0 0 120 84"><path d="M10.3 75.2A52 52 0 1 1 109.7 75.2" stroke-width="4"/><path d="M25.4 40h.01M37.6 26.8h.01M54.4 20.4h.01M72.4 22h.01M86.8 30.3h.01M96.5 43.7h.01M100 58.6h.01M98.8 69.7h.01" stroke-width="6"/><path d="M55.8 64.2L86.8 35.9" stroke-width="4"/><path d="M30 79h60" stroke-width="3"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Meli’s Fahrschule, Startseite">
+        <img src="../assets/img/logo-quer-dunkel.webp" alt="Meli’s Fahrschule, Drive with Meli" width="600" height="101">
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Fahrstunden">Fahrstunden</a></li>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-dark nav-call" href="tel:+41795608801">
+          <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 560 88 01
+        </a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="pill"><span class="pill-dot" aria-hidden="true"></span>Fahrschule Kategorie B · Region Willisau</p>
+          <h1>Fahren lernen mit <span class="swoosh">Meli</span>.</h1>
+          <p class="lead">Professionelle und individuelle Ausbildung für deinen Autoführerschein. Mit persönlicher Betreuung und flexiblen Kurszeiten begleite ich dich sicher zur Prüfung.</p>
+          <div class="hero-cta">
+            <a class="btn btn-dark btn-lg" href="#" data-soon="Kontakt">
+              Fahrstunde anfragen <span class="btn-dot"><svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+            </a>
+            <a class="btn btn-line btn-lg" href="tel:+41795608801">
+              <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 560 88 01
+            </a>
+          </div>
+          <p class="hero-note"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg> Freie Plätze? Frag einfach nach, die Beratung ist kostenlos.</p>
+        </div>
+        <div class="hero-visual">
+          <svg class="hero-tacho" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"><use href="#i-arc"/></svg>
+          <picture>
+            <source media="(max-width: 860px)" srcset="../assets/img/meli-cupra-700.webp">
+            <img class="hero-photo" src="../assets/img/meli-cupra.webp" width="1120" height="933" fetchpriority="high"
+                 alt="Fahrlehrerin Meli Jost lächelnd neben ihrem grauen Seat Leon Cupra">
+          </picture>
+          <span class="l-plate" aria-hidden="true">L</span>
+          <div class="rating-badge">
+            <span class="stars" aria-hidden="true"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></span>
+            <strong>5,0 von 5</strong>
+            <small>3 Bewertungen auf local.ch</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <ul class="trust">
+          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span><div><strong>Kategorie B</strong><span>Dein Autoführerschein</span></div></li>
+          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-steering"/></svg></span><div><strong>Seat Leon Cupra</strong><span>Modernes Fahrschulauto</span></div></li>
+          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span><div><strong>Flexible Kurszeiten</strong><span>Passend zu Schule oder Job</span></div></li>
+          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg></span><div><strong>Einfach bezahlen</strong><span>Bar, Rechnung oder TWINT</span></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Angebot -->
+    <section class="sec">
+      <div class="wrap">
+        <div class="head reveal">
+          <p class="kicker">Was dich erwartet</p>
+          <h2>Alles für deinen Autoführerschein</h2>
+          <p>Theorie, praktische Fahrstunden und eine gute Vorbereitung auf die Verkehrssicherheit: Bei mir bist du in guten Händen.</p>
+        </div>
+        <div class="offer">
+          <a class="card reveal" href="#" data-soon="Fahrstunden">
+            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-steering"/></svg></span>
+            <span class="card-cat">Praxis</span>
+            <h3>Fahrstunden</h3>
+            <p>Du lernst im modernen Seat Leon Cupra, zu Zeiten, die in deinen Alltag passen.</p>
+            <ul class="ticks">
+              <li>Flexible Kurszeiten</li>
+              <li>Persönliche Betreuung</li>
+            </ul>
+            <span class="card-link">Mehr zu den Fahrstunden <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+          </a>
+          <a class="card reveal" href="#" data-soon="Fahrstunden">
+            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-ipad"/></svg></span>
+            <span class="card-cat">Theorie</span>
+            <h3>Theorie, anschaulich erklärt</h3>
+            <p>Innovative Lernmethoden, die optimal auf deine Bedürfnisse abgestimmt sind.</p>
+            <ul class="ticks">
+              <li>Erklärungen mit iPad und Zeichnungen</li>
+              <li>Effektives Feedback</li>
+            </ul>
+            <span class="card-link">So lernst du bei mir <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+          </a>
+          <a class="card reveal" href="#" data-soon="Fahrstunden">
+            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span>
+            <span class="card-cat">Sicherheit</span>
+            <h3>Mehr als die Prüfung</h3>
+            <p>Mein Ziel: Du bestehst nicht nur die Prüfung, sondern fährst danach auch sicher und verantwortungsvoll.</p>
+            <ul class="ticks">
+              <li>Vorbereitung auf die Prüfung</li>
+              <li>Sicher unterwegs, auch danach</li>
+            </ul>
+            <span class="card-link">Zum Ablauf <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Über mich -->
+    <section class="sec sec-sand">
+      <div class="wrap split">
+        <figure class="split-media reveal">
+          <img src="../assets/img/meli-l-schild-hoch.webp" width="900" height="939" loading="lazy" alt="Meli Jost hält ein blaues L-Schild vor ihrem Fahrschulauto">
+          <figcaption><span class="fig-tacho" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-linecap="round"><use href="#i-tacho"/></svg></span><span><strong>Meli Jost</strong>Inhaberin und Fahrlehrerin</span></figcaption>
+        </figure>
+        <div class="split-text reveal">
+          <p class="kicker">Über mich</p>
+          <h2>Hoi, ich bin Meli.</h2>
+          <p class="muted">Mit meiner Erfahrung und einem modernen Fahrschulauto begleite ich dich sicher und effizient auf dem Weg zu deiner Unabhängigkeit. Ich biete dir flexible Kurszeiten, persönliche Betreuung und Lernmethoden, die zu dir passen.</p>
+          <blockquote class="goal">
+            <p>«Mein Ziel ist, dass du nicht nur die Prüfung bestehst, sondern auch zu einem verantwortungsvollen Fahrer oder einer verantwortungsvollen Fahrerin wirst.»</p>
+          </blockquote>
+          <a class="btn btn-dark" href="#" data-soon="Über mich">Mehr über Meli <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ablauf -->
+    <section class="sec">
+      <div class="wrap">
+        <div class="head head-row reveal">
+          <div>
+            <p class="kicker">So startest du</p>
+            <h2>In 4 Schritten zur Prüfung</h2>
+          </div>
+          <a class="text-link" href="#" data-soon="Fahrstunden">Ganzer Ablauf <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="steps">
+          <li class="reveal"><span class="step-no">1</span><h3>Melde dich</h3><p>Lernfahrausweis in der Tasche? Ruf an, schreib mir oder melde dich auf Instagram.</p></li>
+          <li class="reveal"><span class="step-no">2</span><h3>Kostenlose Beratung</h3><p>Wir besprechen, wo du stehst und wie es weitergeht.</p></li>
+          <li class="reveal"><span class="step-no">3</span><h3>Fahrstunden</h3><p>Üben mit Meli, zu Zeiten, die zu deinem Alltag passen.</p></li>
+          <li class="reveal"><span class="step-no step-goal"><svg class="i" aria-hidden="true"><use href="#i-license"/></svg></span><h3>Prüfung</h3><p>Gut vorbereitet zur Prüfung und danach sicher unterwegs.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Bewertungen -->
+    <section class="sec sec-sand">
+      <div class="wrap reviews">
+        <div class="score reveal">
+          <p class="kicker">Bewertungen</p>
+          <h2>Das sagen Fahrschüler</h2>
+          <div class="score-box">
+            <strong>5,0</strong>
+            <div>
+              <span class="stars" aria-hidden="true"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></span>
+              <span>von 5 Sternen, 3 Bewertungen auf local.ch</span>
+            </div>
+          </div>
+          <a class="text-link" href="https://www.local.ch/de/d/zell-lu/6144/fahrschule/meli-jost-s-fahrschule-SnV68RBGm8rRBCfRr6hUlw" target="_blank" rel="noopener">Alle Bewertungen auf local.ch <svg class="i" aria-hidden="true"><use href="#i-external"/></svg></a>
+        </div>
+        <div class="quotes">
+          <figure class="quote reveal">
+            <span class="stars" aria-hidden="true"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></span>
+            <blockquote><p>«Freundlich, unkompliziert, reibungslos, zuverlässig, pünktlich und sehr angenehm. Hat alles sehr gut geklappt. War einfach super!»</p></blockquote>
+            <figcaption><strong>Joris M.</strong> auf local.ch, November 2024</figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <span class="stars" aria-hidden="true"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></span>
+            <blockquote><p>«Feedback war effektiv, Erklärungen mit iPad und Zeichnungen, die Stunden wurden nach den Arbeitszeiten gerichtet. Meli ist sehr angenehm, geduldig und nett. Unter 15 Stunden durchgekommen. 10/10.»</p></blockquote>
+            <figcaption><strong>Anonyme Bewertung</strong> auf local.ch, November 2024</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Auto und Bezahlung -->
+    <section class="sec">
+      <div class="wrap split split-rev">
+        <div class="split-text reveal">
+          <p class="kicker">Dein Fahrschulauto</p>
+          <h2>Lernen im Seat Leon Cupra</h2>
+          <p class="muted">Gelernt wird in einem modernen Seat Leon Cupra. Alles Weitere zu Ablauf und Kosten erfährst du in der kostenlosen Beratung.</p>
+          <ul class="facts">
+            <li><span class="fact-ico"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span><div><strong>Kategorie B</strong><span>Autoführerschein</span></div></li>
+            <li><span class="fact-ico"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></span><div><strong>Beratung</strong><span>kostenlos und unverbindlich</span></div></li>
+            <li><span class="fact-ico"><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg></span><div><strong>Bezahlen</strong><span>Bar, Rechnung oder TWINT</span></div></li>
+            <li><span class="fact-ico"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><div><strong>Region</strong><span>Willisau und Umgebung</span></div></li>
+          </ul>
+          <a class="text-link" href="#" data-soon="Preise">Preise ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <figure class="split-media split-media-tall reveal">
+          <img src="../assets/img/felge-l-schild.webp" width="800" height="1000" loading="lazy" alt="Felge des Seat Leon Cupra mit rotem Bremssattel und blauem L-Schild">
+        </figure>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="sec sec-cta">
+      <div class="wrap">
+        <div class="cta reveal">
+          <svg class="cta-tacho" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"><use href="#i-tacho"/></svg>
+          <div class="cta-text">
+            <p class="cta-kicker">Drive with Meli</p>
+            <h2>Bereit für deine erste Fahrstunde?</h2>
+            <p>Ruf an oder schreib mir. Ich freue mich darauf, dich auf deinem Weg zur Fahrprüfung zu begleiten.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-mint btn-lg" href="tel:+41795608801"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 560 88 01</a>
+            <a class="btn btn-ghost-white btn-lg" href="mailto:fahrschule-meli@outlook.com"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail schreiben</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img class="footer-logo" src="../assets/img/logo-quer-hell.webp" alt="Meli’s Fahrschule, Drive with Meli" width="600" height="101">
+        <p>Fahrschule für die Kategorie B in der Region Willisau.</p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p>Meli Jost’s Fahrschule<br>Sommerwald 1<br>6144 Zell LU</p>
+        <p><a href="tel:+41795608801">079 560 88 01</a><br><a href="mailto:fahrschule-meli@outlook.com">fahrschule-meli@outlook.com</a></p>
+      </div>
+      <div>
+        <h3>Fahrschule</h3>
+        <ul>
+          <li><a href="#" data-soon="Fahrstunden">Fahrstunden</a></li>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Folge mir</h3>
+        <a class="social" href="https://www.instagram.com/fahrschule.meli/" target="_blank" rel="noopener">
+          <svg class="i" aria-hidden="true"><use href="#i-instagram"/></svg> @fahrschule.meli
+        </a>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Meli Jost’s Fahrschule</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>
