@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design B | Fahrschule Zberg Altdorf</title>
+  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Zberg in Altdorf: Bitte einsteigen.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0d0c0a">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/img/hero-b.webp" as="image" media="(min-width: 761px)">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="b">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Fahrschule Zberg, Startseite">
+        <img src="../assets/img/logo-hell.webp" alt="Fahrschule Zberg" width="640" height="293">
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Autofahren lernen">Autofahren lernen</a></li>
+          <li><a href="#pakete">Pakete</a></li>
+          <li><a href="#" data-soon="Verkehrskundeunterricht">VKU</a></li>
+          <li><a href="#" data-soon="Fahrberatung für Senioren">Seniorendrive</a></li>
+          <li><a href="#" data-soon="Aktuelles">Aktuelles</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-gold nav-cta" href="#" data-soon="Anmeldung: Autofahren lernen">Anmelden</a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-top">
+        <p class="eyebrow">Fahrschule Zberg · Altdorf UR</p>
+        <h1>Bitte <em>einsteigen.</em></h1>
+      </div>
+      <div class="hero-body">
+        <div class="hero-side">
+          <p class="hero-lead">Autofahren lernen mit Hans Zberg. Drei Pakete zum Fixpreis und eigene Übungshefte, abgestimmt auf die neue Prüfung ab 2027.</p>
+          <p class="hero-price"><span>Fahrlektion à 60 Min. im Paket</span><strong>ab CHF 73</strong></p>
+          <div class="hero-cta">
+            <a class="btn btn-gold btn-lg" href="#" data-soon="Anmeldung: Autofahren lernen">Jetzt anmelden <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <a class="btn btn-glass btn-lg" href="tel:+41796758840"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 675 88 40</a>
+          </div>
+        </div>
+        <picture class="hero-pic">
+          <source media="(max-width: 760px)" srcset="../assets/img/hero-b-mobil.webp" width="900" height="613">
+          <img class="hero-img" src="../assets/img/hero-b.webp" width="1600" height="865" fetchpriority="high"
+               alt="Gelber VW Golf der Fahrschule Zberg mit offener Fahrertür">
+        </picture>
+      </div>
+    </section>
+
+    <div class="road" aria-hidden="true"></div>
+
+    <section class="stats">
+      <div class="wrap">
+        <ul>
+          <li><strong>60</strong><span>Minuten pro<br>Fahrlektion</span></li>
+          <li><strong>3</strong><span>Pakete<br>zum Fixpreis</span></li>
+          <li><strong>17</strong><span>Jahre: Start mit dem<br>Lernfahrausweis</span></li>
+          <li><strong>2</strong><span>Samstage VKU<br>in Altdorf</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Angebot -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Mehr als nur <em>Fahrstunden.</em></h2>
+          <p>Grundfahrausbildung für das Auto, Kategorie B. Dazu Weiterbildung und eine Fahrberatung für Seniorinnen und Senioren.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile reveal" href="#" data-soon="Autofahren lernen">
+            <img src="../assets/img/kachel-fahrschueler.webp" width="760" height="950" loading="lazy" alt="Fahrschüler mit L-Schild am Schulauto der Fahrschule Hans Zberg">
+            <span class="tile-tag">Kat. B</span>
+            <span class="tile-body">
+              <span class="tile-title">Autofahren lernen</span>
+              <span class="tile-text">Ab 17 Jahren, mit Begleitung durch die 12-monatige Lernphase.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Stadtfahren &amp; Gefahrentraining">
+            <img src="../assets/img/kachel-stadt.webp" width="760" height="950" loading="lazy" alt="Fahrschülerin steigt in den dunklen Golf mit L-Schild">
+            <span class="tile-tag">Ausbildung</span>
+            <span class="tile-body">
+              <span class="tile-title">Stadtfahren &amp; Gefahren&shy;training</span>
+              <span class="tile-text">Doppelkreisel, Lichtsignale und Fahrassistenzsysteme wie ACC und Lane Assist.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Fahrberatung für Senioren">
+            <picture>
+              <source media="(min-width: 761px) and (max-width: 900px)" srcset="../assets/img/seniorendrive.webp" width="1400" height="791">
+              <img src="../assets/img/kachel-senioren.webp" width="760" height="950" loading="lazy" alt="Fahrberatung im Auto: Der Fahrberater bespricht mit dem Fahrer die Überprüfungsfahrt">
+            </picture>
+            <span class="tile-tag">Seniorendrive</span>
+            <span class="tile-body">
+              <span class="tile-title">Sicher mobil im Alter</span>
+              <span class="tile-text">Freiwillige Fahranalyse mit Ratschlägen, keine Prüfung. Ab Fr.&nbsp;120.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pakete -->
+    <section class="sec sec-light" id="pakete">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Wähle dein <em>Paket.</em></h2>
+          <p>Grundfahrausbildung nach Heft, Lektionen à 60 Minuten. Je mehr Lektionen, desto tiefer der Preis pro Lektion.</p>
+        </div>
+        <div class="packs">
+          <article class="pack reveal">
+            <span class="pack-no">01</span>
+            <h3>Intensiv</h3>
+            <p class="pack-for">Für gute Voraussetzungen</p>
+            <p class="pack-price"><small>CHF</small>1’232</p>
+            <ul class="pack-facts">
+              <li><span>Lektionen</span><b>16</b></li>
+              <li><span>Davon Perfektionsschulung</span><b>4</b></li>
+              <li><span>Pro Lektion</span><b>CHF 77</b></li>
+            </ul>
+          </article>
+          <article class="pack reveal">
+            <span class="pack-no">02</span>
+            <h3>Stressfrei</h3>
+            <p class="pack-for">Für normale Voraussetzungen</p>
+            <p class="pack-price"><small>CHF</small>1’800</p>
+            <ul class="pack-facts">
+              <li><span>Lektionen</span><b>24</b></li>
+              <li><span>Davon Perfektionsschulung</span><b>6</b></li>
+              <li><span>Pro Lektion</span><b>CHF 75</b></li>
+            </ul>
+          </article>
+          <article class="pack reveal">
+            <span class="pack-no">03</span>
+            <h3>Geduldig</h3>
+            <p class="pack-for">Wenn du dir mehr Zeit lassen willst</p>
+            <p class="pack-price"><small>CHF</small>2’336</p>
+            <ul class="pack-facts">
+              <li><span>Lektionen</span><b>32</b></li>
+              <li><span>Davon Perfektionsschulung</span><b>8</b></li>
+              <li><span>Pro Lektion</span><b>CHF 73</b></li>
+            </ul>
+          </article>
+        </div>
+        <div class="pack-note reveal">
+          <p><strong>Zuzüglich CHF 250 pro Paket:</strong> Versicherung, Administration und Unterrichtsmaterial CHF 100, Einfahren und Prüfungsfahrzeug CHF 150. Ratenzahlung nach Vereinbarung möglich.</p>
+          <a class="link-arrow" href="#" data-soon="Grundfahrausbildung nach Heft">Alle Details <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ausbildung nach Heft -->
+    <section class="moto">
+      <div class="moto-media">
+        <img src="../assets/img/lernhefte.webp" width="1200" height="853" loading="lazy" alt="Übungshefte der Fahrschule Zberg mit Logo und QR-Code">
+      </div>
+      <div class="moto-text reveal">
+        <p class="label">Neu ab 2027</p>
+        <h2>Lernen<br><em>nach Heft.</em></h2>
+        <p class="moto-lead">Ab Januar 2027 werden Theorie- und Fahrprüfung umfangreicher, vor allem wegen der neuen Fahrassistenzsysteme. Darum lernst du bei mir mit eigenen Übungsheften, inklusive QR-Codes und Übungen für das private Fahren.</p>
+        <table class="spec">
+          <tr><th scope="row">01</th><td>Vorschulung</td></tr>
+          <tr><th scope="row">02</th><td>Grundschulung</td></tr>
+          <tr><th scope="row">03</th><td>Hauptschulung</td></tr>
+          <tr><th scope="row">04</th><td>Perfektionsschulung</td></tr>
+        </table>
+        <div class="highlight">
+          <strong>Mein Tipp für die Lernphase</strong>
+          <span>Zu Beginn von Teil 1 und von Teil 3 je einige Lektionen bei mir, dazwischen privat üben und vertiefen.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Etappen -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>In 5 Etappen<br>zum <em>Ausweis.</em></h2>
+          <a class="link-arrow" href="#" data-soon="Weg zum Lernfahrausweis">Ganzer Ablauf <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="stages">
+          <li class="reveal"><span class="stage-no">01</span><h3>Nothelferkurs</h3><p>Der Kursausweis darf höchstens 6 Jahre alt sein.</p></li>
+          <li class="reveal"><span class="stage-no">02</span><h3>Sehtest</h3><p>Beim Augenarzt oder Optiker, höchstens 24 Monate alt.</p></li>
+          <li class="reveal"><span class="stage-no">03</span><h3>Gesuch und Theorie</h3><p>Frühestens 1 Monat vor dem 17. Geburtstag, dann die Basistheorie am Computer.</p></li>
+          <li class="reveal"><span class="stage-no">04</span><h3>Fahrstunden und VKU</h3><p>Üben bei mir und privat, dazu der VKU mit 8 Stunden.</p></li>
+          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>Prüfung</h3><p>Rund 60 Minuten, im Prüfungsfahrzeug der Fahrschule.</p></li>
+        </ol>
+        <div class="vku reveal">
+          <div class="vku-label"><span>Nächster</span>VKU</div>
+          <div class="vku-dates">
+            <strong>Sa 7.11. und Sa 14.11.2026</strong>
+            <span>jeweils 07.30 bis 11.30 Uhr, Gotthardstrasse 4, Altdorf</span>
+          </div>
+          <div class="vku-price"><small>Fr.</small>275<span>inkl. Kursunterlagen</span></div>
+          <a class="btn btn-black" href="#" data-soon="Verkehrskundeunterricht">Zum VKU <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fahrlehrer -->
+    <section class="sec sec-dark">
+      <div class="wrap team">
+        <div class="team-photo reveal">
+          <img src="../assets/img/hans-zberg.webp" width="600" height="708" loading="lazy" alt="Porträt von Hans Zberg">
+        </div>
+        <div class="team-text reveal">
+          <p class="label">Dein Fahrlehrer</p>
+          <h2>Hans <em>Zberg.</em></h2>
+          <p class="team-lead">Fahrlehrer in Altdorf und ausgebildeter Fahrberater. Bei mir hast du vom ersten Meter bis zur Prüfung denselben Fahrlehrer. Fragen? Ruf mich einfach an.</p>
+          <ul class="contacts">
+            <li><span>Natel</span><a href="tel:+41796758840">079 675 88 40</a></li>
+            <li><span>Telefon</span><a href="tel:+41418711988">041 871 19 88</a></li>
+            <li><span>E-Mail</span><a class="contacts-mail" href="mailto:fahrschule.zberg@gmail.com">fahrschule.zberg@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Bereit zum<br>Einsteigen?</h2>
+        <div class="cta-side">
+          <a class="cta-phone" href="tel:+41796758840">079 675 88 40</a>
+          <p>Melde dich an. Sobald deine Anmeldung da ist, können wir den ersten Fahrtermin abmachen.</p>
+          <a class="btn btn-black btn-lg" href="#" data-soon="Anmeldung: Autofahren lernen">Jetzt anmelden <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img class="footer-logo" src="../assets/img/logo-hell.webp" alt="Fahrschule Zberg" width="640" height="293" loading="lazy">
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <p>Fahrschule Zberg<br>Steinmattstrasse 25A<br>6460 Altdorf</p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+41796758840">079 675 88 40</a><br><a href="tel:+41418711988">041 871 19 88</a><br><a href="mailto:fahrschule.zberg@gmail.com">fahrschule.zberg@gmail.com</a></p>
+      </div>
+      <div>
+        <h3>Anmelden</h3>
+        <ul>
+          <li><a href="#" data-soon="Anmeldung: Autofahren lernen">Autofahren lernen</a></li>
+          <li><a href="#" data-soon="Anmeldung: Seniorendrive">Seniorendrive</a></li>
+          <li><a href="#" data-soon="Häufige Fragen">Häufige Fragen</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Fahrschule Zberg</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>

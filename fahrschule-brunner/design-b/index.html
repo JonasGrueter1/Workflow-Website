@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design B | Brunner Fahrschule Dottikon</title>
+  <meta name="description" content="Designvorschlag B für die Startseite der Brunner Fahrschule in Dottikon AG: Auto, Motorrad und Anhänger bei Fahrlehrer Ruedi Brunner.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0d1015">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="b">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons; Anhänger eigenes Symbol im gleichen Stil -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-calendar-event" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12"/><path d="M16 3l0 4"/><path d="M8 3l0 4"/><path d="M4 11l16 0"/><path d="M8 15h2v2h-2l0 -2"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
+    <symbol id="i-motorbike" viewBox="0 0 24 24"><path d="M2 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4"/><path d="M13 6h2l1.5 3l2 4"/></symbol>
+    <symbol id="i-trailer" viewBox="0 0 24 24"><path d="M7 6h12a2 2 0 0 1 2 2v7h-14z"/><path d="M12 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M7 13h-5"/><path d="M2 11.5v3"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Brunner Fahrschule, Startseite">
+        <span class="logo-plate" aria-hidden="true">L</span>
+        <span class="logo-text"><b>Brunner</b><small>Fahrschule</small></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Auto">Auto</a></li>
+          <li><a href="#" data-soon="Motorrad">Motorrad</a></li>
+          <li><a href="#" data-soon="Anhänger">Anhänger</a></li>
+          <li><a href="#" data-soon="Über mich">Fahrlehrer</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-yellow nav-cta" href="#" data-soon="Kontakt">Anfragen</a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <radialGradient id="glow" cx="560" cy="330" r="520" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#f2b705" stop-opacity=".55"/>
+              <stop offset=".12" stop-color="#e08a1e" stop-opacity=".28"/>
+              <stop offset=".4" stop-color="#1c4f9c" stop-opacity=".35"/>
+              <stop offset="1" stop-color="#0d1015" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#151a22"/>
+              <stop offset="1" stop-color="#0b0e12"/>
+            </linearGradient>
+            <linearGradient id="asphalt" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3a4250"/>
+              <stop offset=".25" stop-color="#262c36"/>
+              <stop offset="1" stop-color="#1b2028"/>
+            </linearGradient>
+          </defs>
+          <rect width="1000" height="700" fill="#0d1015"/>
+          <rect width="1000" height="700" fill="url(#glow)"/>
+          <path d="M0 318 C120 290 220 286 330 304 C420 318 470 300 540 312 C640 330 700 284 820 280 C900 278 960 292 1000 300 V700 H0Z" fill="#121821"/>
+          <path d="M0 336 C160 322 330 326 460 330 C620 334 800 320 1000 326 V700 H0Z" fill="url(#ground)"/>
+          <path d="M32 742.5 L67 717.9 L99 694.7 L130 673.0 L159 652.5 L187 633.2 L212 615.1 L236 598.1 L259 582.1 L280 567.1 L300 552.9 L319 539.6 L337 527.1 L353 515.3 L369 504.3 L383 493.9 L397 484.1 L410 474.9 L422 466.2 L433 458.1 L444 450.5 L454 443.3 L463 436.5 L472 430.1 L480 424.2 L488 418.6 L495 413.3 L502 408.3 L508 403.6 L513 399.2 L519 395.1 L524 391.2 L528 387.6 L532 384.1 L536 380.9 L539 377.9 L542 375.0 L545 372.3 L547 369.8 L549 367.4 L551 365.2 L552 363.1 L553 361.1 L554 359.2 L554 357.5 L613 357.5 L616 359.2 L620 361.1 L623 363.1 L626 365.2 L629 367.4 L632 369.8 L635 372.3 L639 375.0 L642 377.9 L645 380.9 L648 384.1 L651 387.6 L655 391.2 L658 395.1 L662 399.2 L665 403.6 L669 408.3 L673 413.3 L678 418.6 L682 424.2 L687 430.1 L692 436.5 L697 443.3 L702 450.5 L708 458.1 L714 466.2 L721 474.9 L727 484.1 L735 493.9 L742 504.3 L750 515.3 L759 527.1 L768 539.6 L778 552.9 L788 567.1 L799 582.1 L811 598.1 L823 615.1 L836 633.2 L850 652.5 L865 673.0 L881 694.7 L898 717.9 L916 742.5Z" fill="#2a3240" opacity=".6"/>
+          <path d="M71 742.5 L103 717.9 L134 694.7 L163 673.0 L190 652.5 L215 633.2 L239 615.1 L262 598.1 L283 582.1 L303 567.1 L321 552.9 L339 539.6 L355 527.1 L371 515.3 L385 504.3 L399 493.9 L412 484.1 L424 474.9 L435 466.2 L446 458.1 L455 450.5 L465 443.3 L473 436.5 L482 430.1 L489 424.2 L496 418.6 L503 413.3 L509 408.3 L515 403.6 L520 399.2 L525 395.1 L529 391.2 L533 387.6 L537 384.1 L541 380.9 L544 377.9 L546 375.0 L549 372.3 L551 369.8 L553 367.4 L554 365.2 L555 363.1 L556 361.1 L556 359.2 L556 357.5 L610 357.5 L613 359.2 L617 361.1 L620 363.1 L623 365.2 L626 367.4 L629 369.8 L631 372.3 L634 375.0 L637 377.9 L640 380.9 L643 384.1 L646 387.6 L649 391.2 L652 395.1 L655 399.2 L659 403.6 L662 408.3 L666 413.3 L669 418.6 L673 424.2 L677 430.1 L682 436.5 L686 443.3 L691 450.5 L696 458.1 L701 466.2 L707 474.9 L713 484.1 L719 493.9 L726 504.3 L733 515.3 L740 527.1 L748 539.6 L757 552.9 L766 567.1 L775 582.1 L785 598.1 L796 615.1 L808 633.2 L820 652.5 L833 673.0 L847 694.7 L861 717.9 L877 742.5Z" fill="url(#asphalt)"/>
+          <path class="road-edges" d="M97 742.5 L128 717.9 L157 694.7 L184 673.0 L210 652.5 L234 633.2 L257 615.1 L278 598.1 L299 582.1 L318 567.1 L335 552.9 L352 539.6 L368 527.1 L382 515.3 L396 504.3 L409 493.9 L421 484.1 L433 474.9 L444 466.2 L454 458.1 L463 450.5 L472 443.3 L480 436.5 L488 430.1 L495 424.2 L502 418.6 L508 413.3 L514 408.3 L519 403.6 L524 399.2 L529 395.1 L533 391.2 L537 387.6 L541 384.1 L544 380.9 L547 377.9 L549 375.0 L551 372.3 L553 369.8 L555 367.4 L556 365.2 L557 363.1 L558 361.1 L558 359.2 L558 357.5 L560 357.5 L560 359.2 L560 361.1 L559 363.1 L558 365.2 L557 367.4 L556 369.8 L554 372.3 L552 375.0 L549 377.9 L547 380.9 L544 384.1 L540 387.6 L537 391.2 L533 395.1 L528 399.2 L523 403.6 L518 408.3 L513 413.3 L507 418.6 L500 424.2 L493 430.1 L486 436.5 L478 443.3 L470 450.5 L461 458.1 L451 466.2 L441 474.9 L430 484.1 L418 493.9 L406 504.3 L393 515.3 L379 527.1 L364 539.6 L348 552.9 L331 567.1 L313 582.1 L293 598.1 L273 615.1 L251 633.2 L228 652.5 L203 673.0 L177 694.7 L149 717.9 L119 742.5Z M828 742.5 L815 717.9 L803 694.7 L792 673.0 L782 652.5 L772 633.2 L763 615.1 L754 598.1 L746 582.1 L738 567.1 L730 552.9 L724 539.6 L717 527.1 L711 515.3 L705 504.3 L700 493.9 L695 484.1 L690 474.9 L685 466.2 L681 458.1 L677 450.5 L673 443.3 L669 436.5 L665 430.1 L662 424.2 L659 418.6 L656 413.3 L653 408.3 L650 403.6 L647 399.2 L644 395.1 L642 391.2 L639 387.6 L637 384.1 L634 380.9 L631 377.9 L629 375.0 L626 372.3 L624 369.8 L621 367.4 L619 365.2 L616 363.1 L613 361.1 L610 359.2 L607 357.5 L608 357.5 L612 359.2 L615 361.1 L618 363.1 L621 365.2 L623 367.4 L626 369.8 L629 372.3 L631 375.0 L634 377.9 L637 380.9 L640 384.1 L642 387.6 L645 391.2 L648 395.1 L651 399.2 L654 403.6 L657 408.3 L660 413.3 L664 418.6 L667 424.2 L671 430.1 L675 436.5 L679 443.3 L683 450.5 L688 458.1 L693 466.2 L698 474.9 L703 484.1 L709 493.9 L715 504.3 L721 515.3 L728 527.1 L735 539.6 L743 552.9 L751 567.1 L759 582.1 L769 598.1 L778 615.1 L789 633.2 L800 652.5 L811 673.0 L824 694.7 L837 717.9 L851 742.5Z" fill="#f2b705"/>
+          <path class="road-dashes" id="road-dashes" d="M459 742.5 L475 700.4 L490 662.6 L503 628.7 L514 598.2 L525 570.9 L541 570.9 L533 598.2 L523 628.7 L513 662.6 L501 700.4 L488 742.5Z M559 478.6 L562 470.2 L565 462.3 L567 454.8 L570 447.8 L572 441.1 L580 441.1 L578 447.8 L576 454.8 L574 462.3 L572 470.2 L569 478.6Z M580 416.4 L581 413.3 L582 410.4 L583 407.6 L584 404.8 L584 402.2 L589 402.2 L589 404.8 L588 407.6 L588 410.4 L587 413.3 L586 416.4Z M587 390.9 L587 389.3 L588 387.8 L588 386.3 L588 384.9 L588 383.5 L592 383.5 L592 384.9 L592 386.3 L592 387.8 L591 389.3 L591 390.9Z M589 377.0 L589 376.1 L589 375.1 L589 374.2 L589 373.3 L589 372.5 L592 372.5 L592 373.3 L592 374.2 L592 375.1 L592 376.1 L592 377.0Z M588 368.3 L588 367.6 L588 367.0 L588 366.4 L587 365.8 L587 365.2 L590 365.2 L590 365.8 L590 366.4 L590 367.0 L590 367.6 L591 368.3Z M586 362.3 L586 361.8 L585 361.4 L585 360.9 L585 360.5 L584 360.1 L587 360.1 L587 360.5 L587 360.9 L588 361.4 L588 361.8 L588 362.3Z M583 357.9 L583 357.8 L583 357.8 L583 357.7 L582 357.6 L582 357.5 L584 357.5 L584 357.6 L584 357.7 L585 357.8 L585 357.8 L585 357.9Z" fill="#fff"/>
+          <path d="M300 380 C420 366 520 358 584 357.5 C660 357 740 362 860 376" fill="none" stroke="#2b3441" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Fahrschule · Dottikon AG</p>
+        <h1>Dein Start<br>auf der<br><em>Strasse.</em></h1>
+        <p class="hero-lead">Auto, Motorrad und Anhänger. Fahrstunden bei Ruedi Brunner in Dottikon, persönlich und mit Terminen nach Vereinbarung.</p>
+        <div class="hero-cta">
+          <a class="btn btn-yellow btn-lg" href="#" data-soon="Kontakt">Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="btn btn-glass btn-lg" href="tel:+41566241389"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 056 624 13 89</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="wrap">
+          <ul>
+            <li><strong>B</strong><span>Auto<br>Personenwagen</span></li>
+            <li><strong class="stat-ico"><svg class="i" aria-hidden="true"><use href="#i-motorbike"/></svg></strong><span>Motorrad<br>zwei Räder</span></li>
+            <li><strong>BE</strong><span>Auto mit<br>Anhänger</span></li>
+            <li><strong class="stat-ico"><svg class="i" aria-hidden="true"><use href="#i-calendar-event"/></svg></strong><span>Termine nach<br>Vereinbarung</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="road" aria-hidden="true"></div>
+
+    <!-- Klassen -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Wähle deine <em>Klasse.</em></h2>
+          <p>Vier Räder, zwei Räder oder mit Anhänger: Bei der Brunner Fahrschule lernst du alles aus einer Hand.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile reveal" href="#" data-soon="Auto">
+            <span class="tile-tag">Kat. B</span>
+            <span class="tile-art" aria-hidden="true">
+              <span class="tile-code">B</span>
+              <svg class="tile-ico"><use href="#i-car"/></svg>
+            </span>
+            <span class="tile-body">
+              <span class="tile-title">Auto</span>
+              <span class="tile-text">Fahrstunden mit dem Personenwagen, vom ersten Anfahren bis zur Prüfung.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Motorrad">
+            <span class="tile-tag">Zwei Räder</span>
+            <span class="tile-art" aria-hidden="true">
+              <span class="tile-code tile-code-moto">Töff</span>
+              <svg class="tile-ico"><use href="#i-motorbike"/></svg>
+            </span>
+            <span class="tile-body">
+              <span class="tile-title">Motorrad</span>
+              <span class="tile-text">Fahrstunden auf dem Motorrad. Welche Ausbildung zu dir passt, klärst du direkt am Telefon.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Anhänger">
+            <span class="tile-tag">Kat. BE</span>
+            <span class="tile-art" aria-hidden="true">
+              <span class="tile-code">BE</span>
+              <svg class="tile-ico"><use href="#i-trailer"/></svg>
+            </span>
+            <span class="tile-body">
+              <span class="tile-title">Anhänger</span>
+              <span class="tile-text">Fahrstunden mit Anhänger für die Kategorie BE, wenn du den Auto-Ausweis schon hast.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ablauf -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>So geht’s <em>los.</em></h2>
+          <p>Preise und freie Termine erfährst du direkt bei Ruedi Brunner.</p>
+        </div>
+        <ol class="stages">
+          <li class="reveal"><span class="stage-no">01</span><h3>Melde dich</h3><p>Ruf an oder schreib eine E-Mail. Du erreichst deinen Fahrlehrer direkt.</p></li>
+          <li class="reveal"><span class="stage-no">02</span><h3>Termin abmachen</h3><p>Fahrstunden gibt es nach Vereinbarung. Ihr findet gemeinsam einen Zeitpunkt, der passt.</p></li>
+          <li class="reveal"><span class="stage-no stage-goal">03</span><h3>Losfahren</h3><p>Mit dem Lernfahrausweis in der Tasche geht es auf die Strasse, Schritt für Schritt bis zur Prüfung.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Fahrlehrer -->
+    <section class="sec sec-dark">
+      <div class="wrap team">
+        <div class="team-badge reveal" aria-hidden="true">
+          <span class="team-initials">RB</span>
+          <span class="team-plate">L</span>
+        </div>
+        <div class="team-text reveal">
+          <p class="label">Dein Fahrlehrer</p>
+          <h2>Ruedi <em>Brunner.</em></h2>
+          <p class="team-lead">Fahrlehrer für Auto, Motorrad und Anhänger in Dottikon. Bei ihm meldest du dich direkt: für Fragen, für Termine und für deine Fahrstunden.</p>
+          <ul class="contacts">
+            <li><span>Telefon</span><a href="tel:+41566241389">056 624 13 89</a></li>
+            <li><span>Natel</span><a href="tel:+41793009334">079 300 93 34</a></li>
+            <li><span>E-Mail</span><a class="contacts-mail" href="mailto:r.brunner@fahrschule-brunner.ch">r.brunner@fahrschule-brunner.ch</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standort -->
+    <section class="spot">
+      <div class="spot-map">
+        <svg class="map-art" viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="600" height="420" fill="#12161c"/>
+              <g fill="#181e26"><rect x="24" y="26" width="78" height="64" rx="10"/><rect x="214" y="24" width="170" height="62" rx="10"/><rect x="470" y="40" width="108" height="74" rx="10"/><rect x="24" y="166" width="84" height="58" rx="10"/><rect x="196" y="238" width="70" height="62" rx="10"/><rect x="330" y="250" width="60" height="70" rx="10"/><rect x="462" y="140" width="100" height="58" rx="10"/><rect x="24" y="370" width="86" height="40" rx="10"/><rect x="214" y="350" width="120" height="60" rx="10"/><rect x="454" y="330" width="124" height="70" rx="10"/><rect x="300" y="108" width="90" height="50" rx="10"/></g>
+              <path d="M480 220 C520 200 590 210 600 250 L600 300 C560 290 500 280 470 262 Z" fill="#16231d"/>
+              <path d="M-20 64 C200 40 400 92 640 34" fill="none" stroke="#3a4250" stroke-width="5"/>
+              <path d="M-20 64 C200 40 400 92 640 34" fill="none" stroke="#12161c" stroke-width="2.5" stroke-dasharray="10 10"/>
+              <g fill="none" stroke="#1f2630" stroke-width="19" stroke-linecap="round"><path d="M120 -20 C140 120 150 300 170 440"/><path d="M430 -20 C410 120 440 290 400 440"/><path d="M-20 340 C200 330 420 350 640 330"/><path d="M260 196 C250 280 230 360 230 440"/><path d="M560 -20 C548 100 560 200 600 230"/><path d="M-20 120 C40 118 90 110 140 112"/></g>
+              <g fill="none" stroke="#2a323e" stroke-width="14" stroke-linecap="round"><path d="M120 -20 C140 120 150 300 170 440"/><path d="M430 -20 C410 120 440 290 400 440"/><path d="M-20 340 C200 330 420 350 640 330"/><path d="M260 196 C250 280 230 360 230 440"/><path d="M560 -20 C548 100 560 200 600 230"/><path d="M-20 120 C40 118 90 110 140 112"/></g>
+              <path d="M-20 168 C140 150 260 176 330 196 C420 222 520 262 640 300" fill="none" stroke="#143a73" stroke-width="30" stroke-linecap="round"/>
+              <path d="M-20 168 C140 150 260 176 330 196 C420 222 520 262 640 300" fill="none" stroke="#1f529f" stroke-width="24" stroke-linecap="round"/>
+            </svg>
+        <span class="spot-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0 -8 8c0 5.5 8 12 8 12s8 -6.5 8 -12a8 8 0 0 0 -8 -8z"/><circle cx="12" cy="10" r="3.2"/></svg></span>
+      </div>
+      <div class="spot-text reveal">
+        <p class="label">Standort</p>
+        <h2>Dottikon <em>AG.</em></h2>
+        <p class="spot-lead">Wann und wo deine Fahrstunde startet, machst du direkt mit Ruedi Brunner ab.</p>
+        <dl class="spec">
+          <div><dt>Adresse</dt><dd>Alte Bruggerstrasse 24<br>5605 Dottikon AG</dd></div>
+          <div><dt>Termine</dt><dd>Nach Vereinbarung</dd></div>
+        </dl>
+        <a class="link-arrow" href="https://www.google.com/maps/search/?api=1&amp;query=Alte+Bruggerstrasse+24%2C+5605+Dottikon" target="_blank" rel="noopener">Route planen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Bereit zum<br>Losfahren?</h2>
+        <div class="cta-side">
+          <a class="cta-phone" href="tel:+41566241389">056 624 13 89</a>
+          <p>Ruf an oder schreib eine E-Mail. Termine nach Vereinbarung.</p>
+          <a class="btn btn-black btn-lg" href="mailto:r.brunner@fahrschule-brunner.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail schreiben</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <span class="logo">
+          <span class="logo-plate" aria-hidden="true">L</span>
+          <span class="logo-text"><b>Brunner</b><small>Fahrschule</small></span>
+        </span>
+        <p class="footer-claim">Auto, Motorrad und Anhänger in Dottikon AG.</p>
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <p>Brunner Fahrschule<br>Alte Bruggerstrasse 24<br>5605 Dottikon AG</p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+41566241389">056 624 13 89</a><br><a href="mailto:r.brunner@fahrschule-brunner.ch">r.brunner@fahrschule-brunner.ch</a></p>
+      </div>
+      <div>
+        <h3>Termine</h3>
+        <p>Nach Vereinbarung</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Brunner Fahrschule</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>
