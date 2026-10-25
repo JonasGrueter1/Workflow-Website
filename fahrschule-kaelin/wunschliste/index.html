@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wunschliste | Neue Website Fahrschule Kälin und Burkhard AG</title>
+  <meta name="description" content="Wählen Sie Design, Seiten und Funktionen für die neue Website der Fahrschule Kälin und Burkhard AG.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0371b4">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/shared/basis.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"/><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"/><path d="M7 15a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2l0 -4"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11"/><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="../">
+        <span class="top-mark" aria-hidden="true">L</span>
+        <span class="top-word"><strong>Kälin</strong><small>Burkhard · Luzern</small></span>
+        <span class="top-label">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="../">Übersicht</a>
+        <a href="../design-a/" target="_blank" rel="noopener">Design A</a>
+        <a href="../design-b/" target="_blank" rel="noopener">Design B</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <p class="kicker">Wunschliste</p>
+      <h1>Ihre Wunschliste für die neue Website</h1>
+      <p>Wählen Sie Ihr Lieblingsdesign und die Seiten und Funktionen, die Sie sich wünschen. Der Preis rechnet automatisch mit. Am Schluss senden Sie mir Ihre Auswahl mit einem Klick.</p>
+    </div>
+
+    <div class="layout">
+      <form class="wish" id="wish" novalidate>
+
+        <!-- 1 Design -->
+        <section class="block" aria-labelledby="h-design">
+          <div class="block-head">
+            <span class="block-no">1</span>
+            <div>
+              <h2 id="h-design">Welches Design gefällt Ihnen?</h2>
+              <p>Mit «Ansehen» öffnet sich das Design in einem neuen Fenster.</p>
+            </div>
+          </div>
+          <div class="designs" id="designs">
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design A: Hell und herzlich">
+                <img src="../assets/img/vorschau-a.webp" width="960" height="600" alt="Vorschau Design A">
+                <span class="design-text"><strong>Design A</strong><span>Hell und herzlich</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-a/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design B: Sportlich und markant">
+                <img src="../assets/img/vorschau-b.webp" width="960" height="600" alt="Vorschau Design B">
+                <span class="design-text"><strong>Design B</strong><span>Sportlich und markant</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-b/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+          </div>
+          <label class="opt opt-mix">
+            <input type="radio" name="design" value="Mischung aus beiden, gerne besprechen">
+            <span class="opt-box opt-box-round" aria-hidden="true"></span>
+            <span class="opt-text"><strong>Eine Mischung aus beiden</strong><small>Zum Beispiel die hellen Farben von A mit dem Aufbau von B. Das besprechen wir dann gemeinsam.</small></span>
+          </label>
+          <p class="error" id="design-error" hidden>Bitte wählen Sie ein Design aus.</p>
+        </section>
+
+        <!-- 2 Grundpaket -->
+        <section class="block" aria-labelledby="h-base">
+          <div class="block-head">
+            <span class="block-no">2</span>
+            <div>
+              <h2 id="h-base">Grundpaket</h2>
+              <p>Ist immer dabei, damit die Website sauber funktioniert.</p>
+            </div>
+          </div>
+          <ul class="base" id="base">
+            <li data-hours="6"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Konzept und zwei Designentwürfe</span><span class="cost">CHF 270.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ausarbeitung des gewählten Designs</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Startseite</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Texte und Bilder übernehmen und aufbereiten</span><span class="cost">CHF 225.00</span></li>
+            <li data-hours="1.5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Datenschutz und Impressum</span><span class="cost">CHF 67.50</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Optimiert für Smartphone, Tablet und Computer</span><span class="cost">CHF 135.00</span></li>
+            <li data-hours="2"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Aufschalten, Domain und Hosting einrichten</span><span class="cost">CHF 90.00</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Einführung und eine Korrekturrunde</span><span class="cost">CHF 135.00</span></li>
+          </ul>
+        </section>
+
+        <!-- 3 Seiten -->
+        <section class="block" aria-labelledby="h-pages">
+          <div class="block-head">
+            <span class="block-no">3</span>
+            <div>
+              <h2 id="h-pages">Welche Seiten wünschen Sie?</h2>
+              <p>Vorausgewählt sind die Seiten, die Ihre bisherige Website schon hat. Ähnliche Kategorien fasse ich jeweils auf einer Seite zusammen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Seiten">
+            <label class="opt"><input type="checkbox" name="seite" value="Auto Kat. B" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Auto Kat. B</strong><small>Weg zum Billett, Abos, Preise und Hilfe beim Theorielernen</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Auto Kontrollfahrten" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Auto Kontrollfahrten</strong><small>Umschreibung ausländischer Ausweise, Link zum Strassenverkehrsamt</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Anhänger Kat. BE" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Anhänger Kat. BE</strong><small>Wann man die Kategorie BE braucht, Ablauf und Preis</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Taxi Kat. BPT" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Taxi Kat. BPT</strong><small>Voraussetzungen, Ablauf und ein einheitlicher Preis</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Lastwagen Kat. C und Anhänger Kat. CE" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Lastwagen Kat. C und Anhänger Kat. CE</strong><small>Mindestalter, Ablauf, Preise und Versicherung</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kleinbus Kat. C1/D1 und Reisebus Kat. D" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kleinbus Kat. C1/D1 und Reisebus Kat. D</strong><small>Ausbildungswege, Mindestalter und Preise</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Fahren im Alter" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Fahren im Alter</strong><small>Auffrischung für erfahrene Lenkerinnen und Lenker</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Nothelferkurs und Verkehrskunde" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Nothelferkurs und Verkehrskunde</strong><small>Kursinhalte, Daten und Link zur Online-Buchung</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="LKW-Theoriekurs und CZV" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>LKW-Theoriekurs und CZV</strong><small>LKW-Theorie, CZV Grundausbildung und Weiterbildung</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Team" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Team</strong><small>Alle Fahrlehrer mit Foto, Kategorien und Telefonnummer</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Lokalitäten" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Lokalitäten</strong><small>Bildergalerie der Schulungsräume mitten in Luzern</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kontakt und Anfahrt" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kontakt und Anfahrt</strong><small>Adresse, Telefon, E-Mail und Anfahrt mit Bus oder Auto</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Partner und Links" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Partner und Links</strong><small>Strassenverkehrsämter, ASTRA, bfu und weitere</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Videos" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Videos</strong><small>Ihre Videos von Facebook und YouTube übersichtlich eingebunden</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Preise auf einen Blick" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Preise auf einen Blick</strong><small>Alle Preise aller Kategorien und Kurse in einer Tabelle</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Häufige Fragen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Häufige Fragen</strong><small>Antworten auf die Fragen, die Fahrschüler am meisten stellen</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Gratulationen" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Gratulationen</strong><small>Galerie mit Fotos Ihrer Fahrschüler nach der bestandenen Prüfung</small></span><span class="cost">CHF 67.50</span></label>
+          </div>
+        </section>
+
+        <!-- 4 Funktionen -->
+        <section class="block" aria-labelledby="h-features">
+          <div class="block-head">
+            <span class="block-no">4</span>
+            <div>
+              <h2 id="h-features">Welche Funktionen wünschen Sie?</h2>
+              <p>Extras, die Ihren Fahrschülern das Leben leichter machen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Funktionen">
+            <label class="opt"><input type="checkbox" name="funktion" value="Anmelde- und Kontaktformular" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Anmelde- und Kontaktformular</strong><small>Anmeldungen und Anfragen kommen direkt per E-Mail zu Ihnen</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Optimierung" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Optimierung</strong><small>Damit man Sie bei «Fahrschule Luzern» gut findet</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Online-Buchung einbinden" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Online-Buchung einbinden</strong><small>Buchungslinks für Nothelferkurs, VKU, LKW-Theorie und CZV gut sichtbar</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Bewertungen" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Bewertungen</strong><small>Ihre Bewertungen von Google gut sichtbar auf der Startseite</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Kostenrechner" data-hours="4"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kostenrechner</strong><small>Fahrschüler rechnen aus, was ihr Auto-Billett ungefähr kostet</small></span><span class="cost">CHF 180.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="WhatsApp-Button" data-hours="1"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>WhatsApp-Button</strong><small>Fahrschüler schreiben Ihnen mit einem Tipp auf WhatsApp</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Karte mit Anfahrt" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Karte mit Anfahrt</strong><small>Interaktive Karte zur Kasimir-Pfyffer-Strasse 2</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Wichtigste Seiten auf Englisch" data-hours="5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Wichtigste Seiten auf Englisch</strong><small>Zum Beispiel für Kontrollfahrten mit ausländischem Ausweis</small></span><span class="cost">CHF 225.00</span></label>
+          </div>
+        </section>
+
+        <!-- 5 Weitere Angaben -->
+        <section class="block" aria-labelledby="h-more">
+          <div class="block-head">
+            <span class="block-no">5</span>
+            <div>
+              <h2 id="h-more">Noch ein paar Fragen</h2>
+              <p>Damit ich gut planen kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-when">Wann soll die neue Website online sein?</label>
+              <select id="f-when" name="termin">
+                <option>So bald wie möglich</option>
+                <option>Bis Ende 2026</option>
+                <option>Bis Frühling 2027</option>
+                <option>Kein fester Termin</option>
+              </select>
+            </div>
+            <fieldset class="field">
+              <legend>Fotos</legend>
+              <label class="mini"><input type="radio" name="fotos" value="Vorhandene Fotos verwenden" checked> Vorhandene Fotos verwenden</label>
+              <label class="mini"><input type="radio" name="fotos" value="Ich liefere neue Fotos"> Ich liefere neue Fotos</label>
+              <label class="mini"><input type="radio" name="fotos" value="Neue Fotos wären schön, bitte beraten"> Neue Fotos wären schön, bitte beraten</label>
+            </fieldset>
+            <div class="field field-full">
+              <label for="f-notes">Weitere Wünsche oder Bemerkungen</label>
+              <textarea id="f-notes" name="bemerkungen" rows="4" placeholder="Was ist Ihnen sonst noch wichtig?"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 Kontakt -->
+        <section class="block" aria-labelledby="h-contact">
+          <div class="block-head">
+            <span class="block-no">6</span>
+            <div>
+              <h2 id="h-contact">Ihre Kontaktangaben</h2>
+              <p>Damit ich mich bei Ihnen melden kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telefon</label>
+              <input id="f-phone" name="telefon" type="tel" autocomplete="tel">
+            </div>
+            <div class="field field-full">
+              <label for="f-mail">E-Mail</label>
+              <input id="f-mail" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <aside class="summary" id="summary" aria-labelledby="h-summary">
+        <h2 id="h-summary">Ihre Auswahl</h2>
+        <dl class="sum-lines">
+          <div><dt>Design</dt><dd id="s-design" class="sum-design">noch nicht gewählt</dd></div>
+          <div><dt>Grundpaket</dt><dd id="s-base">CHF 1’282.50</dd></div>
+          <div><dt>Seiten <span id="s-pages-n">(14)</span></dt><dd id="s-pages">CHF 922.50</dd></div>
+          <div><dt>Funktionen <span id="s-feat-n">(4)</span></dt><dd id="s-feat">CHF 382.50</dd></div>
+        </dl>
+        <div class="sum-total">
+          <span>Total</span>
+          <strong id="s-total">CHF 2’587.50</strong>
+        </div>
+        <p class="sum-hours"><span id="s-hours">57.5</span> Stunden à CHF 45</p>
+        <div class="sum-actions no-print">
+          <button class="btn btn-brand btn-block" type="submit" form="wish">Auswahl senden <svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+          <button class="btn btn-line btn-block" type="button" id="print"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg> Drucken oder als PDF</button>
+        </div>
+        <div class="status" id="status" role="status" aria-live="polite" hidden></div>
+        <p class="sum-note">Alle Preise sind unverbindliche Richtpreise. Zusätzliche Wünsche berechne ich mit CHF 45 pro Stunde.</p>
+        <p class="sum-note">Beim Senden werden Ihre Angaben über den Dienst Web3Forms per E-Mail an mich übermittelt und nur für dieses Projekt verwendet.</p>
+      </aside>
+    </div>
+  </main>
+
+  <div class="mbar no-print">
+    <span>Total <strong id="m-total">CHF 2’587.50</strong></span>
+    <a class="btn btn-brand" href="#summary">Zur Auswahl</a>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Jonas Grüter Webdesign</span>
+      <span>Oktober 2026</span>
+      <a data-mail href="#">E-Mail an Jonas Grüter</a>
+    </div>
+  </footer>
+</body>
+</html>

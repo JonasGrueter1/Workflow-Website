@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design B | Fahrschule Peter GmbH</title>
+  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Peter GmbH in Emmenbrücke und Luzern.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#07111d">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/img/hero-b.webp" as="image" media="(min-width: 761px)">
+  <link rel="preload" href="../assets/img/hero-b-mobil.webp" as="image" media="(max-width: 760px)">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="b">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M16.5 7.5v.01"/></symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Fahrschule Peter, Startseite">
+        <img src="../assets/img/logo-hell.webp" alt="Fahrschule Peter" width="720" height="177">
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Fahrschule">Fahrschule</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Kurse">Kurse</a></li>
+          <li><a href="#" data-soon="FAQ">FAQ</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-green nav-cta" href="#" data-soon="Online buchen">Online buchen</a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <picture>
+        <source media="(max-width: 760px)" srcset="../assets/img/hero-b-mobil.webp" width="900" height="900">
+        <img class="hero-bg" src="../assets/img/hero-b.webp" width="1920" height="1100" fetchpriority="high"
+             alt="Junge Fahrschülerin lächelt am Steuer des Fahrschulautos">
+      </picture>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Fahrschule · Emmenbrücke · Luzern</p>
+        <h1>Sicher<br>ans <em>Ziel.</em></h1>
+        <p class="hero-lead">Auto, Anhänger, Motorrad-Grundkurs und Taxi. Mit Roland Peter lernst du individuell und zielgerichtet, direkt auf den echten Prüfungsstrecken.</p>
+        <div class="hero-cta">
+          <a class="btn btn-green btn-lg" href="#" data-soon="Online buchen">Fahrstunde buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="btn btn-glass btn-lg" href="tel:+41793403000"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 340 30 00</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="wrap">
+          <ul>
+            <li><strong>90</strong><span>Minuten erste<br>Fahrstunde</span></li>
+            <li><strong>2</strong><span>Fahrschulautos<br>mit Allrad</span></li>
+            <li><strong>24</strong><span>Stunden vorher<br>gratis verschieben</span></li>
+            <li><strong>50</strong><span>Franken pro<br>Empfehlung</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="road" aria-hidden="true"></div>
+
+    <!-- Getriebe -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Wähle dein <em>Getriebe.</em></h2>
+          <p>Beide Fahrschulautos haben Allrad. Unsicher? Starte mit dem Automaten: Seit 2019 darfst du danach auch geschaltet fahren.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile reveal" href="#" data-soon="Fahrzeuge">
+            <img src="../assets/img/troc.webp" width="900" height="675" loading="lazy" alt="Weisser VW T-Roc der Fahrschule Peter von der Seite">
+            <span class="tile-tag">Kat. B · Automat</span>
+            <span class="tile-body">
+              <span class="tile-title">VW T-Roc</span>
+              <span class="tile-text">2.0 TSI, 190 PS, 7-Gang DSG, 4Motion Allrad</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Fahrzeuge">
+            <img src="../assets/img/golf.webp" width="900" height="675" loading="lazy" alt="Silberner VW Golf der Fahrschule Peter auf dem Übungsplatz">
+            <span class="tile-tag">Kat. B · Geschaltet</span>
+            <span class="tile-body">
+              <span class="tile-title">VW Golf</span>
+              <span class="tile-text">2.0 TDI, 150 PS, 6-Gang manuell, 4Motion Allrad</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+        <ul class="classes">
+          <li class="reveal">
+            <a href="#" data-soon="Anhänger">
+              <span class="cl-code">BE</span>
+              <span class="cl-main"><span class="cl-title">Anhänger</span><span class="cl-text">Einzel- und Doppellektionen, Grundkurs in 4er-Gruppen</span></span>
+              <span class="cl-price"><small>ab CHF</small>120</span>
+              <svg class="i cl-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </a>
+          </li>
+          <li class="reveal">
+            <a href="#" data-soon="Motorrad-Grundkurs">
+              <span class="cl-code">A1·A</span>
+              <span class="cl-main"><span class="cl-title">Motorrad-Grundkurs</span><span class="cl-text">A1: 2 x 4 Stunden, A: 3 x 4 Stunden</span></span>
+              <span class="cl-price"><small>ab CHF</small>320</span>
+              <svg class="i cl-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </a>
+          </li>
+          <li class="reveal">
+            <a href="#" data-soon="Taxi">
+              <span class="cl-code">BPT</span>
+              <span class="cl-main"><span class="cl-title">Taxi</span><span class="cl-text">Berufsmässiger Personentransport, Einzel- oder Doppellektion</span></span>
+              <span class="cl-price"><small>ab CHF</small>90</span>
+              <svg class="i cl-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Etappen -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>In 5 Etappen<br>zum <em>Ausweis.</em></h2>
+          <a class="link-arrow" href="#" data-soon="Weg zum Führerschein">Ganzer Ablauf <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="stages">
+          <li class="reveal"><span class="stage-no">01</span><h3>Nothelferkurs</h3><p>Der Nothelferausweis ist 6 Jahre gültig.</p></li>
+          <li class="reveal"><span class="stage-no">02</span><h3>Gesuch</h3><p>Mit Sehtest, Passfoto und Bestätigung der Gemeinde einreichen.</p></li>
+          <li class="reveal"><span class="stage-no">03</span><h3>Theorie</h3><p>Prüfung bestanden, dann gibt es den Lernfahrausweis für 24 Monate.</p></li>
+          <li class="reveal"><span class="stage-no">04</span><h3>Fahren und VKU</h3><p>Fahrstunden bis zur Prüfungsreife, dazu der Verkehrskundekurs.</p></li>
+          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>Prüfung</h3><p>Bestanden! Innerhalb eines Jahres folgt noch der WAB-Kurs.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Erste Fahrstunde -->
+    <section class="first">
+      <div class="first-media">
+        <img src="../assets/img/spiegel.webp" width="900" height="894" loading="lazy" alt="Lächelnde Fahrschülerin im Rückspiegel des Fahrschulautos">
+      </div>
+      <div class="first-text reveal">
+        <p class="label">Deine erste Fahrstunde</p>
+        <h2>Doppelt fahren.<br><em>Einfach zahlen.</em></h2>
+        <p class="first-lead">Die erste Fahrstunde ist eine Doppellektion, bezahlt wird nur eine. Wir lernen uns kennen, besprechen den Ablauf und dann fährst du die ersten Meter an einem ruhigen Ort.</p>
+        <dl class="facts">
+          <div><dt>Ausbildungsheft</dt><dd>kostenlos</dd></div>
+          <div><dt>Qualidrive-App</dt><dd>inklusive</dd></div>
+          <div><dt>Tanken oder Waschen</dt><dd>Uhr steht still</dd></div>
+          <div><dt>Verschieben</dt><dd>bis 24 h vorher gratis</dd></div>
+        </dl>
+        <div class="highlight">
+          <strong>Win-Win-Programm</strong>
+          <span>Teil die Vorlage und bring jemanden mit: Du bekommst 50 Stutz per TWINT, die neue Person CHF 50.– Rabatt ab der 5. Fahrstunde.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preise -->
+    <section class="sec sec-light">
+      <div class="wrap price-wrap">
+        <div class="sec-head sec-head-stack reveal">
+          <h2>Faire <em>Preise.</em></h2>
+          <p>Keine versteckten Kosten. E-Banking oder bar ohne Gebühr, dazu einmalig CHF 100.– Administrationspauschale. Nicht aufgebrauchte Abos gibt es nach erfolgreicher Ausbildung zurück.</p>
+          <a class="link-arrow" href="#" data-soon="Preise">Alle Preise <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ul class="pricelist reveal">
+          <li><span class="pl-name">Einzellektion<small>Kat. B, 45 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>90</span></li>
+          <li><span class="pl-name">5er-Abo<small>5 x 45 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>445</span></li>
+          <li class="pl-hot"><span class="pl-name">10er-Abo <b>Beliebt</b><small>10 x 45 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>870</span></li>
+          <li><span class="pl-name">20er-Abo<small>20 x 45 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>1’660</span></li>
+          <li><span class="pl-name">25er-Abo<small>25 x 45 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>2’025</span></li>
+          <li><span class="pl-name">Verkehrskunde VKU<small>4 x 2 Lektionen, inklusive Lehrmittel</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>250</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- VKU -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Nächste<br><em>VKU-Kurse.</em></h2>
+          <p>4 Abende à 2 Lektionen, jeweils 19.00 bis 21.00 Uhr im Fahrschul-Kompetenzzentrum Seetalplatz, Gerliswilstrasse 15, Emmenbrücke.</p>
+        </div>
+        <div class="tickets">
+          <article class="ticket reveal">
+            <span class="tk-no">Kurs 1126</span>
+            <h3 class="tk-month">November</h3>
+            <p class="tk-days"><span>16</span><span>17</span><span>23</span><span>24</span></p>
+            <p class="tk-meta">Mo, Di, Mo, Di · 2026</p>
+            <a class="tk-link" href="#" data-soon="VKU-Anmeldung">Anmelden <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          </article>
+          <article class="ticket reveal">
+            <span class="tk-no">Kurs 1226</span>
+            <h3 class="tk-month">Dezember</h3>
+            <p class="tk-days"><span>14</span><span>15</span><span>21</span><span>22</span></p>
+            <p class="tk-meta">Mo, Di, Mo, Di · 2026</p>
+            <a class="tk-link" href="#" data-soon="VKU-Anmeldung">Anmelden <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          </article>
+          <article class="ticket reveal">
+            <span class="tk-no">Kurs 0127</span>
+            <h3 class="tk-month">Januar</h3>
+            <p class="tk-days"><span>04</span><span>05</span><span>11</span><span>12</span></p>
+            <p class="tk-meta">Mo, Di, Mo, Di · 2027</p>
+            <a class="tk-link" href="#" data-soon="VKU-Anmeldung">Anmelden <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          </article>
+        </div>
+        <p class="vku-note reveal"><strong>CHF 250.– inklusive Lehrmittel.</strong> Machst du die ganze Ausbildung bei der Fahrschule Peter, gibt es CHF 50.– zurück. Weitere Termine auf Anfrage.</p>
+      </div>
+    </section>
+
+    <!-- Fahrlehrer -->
+    <section class="sec sec-dark2">
+      <div class="wrap team">
+        <div class="team-photo reveal">
+          <img src="../assets/img/roland-b.webp" width="625" height="800" loading="lazy" alt="Fahrlehrer Roland Peter schaut durch das Autofenster">
+        </div>
+        <div class="team-text reveal">
+          <p class="label">Dein Fahrlehrer</p>
+          <h2>Roland <em>Peter.</em></h2>
+          <p class="team-lead">Fahrlehrer mit eidgenössischem Fachausweis und SVEB-Zertifikat Kursleiter. Gelernter Koch, danach Lagerist, Disponent und LKW-Chauffeur. 2018 hat er die Fahrschule Peter gegründet.</p>
+          <blockquote class="team-quote">«Wenn du es nicht einfach erklären kannst, hast du es selbst nicht genug verstanden.»<cite>Albert Einstein, Rolands Leitsatz</cite></blockquote>
+          <ul class="contacts">
+            <li><span>Mobile und WhatsApp</span><a href="tel:+41793403000">079 340 30 00</a></li>
+            <li><span>Festnetz</span><a href="tel:+41412601555">041 260 15 55</a></li>
+            <li><span>E-Mail</span><a class="contacts-mail" href="mailto:info@fahrschule-peter.ch">info@fahrschule-peter.ch</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Bereit zum<br>Losfahren?</h2>
+        <div class="cta-side">
+          <a class="cta-phone" href="tel:+41793403000">079 340 30 00</a>
+          <p>Ruf an, schreib per WhatsApp oder buch deine Fahrstunde direkt online.</p>
+          <div class="cta-actions">
+            <a class="btn btn-black btn-lg" href="https://api.whatsapp.com/send?phone=41793403000" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg> WhatsApp</a>
+            <a class="btn btn-outline-dark btn-lg" href="#" data-soon="Online buchen">Online buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img class="footer-logo" src="../assets/img/logo-hell.webp" alt="Fahrschule Peter" width="720" height="177" loading="lazy">
+        <div class="social">
+          <a href="https://www.instagram.com/fahrschule.peter/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="i" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a href="https://www.facebook.com/fahrschule.peter.ch" target="_blank" rel="noopener" aria-label="Facebook"><svg class="i" aria-hidden="true"><use href="#i-facebook"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <p>Fahrschule Peter GmbH<br>Gerliswilstrasse 15<br>6020 Emmenbrücke</p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+41793403000">079 340 30 00</a><br><a href="tel:+41412601555">041 260 15 55</a><br><a href="mailto:info@fahrschule-peter.ch">info@fahrschule-peter.ch</a></p>
+      </div>
+      <div>
+        <h3>Öffnungszeiten</h3>
+        <p>Mo 12.00 bis 21.00<br>Di bis Fr 07.00 bis 21.00<br>Sa 07.00 bis 16.00<br>So geschlossen</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Fahrschule Peter GmbH</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="AGB">AGB</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design A | Fahrschule Bitzi</title>
+  <meta name="description" content="Designvorschlag A für die Startseite der Fahrschule Bitzi in Luzern und Emmenbrücke.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#c1272d">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="a">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
+    <symbol id="i-motorbike" viewBox="0 0 24 24"><path d="M2 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4"/><path d="M13 6h2l1.5 3l2 4"/></symbol>
+    <symbol id="i-cone" viewBox="0 0 24 24"><path d="M4 20l16 0"/><path d="M9.4 10l5.2 0"/><path d="M7.8 15l8.4 0"/><path d="M6 20l5 -15h2l5 15"/></symbol>
+    <symbol id="i-chalkboard-teacher" viewBox="0 0 24 24"><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1"/><path d="M12 14a2 2 0 1 0 4.001 -.001a2 2 0 0 0 -4.001 .001"/><path d="M17 19a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2"/></symbol>
+    <symbol id="i-certificate" viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5"/><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73"/><path d="M6 9l12 0"/><path d="M6 12l3 0"/><path d="M6 15l2 0"/></symbol>
+    <symbol id="i-license" viewBox="0 0 24 24"><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"/><path d="M9 7l4 0"/><path d="M9 11l4 0"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 15h-3a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v3"/><path d="M7 10a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1l0 -8"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><path d="M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/><path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z"/><path d="M12 8l0 13"/><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"/><path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"/><path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Fahrschule Bitzi, Startseite">
+        <img src="../assets/img/logo-dunkel.webp" alt="Fahrschule Bitzi" width="640" height="197">
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Auto">Auto</a></li>
+          <li><a href="#" data-soon="Motorrad">Motorrad</a></li>
+          <li><a href="#" data-soon="VKU">VKU</a></li>
+          <li><a href="#" data-soon="WAB">WAB</a></li>
+          <li><a href="#" data-soon="Dein Fahrlehrer">Fahrlehrer</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-red nav-call" href="tel:+41794470631">
+          <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 447 06 31
+        </a>
+      </nav>
+      <a class="head-call" href="tel:+41794470631" aria-label="Anrufen: 079 447 06 31">
+        <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-top">
+          <div class="hero-text">
+            <p class="pill"><span class="pill-dot" aria-hidden="true"></span>Fahrschule für Auto und Motorrad in Luzern</p>
+            <h1>Für mehr <span class="swoosh">Sicherheit</span> auf den Strassen.</h1>
+          </div>
+          <div class="hero-side">
+            <p class="lead">Ich begleite dich persönlich zum Führerausweis. Auto und Motorrad, in Luzern und Emmenbrücke, seit 2004.</p>
+            <div class="hero-cta">
+              <a class="btn btn-red btn-lg" href="#" data-soon="Kontakt">
+                Kennenlernen vereinbaren <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+              </a>
+              <a class="btn btn-line btn-lg" href="tel:+41794470631">
+                <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 447 06 31
+              </a>
+            </div>
+            <p class="hero-note"><svg class="i" aria-hidden="true"><use href="#i-coffee"/></svg> Das erste Kennenlernen ist kostenlos und unverbindlich.</p>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img class="hero-photo"
+               src="../assets/img/auto-golf.webp"
+               srcset="../assets/img/auto-golf-800.webp 800w, ../assets/img/auto-golf.webp 1200w"
+               sizes="(max-width: 1228px) 100vw, 1180px"
+               width="1200" height="575" fetchpriority="high"
+               alt="Weisser VW Golf der Fahrschule Bitzi mit Beschriftung">
+          <span class="l-plate" aria-hidden="true">L</span>
+          <div class="price-badge">
+            <span>1 Fahrlektion</span>
+            <strong>CHF 90.–</strong>
+            <small>45 Minuten, Auto oder Motorrad</small>
+          </div>
+          <div class="person-chip">
+            <img src="../assets/img/stefan-bitzi.webp" width="550" height="562" alt="">
+            <div><strong>Stefan Bitzi</strong><span>Fahrlehrer und Inhaber</span></div>
+          </div>
+        </div>
+
+        <ul class="trust">
+          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span><div><strong>Auto und Motorrad</strong><span>Kat. B, A1, A beschränkt, A</span></div></li>
+          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-certificate"/></svg></span><div><strong>Seit 2004</strong><span>über 1100 ausgebildet</span></div></li>
+          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-map-pin"/></svg></span><div><strong>Zwei Standorte</strong><span>Luzern und Emmenbrücke</span></div></li>
+          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg></span><div><strong>Einfach bezahlen</strong><span>Bar oder mit TWINT</span></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Angebot -->
+    <section class="sec">
+      <div class="wrap">
+        <div class="head reveal">
+          <p class="kicker">Angebot</p>
+          <h2>Was möchtest du lernen?</h2>
+          <p>Auto und Motorrad aus einer Hand, dazu alle Kurse auf dem Weg zu deinem Führerausweis.</p>
+        </div>
+        <div class="offer">
+          <a class="card card-photo reveal" href="#" data-soon="Auto">
+            <span class="card-media">
+              <img src="../assets/img/standort-emmenbruecke.webp" width="800" height="383" loading="lazy" alt="Fahrschulauto der Fahrschule Bitzi am Standort Emmenbrücke">
+              <span class="card-badge"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg> Kategorie B</span>
+            </span>
+            <span class="card-body">
+              <h3>Auto</h3>
+              <p>Individuelle Betreuung, praxisnahe Fahrstunden und dein persönliches Ausbildungsheft. Wir treffen uns in Luzern oder Emmenbrücke, zu flexiblen Zeiten.</p>
+              <ul class="ticks">
+                <li>Lektion 45 Minuten, CHF 90.–</li>
+                <li>Abholung zu Hause in Littau und Reussbühl</li>
+              </ul>
+              <span class="card-link">Mehr zum Auto <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+            </span>
+          </a>
+          <a class="card card-photo reveal" href="#" data-soon="Motorrad">
+            <span class="card-media">
+              <img src="../assets/img/motorrad-kurve.webp" width="850" height="607" loading="lazy" alt="Motorradfahrer in einer Kurve auf der Landstrasse">
+              <span class="card-badge"><svg class="i" aria-hidden="true"><use href="#i-motorbike"/></svg> Kategorie A1, A beschränkt, A</span>
+            </span>
+            <span class="card-body">
+              <h3>Motorrad</h3>
+              <p>Sicherheit, Fahrtechnik und individuelle Betreuung. Ich begleite dich vom ersten Kontakt mit deinem Motorrad bis auf die Rennstrecke.</p>
+              <ul class="ticks">
+                <li>Lektion 45 Minuten, CHF 90.–</li>
+                <li>Doppelbesetzung ab zwei Personen, CHF 55.–</li>
+              </ul>
+              <span class="card-link">Mehr zum Motorrad <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+            </span>
+          </a>
+        </div>
+        <div class="courses">
+          <a class="course reveal" href="#" data-soon="Motorrad-Grundkurs">
+            <span class="course-ico"><svg class="i" aria-hidden="true"><use href="#i-cone"/></svg></span>
+            <span class="course-cat">Kat. A1 und A beschränkt</span>
+            <h3>Motorrad-Grundkurs</h3>
+            <p>Drei Teile à 4 Stunden. Zu absolvieren innert 4 Monaten nach Erhalt des Lernfahrausweises.</p>
+            <span class="course-foot"><strong>CHF 480.–</strong><svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+          </a>
+          <a class="course reveal" href="#" data-soon="VKU">
+            <span class="course-ico"><svg class="i" aria-hidden="true"><use href="#i-chalkboard-teacher"/></svg></span>
+            <span class="course-cat">Verkehrskundeunterricht</span>
+            <h3>VKU</h3>
+            <p>Vier Abende à 2 Stunden in Emmenbrücke. Obligatorisch vor der praktischen Prüfung.</p>
+            <span class="course-foot"><strong>CHF 250.–</strong><svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+          </a>
+          <a class="course reveal" href="#" data-soon="WAB">
+            <span class="course-ico"><svg class="i" aria-hidden="true"><use href="#i-certificate"/></svg></span>
+            <span class="course-cat">Weiterausbildung, Kat. A und B</span>
+            <h3>WAB</h3>
+            <p>Ein Kurstag im ersten Jahr nach der Prüfung, mit der WAB Zentralschweiz in Ruswil.</p>
+            <span class="course-foot"><strong>Infos und Anmeldung</strong><svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fahrlehrer -->
+    <section class="sec sec-soft">
+      <div class="wrap teacher">
+        <figure class="teacher-media reveal">
+          <img src="../assets/img/stefan-bitzi.webp" width="550" height="562" loading="lazy" alt="Porträt von Stefan Bitzi, Fahrlehrer und Inhaber der Fahrschule Bitzi">
+          <figcaption>
+            <strong>Stefan Bitzi</strong>
+            <span>Fahrlehrer Auto und Motorrad</span>
+          </figcaption>
+        </figure>
+        <div class="teacher-text reveal">
+          <p class="kicker">Dein Fahrlehrer</p>
+          <h2>Jeder Mensch ist anders.</h2>
+          <p class="muted">Was bei einem funktioniert, bringt den nächsten nicht weiter. Ich nehme mir Zeit, dich kennenzulernen, und passe meinen Unterricht an dich an. Mein Ziel ist nicht nur die bestandene Prüfung, sondern dass du danach selbständig und sicher unterwegs bist.</p>
+          <ul class="facts">
+            <li><strong>2004</strong><span>selbständiger Fahrlehrer in Luzern</span></li>
+            <li><strong>1100+</strong><span>ausgebildete Fahrschüler/innen</span></li>
+            <li><strong>1200+</strong><span>Kurstage als WAB-Moderator</span></li>
+            <li><strong>2015</strong><span>seither Training auf Rennstrecken</span></li>
+          </ul>
+          <a class="text-link" href="#" data-soon="Dein Fahrlehrer">Mehr über mich und meine Ausbildung <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ablauf -->
+    <section class="sec">
+      <div class="wrap">
+        <div class="head head-row reveal">
+          <div>
+            <p class="kicker">Dein Weg zum Führerausweis</p>
+            <h2>In 5 Schritten ans Steuer</h2>
+          </div>
+          <a class="text-link" href="#" data-soon="Dein Weg zum Führerausweis">Alle Kategorien im Überblick <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="steps">
+          <li class="reveal"><span class="step-no">1</span><h3>Nothelferkurs</h3><p>Am besten schon vor dem 17. Geburtstag besuchen.</p></li>
+          <li class="reveal"><span class="step-no">2</span><h3>Antragsformular</h3><p>Gesuch für den Lernfahrausweis beim Strassenverkehrsamt Luzern.</p></li>
+          <li class="reveal"><span class="step-no">3</span><h3>Theorieprüfung</h3><p>Danach ist dein Lernfahrausweis 24 Monate gültig.</p></li>
+          <li class="reveal"><span class="step-no">4</span><h3>VKU und Fahrstunden</h3><p>Vier Abende Verkehrskunde, dazu Fahrstunden mit mir.</p></li>
+          <li class="reveal"><span class="step-no step-goal"><svg class="i" aria-hidden="true"><use href="#i-license"/></svg></span><h3>Praktische Prüfung</h3><p>Geschafft! Im ersten Jahr folgt noch der WAB-Kurstag.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Motorrad -->
+    <section class="sec sec-soft">
+      <div class="wrap split">
+        <figure class="split-media reveal">
+          <img src="../assets/img/motorrad-slalom.webp" width="850" height="607" loading="lazy" alt="Motorradfahrer übt Slalom zwischen Pylonen">
+          <figcaption><svg class="i" aria-hidden="true"><use href="#i-cone"/></svg> Grundkurs: 3 Teile à 4 Stunden, CHF 480.–</figcaption>
+        </figure>
+        <div class="split-text reveal">
+          <p class="kicker">Motorrad</p>
+          <h2>Vertrauen in deine zwei Räder</h2>
+          <p class="muted">Ich vermittle dir nicht nur die Grundlagen, sondern auch fortgeschrittene Fahrmanöver. Mit praxisnahen Übungen bist du optimal auf die Strasse vorbereitet.</p>
+          <ul class="cats">
+            <li><span class="cat-code">A1</span><div><strong>ab 15 Jahren</strong><span>bis 50 cm³, max. 45 km/h</span></div></li>
+            <li><span class="cat-code">A1</span><div><strong>ab 16 Jahren</strong><span>bis 125 cm³ und 11 kW</span></div></li>
+            <li><span class="cat-code">A</span><div><strong>ab 18 Jahren</strong><span>beschränkt, bis 35 kW</span></div></li>
+            <li><span class="cat-code">A</span><div><strong>nach 2 Jahren Praxis</strong><span>unbeschränkt, über 35 kW</span></div></li>
+          </ul>
+          <a class="btn btn-dark" href="#" data-soon="Motorrad-Grundkurs">Zum Motorrad-Grundkurs <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preise -->
+    <section class="sec">
+      <div class="wrap">
+        <div class="head head-row reveal">
+          <div>
+            <p class="kicker">Preise</p>
+            <h2>Transparent von Anfang an</h2>
+          </div>
+          <a class="text-link" href="#" data-soon="Preise">Alle Preise und AGB <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <div class="prices">
+          <div class="price reveal">
+            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span>
+            <span class="price-name">Fahrlektion Auto oder Motorrad</span>
+            <strong>CHF 90.–</strong>
+            <span class="price-note">pro Lektion à 45 Minuten</span>
+            <ul class="price-more">
+              <li><span>Doppellektion, 90 Minuten</span><b>CHF 180.–</b></li>
+              <li><span>Motorrad in Doppelbesetzung</span><b>CHF 55.–</b></li>
+            </ul>
+          </div>
+          <div class="price reveal">
+            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-cone"/></svg></span>
+            <span class="price-name">Motorrad-Grundkurs</span>
+            <strong>CHF 480.–</strong>
+            <span class="price-note">alle 3 Teile à 4 Stunden</span>
+            <ul class="price-more">
+              <li><span>Einzelner Kursteil</span><b>CHF 160.–</b></li>
+            </ul>
+          </div>
+          <div class="price reveal">
+            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-chalkboard-teacher"/></svg></span>
+            <span class="price-name">Verkehrskunde VKU</span>
+            <strong>CHF 250.–</strong>
+            <span class="price-note">4 Abende, inklusive Lehrmittel</span>
+          </div>
+        </div>
+        <div class="pay-row">
+          <p class="pay reveal"><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg> Du bezahlst direkt nach der Lektion, bar oder mit TWINT.</p>
+          <a class="gift reveal" href="#" data-soon="Gutscheine">
+            <span class="gift-ico"><svg class="i" aria-hidden="true"><use href="#i-gift"/></svg></span>
+            <span><strong>Noch kein Geschenk gefunden?</strong> Gutscheine für 1, 2, 5 oder 10 Lektionen.</span>
+            <svg class="i gift-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standorte -->
+    <section class="sec sec-soft">
+      <div class="wrap">
+        <div class="head reveal">
+          <p class="kicker">Treffpunkte</p>
+          <h2>Hier starten wir</h2>
+          <p>Damit die Fahrausbildung gut in deinen Zeitplan passt, kannst du dich an zwei Standorten mit mir treffen. Für das Motorrad gibt es einen eigenen Treffpunkt.</p>
+        </div>
+        <div class="places">
+          <article class="place reveal">
+            <img src="../assets/img/standort-emmenbruecke.webp" width="800" height="383" loading="lazy" alt="Fahrschulauto am Standort Emmenbrücke">
+            <div class="place-body">
+              <span class="place-tags"><span>Fahrstunden Auto</span><span>VKU Theorie</span></span>
+              <h3>Emmenbrücke</h3>
+              <p>Gerliswilstrasse 15<br>6020 Emmenbrücke</p>
+              <a class="place-route" href="https://www.google.com/maps/search/?api=1&amp;query=Gerliswilstrasse+15+6020+Emmenbr%C3%BCcke" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg> Route planen</a>
+            </div>
+          </article>
+          <article class="place reveal">
+            <img src="../assets/img/standort-luzern.webp" width="800" height="383" loading="lazy" alt="Fahrschulauto am Standort Luzern">
+            <div class="place-body">
+              <span class="place-tags"><span>Fahrstunden Auto</span></span>
+              <h3>Luzern</h3>
+              <p>Frankenstrasse 2<br>6003 Luzern</p>
+              <a class="place-route" href="https://www.google.com/maps/search/?api=1&amp;query=Frankenstrasse+2+6003+Luzern" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg> Route planen</a>
+            </div>
+          </article>
+          <article class="place place-moto reveal">
+            <span class="place-icon"><svg class="i" aria-hidden="true"><use href="#i-motorbike"/></svg></span>
+            <div class="place-body">
+              <span class="place-tags"><span>Fahrstunden Motorrad</span><span>Grundkurs</span></span>
+              <h3>Emmen</h3>
+              <p>Mooshüsli Parkplatz<br>Mooshüslistrasse 32, 6032 Emmen</p>
+              <a class="place-route" href="https://www.google.com/maps/search/?api=1&amp;query=Moosh%C3%BCslistrasse+32+6032+Emmen" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg> Route planen</a>
+            </div>
+          </article>
+        </div>
+        <p class="pickup reveal"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg> <span><strong>Wohnst du in Littau oder Reussbühl?</strong> Dann hole ich dich zu Hause oder an einem vereinbarten Treffpunkt ab.</span></p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="sec sec-cta">
+      <div class="wrap">
+        <div class="cta reveal">
+          <div class="cta-text">
+            <p class="cta-kicker"><svg class="i" aria-hidden="true"><use href="#i-coffee"/></svg> Kostenlos und unverbindlich</p>
+            <h2>Vereinbare einen Termin zum Kennenlernen.</h2>
+            <p>Bevor wir starten, nehme ich mir gerne Zeit für ein persönliches Kennenlernen bei einem Getränk. Du erzählst mir deine Geschichte, ich erzähle dir, wie ich arbeite.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-white btn-lg" href="tel:+41794470631"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 447 06 31</a>
+            <a class="btn btn-ghost-white btn-lg" href="#" data-soon="Kontakt">Nachricht senden</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img class="footer-logo" src="../assets/img/logo-hell.webp" alt="Fahrschule Bitzi" width="640" height="197" loading="lazy">
+        <p>Für mehr Sicherheit auf den Strassen. Fahrschule für Auto und Motorrad in Luzern und Emmenbrücke.</p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p>Fahrschule Bitzi<br>Stefan Bitzi<br>Luzernerstrasse 148<br>6014 Luzern</p>
+        <p><a href="tel:+41794470631">079 447 06 31</a><br><a href="mailto:mail@fahrschule-bitzi.ch">mail@fahrschule-bitzi.ch</a></p>
+      </div>
+      <div>
+        <h3>Angebot</h3>
+        <ul>
+          <li><a href="#" data-soon="Auto">Auto</a></li>
+          <li><a href="#" data-soon="Motorrad">Motorrad</a></li>
+          <li><a href="#" data-soon="Motorrad-Grundkurs">Motorrad-Grundkurs</a></li>
+          <li><a href="#" data-soon="VKU">VKU</a></li>
+          <li><a href="#" data-soon="WAB">WAB</a></li>
+          <li><a href="#" data-soon="Gutscheine">Gutscheine</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Fahrschule</h3>
+        <ul>
+          <li><a href="#" data-soon="Dein Fahrlehrer">Dein Fahrlehrer</a></li>
+          <li><a href="#" data-soon="Dein Weg zum Führerausweis">Dein Weg zum Führerausweis</a></li>
+          <li><a href="#" data-soon="Treffpunkte">Treffpunkte</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Fahrschule Bitzi, Luzern</p>
+      <p><a href="#" data-soon="AGB">AGB</a> <a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>

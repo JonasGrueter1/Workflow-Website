@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design B | Christoph's Fahrschule Sursee</title>
+  <meta name="description" content="Designvorschlag B für die Startseite von Christoph's Fahrschule in Sursee: Fahrstunden für Auto, Töff und Roller, VKU und Grundkurs.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b0c1f">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/img/hero-fahrstunde.webp" as="image" media="(min-width: 761px)">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="b">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-brand-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M16.5 7.5v.01"/></symbol>
+    <symbol id="i-brand-facebook" viewBox="0 0 24 24"><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Christoph's Fahrschule, Startseite">
+        <img src="../assets/img/logo-hell.webp" alt="Christoph's Fahrschule, 6210 Sursee" width="520" height="266">
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Fahrstunden">Fahrstunden</a></li>
+          <li><a href="#" data-soon="Töff &amp; Roller">Töff &amp; Roller</a></li>
+          <li><a href="#" data-soon="VKU">VKU</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-red nav-cta" href="#" data-soon="Fahrstunden &amp; Kurse">Buchen</a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <picture>
+        <source media="(max-width: 760px)" srcset="../assets/img/hero-fahrstunde-mobil.webp">
+        <img class="hero-bg" src="../assets/img/hero-fahrstunde.webp" width="1280" height="960" fetchpriority="high"
+             alt="Fahrstunde im Fahrschulauto: Der Fahrlehrer zeigt auf die Strasse, vorne die Ortstafel Sursee">
+      </picture>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Auto <span aria-hidden="true">|</span> Töff <span aria-hidden="true">|</span> Roller <span aria-hidden="true">|</span> Sursee</p>
+        <h1>Ab auf die<br><em>Strasse.</em></h1>
+        <p class="hero-lead">Fahrstunden, VKU und Töff-Grundkurs in der Region Sursee. Persönlich begleitet von Christoph Arnold, mit über 20 Jahren Erfahrung.</p>
+        <div class="hero-cta">
+          <a class="btn btn-red btn-lg" href="#" data-soon="Fahrstunden &amp; Kurse">Fahrstunde buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="btn btn-glass btn-lg" href="tel:+41793341403"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 334 14 03</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="wrap">
+          <ul>
+            <li><strong>88</strong><span>Franken pro<br>Fahrstunde</span></li>
+            <li><strong>50</strong><span>Minuten pro<br>Lektion</span></li>
+            <li><strong>20+</strong><span>Jahre<br>Erfahrung</span></li>
+            <li><strong>3</strong><span>Kurstage<br>Töff-Grundkurs</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="road" aria-hidden="true"></div>
+
+    <!-- Angebot -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Was willst du<br><em>fahren?</em></h2>
+          <p>Auto, Töff oder Roller: Bei mir bekommst du Fahrstunden, Grundkurs und VKU aus einer Hand.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile reveal" href="#" data-soon="Fahrstunden">
+            <img src="../assets/img/kachel-auto.webp" width="760" height="950" loading="lazy" alt="Front des blauen Fahrschulautos von Christoph's Fahrschule">
+            <span class="tile-tag">Automat · Schaltung</span>
+            <span class="tile-body">
+              <span class="tile-title">Auto</span>
+              <span class="tile-text">Fahrstunden à 50 Minuten bis zur Prüfung. Treffpunkt Bahnhof Sursee.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Töff &amp; Roller">
+            <img src="../assets/img/kachel-kawasaki.webp" width="760" height="950" loading="lazy" alt="Kawasaki Z900RS in Rot und Schwarz, Tank, Motor und Vorderrad">
+            <span class="tile-tag">Grundkurs · Fahrstunden</span>
+            <span class="tile-body">
+              <span class="tile-title">Töff &amp; Roller</span>
+              <span class="tile-text">Theorie und Praxis im Grundkurs, danach Fahrstunden bis zur Prüfung.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="VKU">
+            <img src="../assets/img/kachel-vku.webp" width="760" height="950" loading="lazy" alt="Christoph Arnold zeigt im VKU-Kurs auf eine projizierte Verkehrssituation">
+            <span class="tile-tag">Verkehrskunde</span>
+            <span class="tile-body">
+              <span class="tile-title">VKU</span>
+              <span class="tile-text">Verkehrskundeunterricht in Sursee, Kursmaterial inklusive.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kursdaten -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Nächste<br><em>Kurse.</em></h2>
+          <a class="link-arrow" href="#" data-soon="Fahrstunden &amp; Kurse">Alle Kurse <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="dates">
+          <li class="date reveal">
+            <span class="date-day"><strong>15.02.</strong><span>2027</span></span>
+            <div class="date-info">
+              <h3>VKU-Kurs</h3>
+              <p>Mo 15., Di 16., Mo 22. und Di 23. Februar, je 19.30&nbsp;Uhr<br>Kornfeldstrasse 1, Sursee</p>
+            </div>
+            <span class="date-price"><small>CHF</small>230</span>
+            <span class="date-status status-free">Freie Plätze</span>
+          </li>
+          <li class="date is-full reveal">
+            <span class="date-day"><strong>07.12.</strong><span>2026</span></span>
+            <div class="date-info">
+              <h3>VKU-Kurs</h3>
+              <p>Mo 7. und Di 8. Dezember, je 18.00&nbsp;Uhr<br>Kornfeldstrasse 1, Sursee</p>
+            </div>
+            <span class="date-price"><small>CHF</small>160</span>
+            <span class="date-status status-full">Ausgebucht</span>
+          </li>
+          <li class="date reveal">
+            <span class="date-day"><strong>Sa</strong><span>08.00 Uhr</span></span>
+            <div class="date-info">
+              <h3>Töff- und Rollergrundkurs</h3>
+              <p>3 Kurstage, jeweils samstags<br>Kornfeldstrasse 1, Sursee</p>
+            </div>
+            <span class="date-price"><small>CHF</small>150<small class="per">pro Tag</small></span>
+            <span class="date-status status-soon">Daten auf Anfrage</span>
+          </li>
+        </ol>
+        <p class="date-note reveal">VKU-Preise inklusive Material. Mitnehmen: Lernfahrausweis. Bezahlt wird bar.</p>
+      </div>
+    </section>
+
+    <!-- Töff -->
+    <section class="moto">
+      <div class="moto-media">
+        <img src="../assets/img/toeff-grundkurs-hoch.webp" width="800" height="1141" loading="lazy" alt="Töff-Fahrer mit Helm im Grundkurs zwischen Pylonen">
+      </div>
+      <div class="moto-text reveal">
+        <p class="label">Töff &amp; Roller</p>
+        <h2>Zwei Räder.<br><em>Volle Kontrolle.</em></h2>
+        <p class="moto-lead">Im Grundkurs lernst du Theorie und Praxis für Töff und Roller. Danach bereite ich dich in Fahrstunden gezielt auf die Prüfung vor.</p>
+        <table class="spec">
+          <tr><th scope="row">3</th><td>Kurstage</td><td>je 3½ Stunden, samstags</td></tr>
+          <tr><th scope="row">150</th><td>CHF</td><td>pro Kurstag</td></tr>
+          <tr><th scope="row">88</th><td>CHF</td><td>Töff-Fahrstunde à 50 Minuten</td></tr>
+        </table>
+        <div class="highlight">
+          <strong>Mitnehmen</strong>
+          <span>Lernfahrausweis und Motorradbekleidung. Kursort ist die Kornfeldstrasse 1 in Sursee, bezahlt wird bar.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preise -->
+    <section class="sec sec-light">
+      <div class="wrap price-wrap">
+        <div class="sec-head sec-head-stack reveal">
+          <h2>Klare<br><em>Preise.</em></h2>
+          <p>Für Autofahrstunden kommt einmalig eine administrative Grundgebühr von CHF&nbsp;100.– dazu.</p>
+          <a class="link-arrow" href="#" data-soon="Preise">Alle Preise <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <div class="reveal">
+          <ul class="pricelist">
+            <li><span class="pl-name">Fahrstunde Auto<small>50 Minuten, Automat oder geschaltet</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>88</span></li>
+            <li class="pl-hi"><span class="pl-name">10er-Abo Auto<small>pro Fahrstunde, VKU dann für CHF&nbsp;210.–</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>83</span></li>
+            <li><span class="pl-name">Fahrstunde Töff<small>50 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>88</span></li>
+            <li><span class="pl-name">Töff- und Rollergrundkurs<small>pro Kurstag, 3 Kurstage</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>150</span></li>
+          </ul>
+          <p class="pl-note">Kannst du nicht kommen? Melde dich 24 Stunden im Voraus, sonst werden die gesamten Kosten verrechnet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fahrlehrer -->
+    <section class="sec sec-dark">
+      <div class="wrap team">
+        <div class="team-photo reveal">
+          <img src="../assets/img/christoph-portrait.webp" width="500" height="640" loading="lazy" alt="Porträt von Fahrlehrer Christoph Arnold im Fahrschulauto">
+        </div>
+        <div class="team-text reveal">
+          <p class="label">Dein Fahrlehrer</p>
+          <h2>Christoph <em>Arnold.</em></h2>
+          <p class="team-lead">Ich begleite junge und auch ältere Personen bei der Fahrausbildung und helfe dir, sicher durch den Strassenverkehr zu kommen.</p>
+          <ul class="perks">
+            <li>Praxisbezogene Ausbildung</li>
+            <li>Angenehme Lernatmosphäre</li>
+            <li>Über 20 Jahre Erfahrung</li>
+            <li>Komplette Ausbildung</li>
+            <li>Zielorientiert arbeiten</li>
+            <li>Angepasste Lernschritte</li>
+          </ul>
+          <ul class="contacts">
+            <li><span>Mobile</span><a href="tel:+41793341403">079 334 14 03</a></li>
+            <li><span>Festnetz</span><a href="tel:+41419219601">041 921 96 01</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Bereit zum<br>Losfahren?</h2>
+        <div class="cta-side">
+          <a class="cta-phone" href="tel:+41793341403">079 334 14 03</a>
+          <p>Ruf an oder buche deine Fahrstunde online. Treffpunkt ist der Bahnhof Sursee.</p>
+          <a class="btn btn-black btn-lg" href="#" data-soon="Fahrstunden &amp; Kurse">Fahrstunde buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img class="footer-logo" src="../assets/img/logo-hell.webp" alt="Christoph's Fahrschule, 6210 Sursee" width="520" height="266">
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <p>Christoph's Fahrschule<br>Badstrasse 13b<br>6210 Sursee</p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+41419219601">041 921 96 01</a><br><a href="tel:+41793341403">079 334 14 03</a><br><a href="mailto:christopharnold@bluewin.ch">christopharnold@bluewin.ch</a></p>
+      </div>
+      <div>
+        <h3>Folge mir</h3>
+        <ul class="social">
+          <li><a href="https://www.instagram.com/christophsfahrschule/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="i" aria-hidden="true"><use href="#i-brand-instagram"/></svg></a></li>
+          <li><a href="https://www.facebook.com/christophsfahrschule" target="_blank" rel="noopener" aria-label="Facebook"><svg class="i" aria-hidden="true"><use href="#i-brand-facebook"/></svg></a></li>
+        </ul>
+        <p class="handle">@christophsfahrschule</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Christoph's Fahrschule</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>
