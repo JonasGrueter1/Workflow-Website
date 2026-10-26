@@ -2,14 +2,15 @@
 <html lang="de-CH">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Design B | Fahrschule Meyer Menznau</title>
-  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Meyer in Menznau: Auto und Motorrad, VKU und Theorie bei Esther Meyer.">
+  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Meyer in Menznau: Auto- und Motorradfahren lernen bei Esther Meyer, Theorieabend jeden Donnerstag, Abholung ohne Mehrkosten.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#14110f">
+  <meta name="theme-color" content="#efe8da">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/b-fraunces-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/b-worksans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>document.documentElement.classList.add('js')</script>
@@ -17,245 +18,427 @@
   <script src="../assets/shared/vorschau.js" defer></script>
 </head>
 <body data-vorschau="b">
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
   <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M3 7l9 6l9 -6"/></symbol>
-    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0"/></symbol>
+  <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14l0 7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/></symbol>
   </svg>
 
-  <header class="header">
-    <div class="wrap header-inner">
-      <a class="logo" href="./" aria-label="Fahrschule Meyer, Startseite">
-        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#d23a2a"/><path d="M11 7h4.4v14h7.6v4H11z" fill="#fff"/></svg>
-        <span class="logo-text">fahrschule <b>meyer</b></span>
-      </a>
-      <nav class="nav" id="nav" aria-label="Hauptnavigation">
-        <ul>
-          <li><a href="#" data-soon="Der Weg zum Ziel">Weg zum Ziel</a></li>
-          <li><a href="#" data-soon="Angebot">Angebot</a></li>
-          <li><a href="#" data-soon="Ausbildung und Preise">Preise</a></li>
-          <li><a href="#" data-soon="Über mich">Über mich</a></li>
-          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
-        </ul>
-        <a class="btn btn-red nav-cta" href="tel:+41796484454"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Anrufen</a>
+  <header class="kopf">
+    <div class="wrap kopf-in">
+      <a class="marke" href="./" aria-label="Fahrschule Meyer, zur Startseite">fahrschule meyer<span class="marke-punkt" aria-hidden="true"></span></a>
+      <nav class="nav" aria-label="Abschnitte">
+        <a href="#wochenplan">Wochenplan</a>
+        <a href="#weg">Weg zum Ausweis</a>
+        <a href="#preise">Preise</a>
+        <a href="#ueber-mich">Über mich</a>
+        <a href="#kontakt">Kontakt</a>
       </nav>
-      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
-        <span></span><span></span>
-      </button>
+      <a class="kopf-tel" href="tel:+41796484454" aria-label="Anrufen: 079 648 44 54">
+        <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span>079 648 44 54</span>
+      </a>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <svg class="hero-tracks" viewBox="0 0 900 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <defs>
-          <pattern id="tread" width="44" height="40" patternUnits="userSpaceOnUse">
-            <path d="M2 4l20 13l20-13v10l-20 13l-20-13z" fill="#fff"/>
-          </pattern>
-        </defs>
-        <g transform="rotate(-24 450 450)">
-          <rect x="250" y="-400" width="88" height="1700" fill="url(#tread)" opacity=".05"/>
-          <rect x="560" y="-400" width="88" height="1700" fill="url(#tread)" opacity=".05"/>
-        </g>
-      </svg>
-      <div class="wrap hero-inner">
-        <div class="hero-text">
-          <p class="eyebrow">Fahrschule · Menznau LU</p>
-          <h1>Immer eine Radbreite <em>voraus.</em></h1>
-          <p class="hero-lead">Auto und Motorrad fahren lernen bei Esther Meyer, Fahrlehrerin seit 1996. Seriös, kompetent und mit Spass am Fahren.</p>
-          <div class="hero-cta">
-            <a class="btn btn-red btn-lg" href="#" data-soon="Kontakt">Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-            <a class="btn btn-glass btn-lg" href="tel:+41796484454"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 648 44 54</a>
+  <main id="inhalt">
+
+    <!-- 1 Brief -->
+    <section class="hero" aria-labelledby="hero-titel">
+      <div class="hero-buehne">
+        <article class="brief">
+          <span class="falz falz-1" aria-hidden="true"></span>
+          <span class="falz falz-2" aria-hidden="true"></span>
+          <figure class="portrait">
+            <img src="../assets/img/b-esther.webp" width="300" height="400" alt="Esther Meyer, Fahrlehrerin und Inhaberin der Fahrschule Meyer">
+          </figure>
+          <p class="absender"><span>Fahrschule Meyer</span><span>Menznau LU</span></p>
+          <h1 id="hero-titel" class="h1"><span class="w" style="--i:0"><span>Auto-</span></span> <span class="w" style="--i:1"><span>und</span></span> <span class="w" style="--i:2"><span>Motorradfahren</span></span> <span class="w" style="--i:3"><span>lernen</span></span> <span class="w" style="--i:4"><span>in</span></span> <span class="w" style="--i:5"><span>Menznau.</span></span></h1>
+          <div class="brief-text">
+            <p style="--i:0">Ich freue mich, dass du meine Website besuchst. Hier findest du alles, was du wissen musst, wenn du bei mir Auto- oder Motorradfahren lernen möchtest.</p>
+            <p style="--i:1">Ich biete dir eine seriöse, kompetente und umfangreiche Ausbildung, bei der der Spass am Fahren sicher nicht zu kurz kommt. Mein Ziel ist, dass du dich nach der Prüfung sicher und unfallfrei auf der Strasse bewegst.</p>
+          </div>
+          <div class="gruss">
+            <p class="gruss-satz">Ich freue mich auf dich!</p>
+            <p class="unterschrift">
+              <span>Esther Meyer</span>
+              <svg class="unterschrift-strich" viewBox="0 0 240 24" aria-hidden="true" preserveAspectRatio="none"><path pathLength="1" d="M4 15c40-6 96-10 150-8c30 1 54 3 82 7"/></svg>
+            </p>
+          </div>
+        </article>
+
+        <div class="hero-aktionen">
+          <a class="knopf knopf-rot" href="tel:+41796484454"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Ruf mich an<span class="knopf-zusatz">079 648 44 54</span></a>
+          <a class="knopf knopf-linie" href="mailto:info@fahrschule-menznau.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
+        </div>
+
+        <ul class="notizen" aria-label="Kurz notiert">
+          <li class="notiz notiz-1">
+            <span class="notiz-text">Fahrlehrerin seit 1996</span>
+            <svg class="notiz-pfeil" viewBox="0 0 120 70" aria-hidden="true"><path pathLength="1" d="M6 8c30 2 62 14 84 34c8 7 14 14 20 22"/><path pathLength="1" d="M96 60l14 4l-2-15"/></svg>
+          </li>
+          <li class="notiz notiz-2">
+            <span class="notiz-text">Wir holen dich ohne Mehrkosten ab</span>
+            <svg class="notiz-pfeil" viewBox="0 0 120 70" aria-hidden="true"><path pathLength="1" d="M6 40c30-14 64-22 104-14"/><path pathLength="1" d="M98 16l13 10l-14 9"/></svg>
+          </li>
+          <li class="notiz notiz-3">
+            <a class="notiz-text" href="#wochenplan">Jeden Donnerstag Theorieabend</a>
+            <svg class="notiz-pfeil" viewBox="0 0 120 70" aria-hidden="true"><path pathLength="1" d="M60 4c-14 18-18 38-6 60"/><path pathLength="1" d="M44 54l10 12l10-12"/></svg>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2 Wochenplan -->
+    <section class="sektion wochenplan" id="wochenplan" aria-labelledby="wp-titel">
+      <div class="wrap wp-raster">
+        <div class="sek-kopf" data-anim>
+          <p class="vorzeile">Dein Wochenplan</p>
+          <h2 id="wp-titel">Donnerstag&shy;abend ist Theorie&shy;abend.</h2>
+          <p class="sek-lead">Jeweils am Donnerstagabend kannst du im Theorielokal vorbeikommen und am PC Theoriefragen lösen. Gerne helfe ich dir bei offenen Fragen.</p>
+        </div>
+
+        <div class="plan" data-anim role="group" aria-label="Wochenplan">
+          <div class="plan-tag" style="--i:0" aria-hidden="true"><span>Mo</span></div>
+          <div class="plan-tag" style="--i:1" aria-hidden="true"><span>Di</span></div>
+          <div class="plan-tag" style="--i:2" aria-hidden="true"><span>Mi</span></div>
+          <div class="plan-tag plan-tag-do" style="--i:3" aria-hidden="true"><span>Do</span><span class="plan-punkt" aria-hidden="true"></span></div>
+          <div class="plan-tag" style="--i:4" aria-hidden="true"><span>Fr</span></div>
+          <div class="plan-tag" style="--i:5" aria-hidden="true"><span>Sa</span></div>
+          <div class="plan-tag" style="--i:6" aria-hidden="true"><span>So</span></div>
+
+          <span class="plan-zeit plan-zeit-18" aria-hidden="true">18</span>
+          <span class="plan-zeit plan-zeit-19" aria-hidden="true">19</span>
+          <span class="plan-zeit plan-zeit-20" aria-hidden="true">20</span>
+          <span class="plan-zeit plan-zeit-21" aria-hidden="true">21</span>
+          <span class="plan-linien" aria-hidden="true"></span>
+          <span class="plan-spalte" style="--c:2" aria-hidden="true"></span>
+          <span class="plan-spalte" style="--c:3" aria-hidden="true"></span>
+          <span class="plan-spalte" style="--c:4" aria-hidden="true"></span>
+          <span class="plan-spalte plan-spalte-do" style="--c:5" aria-hidden="true"></span>
+          <span class="plan-spalte" style="--c:6" aria-hidden="true"></span>
+          <span class="plan-spalte" style="--c:7" aria-hidden="true"></span>
+          <span class="plan-spalte" style="--c:8" aria-hidden="true"></span>
+
+          <div class="termin">
+            <p class="termin-tag">Donnerstag</p>
+            <p class="termin-zeit">19.00 bis 20.00 Uhr</p>
+            <p class="termin-was">Theorie am PC</p>
+            <p class="termin-ort">Theorielokal Wolhuserstr. 2</p>
           </div>
         </div>
-        <div class="hero-plates" aria-hidden="true">
-          <span>L</span><span class="is-ahead">L</span><span>L</span><span>L</span>
-        </div>
-      </div>
-      <div class="hero-stats">
-        <div class="wrap">
-          <ul>
-            <li><strong>1996</strong><span>Fahrlehrerin<br>seit</span></li>
-            <li><strong>50</strong><span>Minuten pro<br>Fahrstunde</span></li>
-            <li><strong>85.–</strong><span>Franken pro<br>Fahrstunde</span></li>
-            <li><strong>0.–</strong><span>Mehrkosten für die<br>Abholung</span></li>
-          </ul>
-        </div>
+        <p class="wp-fahrstunden" data-anim><svg class="i" aria-hidden="true"><use href="#i-wheel"/></svg><span><strong>Fahrstunden:</strong> Termine nach Absprache.</span></p>
       </div>
     </section>
 
-    <div class="road" aria-hidden="true"></div>
+    <!-- 3 Weg zum Ausweis -->
+    <section class="sektion weg" id="weg" aria-labelledby="weg-titel">
+      <div class="wrap weg-raster">
+        <div class="weg-kopf">
+          <div class="sek-kopf" data-anim>
+            <p class="vorzeile">Der Weg zum Ziel</p>
+            <h2 id="weg-titel">So kommst du zum Ausweis.</h2>
+          </div>
+          <div class="ab17" data-anim>
+            <svg class="ab17-schild" viewBox="0 0 120 120" role="img" aria-label="Signal: ab 17">
+              <circle cx="60" cy="60" r="55" fill="#fffdf8"/>
+              <circle cx="60" cy="60" r="47" fill="none" stroke="#af2b1e" stroke-width="15"/>
+              <text x="60" y="76" text-anchor="middle" class="ab17-zahl">17</text>
+            </svg>
+            <p><strong>Den Lernfahrausweis Kategorie B gibt es ab 17 Jahren.</strong> Wer ihn vor dem 20. Geburtstag erwirbt, kann die praktische Prüfung frühestens nach 12 Monaten machen.</p>
+          </div>
+          <a class="link-pfeil" href="#" data-soon="Der Weg zum Ziel">Alle Details zum Weg<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
 
-    <!-- Klassen -->
-    <section class="sec sec-dark">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <h2>Wähle deine <em>Klasse.</em></h2>
-          <p>Fahrstunden, Theorie und Kurse aus einer Hand. Ich hole dich ohne Mehrkosten an deinem Wunschort ab.</p>
-        </div>
-        <div class="tiles">
-          <a class="tile reveal" href="#" data-soon="Angebot">
-            <span class="tile-letter" aria-hidden="true">B</span>
-            <span class="tile-tag">Kat. B</span>
-            <span class="tile-body">
-              <span class="tile-title">Auto</span>
-              <span class="tile-text">Praktischer Fahrunterricht à 50 Minuten, Termine nach Absprache. Versichert während der ganzen Ausbildung.</span>
-            </span>
-          </a>
-          <a class="tile reveal" href="#" data-soon="Angebot">
-            <span class="tile-letter" aria-hidden="true">A</span>
-            <span class="tile-tag">Kat. A1 · A</span>
-            <span class="tile-body">
-              <span class="tile-title">Motorrad</span>
-              <span class="tile-text">Obligatorischer Grundkurs, danach Perfektionsschulung einzeln oder in der Gruppe.</span>
-            </span>
-          </a>
-          <a class="tile reveal" href="#" data-soon="Angebot">
-            <span class="tile-letter tile-letter-sm" aria-hidden="true">VKU</span>
-            <span class="tile-tag">VKU · Theorie</span>
-            <span class="tile-body">
-              <span class="tile-title">Theorie</span>
-              <span class="tile-text">VKU laufend im Theorielokal in Menznau. Theorie lernen von zu Hause mit der VIP-Card.</span>
-            </span>
-          </a>
-        </div>
-        <ul class="extras reveal">
-          <li>Nothelferkurse mit dem Samariterverein Menznau</li>
-          <li>Kontrollfahrten mit Partnerfahrlehrer</li>
-          <li>Umtauschfahrten</li>
-          <li>Geschenkgutscheine</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Etappen -->
-    <section class="sec sec-light">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <h2>Der Weg <em>zum Ziel.</em></h2>
-          <p>Fünf Etappen bis zum Führerausweis auf Probe. Für die anschliessende WAB ist meine Fahrschule Partnerin der WAB Zentralschweiz AG in Ruswil.</p>
-        </div>
-        <ol class="stages">
-          <li class="reveal"><span class="stage-no">01</span><h3>Nothelfer</h3><p>Nothelferausweis, nicht älter als 6 Jahre, plus Sehtest.</p></li>
-          <li class="reveal"><span class="stage-no">02</span><h3>Gesuch</h3><p>Antrag beim Strassenverkehrsamt, fürs Auto ab 17 Jahren.</p></li>
-          <li class="reveal"><span class="stage-no">03</span><h3>Theorie</h3><p>Theorieprüfung bestehen, dann gibts den Lernfahrausweis.</p></li>
-          <li class="reveal"><span class="stage-no">04</span><h3>Fahren</h3><p>Fahrstunden mit mir nach Absprache und den VKU besuchen.</p></li>
-          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>Prüfung</h3><p>Praktische Prüfung, danach Führerausweis auf Probe.</p></li>
+        <ol class="stationen">
+          <li class="station" data-anim>
+            <span class="st-nr" aria-hidden="true">1</span><span class="st-linie" aria-hidden="true"><span></span></span>
+            <div class="st-text"><h3>Nothelferkurs und Sehtest</h3><p>Der Nothelferausweis darf nicht älter als 6 Jahre sein. Dazu kommt der Sehtest.</p></div>
+          </li>
+          <li class="station" data-anim>
+            <span class="st-nr" aria-hidden="true">2</span><span class="st-linie" aria-hidden="true"><span></span></span>
+            <div class="st-text"><h3>Gesuch beim Strassenverkehrsamt</h3><p>Antragsformular mit Nothelferausweis und Sehtest einreichen. Danach erhältst du die Anmeldekarte für die Theorieprüfung.</p></div>
+          </li>
+          <li class="station" data-anim>
+            <span class="st-nr" aria-hidden="true">3</span><span class="st-linie" aria-hidden="true"><span></span></span>
+            <div class="st-text"><h3>Theorieprüfung</h3><p>Lernen kannst du von zu Hause mit der VIP-Card und jeden Donnerstagabend im Theorielokal.</p></div>
+          </li>
+          <li class="station station-17" data-anim>
+            <span class="st-nr" aria-hidden="true">4</span><span class="st-linie" aria-hidden="true"><span></span></span>
+            <div class="st-text">
+              <h3>Lernfahrausweis <span class="st-marke">ab 17</span></h3>
+              <p>Jetzt darfst du mit Begleitung üben.</p>
+              <p class="randnotiz"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M24 25C15 23 8 17 6 6"/><path d="M2 10l4-5l5 4"/></svg>vor dem 20. Geburtstag: 12 Monate Lernphase bis zur Prüfung</p>
+            </div>
+          </li>
+          <li class="station" data-anim>
+            <span class="st-nr" aria-hidden="true">5</span><span class="st-linie" aria-hidden="true"><span></span></span>
+            <div class="st-text"><h3>Fahrstunden</h3><p>Termine nach Absprache. Ich hole dich ohne Mehrkosten an deinem Wunschort ab.</p></div>
+          </li>
+          <li class="station" data-anim>
+            <span class="st-nr" aria-hidden="true">6</span><span class="st-linie" aria-hidden="true"><span></span></span>
+            <div class="st-text"><h3>Verkehrskunde&shy;unterricht VKU</h3><p>Laufend im Theorielokal in Menznau. Anmeldung bitte telefonisch.</p></div>
+          </li>
+          <li class="station" data-anim>
+            <span class="st-nr" aria-hidden="true">7</span><span class="st-linie" aria-hidden="true"><span></span></span>
+            <div class="st-text"><h3>Praktische Prüfung</h3><p>Bestanden? Dann erhältst du den Führerausweis auf Probe für 3 Jahre.</p></div>
+          </li>
+          <li class="station station-ziel" data-anim>
+            <span class="st-nr" aria-hidden="true">8</span>
+            <div class="st-text"><h3>WAB-Kurs, ein Tag</h3><p>Die Weiterausbildung machst du bei meiner Partnerfahrschule, der WAB Zentralschweiz AG in Ruswil.</p></div>
+          </li>
         </ol>
       </div>
     </section>
 
-    <!-- Theorie-Abend -->
-    <section class="theory">
-      <div class="theory-media">
-        <div class="theory-board reveal">
-          <span class="theory-day">Jeden Donnerstag</span>
-          <strong class="theory-time">19.00<br><span>bis</span> 20.00</strong>
-          <span class="theory-place"><svg class="i" aria-hidden="true"><use href="#i-map-pin"/></svg> Wolhuserstrasse 2, Menznau</span>
-        </div>
-      </div>
-      <div class="theory-text reveal">
-        <p class="label">Theorie und VKU</p>
-        <h2>Theorie-Abend.<br><em>Komm vorbei.</em></h2>
-        <p class="theory-lead">Am Donnerstagabend kannst du bei mir im Theorielokal vorbeikommen und am PC Theoriefragen lösen. Gerne helfe ich dir bei offenen Fragen.</p>
-        <table class="spec">
-          <tr><th scope="row">VIP</th><td>60 Tage</td><td>Lernportal mit der VIP-Card, CHF 40.–</td></tr>
-          <tr><th scope="row">VKU</th><td>laufend</td><td>Verkehrskundeunterricht inklusive Material</td></tr>
-          <tr><th scope="row">PC</th><td>Do</td><td>Theoriefragen lösen im Theorielokal</td></tr>
-        </table>
-        <div class="highlight">
-          <strong>VKU-Anmeldung</strong>
-          <span>Bitte telefonisch unter <a href="tel:+41796484454">079 648 44 54</a></span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Preise -->
-    <section class="sec sec-light">
-      <div class="wrap price-wrap">
-        <div class="sec-head sec-head-stack reveal">
-          <h2>Faire <em>Preise.</em></h2>
-          <p>Eine qualitativ hochstehende Ausbildung zu fairen Preisen. Fahrstunden bezahlst du einzeln auf Rechnung.</p>
-          <a class="link-arrow" href="#" data-soon="Ausbildung und Preise">Alle Preise <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <ul class="pricelist reveal">
-          <li><span class="pl-name">Fahrstunde Auto<small>Kat. B, 50 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>85</span></li>
-          <li><span class="pl-name">Versicherung Auto<small>einmalig für die ganze Ausbildung</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>70</span></li>
-          <li><span class="pl-name">Verkehrskundekurs VKU<small>inklusive Material</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>260</span></li>
-          <li><span class="pl-name">Perfektionsschulung Motorrad<small>Einzelstunde</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>85</span></li>
-          <li><span class="pl-name">Perfektionsschulung Motorrad<small>in der Gruppe</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>65</span></li>
-          <li><span class="pl-name">Theorieunterricht<small>pro Stunde</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>40</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Über mich -->
-    <section class="sec sec-dark">
-      <div class="wrap team">
-        <div class="team-photo reveal">
-          <img src="../assets/img/esther-meyer.webp" width="300" height="416" alt="Porträt von Esther Meyer vor einer Wand mit Verkehrssignalen">
-        </div>
-        <div class="team-text reveal">
-          <p class="label">Deine Fahrlehrerin</p>
-          <h2>Esther <em>Meyer.</em></h2>
-          <p class="team-lead">Fahrlehrerin seit 1996, Inhaberin der Fahrschule Meyer seit 1999. Als begeisterte Autofahrerin gebe ich meine Erfahrungen und mein Wissen gerne an dich weiter.</p>
-          <ul class="contacts">
-            <li><span>Mobile</span><a href="tel:+41796484454">079 648 44 54</a></li>
-            <li><span>E-Mail</span><a class="contact-mail" href="mailto:info@fahrschule-menznau.ch">info@fahrschule-menznau.ch</a></li>
-          </ul>
-        </div>
-      </div>
+    <!-- 4 Angebot und Preise -->
+    <section class="sektion preise" id="preise" aria-labelledby="preise-titel">
       <div class="wrap">
-        <ol class="values">
-          <li class="reveal"><span class="value-no">01</span><h3>Gemeinsam zum Ziel</h3><p>Ich gebe mein Bestes und erwarte das Gleiche von dir. Zusammen erreichen wir das Ziel.</p></li>
-          <li class="reveal"><span class="value-no">02</span><h3>Geduld</h3><p>Eine sorgfältige Ausbildung braucht ihre Zeit. Nimm dir die nötige Zeit und Geduld.</p></li>
-          <li class="reveal"><span class="value-no">03</span><h3>Vertrauen</h3><p>Ich gebe dir mein volles Vertrauen. Vertrauen ist ein gegenseitiges Nehmen und Geben.</p></li>
-        </ol>
+        <div class="sek-kopf sek-kopf-breit" data-anim>
+          <p class="vorzeile">Angebot und Preise</p>
+          <h2 id="preise-titel">Was ich anbiete und was es kostet.</h2>
+          <p class="sek-lead">Eine Lektion dauert 50 Minuten. Ich biete eine qualitativ hochstehende Ausbildung zu fairen Preisen an.</p>
+        </div>
+
+        <div class="heft" data-anim>
+          <div class="heft-seite heft-links">
+            <h3 class="heft-titel">Auto <span>Kategorie B</span></h3>
+            <p class="heft-chf" aria-hidden="true">CHF</p>
+            <dl class="preisliste">
+              <div class="pz" style="--i:0"><dt>Fahrstunde, 50 Minuten<small>einzeln, auf Rechnung</small></dt><dd><span class="sr">CHF </span>85.<span class="strich">-</span></dd></div>
+              <div class="pz" style="--i:1"><dt>Versicherung<small>einmalig für die ganze Ausbildung</small></dt><dd><span class="sr">CHF </span>70.<span class="strich">-</span></dd></div>
+              <div class="pz" style="--i:2"><dt>Verkehrskunde&shy;unterricht VKU<small>inklusive Material</small></dt><dd><span class="sr">CHF </span>260.<span class="strich">-</span></dd></div>
+              <div class="pz" style="--i:3"><dt>Theorieunterricht<small>pro Stunde</small></dt><dd><span class="sr">CHF </span>40.<span class="strich">-</span></dd></div>
+              <div class="pz" style="--i:4"><dt>VIP-Card<small>60 Tage Zugang zum Lernportal</small></dt><dd><span class="sr">CHF </span>40.<span class="strich">-</span></dd></div>
+            </dl>
+          </div>
+          <div class="heft-seite heft-rechts">
+            <h3 class="heft-titel">Motorrad <span>Kategorie A1 und A</span></h3>
+            <p class="heft-chf" aria-hidden="true">CHF</p>
+            <dl class="preisliste">
+              <div class="pz" style="--i:5"><dt>Motorrad-Grundkurs<small>obligatorisch</small></dt><dd><span class="sr">CHF </span>300.<span class="strich">-</span></dd></div>
+              <div class="pz" style="--i:6"><dt>Perfektionsschulung<small>Einzelstunde</small></dt><dd><span class="sr">CHF </span>85.<span class="strich">-</span></dd></div>
+              <div class="pz" style="--i:7"><dt>Perfektionsschulung<small>in der Gruppe</small></dt><dd><span class="sr">CHF </span>65.<span class="strich">-</span></dd></div>
+            </dl>
+            <p class="heft-notiz">Für die Versicherung bist du als Motorrad-Fahrschülerin oder Motorrad-Fahrschüler selber verantwortlich.</p>
+            <span class="heft-leer" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <ul class="extras" data-anim>
+          <li style="--i:0">
+            <h3>Nothelfer-Weekends</h3>
+            <p>Mit dem Samariterverein Menznau. Kontakt: <a href="tel:+41414931971">041 493 19 71</a></p>
+          </li>
+          <li style="--i:1">
+            <h3>Kontrollfahrten</h3>
+            <p>Prüfungsreif? Standortbestimmung mit einem Partnerfahrlehrer.</p>
+          </li>
+          <li style="--i:2">
+            <h3>Alters- und Umtauschfahrten</h3>
+            <p>Für alle, die schon einen Ausweis haben und vor einer Kontrollfahrt oder einem Umtausch stehen.</p>
+          </li>
+          <li style="--i:3">
+            <h3>Geschenkgutscheine</h3>
+            <p>Zum Verschenken, erhältlich bei mir.</p>
+          </li>
+        </ul>
+        <p class="preise-mehr"><a class="link-pfeil" href="#" data-soon="Ausbildung">Ausbildung und Preise im Detail<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="cta">
-      <div class="wrap cta-inner reveal">
-        <h2>Bereit zum<br>Losfahren?</h2>
-        <div class="cta-side">
-          <a class="cta-phone" href="tel:+41796484454">079 648 44 54</a>
-          <p>Ruf doch einfach an, wenn du Fragen hast oder mich persönlich treffen möchtest. Ich freue mich auf dich!</p>
-          <a class="btn btn-black btn-lg" href="mailto:info@fahrschule-menznau.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail schreiben</a>
+    <!-- 5 Abholung -->
+    <section class="sektion abholung" aria-labelledby="ab-titel">
+      <div class="wrap abholung-kopf" data-anim>
+        <p class="vorzeile">Abholdienst</p>
+        <h2 id="ab-titel" class="ab-satz">Wir holen dich ohne Mehrkosten an deinem Wunschort ab.</h2>
+      </div>
+      <div class="landschaft" data-anim>
+        <div class="landschaft-in">
+          <svg class="huegel huegel-fern" viewBox="0 140 1440 340" aria-hidden="true" data-tiefe="22">
+            <circle class="sonne" cx="1196" cy="218" r="50"/>
+            <path class="flaeche flaeche-1" d="M0 262C110 248 190 222 284 220C380 218 440 244 534 240C628 236 690 204 782 198C878 192 944 222 1036 226C1130 230 1210 206 1300 208C1370 210 1414 222 1440 226V480H0Z"/>
+            <g class="dorf">
+              <path d="M744 203v-10l7-6l7 6v10z"/>
+              <path d="M766 201v-11h17v11z"/>
+              <path d="M783 201v-25l5-9l5 9v25z"/>
+              <path d="M802 199v-10l7-6l7 6v10z"/>
+            </g>
+            <path class="kamm kamm-1" d="M0 262C110 248 190 222 284 220C380 218 440 244 534 240C628 236 690 204 782 198C878 192 944 222 1036 226C1130 230 1210 206 1300 208C1370 210 1414 222 1440 226"/>
+          </svg>
+          <svg class="huegel huegel-nah" viewBox="0 140 1440 340" aria-hidden="true">
+            <defs>
+              <mask id="weg-maske" maskUnits="userSpaceOnUse" x="0" y="140" width="1440" height="340">
+                <path class="weg-zug" pathLength="1" d="M546 381C590 389 612 398 652 396C714 393 726 354 780 342C836 330 866 308 914 297C944 291 962 286 977 283" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+              </mask>
+            </defs>
+            <path class="flaeche flaeche-2" d="M0 330C116 316 220 292 336 296C446 300 524 334 636 330C744 326 812 290 914 282C1010 275 1090 292 1190 306C1290 320 1380 318 1440 312V480H0Z"/>
+            <path class="kamm kamm-2" d="M0 330C116 316 220 292 336 296C446 300 524 334 636 330C744 326 812 290 914 282C1010 275 1090 292 1190 306C1290 320 1380 318 1440 312"/>
+            <g class="baeume">
+              <g transform="translate(214 301) scale(1)"><path class="stamm" d="M0 0v-14"/><ellipse cx="0" cy="-27" rx="13" ry="16"/></g>
+              <g transform="translate(244 298) scale(0.8)"><path class="stamm" d="M0 0v-14"/><ellipse cx="0" cy="-27" rx="13" ry="16"/></g>
+              <g transform="translate(1112 296) scale(1)"><path class="stamm" d="M0 0v-9"/><path d="M-12 -7L0 -42L12 -7Z"/></g>
+              <g transform="translate(1138 300) scale(0.8)"><path class="stamm" d="M0 0v-9"/><path d="M-12 -7L0 -42L12 -7Z"/></g>
+              <g transform="translate(1262 314) scale(0.9)"><path class="stamm" d="M0 0v-14"/><ellipse cx="0" cy="-27" rx="13" ry="16"/></g>
+            </g>
+            <path class="flaeche flaeche-3" d="M0 404C150 384 296 368 446 374C590 380 668 410 806 408C946 406 1052 370 1200 366C1306 364 1392 376 1440 382V480H0Z"/>
+            <path class="kamm kamm-3" d="M0 404C150 384 296 368 446 374C590 380 668 410 806 408C946 406 1052 370 1200 366C1306 364 1392 376 1440 382"/>
+            <g class="baeume baeume-vorn">
+              <g transform="translate(150 387) scale(1.25)"><path class="stamm" d="M0 0v-14"/><ellipse cx="0" cy="-27" rx="13" ry="16"/></g>
+              <g transform="translate(184 383) scale(0.95)"><path class="stamm" d="M0 0v-14"/><ellipse cx="0" cy="-27" rx="13" ry="16"/></g>
+              <g transform="translate(1318 369) scale(1.2)"><path class="stamm" d="M0 0v-9"/><path d="M-12 -7L0 -42L12 -7Z"/></g>
+              <g transform="translate(1350 371) scale(0.9)"><path class="stamm" d="M0 0v-9"/><path d="M-12 -7L0 -42L12 -7Z"/></g>
+            </g>
+            <path class="weg-punkte" mask="url(#weg-maske)" d="M546 381C590 389 612 398 652 396C714 393 726 354 780 342C836 330 866 308 914 297C944 291 962 286 977 283"/>
+            <g transform="translate(520 381)">
+              <g class="haus">
+                <path class="haus-kamin" d="M12 -42v-14h8v8"/>
+                <path class="haus-wand" d="M-26 0v-33h52v33z"/>
+                <path class="haus-dach" d="M-35 -30L0 -58L35 -30"/>
+                <path class="haus-tuer" d="M-7 0v-17h14v17"/>
+                <path class="haus-fenster" d="M11 -25h9v9h-9z"/>
+              </g>
+            </g>
+            <g transform="translate(985 282)">
+              <g class="ziel">
+                <ellipse class="ziel-fuss" cx="0" cy="0" rx="11" ry="3"/>
+                <path class="ziel-stange" d="M0 0v-82"/>
+                <path class="ziel-fahne" d="M1.5 -81c12 5 24 -4 38 1v24c-14 -5 -26 4 -38 -1z"/>
+              </g>
+            </g>
+          </svg>
+          <span class="huegel-label huegel-label-haus">dein Wunschort</span>
+          <span class="huegel-label huegel-label-ziel">Fahrstunde</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 Über mich -->
+    <section class="sektion ueber" id="ueber-mich" aria-labelledby="ueber-titel">
+      <div class="wrap">
+        <div class="ueber-oben">
+          <div class="sek-kopf" data-anim>
+            <p class="vorzeile">Über mich</p>
+            <h2 id="ueber-titel">Worauf ich Wert lege.</h2>
+            <dl class="lebenslauf">
+              <div><dt>1996</dt><dd>Fahrlehrerin</dd></div>
+              <div><dt>1999</dt><dd>Eigene Fahrschule in Menznau</dd></div>
+              <div><dt>Herkunft</dt><dd>Aufgewachsen in Schüpfheim</dd></div>
+            </dl>
+          </div>
+          <figure class="zitat" data-anim>
+            <blockquote><p>«Als begeisterte Autofahrerin gebe ich meine Erfahrungen und mein Wissen gerne an meine Fahrschülerinnen und Fahrschüler weiter.»</p></blockquote>
+            <figcaption>Esther Meyer</figcaption>
+          </figure>
+        </div>
+
+        <ol class="karten">
+          <li class="karte" data-anim>
+            <p class="karte-nr" aria-hidden="true">01</p>
+            <h3>Gemeinsam zum Ziel</h3>
+            <p>Die Fahrausbildung kann nur erfolgreich absolviert werden, wenn wir zusammenarbeiten. Ich werde mich bemühen, mein Bestes zu geben. Genau das Gleiche erwarte ich auch von dir. Ich bin überzeugt, dass wir gemeinsam das Ziel erreichen.</p>
+          </li>
+          <li class="karte" data-anim>
+            <p class="karte-nr" aria-hidden="true">02</p>
+            <h3>Geduld</h3>
+            <p>Eine sorgfältige Ausbildung braucht ihre Zeit. Daher ist es sehr wichtig, dass du dir die nötige Zeit und Geduld nimmst, um die Ausbildung zu absolvieren.</p>
+          </li>
+          <li class="karte" data-anim>
+            <p class="karte-nr" aria-hidden="true">03</p>
+            <h3>Vertrauen</h3>
+            <p>Ich gebe dir mein volles Vertrauen. Vertrauen ist ein gegenseitiges Nehmen und Geben.</p>
+          </li>
+        </ol>
+        <p class="ueber-mehr"><a class="link-pfeil" href="#" data-soon="Über mich">Mehr über mich<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </section>
+
+    <!-- 7 Kontakt PS -->
+    <section class="sektion ps" id="kontakt" aria-labelledby="ps-titel">
+      <div class="wrap ps-raster">
+        <div class="ps-text" data-anim>
+          <h2 id="ps-titel" class="ps-titel"><span class="ps-marke">PS:</span> Ruf doch einfach an, wenn du weitere Infos brauchst oder mich persönlich treffen möchtest.</h2>
+          <a class="ps-tel" href="tel:+41796484454">079 648 44 54</a>
+          <div class="ps-knoepfe">
+            <a class="knopf knopf-rot" href="tel:+41796484454"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
+            <a class="knopf knopf-linie" href="mailto:info@fahrschule-menznau.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
+          </div>
+          <p class="ps-mail"><a href="mailto:info@fahrschule-menznau.ch">info@fahrschule-menznau.ch</a></p>
+          <p class="ps-hinweis">VKU-Anmeldung bitte telefonisch.</p>
+        </div>
+
+        <div class="ps-karten" data-anim>
+          <div class="couvert">
+            <svg class="briefmarke" viewBox="0 0 80 96" aria-hidden="true">
+              <rect x="7" y="7" width="66" height="82" fill="#af2b1e"/>
+              <circle cx="52" cy="34" r="9" fill="#f1d7c9"/>
+              <path d="M7 62c12-8 22-10 34-6c10 3 20 2 32-6v39h-66z" fill="#832016"/>
+              <path d="M7 74c16-8 30-8 44-3c8 3 15 2 22-2v20h-66z" fill="#efe8da"/>
+            </svg>
+            <svg class="stempel" viewBox="0 0 150 80" aria-hidden="true">
+              <circle cx="40" cy="40" r="30"/>
+              <circle cx="40" cy="40" r="22"/>
+              <path d="M78 26c12-6 22 6 34 0s22 6 34 0M78 40c12-6 22 6 34 0s22 6 34 0M78 54c12-6 22 6 34 0s22 6 34 0"/>
+            </svg>
+            <p class="couvert-label">Postadresse</p>
+            <address class="couvert-adresse">Fahrschule Meyer<br>Esther Meyer<br>Chlischwand 1<br>6122 Menznau</address>
+          </div>
+          <div class="lokal">
+            <svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>
+            <div>
+              <h3>Theorielokal</h3>
+              <p>Wolhuserstr. 2, Menznau<br>Donnerstag, 19.00 bis 20.00 Uhr</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer-grid">
-      <div>
-        <a class="logo" href="./" aria-label="Fahrschule Meyer, Startseite">
-          <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#d23a2a"/><path d="M11 7h4.4v14h7.6v4H11z" fill="#fff"/></svg>
-          <span class="logo-text">fahrschule <b>meyer</b></span>
-        </a>
-        <p class="footer-claim">Immer eine Radbreite voraus.</p>
+  <footer class="fuss">
+    <div class="wrap fuss-raster">
+      <div class="fuss-marke">
+        <a class="marke" href="./" aria-label="Fahrschule Meyer, zur Startseite">fahrschule meyer<span class="marke-punkt" aria-hidden="true"></span></a>
+        <p class="slogan">… immer eine Radbreite voraus.</p>
       </div>
       <div>
-        <h3>Adresse</h3>
-        <p>Fahrschule Meyer<br>Esther Meyer<br>Chlischwand 1<br>6122 Menznau</p>
+        <h2 class="fuss-titel">Kontakt</h2>
+        <p>Esther Meyer<br>Chlischwand 1, 6122 Menznau<br><a href="tel:+41796484454">079 648 44 54</a><br><a href="mailto:info@fahrschule-menznau.ch">info@fahrschule-menznau.ch</a></p>
       </div>
       <div>
-        <h3>Kontakt</h3>
-        <p><a href="tel:+41796484454">079 648 44 54</a><br><a href="mailto:info@fahrschule-menznau.ch">info@fahrschule-menznau.ch</a></p>
+        <h2 class="fuss-titel">Seiten</h2>
+        <ul>
+          <li><a href="#" data-soon="Der Weg zum Ziel">Der Weg zum Ziel</a></li>
+          <li><a href="#" data-soon="Angebot">Angebot</a></li>
+          <li><a href="#" data-soon="Ausbildung">Ausbildung</a></li>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
       </div>
       <div>
-        <h3>Theorielokal</h3>
-        <p>Wolhuserstrasse 2, Menznau<br>Donnerstag, 19.00 bis 20.00 Uhr</p>
+        <h2 class="fuss-titel">Nützliches</h2>
+        <ul>
+          <li><a href="https://strassenverkehrsamt.lu.ch/" target="_blank" rel="noopener">Strassenverkehrsamt Luzern<svg class="i" aria-hidden="true"><use href="#i-ext"/></svg></a></li>
+          <li><a href="https://www.fahrlehrerverband.ch/" target="_blank" rel="noopener">Schweizerischer Fahrlehrerverband<svg class="i" aria-hidden="true"><use href="#i-ext"/></svg></a></li>
+          <li><a href="https://www.bfu.ch/de/die-bfu/kampagnen/kampagne-alkohol" target="_blank" rel="noopener">bfu Kampagne Alkohol<svg class="i" aria-hidden="true"><use href="#i-ext"/></svg></a></li>
+        </ul>
       </div>
     </div>
-    <div class="wrap footer-bottom">
+    <div class="wrap fuss-unten">
       <p>© 2026 Fahrschule Meyer, Menznau</p>
-      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a><a href="#" data-soon="Impressum">Impressum</a></p>
     </div>
   </footer>
+
+  <nav class="aktionsleiste" aria-label="Schnellkontakt">
+    <a class="al-knopf al-rot" href="tel:+41796484454"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
+    <a class="al-knopf" href="mailto:info@fahrschule-menznau.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
+  </nav>
 </body>
 </html>

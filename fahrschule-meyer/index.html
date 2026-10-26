@@ -33,6 +33,19 @@
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
 
+    /* Farben passend zu den Designs: A «Radbreite» (Meyer-Rot und Creme), B «Donnerstagabend» (Papier und Tinte) */
+    .option-tag { align-self: flex-start; padding: 6px 12px 5px; border-radius: 999px; }
+    .option-a .shots { background: #af2b1e; }
+    .option-a .option-tag { background: #832016; color: #f4f1e8; }
+    .option-a .chips li { background: #f4f1e8; color: #832016; }
+    .btn-radbreite { background: #af2b1e; color: #f4f1e8; }
+    .btn-radbreite:hover { background: #832016; color: #fff; }
+    .option-b .shots { background: #efe8da; }
+    .option-b .option-tag { background: #efe8da; color: #a3271b; }
+    .option-b .chips li { background: #f7f3ea; color: #2e2724; box-shadow: inset 0 0 0 1px #dccfb8; }
+    .btn-brief { background: #2e2724; color: #f7f3ea; }
+    .btn-brief:hover { background: #a3271b; color: #fff; }
+
     .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #cfced6; color: var(--ink-2); font-size: .975rem; }
     .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
 
@@ -88,31 +101,31 @@
     </ol>
 
     <div class="options">
-      <article class="option">
-        <a class="shots" href="design-a/" aria-label="Design A ansehen">
-          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
-          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A «Radbreite» ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A «Radbreite» am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A «Radbreite» auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, warm und übersichtlich. Runde Formen, viel Weissraum und das Rot Ihrer bisherigen Website als Akzent. Ihr Porträt und Ihre drei Werte haben einen festen Platz. Wirkt nahbar und schafft Vertrauen, auch bei Eltern.</p>
-          <ul class="chips"><li>Hell</li><li>Freundlich</li><li>Übersichtlich</li></ul>
-          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Radbreite</h2>
+          <p>Ein Schweizer Typo-Plakat in Ihrem Meyer-Rot: Ihre Wortmarke «fahrschule meyer» steht riesig im Bild und schiebt sich beim Laden eine Radbreite nach vorn, eine Reifenspur zieht sich durch die Seite. Die Preise stehen als grosse Zahlen auf einem Preisplakat, klar und selbstbewusst.</p>
+          <ul class="chips"><li>Meyer-Rot</li><li>Typo-Plakat</li><li>Reifenspur</li></ul>
+          <a class="btn btn-radbreite" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
-        <a class="shots" href="design-b/" aria-label="Design B ansehen">
-          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
-          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B «Donnerstagabend» ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B «Donnerstagabend» am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B «Donnerstagabend» auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Dunkel, kraftvoll und modern. Grosse Schrift, Ihr Slogan «Immer eine Radbreite voraus» als Blickfang und Strassenmarkierungen als Erkennungszeichen. Wirkt dynamisch und spricht junge Fahrschülerinnen und Fahrschüler an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Dynamisch</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Donnerstagabend</h2>
+          <p>Ruhig und persönlich wie ein Brief von Ihnen: Die Startseite beginnt mit Ihrem Willkommenstext, Ihrem Porträt und Ihrer Unterschrift. Ein Wochenplan zeigt den Theorieabend am Donnerstag, eine gezeichnete Hügellandschaft den Abholdienst ohne Mehrkosten.</p>
+          <ul class="chips"><li>Warmes Papier</li><li>Persönlich</li><li>Wochenplan</li></ul>
+          <a class="btn btn-brief" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>

@@ -48,3 +48,10 @@
 }
 
 @media print { .vz-bar, .vz-toast { display: none !important; } }
+
+/* vz-fix-320: sehr schmale Handys (320 px), Leiste darf nicht abgeschnitten werden */
+@media (max-width: 360px) {
+  .vz-bar { font-size: 11.5px; }
+  .vz-bar .vz-sep { display: none; }
+  .vz-bar a { padding: 8px 7px; }
+}

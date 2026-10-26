@@ -33,6 +33,25 @@
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
 
+    /* Design A «Ja, ich will!»: Petrol und Blau aus dem Logo, Chat-Sprechblase */
+    .option-a .shots { background: linear-gradient(135deg, #DCEDEC, #DCE5F5); }
+    .option-a .option-tag { align-self: flex-start; padding: 5px 12px; border-radius: 14px 14px 14px 4px; background: linear-gradient(120deg, #26797B, #3A64B5); color: #fff; }
+    .option-a .chips li { background: #E4F1F0; color: #1A5A5C; }
+    .btn-lena-a { background: linear-gradient(120deg, #26797B, #3A64B5); color: #fff; }
+    .btn-lena-a:hover { background: linear-gradient(120deg, #1F6668, #2F539A); color: #fff; }
+
+    /* Design B «Fallblatt»: Anthrazit mit Mint, wie die Anzeigetafel */
+    .option-b { background: #1E2022; border-color: #2E3134; }
+    .option-b .shots { background: #141516; }
+    .option-b .shot-mob { border-color: #2E3134; }
+    .option-b .option-tag { align-self: flex-start; padding: 4px 10px; border-radius: 4px; background: linear-gradient(180deg, #2E3134 0 calc(50% - .5px), #0A0A0B calc(50% - .5px) calc(50% + .5px), #26292C calc(50% + .5px)); color: #A9D3D4; letter-spacing: .16em; }
+    .option-b h2 { color: #F2F2F2; }
+    .option-b p { color: #C3C7CC; }
+    .option-b .chips li { background: #2A2C2F; border: 1px solid #3A3D41; color: #E6E8EA; }
+    .btn-lena-b { background: #8ABEBF; color: #111213; }
+    .btn-lena-b:hover { background: #A9D3D4; color: #111213; }
+    .option-b .btn:focus-visible { outline-color: #A9D3D4; }
+
     .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #cfced6; color: var(--ink-2); font-size: .975rem; }
     .note .i { color: var(--accent); width: 22px; height: 22px; margin-top: 2px; }
 
@@ -88,31 +107,31 @@
     </ol>
 
     <div class="options">
-      <article class="option">
+      <article class="option option-a">
         <a class="shots" href="design-a/" aria-label="Design A ansehen">
           <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
           <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, frisch und übersichtlich. Das Türkis und Blau aus Ihrem Logo als Akzente und Ihr Porträt gleich auf der Startseite. Wirkt persönlich und schafft Vertrauen, auch bei Eltern.</p>
-          <ul class="chips"><li>Hell</li><li>Persönlich</li><li>Vertrauensvoll</li></ul>
-          <a class="btn btn-accent" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Ja, ich will!</h2>
+          <p>Ihre Startseite als WhatsApp-Gespräch in den Petrol- und Blautönen Ihres Logos: Im Startbereich baut sich ein Chat aus Ihren eigenen Sätzen auf, danach beantworten Sie Fragen wie «Was kostet’s?» und «Wo denn?» mit Karten. Hell, persönlich und mit WhatsApp und Telefon direkt oben.</p>
+          <ul class="chips"><li>WhatsApp-Chat</li><li>Petrol und Blau</li><li>Persönlich</li></ul>
+          <a class="btn btn-lena-a" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
+      <article class="option option-b">
         <a class="shots" href="design-b/" aria-label="Design B ansehen">
           <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
           <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Dunkel, kraftvoll und modern, mit dem Anthrazit Ihrer bisherigen Website. Grosse Schrift, Ihr BMW X3 im Startbild und Wegweiser zu den Prüfungsorten. Spricht junge Fahrschüler direkt an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Sportlich</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Fallblatt</h2>
+          <p>Dunkel wie Ihre bisherige Website, mit einer klappernden Anzeigetafel wie am Bahnhof: Ihre Slogans klappen Buchstabe für Buchstabe um, Sursee, Kriens und Schafisheim stehen als Ziele auf der Abfahrtstafel und die Preise auf einer Tariftafel. Kräftig und mit Witz, für junge Fahrschülerinnen und Fahrschüler.</p>
+          <ul class="chips"><li>Dunkel</li><li>Anzeigetafel</li><li>Abfahrt Reiden</li></ul>
+          <a class="btn btn-lena-b" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>

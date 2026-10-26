@@ -2,268 +2,540 @@
 <html lang="de-CH">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Design B | Fahrschule LernGut Urs Giger</title>
-  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule LernGut Urs Giger in Siebnen SZ: Fahrstunden Kat. B mit Automat, VKU und Prüfungsbegleitung.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Design B | Fahrschule LernGut Urs Giger, Siebnen</title>
+  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule LernGut Urs Giger in Siebnen SZ: Fahrstunden Kat. B mit Automat, online buchen, VKU im eigenen Kurslokal und Prüfungsbegleitung.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#0e131b">
+  <meta name="theme-color" content="#121826">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../assets/img/hero-b.webp" as="image" media="(min-width: 761px)">
+  <link rel="preload" href="../assets/fonts/b-figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="../assets/img/b-hero-mobil.webp" media="(max-width: 760px)">
+  <link rel="preload" as="image" href="../assets/img/b-hero.webp" imagesrcset="../assets/img/b-hero-1200.webp 1200w, ../assets/img/b-hero.webp 1800w" imagesizes="100vw" media="(min-width: 761px)">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>document.documentElement.classList.add('js'); setTimeout(function () { if (!window.lgReady) document.documentElement.classList.remove('js'); }, 2500);</script>
   <script src="script.js" defer></script>
   <script src="../assets/shared/vorschau.js" defer></script>
 </head>
 <body data-vorschau="b">
-  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
-    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+  <!-- Symbole: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/><path d="M8 15h2v2h-2z"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></symbol>
-    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12"/><path d="M16 3l0 4"/><path d="M8 3l0 4"/><path d="M4 11l16 0"/><path d="M8 15h2v2h-2l0 -2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M16.5 7.5v.01"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7h9v9"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6 -6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
+    <symbol id="i-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14v7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6v13"/><path d="M12 6v13"/><path d="M21 6v13"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5"/><path d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5"/><path d="M14 5.5a1.5 1.5 0 0 1 3 0v6.5"/><path d="M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9z"/><path d="M5 21v-7"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></symbol>
+    <symbol id="i-road" viewBox="0 0 24 24"><path d="M4 19l4 -14"/><path d="M16 5l4 14"/><path d="M12 8v-2"/><path d="M12 13v-2"/><path d="M12 18v-2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"/></symbol>
+    <symbol id="i-parking" viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M9 16v-8h4a2 2 0 0 1 0 4h-4"/></symbol>
+    <symbol id="i-id" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></symbol>
+    <symbol id="i-taxi" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/><path d="M8 3h4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"/><path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"/><path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11"/><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></symbol>
   </svg>
 
-  <header class="header">
-    <div class="wrap header-inner">
-      <a class="logo" href="./" aria-label="Fahrschule LernGut, Startseite">
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="head" data-head>
+    <div class="wrap head-in">
+      <a class="logo" href="./" aria-label="Fahrschule LernGut, zur Startseite">
         <img src="../assets/img/logo-hell.webp" alt="Fahrschule LernGut, Zäme zum Erfolg" width="640" height="182">
       </a>
       <nav class="nav" id="nav" aria-label="Hauptnavigation">
         <ul>
-          <li><a href="#" data-soon="Fahrstunden">Fahrstunden</a></li>
-          <li><a href="#" data-soon="VKU">VKU</a></li>
-          <li><a href="#" data-soon="Preise">Preise</a></li>
-          <li><a href="#" data-soon="Fahrzeug">Fahrzeug</a></li>
-          <li><a href="#" data-soon="Über mich">Über mich</a></li>
-          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+          <li><a href="#ablauf">Ablauf</a></li>
+          <li><a href="#preise">Preise</a></li>
+          <li><a href="#auto">Auto</a></li>
+          <li><a href="#angebot">Angebot</a></li>
+          <li><a href="#urs">Über mich</a></li>
+          <li><a href="#vku">VKU</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
         </ul>
-        <a class="btn btn-sun nav-cta" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener">Online buchen</a>
+        <div class="nav-contact">
+          <a href="https://wa.me/41782440320" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg> WhatsApp</a>
+          <a href="tel:+41782440320"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 078 244 03 20</a>
+        </div>
       </nav>
-      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
-        <span></span><span></span>
-      </button>
+      <div class="head-actions">
+        <a class="btn btn-sonne btn-head" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener">
+          <svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg><span>Termin <span class="hide-s">online </span>buchen</span>
+        </a>
+        <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+          <svg class="i i-open" aria-hidden="true"><use href="#i-menu"/></svg>
+          <svg class="i i-close" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <picture>
-        <source media="(max-width: 760px)" srcset="../assets/img/hero-b-mobil.webp">
-        <img class="hero-bg" src="../assets/img/hero-b.webp" width="1920" height="1440" fetchpriority="high"
-             alt="Fahrschulauto der Fahrschule LernGut mit Dachschild und L-Schild im Abendlicht">
-      </picture>
-      <div class="wrap hero-inner">
-        <p class="eyebrow"><span>Fahrschule · Siebnen SZ<span class="eb-more"> · Kat. B Automat</span></span></p>
-        <h1>Zäme zum <em>Erfolg.</em></h1>
-        <p class="hero-lead">Fahrstunden im Automaten mit Allrad, VKU im eigenen Kurslokal und Begleitung bis zur Prüfung. Persönlich mit Urs Giger.</p>
-        <div class="hero-cta">
-          <a class="btn btn-sun btn-lg cta-main" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg> Fahrstunde buchen</a>
-          <a class="btn btn-glass btn-lg" href="tel:+41782440320"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 078 244 03 20</a>
-          <a class="btn btn-glass btn-lg" href="https://wa.me/41782440320" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg> WhatsApp</a>
+  <main id="inhalt">
+    <!-- 1 Hero: Abendrot -->
+    <section class="hero" aria-labelledby="h1">
+      <div class="hero-media">
+        <picture>
+          <source media="(max-width: 760px)" srcset="../assets/img/b-hero-mobil.webp" width="900" height="1949">
+          <img src="../assets/img/b-hero.webp" srcset="../assets/img/b-hero-1200.webp 1200w, ../assets/img/b-hero.webp 1800w" sizes="100vw"
+               width="1800" height="1350" fetchpriority="high"
+               alt="Das weisse Fahrschulauto von LernGut mit Dachschild und L-Schild im Abendrot">
+        </picture>
+      </div>
+      <div class="wrap hero-in">
+        <div class="hero-copy">
+          <p class="kicker hero-kicker"><span class="dot" aria-hidden="true"></span>Fahrschule LernGut · Siebnen SZ</p>
+          <h1 id="h1"><span class="ln"><span>Deine Fahrschule</span></span> <span class="ln"><span>in Siebnen.</span></span></h1>
+          <p class="hero-tag">Dein Weg zu <span class="lplate">L</span><span class="tag-dot">.</span></p>
+          <p class="hero-lead">Fahrstunden im Automaten mit Urs Giger, Kat. B. Freie Termine siehst und buchst du direkt online.</p>
+        </div>
+
+        <div class="book" id="buchen">
+          <span class="book-sheen" aria-hidden="true"></span>
+          <div class="book-head">
+            <span class="book-ic" aria-hidden="true"><svg class="i"><use href="#i-calendar"/></svg></span>
+            <div>
+              <p class="book-title">In der Online-Agenda buchbar</p>
+              <p class="book-sub">Kat. B Automat · Treffpunkt nach Absprache</p>
+            </div>
+          </div>
+          <ul class="book-rows" id="book-rows">
+            <li class="book-row" style="--i:0">
+              <span class="br-ic" aria-hidden="true"><svg class="i"><use href="#i-hand"/></svg></span>
+              <span class="br-txt"><strong>Schnupper-Fahrstunde</strong><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>60 Min.<em>Beginner-Aktion</em></span></span>
+              <span class="br-price"><small>Fr.</small>59</span>
+            </li>
+            <li class="book-row" style="--i:1">
+              <span class="br-ic" aria-hidden="true"><svg class="i"><use href="#i-wheel"/></svg></span>
+              <span class="br-txt"><strong>Einzel-Fahrstunde</strong><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>45 Min.</span></span>
+              <span class="br-price"><small>Fr.</small>90</span>
+            </li>
+            <li class="book-row" style="--i:2">
+              <span class="br-ic" aria-hidden="true"><svg class="i"><use href="#i-wheel"/></svg></span>
+              <span class="br-txt"><strong>Doppel-Fahrstunde</strong><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>90 Min.</span></span>
+              <span class="br-price"><small>Fr.</small>170</span>
+            </li>
+            <li class="book-row" style="--i:3">
+              <span class="br-ic" aria-hidden="true"><svg class="i"><use href="#i-book"/></svg></span>
+              <span class="br-txt"><strong>Theorielektion</strong><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>45 Min. im Kurslokal</span></span>
+              <span class="br-price"><small>Fr.</small>80</span>
+            </li>
+          </ul>
+          <button class="book-more" type="button" aria-expanded="false" aria-controls="book-rows" hidden>
+            <span>Alle Lektionen anzeigen</span><svg class="i" aria-hidden="true"><use href="#i-down"/></svg>
+          </button>
+          <div class="book-foot">
+            <a class="btn btn-sonne btn-lg btn-book" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener">
+              <svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg>Termin online buchen<svg class="i i-go" aria-hidden="true"><use href="#i-out"/></svg>
+            </a>
+            <p class="book-alt">
+              <span>Barpreise. Lieber persönlich?</span>
+              <a class="mini-link wa" href="https://wa.me/41782440320" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+              <a class="mini-link" href="tel:+41782440320"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Telefon</a>
+            </p>
+          </div>
         </div>
       </div>
-      <div class="hero-stats">
-        <div class="wrap">
-          <ul>
-            <li><strong>45</strong><span>Minuten pro<br>Fahrstunde</span></li>
-            <li><strong>4x4</strong><span>Allrad, auch<br>auf Schnee sicher</span></li>
-            <li><strong>59</strong><span>Franken für die<br>Schnupperstunde</span></li>
-            <li><strong>2</strong><span>Prüfungsorte:<br>Pfäffikon und Zürich</span></li>
+    </section>
+
+    <!-- 2 So läuft's: gestapelte Karten -->
+    <section class="sec steps" id="ablauf" aria-labelledby="h-ablauf">
+      <div class="wrap">
+        <header class="sec-head" data-reveal>
+          <p class="kicker">So läuft’s</p>
+          <h2 id="h-ablauf">Drei Schritte bis zur ersten&nbsp;Fahrstunde.</h2>
+        </header>
+        <ol class="stack" data-stack>
+          <li class="stack-item" style="--n:0">
+            <article class="stack-card">
+              <div class="stack-text">
+                <span class="stack-no" aria-hidden="true">01</span>
+                <h3>Online buchen</h3>
+                <p>Lektion wählen, dann zeigt dir die Agenda die freien Tage und Zeiten. Auswählen, Daten eingeben, fertig.</p>
+                <a class="link-go" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener">Zur Online-Agenda<svg class="i" aria-hidden="true"><use href="#i-out"/></svg></a>
+              </div>
+              <div class="stack-vis vis-pick" aria-hidden="true">
+                <span class="pick">Schnupper-Fahrstunde<b>60 Min.</b></span>
+                <span class="pick is-on">Einzel-Fahrstunde<b>45 Min.</b><svg class="i"><use href="#i-check"/></svg></span>
+                <span class="pick">Doppel-Fahrstunde<b>90 Min.</b></span>
+                <span class="pick">Theorielektion<b>45 Min.</b></span>
+              </div>
+            </article>
+          </li>
+          <li class="stack-item" style="--n:1">
+            <article class="stack-card">
+              <div class="stack-text">
+                <span class="stack-no" aria-hidden="true">02</span>
+                <h3>Lernfahrausweis schicken</h3>
+                <p>Ganz wichtig vor dem ersten Termin: eine Kopie deines Lernfahrausweises als Foto oder PDF per WhatsApp an 078&nbsp;244&nbsp;03&nbsp;20 oder per Mail an info@lerngut.ch.</p>
+                <a class="link-go" href="https://wa.me/41782440320" target="_blank" rel="noopener">Per WhatsApp schicken<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              </div>
+              <div class="stack-vis vis-send" aria-hidden="true">
+                <span class="doc">
+                  <span class="lplate lplate-s">L</span>
+                  <span class="doc-lines"><i></i><i></i><i></i></span>
+                  <span class="doc-name">Lernfahrausweis</span>
+                </span>
+                <span class="send-path"><svg class="i"><use href="#i-send"/></svg></span>
+                <span class="send-to">
+                  <span class="send-badge wa"><svg class="i"><use href="#i-whatsapp"/></svg></span>
+                  <span class="send-badge"><svg class="i"><use href="#i-mail"/></svg></span>
+                </span>
+              </div>
+            </article>
+          </li>
+          <li class="stack-item" style="--n:2">
+            <article class="stack-card">
+              <div class="stack-text">
+                <span class="stack-no" aria-hidden="true">03</span>
+                <h3>Treffpunkt abmachen</h3>
+                <p>Wo die Fahrstunde startet, machen wir zusammen ab. Sonst treffen wir uns am Bahnhof Siebnen-Wangen. In Zürich in der Nähe vom Bahnhof Enge.</p>
+                <a class="link-go" href="#orte">Siebnen und Zürich<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              </div>
+              <div class="stack-vis vis-meet" aria-hidden="true">
+                <svg class="meet-map" viewBox="0 0 320 220" preserveAspectRatio="xMidYMid meet">
+                  <path class="meet-road" d="M-10 180 C 60 170, 90 120, 150 118 S 250 70, 330 40"/>
+                  <path class="meet-road meet-road-2" d="M60 230 C 90 180, 120 150, 150 118"/>
+                  <path class="meet-dash" d="M-10 180 C 60 170, 90 120, 150 118 S 250 70, 330 40"/>
+                </svg>
+                <span class="meet-pin"><svg class="i"><use href="#i-pin"/></svg></span>
+                <span class="meet-label">Treffpunkt<br><b>nach Absprache</b></span>
+              </div>
+            </article>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 3 Preise mit Schalter -->
+    <section class="sec prices" id="preise" aria-labelledby="h-preise">
+      <div class="wrap prices-grid">
+        <div class="prices-side">
+          <header class="sec-head" data-reveal>
+            <p class="kicker">Preise</p>
+            <h2 id="h-preise">Alles klar, bevor du losfährst.</h2>
+            <p class="sec-lead">Bar bezahlst du am wenigsten. Mit TWINT oder Karte kommt ein kleiner Zuschlag dazu. Eine Bezahlung per Rechnung ist nicht möglich.</p>
+          </header>
+          <aside class="promo" data-reveal aria-labelledby="h-promo">
+            <p class="promo-tag">Beginner-Aktion</p>
+            <h3 id="h-promo">Schnupper- und Kennenlern-Fahrstunde</h3>
+            <p class="promo-q">«Stimmt die Chemie zwischen uns, passt das Auto?»</p>
+            <div class="promo-row">
+              <p class="promo-price"><small>Fr.</small>59<span>60 Minuten, bar<br>Fr. 60 mit TWINT oder Karte</span></p>
+            </div>
+            <p class="promo-note">Gilt einmal pro Schüler, eben zum Sehen, ob’s passt.</p>
+            <a class="btn btn-ghost" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener">Schnupperstunde buchen<svg class="i i-go" aria-hidden="true"><use href="#i-out"/></svg></a>
+          </aside>
+        </div>
+
+        <div class="price-card" data-reveal data-pay="bar">
+          <div class="price-top">
+            <p class="price-label" id="pay-status" aria-live="polite">Preise bei Barzahlung</p>
+            <div class="pay-toggle" role="group" aria-label="Zahlungsart wählen">
+              <span class="pay-pill" aria-hidden="true"></span>
+              <button type="button" data-set="bar" aria-pressed="true">Bar</button>
+              <button type="button" data-set="twint" aria-pressed="false">TWINT oder Karte</button>
+            </div>
+          </div>
+          <ul class="plist">
+            <li style="--i:0"><span class="pl-name">Einzel-Fahrstunde<small>45 Minuten</small></span><span class="pl-amt"><small>Fr.</small><b data-bar="90" data-twint="92">90</b></span><span class="pl-alt">TWINT oder Karte: Fr. 92</span></li>
+            <li style="--i:1"><span class="pl-name">Doppel-Fahrstunde<small>90 Minuten</small></span><span class="pl-amt"><small>Fr.</small><b data-bar="170" data-twint="174">170</b></span><span class="pl-alt">TWINT oder Karte: Fr. 174</span></li>
+            <li style="--i:2"><span class="pl-name">5er-Abo<small>5 Fahrstunden</small></span><span class="pl-amt"><small>Fr.</small><b data-bar="430" data-twint="440">430</b></span><span class="pl-alt">TWINT oder Karte: Fr. 440</span></li>
+            <li style="--i:3"><span class="pl-name">10er-Abo<small>10 Fahrstunden</small></span><span class="pl-amt"><small>Fr.</small><b data-bar="840" data-twint="860">840</b></span><span class="pl-alt">TWINT oder Karte: Fr. 860</span></li>
+            <li style="--i:4"><span class="pl-name">Theorielektion<small>45 Minuten im Kurslokal</small></span><span class="pl-amt"><small>Fr.</small><b data-bar="80" data-twint="82">80</b></span><span class="pl-alt">TWINT oder Karte: Fr. 82</span></li>
+            <li style="--i:5"><span class="pl-name">Verkehrskunde VKU<small>zahlbar am ersten Kurstag</small></span><span class="pl-amt"><small>Fr.</small><b data-bar="240" data-twint="246">240</b></span><span class="pl-alt">TWINT oder Karte: Fr. 246</span></li>
+            <li style="--i:6"><span class="pl-name">Führerprüfung<small>Einfahren und Prüfung, total 2 Stunden</small></span><span class="pl-amt"><small>Fr.</small><b data-bar="220" data-twint="225">220</b></span><span class="pl-alt">TWINT oder Karte: Fr. 225</span></li>
+            <li style="--i:7"><span class="pl-name">Administration und Versicherung<small>einmalig, ab der 2. Fahrstunde</small></span><span class="pl-amt"><small>Fr.</small><b data-bar="120" data-twint="123">120</b></span><span class="pl-alt">TWINT oder Karte: Fr. 123</span></li>
+          </ul>
+          <p class="price-foot">Einzel- und Doppelstunden bezahlst du bei Beginn der Lektion. <a href="#" data-soon="Preise">Alle Preise und Bedingungen</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 Dein Auto: Karussell -->
+    <section class="sec car" id="auto" aria-labelledby="h-auto">
+      <div class="wrap car-grid">
+        <div class="car-gallery" data-reveal>
+          <div class="car-track" data-carousel tabindex="0" aria-label="Fotos vom Fahrschulauto, zum Wischen">
+            <figure class="car-slide">
+              <img src="../assets/img/b-heck.webp" width="1000" height="750" decoding="async" alt="Heck des Fahrschulautos mit L-Schild und Schwyzer Kennzeichen im Sonnenuntergang">
+              <figcaption>Mit L-Schild und Dachschild</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="../assets/img/b-front.webp" width="1000" height="750" loading="lazy" alt="Der weisse Mercedes-Benz B220 von vorne mit eingeschalteten Scheinwerfern">
+              <figcaption>Mercedes-Benz B220 4matic</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="../assets/img/b-seite.webp" width="1000" height="722" loading="lazy" alt="Seitenansicht des Fahrschulautos auf einem Weg zwischen Wiesen, im Hintergrund Hügel">
+              <figcaption>Automat und Allrad</figcaption>
+            </figure>
+          </div>
+          <div class="car-ctrl">
+            <div class="car-dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
+            <p class="car-count" aria-hidden="true"><b>1</b> / 3</p>
+            <div class="car-btns">
+              <button type="button" class="round" data-dir="-1" aria-label="Vorheriges Foto"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></button>
+              <button type="button" class="round" data-dir="1" aria-label="Nächstes Foto"><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="car-text">
+          <header class="sec-head" data-reveal>
+            <p class="kicker">Dein Fahrschulauto</p>
+            <h2 id="h-auto">Mercedes-Benz B220 4matic.</h2>
+            <p class="sec-lead">Du lernst im Automaten mit Allrad. Kein Kuppeln, dafür volle Konzentration auf den Verkehr. Und dank 4x4 auch auf Schnee sicher.</p>
+          </header>
+          <ul class="specs" data-reveal>
+            <li style="--i:0"><span>Getriebe</span><b>7-Gang-Automat</b></li>
+            <li style="--i:1"><span>Antrieb</span><b>4x4, auch auf Schnee sicher</b></li>
+            <li style="--i:2"><span>Kraftstoff</span><b>Benzin</b></li>
+            <li style="--i:3"><span>Hubraum</span><b>1991 ccm</b></li>
+            <li style="--i:4"><span>Leergewicht</span><b>1’505 kg</b></li>
           </ul>
         </div>
       </div>
     </section>
 
-    <div class="road" aria-hidden="true"></div>
-
-    <!-- Angebot -->
-    <section class="sec sec-dark">
+    <!-- 5 Mehr als Fahrstunden: Chips -->
+    <section class="sec more" id="angebot" aria-labelledby="h-angebot">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <h2>Alles für dein <em>Billett.</em></h2>
-          <p>Fahrstunden, Verkehrskunde und Prüfungsbegleitung aus einer Hand, mit einem Fahrlehrer, der dich kennt.</p>
-        </div>
-        <div class="tiles">
-          <a class="tile reveal" href="#" data-soon="Fahrstunden">
-            <img src="../assets/img/kachel-fahrstunden.webp" width="760" height="950" loading="lazy" alt="Fahrschulauto Mercedes-Benz B220 von vorne">
-            <span class="tile-tag">Kat. B Automat</span>
-            <span class="tile-body">
-              <span class="tile-title">Fahrstunden</span>
-              <span class="tile-text">45 oder 90 Minuten, Treffpunkt nach Absprache. Auch in Zürich beim Bahnhof Enge.</span>
-            </span>
-            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-          </a>
-          <a class="tile reveal" href="#" data-soon="VKU">
-            <img src="../assets/img/kachel-vku.webp" width="760" height="950" loading="lazy" alt="Kurslokal mit Bildschirm, Flipchart und Lehrmitteln auf dem Tisch">
-            <span class="tile-tag">VKU</span>
-            <span class="tile-body">
-              <span class="tile-title">Verkehrskunde</span>
-              <span class="tile-text">Im eigenen Kurslokal in Siebnen. Getränke und Snacks stehen bereit.</span>
-            </span>
-            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-          </a>
-          <a class="tile tile-pruefung reveal" href="#" data-soon="Prüfungsbegleitung">
-            <img src="../assets/img/kachel-pruefung.webp" width="760" height="950" loading="lazy" alt="Heck des Fahrschulautos mit L-Schild und Schwyzer Kennzeichen">
-            <span class="tile-tag">2 Prüfungsorte</span>
-            <span class="tile-body">
-              <span class="tile-title">Prüfung</span>
-              <span class="tile-text">Prüfungsbegleitung mit einer Stunde Einfahren vorher, um dir die Nervosität zu nehmen.</span>
-            </span>
-            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Etappen -->
-    <section class="sec sec-light">
-      <div class="wrap">
-        <div class="sec-head reveal">
+        <header class="sec-head sec-head-row" data-reveal>
           <div>
-            <p class="label">Neu ab 1. Januar 2027</p>
-            <h2>In 5 Etappen<br>zum <em>Ausweis.</em></h2>
+            <p class="kicker">Angebot</p>
+            <h2 id="h-angebot">Mehr als nur Fahrstunden.</h2>
           </div>
-          <a class="link-arrow" href="#" data-soon="News">Alle Neuerungen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <ol class="stages">
-          <li class="reveal"><span class="stage-no">01</span><h3>Gesuch</h3><p>Identität prüfen lassen und die FABER-PIN beantragen.</p></li>
-          <li class="reveal"><span class="stage-no">02</span><h3>Nothilfe, Sehtest, VKU</h3><p>Neu kommt der VKU vor die Theorieprüfung.</p></li>
-          <li class="reveal"><span class="stage-no">03</span><h3>Theorie&shy;prüfung</h3><p>Bestanden? Dann gibts den Lernfahrausweis.</p></li>
-          <li class="reveal"><span class="stage-no">04</span><h3>Fahrstunden</h3><p>Fahrpraxis sammeln, mit Urs im Automaten.</p></li>
-          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>Prüfung</h3><p>Danach gibts den Führerausweis auf Probe.</p></li>
-        </ol>
+          <p class="sec-lead">Von der Prüfungsbegleitung bis zur Auffrischung, auch wenn du den Ausweis schon lange hast. Fragen? Einfach anrufen oder per WhatsApp schreiben: 078&nbsp;244&nbsp;03&nbsp;20.</p>
+        </header>
       </div>
-    </section>
-
-    <!-- Fahrzeug -->
-    <section class="car">
-      <div class="car-media">
-        <img src="../assets/img/auto-seite-breit.webp" width="1920" height="933" loading="lazy" alt="Weisses Fahrschulauto Mercedes-Benz B220 mit Dachschild in der Seitenansicht vor Wiesen und Hügeln">
-      </div>
-      <div class="wrap car-inner">
-        <div class="car-text reveal">
-          <p class="label">Dein Fahrschulauto</p>
-          <h2>Automat.<br><em>Allrad.</em></h2>
-          <p class="car-lead">Du fährst einen Mercedes-Benz B220 4matic. Dank Allrad bist du auch auf Schnee sicher unterwegs.</p>
-        </div>
-        <div class="car-side reveal">
-          <dl class="spec">
-            <div><dt>Getriebe</dt><dd>7-Gang-Automat</dd></div>
-            <div><dt>Antrieb</dt><dd>4x4, 4matic</dd></div>
-            <div><dt>Hubraum</dt><dd>1991 ccm</dd></div>
-            <div><dt>Kraftstoff</dt><dd>Benzin</dd></div>
-          </dl>
-          <div class="highlight">
-            <strong>Schnupper-Fahrstunde: <span class="nowrap">CHF 59.–</span></strong>
-            <span>60 Minuten zum Kennenlernen. Stimmt die Chemie, passt das Auto? Einmal pro Fahrschüler, mit Karte oder Twint CHF 60.–</span>
-            <a class="link-arrow" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener">Jetzt buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Preise -->
-    <section class="sec sec-light">
-      <div class="wrap price-wrap">
-        <div class="sec-head sec-head-stack reveal">
-          <h2>Klare <em>Preise.</em></h2>
-          <p>Bezahlen kannst du bar, mit Karte oder mit Twint. Bei Karte und Twint kommt ein Zuschlag dazu.</p>
-          <a class="link-arrow" href="#" data-soon="Preise">Alle Preise <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <ul class="pricelist reveal">
-          <li><span class="pl-name">Einzel-Fahrstunde<small>45 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>90</span></li>
-          <li><span class="pl-name">Doppel-Fahrstunde<small>90 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>170</span></li>
-          <li><span class="pl-name">5er-Abo<small>5 Fahrstunden</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>430</span></li>
-          <li><span class="pl-name">10er-Abo<small>10 Fahrstunden</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>840</span></li>
-          <li><span class="pl-name">Verkehrskunde VKU<small>zahlbar am ersten Kurstag</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>240</span></li>
-          <li><span class="pl-name">Theorielektion<small>45 Minuten im Kurslokal</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>80</span></li>
-          <li><span class="pl-name">Führerprüfung<small>Einfahren und Prüfung, 2 Stunden</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>220</span></li>
-          <li><span class="pl-name">Administration und Versicherung<small>einmalig, ab der 2. Fahrstunde</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>120</span></li>
+      <div class="wrap more-grid">
+        <ul class="chips" data-reveal>
+          <li class="chip" style="--i:0"><span class="chip-ic"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span><h3>Für Senioren</h3><p>Auffrischung, neue Gesetze und die Fahrassistenten im eigenen Auto.</p></li>
+          <li class="chip" style="--i:1"><span class="chip-ic"><svg class="i" aria-hidden="true"><use href="#i-road"/></svg></span><h3>Fahrängste</h3><p>Hilfe bei Tunnel, Autobahn oder Kreisverkehr.</p></li>
+          <li class="chip" style="--i:2"><span class="chip-ic"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></span><h3>Nach einem Unfall</h3><p>Ängste nach einem Verkehrsunfall verarbeiten.</p></li>
+          <li class="chip" style="--i:3"><span class="chip-ic"><svg class="i" aria-hidden="true"><use href="#i-parking"/></svg></span><h3>Parkieren</h3><p>Gezielte Auffrischung beim Parkieren.</p></li>
+          <li class="chip" style="--i:4"><span class="chip-ic"><svg class="i" aria-hidden="true"><use href="#i-id"/></svg></span><h3>Kontrollfahrten</h3><p>Prüfungsfahrt für den Tausch eines ausländischen Führerausweises.</p></li>
+          <li class="chip" style="--i:5"><span class="chip-ic"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg></span><h3>Auffrischen</h3><p>Theorie oder Praxis wieder auffrischen, oder nach persönlichen Wünschen.</p></li>
+          <li class="chip" style="--i:6"><span class="chip-ic"><svg class="i" aria-hidden="true"><use href="#i-taxi"/></svg></span><h3>Taxi (BPT)</h3><p>Ausbildung für den berufsmässigen Personentransport, Code 121.</p></li>
+          <li class="chip chip-cta" style="--i:7">
+            <a href="https://wa.me/41782440320" target="_blank" rel="noopener">
+              <span class="chip-ic"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg></span>
+              <h3>Etwas anderes?</h3>
+              <p>Schreib Urs per WhatsApp, was du brauchst.</p>
+              <span class="chip-go">WhatsApp öffnen<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </a>
+          </li>
         </ul>
+        <div class="exam" data-reveal>
+          <p class="exam-k"><span class="exam-ic"><svg class="i" aria-hidden="true"><use href="#i-flag"/></svg></span>Prüfungsbegleitung</p>
+          <blockquote>
+            <p>Wir treffen uns 1 Stunde vor dem Prüfungstermin zum Einfahren. Hauptziel ist es, dir die Nervosität zu&nbsp;nehmen.</p>
+          </blockquote>
+          <p class="exam-info">Du gewöhnst dich nochmals ans Auto, wir gehen die wichtigsten Bedienelemente durch. Danach fahren wir zum Strassenverkehrsamt, wo der Experte meinen Platz einnimmt. Nach der Prüfung besprechen wir sie auf Wunsch.</p>
+          <dl class="exam-facts">
+            <div><dt>Preis</dt><dd>Fr. 220</dd></div>
+            <div><dt>Dauer</dt><dd>Einfahren und Prüfung, total 2 Stunden</dd></div>
+            <div><dt>Prüfungsorte</dt><dd>Pfäffikon SZ und Zürich-Albisgütli</dd></div>
+          </dl>
+        </div>
       </div>
     </section>
 
-    <!-- Weitere Angebote -->
-    <section class="sec sec-dark">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <h2>Mehr als<br><em>Fahrstunden.</em></h2>
-          <p>Auch wer den Ausweis schon hat, ist hier richtig. Bei Fragen einfach anrufen oder per WhatsApp schreiben.</p>
+    <!-- 6 Urs Giger: Zeitleiste -->
+    <section class="sec urs" id="urs" aria-labelledby="h-urs">
+      <div class="wrap urs-grid">
+        <div class="urs-card" data-reveal>
+          <div class="urs-photo">
+            <img src="../assets/img/b-urs.webp" width="520" height="520" decoding="async" alt="Fahrlehrer Urs Giger lächelt und zeigt den Daumen nach oben">
+          </div>
+          <p class="kicker">Dein Fahrlehrer</p>
+          <h2 id="h-urs">Urs Giger</h2>
+          <p class="urs-role">Fahrlehrer Kat. B mit eidgenössischem Fachausweis</p>
+          <p class="urs-lead">Von der Schnupperstunde bis zur Prüfung fährst du mit Urs. Bevor er Fahrlehrer wurde, sass er jahrelang beruflich am Steuer.</p>
+          <a class="sd" href="https://www.swissdrive.ch" target="_blank" rel="noopener">
+            <span>Mitglied von</span>
+            <img src="../assets/img/swissdrive.webp" width="400" height="88" decoding="async" alt="SWISSDRIVE">
+          </a>
         </div>
-        <ol class="extras">
-          <li class="reveal"><span>01</span><h3>Kontrollfahrten</h3><p>Prüfungsfahrt für den Tausch eines ausländischen Führerausweises.</p></li>
-          <li class="reveal"><span>02</span><h3>Für Senioren</h3><p>Auffrischung, neue Gesetze und die Fahrassistenten im eigenen Auto erklärt.</p></li>
-          <li class="reveal"><span>03</span><h3>Fahrängste</h3><p>Hilfe bei Tunnel, Autobahn oder Kreisverkehr.</p></li>
-          <li class="reveal"><span>04</span><h3>Nach einem Unfall</h3><p>Unterstützung, um Ängste nach einem Verkehrsunfall zu verarbeiten.</p></li>
-          <li class="reveal"><span>05</span><h3>Parkieren</h3><p>Gezielte Auffrischung beim Parkieren.</p></li>
-          <li class="reveal"><span>06</span><h3>Theorie oder Praxis</h3><p>Wissen auffrischen oder ganz nach deinen Wünschen.</p></li>
+        <div class="tl-wrap" data-tl>
+        <span class="tl-track" aria-hidden="true"><span class="tl-fill"></span></span>
+        <ol class="tl">
+          <li data-reveal><span class="tl-k">seit 1991</span><p>Zuhause in Siebnen</p></li>
+          <li data-reveal><span class="tl-k">28 Jahre</span><p>In der IT, vor allem Support, Installation und Schulung</p></li>
+          <li data-reveal><span class="tl-k">am Steuer</span><p>Fahrer auf Taxis, Schulbussen und VIP-Transporten</p></li>
+          <li data-reveal><span class="tl-k">4 ½ Jahre</span><p>Fahrer beim Blutspendedienst Zürich</p></li>
+          <li data-reveal><span class="tl-k">2 ½ Jahre</span><p>Fahrer auf Ambulanzen und im Organtransport</p></li>
+          <li data-reveal><span class="tl-k">Ausbildung</span><p>Fahrlehrer Kat. B mit eidgenössischem Fachausweis</p></li>
+          <li data-reveal><span class="tl-k">2024</span><p>Gründung der eigenen Fahrschule</p></li>
+          <li data-reveal class="tl-goal"><span class="tl-k">2025</span><p>Eröffnung der Fahrschule LernGut</p></li>
         </ol>
+        </div>
       </div>
     </section>
 
-    <!-- Fahrlehrer -->
-    <section class="sec sec-dark sec-team">
-      <div class="wrap team">
-        <div class="team-photo reveal">
-          <img src="../assets/img/urs-giger.webp" width="600" height="788" loading="lazy" alt="Fahrlehrer Urs Giger mit Daumen hoch">
-        </div>
-        <div class="team-text reveal">
-          <p class="label">Dein Fahrlehrer</p>
-          <h2>Urs <em>Giger.</em></h2>
-          <p class="team-lead">Seit 1991 in Siebnen zuhause, Fahrlehrer Kat. B mit eidgenössischem Fachausweis. Vorher am Steuer von Taxis, Schulbussen und Ambulanzen und beim Blutspendedienst Zürich.</p>
-          <ul class="contacts">
-            <li><span>Natel und WhatsApp</span><a href="tel:+41782440320">078 244 03 20</a></li>
-            <li><span>E-Mail</span><a href="mailto:info@lerngut.ch">info@lerngut.ch</a></li>
-            <li><span>Kurslokal</span><a href="https://maps.google.com/?q=Kreuzstrasse+14,+8854+Siebnen" target="_blank" rel="noopener">Kreuzstrasse 14, Siebnen</a></li>
+    <!-- 7 VKU und Kurslokal -->
+    <section class="sec vku" id="vku" aria-labelledby="h-vku">
+      <div class="wrap vku-grid">
+        <figure class="vku-photo" data-reveal>
+          <img src="../assets/img/b-lokal.webp" width="1000" height="750" decoding="async" alt="Kurslokal der Fahrschule LernGut in Siebnen mit grossem Tisch, Lehrmitteln, Signaltafel und Bildschirm mit dem Logo">
+          <figcaption><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Kreuzstrasse 14, Siebnen</figcaption>
+        </figure>
+        <div class="vku-text">
+          <header class="sec-head" data-reveal>
+            <p class="kicker">VKU und Kurslokal</p>
+            <h2 id="h-vku">Verkehrskunde im eigenen Kurslokal.</h2>
+            <p class="sec-lead">Den VKU besuchst du direkt in Siebnen, im gleichen Lokal wie die Theorielektionen. Getränke und Snacks stehen zur Verfügung.</p>
+          </header>
+          <a class="news" href="#" data-soon="News" data-reveal>
+            <span class="news-tag">Neu ab 1. Januar 2027</span>
+            <span class="news-txt">Der VKU kommt vor die Theorieprüfung.</span>
+            <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <ul class="vku-parts" data-reveal>
+            <li style="--i:0"><b>Teil 1</b>Verkehrssehen</li>
+            <li style="--i:1"><b>Teil 2</b>Verkehrsumwelt</li>
+            <li style="--i:2"><b>Teil 3</b>Verkehrsdynamik</li>
+            <li style="--i:3"><b>Teil 4</b>Verkehrstaktik</li>
           </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta">
-      <div class="wrap cta-inner reveal">
-        <h2>Bereit zum<br>Losfahren?</h2>
-        <div class="cta-side">
-          <a class="cta-phone" href="tel:+41782440320">078 244 03 20</a>
-          <p>Freie Termine siehst du direkt online. Oder ruf an oder schreib per WhatsApp. Vor dem ersten Termin bitte eine Kopie des Lernfahrausweises schicken.</p>
-          <div class="cta-btns">
-            <a class="btn btn-black btn-lg" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener">Online buchen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-            <a class="btn btn-outline-black btn-lg" href="https://wa.me/41782440320" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg> WhatsApp</a>
+          <div class="vku-foot" data-reveal>
+            <p class="vku-price"><b>Fr. 240</b><span>zahlbar am ersten Kurstag, bar oder mit TWINT. Lernfahrausweis mitbringen.</span></p>
+            <a class="btn btn-line" href="#" data-soon="VKU">Zur VKU-Anmeldung<svg class="i i-go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- 8 Siebnen und Zürich -->
+    <section class="sec orte" id="orte" aria-labelledby="h-orte">
+      <div class="wrap">
+        <header class="sec-head sec-head-center" data-reveal>
+          <p class="kicker">Wo wir fahren</p>
+          <h2 id="h-orte">Siebnen und Zürich.</h2>
+        </header>
+        <div class="route" data-reveal aria-hidden="true">
+          <svg class="route-svg" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g-route" x1="1" y1="0" x2="0" y2="0">
+                <stop offset="0" stop-color="#FFC444"/><stop offset=".5" stop-color="#E8643A"/><stop offset="1" stop-color="#B4569A"/>
+              </linearGradient>
+              <mask id="m-route" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="120">
+                <path class="route-draw" d="M991 70 C 860 20, 720 100, 560 70 S 260 30, 9 66" pathLength="1"/>
+              </mask>
+            </defs>
+            <path class="route-base" d="M991 70 C 860 20, 720 100, 560 70 S 260 30, 9 66"/>
+            <path class="route-line" d="M991 70 C 860 20, 720 100, 560 70 S 260 30, 9 66" mask="url(#m-route)"/>
+          </svg>
+          <span class="stop stop-z"><i></i><b>Zürich-Enge</b><small>Prüfung Albisgütli</small></span>
+          <span class="stop stop-p" style="--x:56%"><i></i><b>Pfäffikon SZ</b><small>Prüfung</small></span>
+          <span class="stop stop-s"><i></i><b>Siebnen</b><small>Kurslokal</small></span>
+        </div>
+        <div class="places">
+          <article class="place" data-reveal>
+            <p class="place-k"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Siebnen SZ</p>
+            <h3>Kurslokal und Fahrstunden</h3>
+            <dl>
+              <div><dt>Kurslokal</dt><dd>Kreuzstrasse 14, 8854 Siebnen</dd></div>
+              <div><dt>Treffpunkt</dt><dd>Nach Absprache, sonst Bahnhof Siebnen-Wangen</dd></div>
+              <div><dt>Prüfung</dt><dd>Strassenverkehrsamt Pfäffikon SZ</dd></div>
+            </dl>
+            <a class="link-go" href="https://maps.google.com/?q=Kreuzstrasse+14,+8854+Siebnen" target="_blank" rel="noopener">Route planen<svg class="i" aria-hidden="true"><use href="#i-out"/></svg></a>
+          </article>
+          <article class="place" data-reveal>
+            <p class="place-k"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Zürich</p>
+            <h3>Fahrstunden in Zürich</h3>
+            <dl>
+              <div><dt>Treffpunkt</dt><dd>In der Nähe vom Bahnhof Zürich-Enge</dd></div>
+              <div><dt>Prüfung</dt><dd>Strassenverkehrsamt Zürich-Albisgütli</dd></div>
+              <div><dt>Hinweis</dt><dd>Preise, Termine und Treffpunkt bitte anfragen</dd></div>
+            </dl>
+            <a class="link-go" href="https://wa.me/41782440320" target="_blank" rel="noopener">Per WhatsApp anfragen<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 Kontakt -->
+    <section class="contact" id="kontakt" aria-labelledby="h-kontakt">
+      <div class="sun" aria-hidden="true"></div>
+      <div class="wrap contact-in">
+        <p class="kicker" data-reveal>Kontakt</p>
+        <h2 id="h-kontakt" data-reveal>Zäme zum Erfolg!</h2>
+        <p class="contact-lead" data-reveal>Freie Termine siehst du online. Lieber persönlich? Ruf an oder schreib per WhatsApp.</p>
+        <div class="contact-btns" data-reveal>
+          <a class="btn btn-sonne btn-lg" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg>Termin online buchen</a>
+          <a class="btn btn-wa btn-lg" href="https://wa.me/41782440320" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+          <a class="btn btn-ghost btn-lg" href="tel:+41782440320"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>078 244 03 20</a>
+        </div>
+        <ul class="contact-list" data-reveal>
+          <li><span>E-Mail</span><a href="mailto:info@lerngut.ch">info@lerngut.ch</a></li>
+          <li><span>Kurslokal</span><a href="https://maps.google.com/?q=Kreuzstrasse+14,+8854+Siebnen" target="_blank" rel="noopener">Kreuzstrasse 14, 8854 Siebnen SZ</a></li>
+          <li><span>Instagram</span><a href="https://instagram.com/fahrschule_lerngut" target="_blank" rel="noopener">@fahrschule_lerngut</a></li>
+        </ul>
+        <p class="contact-note" data-reveal><svg class="i" aria-hidden="true"><use href="#i-id"/></svg>Vor dem ersten Termin: Kopie des Lernfahrausweises als Foto oder PDF per WhatsApp oder Mail schicken.</p>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer-grid">
-      <div>
-        <img class="footer-logo" src="../assets/img/logo-hell.webp" alt="Fahrschule LernGut, Zäme zum Erfolg" width="640" height="182" loading="lazy">
-      </div>
-      <div>
-        <h3>Adresse</h3>
-        <p>Fahrschule LernGut Urs Giger<br>Kreuzstrasse 14<br>8854 Siebnen SZ</p>
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div class="foot-brand">
+        <img src="../assets/img/logo-hell.webp" width="640" height="182" decoding="async" alt="Fahrschule LernGut, Zäme zum Erfolg">
+        <p>Fahrschule LernGut Urs Giger<br>Kreuzstrasse 14, 8854 Siebnen SZ</p>
       </div>
       <div>
         <h3>Kontakt</h3>
-        <p><a href="tel:+41782440320">078 244 03 20</a><br><a href="mailto:info@lerngut.ch">info@lerngut.ch</a><br><a href="https://instagram.com/fahrschule_lerngut" target="_blank" rel="noopener">Instagram</a></p>
+        <ul>
+          <li><a href="tel:+41782440320">078 244 03 20</a></li>
+          <li><a href="https://wa.me/41782440320" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:info@lerngut.ch">info@lerngut.ch</a></li>
+          <li><a href="https://instagram.com/fahrschule_lerngut" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Seiten</h3>
+        <ul class="foot-cols">
+          <li><a href="#" data-soon="Fahrstunden">Fahrstunden</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="VKU">VKU</a></li>
+          <li><a href="#" data-soon="Dienstleistungen">Dienstleistungen</a></li>
+          <li><a href="#" data-soon="Fahrzeug">Fahrzeug</a></li>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Kurslokal">Kurslokal</a></li>
+          <li><a href="#" data-soon="News">News</a></li>
+        </ul>
       </div>
       <div>
         <h3>Führerprüfungen</h3>
-        <p>Strassenverkehrsamt Pfäffikon SZ<br>Strassenverkehrsamt Zürich-Albisgütli</p>
-        <span class="partners"><img src="../assets/img/swissdrive.webp" alt="Mitglied von SWISSDRIVE" width="400" height="88" loading="lazy"></span>
+        <ul>
+          <li>Strassenverkehrsamt Pfäffikon SZ</li>
+          <li>Strassenverkehrsamt Zürich-Albisgütli</li>
+        </ul>
       </div>
     </div>
-    <div class="wrap footer-bottom">
+    <div class="wrap foot-bottom">
       <p>© 2026 Fahrschule LernGut Urs Giger</p>
-      <p><a href="#" data-soon="AGB">AGB</a> <a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+      <p class="foot-legal"><a href="#" data-soon="AGB">AGB</a><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
     </div>
   </footer>
+
+  <!-- Aktionsleiste (mobil) -->
+  <nav class="dock" aria-label="Schnellkontakt">
+    <a class="dock-book" href="https://booking.localsearch.ch/widget/fahrschule-lerngut-urs-giger?locale=de" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg>Termin buchen</a>
+    <a class="dock-btn dock-wa" href="https://wa.me/41782440320" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>WhatsApp</span></a>
+    <a class="dock-btn" href="tel:+41782440320"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span>Anrufen</span></a>
+  </nav>
 </body>
 </html>

@@ -28,8 +28,20 @@
     .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(26 24 19 / 10%); }
     .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(26 24 19 / 30%); }
     .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
-    .option-tag { color: var(--red); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    @font-face { font-family: "Marcellus SC"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/a-marcellus-sc-latin.woff2") format("woff2"); }
+    @font-face { font-family: "Chakra Petch"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/b-chakra-petch-700.woff2") format("woff2"); }
+    .option-tag { align-self: flex-start; padding: 5px 12px; border-radius: 999px; font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option h2 { font-size: 1.75rem; margin-top: -4px; }
+    .option-a .option-tag { background: #f6efc9; color: #7a5c0e; }
+    .option-a h2 { font: 400 2rem/1.1 "Marcellus SC", Georgia, serif; letter-spacing: .02em; color: #121110; }
+    .option-a .chips li { background: #f4f5f2; box-shadow: inset 0 0 0 1px #dde3e8; color: #3d3a32; }
+    .btn-heft { background: #d4a940; color: #121110; box-shadow: inset 0 -2px 0 rgb(18 17 16 / 14%); }
+    .btn-heft:hover { background: #c2972f; color: #121110; }
+    .option-b .option-tag { border-radius: 0; background: #121a24; color: #d4a940; clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px); }
+    .option-b h2 { font: 700 2rem/1.05 "Chakra Petch", "Arial Narrow", sans-serif; letter-spacing: -.01em; color: #121a24; }
+    .option-b .chips li { border-radius: 0; background: #eef1f5; color: #1a2430; }
+    .btn-cockpit { border-radius: 0; background: #121a24; color: #d4a940; letter-spacing: .04em; clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
+    .btn-cockpit:hover { background: #1f2b39; color: #e8c35f; }
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
 
@@ -88,31 +100,31 @@
     </ol>
 
     <div class="options">
-      <article class="option">
+      <article class="option option-a">
         <a class="shots" href="design-a/" aria-label="Design A ansehen">
           <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
           <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, warm und übersichtlich. Viel Weissraum, Ihr gelber Golf vor dem Bristen und das Gold aus Ihrem Logo als Akzent. Wirkt nahbar und schafft Vertrauen, bei Eltern genauso wie bei Seniorinnen und Senioren.</p>
-          <ul class="chips"><li>Hell</li><li>Freundlich</li><li>Übersichtlich</li></ul>
-          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Lernheft</h2>
+          <p>Die Startseite ist gestaltet wie Ihre eigenen Übungshefte, mit Lineatur und dem goldenen Berg aus Ihrem Logo. Die drei Pakete erscheinen als drei unterschiedlich dicke Hefte, die beim Antippen aufklappen: ruhig, klar und vertrauenswürdig für Eltern wie für Seniorinnen und Senioren.</p>
+          <ul class="chips"><li>Hell und ruhig</li><li>Wie Ihre Übungshefte</li><li>Pakete als Hefte</li></ul>
+          <a class="btn btn-heft" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
+      <article class="option option-b">
         <a class="shots" href="design-b/" aria-label="Design B ansehen">
           <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
           <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Dunkel, kraftvoll und modern. Grosse Schrift, Ihr Slogan «Bitte einsteigen» als Blickfang und Strassenmarkierungen als Erkennungszeichen. Wirkt dynamisch und spricht junge Fahrschülerinnen und Fahrschüler an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Dynamisch</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Cockpit 2027</h2>
+          <p>Ihr Slogan «Bitte einsteigen» wird wörtlich genommen: Beim gelben Golf geht die Fahrertür auf, danach wird die Seite zum dunklen Cockpit. Die drei Pakete wählt man wie Fahrmodi am Drehregler, die Assistenzsysteme leuchten wie Kontrollleuchten auf.</p>
+          <ul class="chips"><li>Dunkel und technisch</li><li>Pakete am Drehregler</li><li>Neue Prüfung 2027</li></ul>
+          <a class="btn btn-cockpit" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>

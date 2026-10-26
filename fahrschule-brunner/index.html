@@ -32,6 +32,14 @@
     .option h2 { font-size: 1.75rem; margin-top: -8px; }
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
+    .option-a .option-tag { color: #1f4e9e; }
+    .option-a .chips li { background: #e8eef8; color: #1f4e9e; }
+    .btn-a { background: #1f4e9e; color: #fff; }
+    .btn-a:hover { background: #173d7d; color: #fff; }
+    .option-b .option-tag { color: #3b3fb6; }
+    .option-b .chips li { background: #ecebfa; color: #3b3fb6; }
+    .btn-b { background: #3b3fb6; color: #fff; }
+    .btn-b:hover { background: #2e3196; color: #fff; }
 
     .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #cfced6; color: var(--ink-2); font-size: .975rem; }
     .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
@@ -88,31 +96,31 @@
     </ol>
 
     <div class="options">
-      <article class="option">
+      <article class="option option-a">
         <a class="shots" href="design-a/" aria-label="Design A ansehen">
           <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
           <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, ruhig und übersichtlich. Viel Weissraum, das Blau des Lernfahrer-Schilds und Wegweiser zu Auto, Motorrad und Anhänger. Wirkt nahbar und schafft Vertrauen, auch bei Eltern.</p>
-          <ul class="chips"><li>Hell</li><li>Freundlich</li><li>Übersichtlich</li></ul>
-          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Wegweiser</h2>
+          <p>Hell und klar, in der Sprache der Schweizer Signalisation: Ein blauer Wegweiser zeigt nach Dottikon, Zusatztafeln stehen für Auto, Motorrad und Anhänger, eine Ortstafel zeigt den Standort. Ruhig und vertrauenswürdig, auch für Eltern.</p>
+          <ul class="chips"><li>Signalblau</li><li>Wegweiser</li><li>Klar</li></ul>
+          <a class="btn btn-a" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
+      <article class="option option-b">
         <a class="shots" href="design-b/" aria-label="Design B ansehen">
           <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
           <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Dunkel, kraftvoll und modern. Grosse Schrift, eine Strasse bis zum Horizont und Gelb wie die Strassenmarkierung. Wirkt dynamisch und spricht junge Fahrschülerinnen und Fahrschüler an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Dynamisch</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Kategorienkarte</h2>
+          <p>Frisch in Pastell: Eine schwebende Karte zeigt die Kategorien B, A und BE und dreht sich beim Scrollen auf die Rückseite. Grosse Schrift und feine Animationen sprechen junge Fahrschülerinnen und Fahrschüler an.</p>
+          <ul class="chips"><li>Pastell</li><li>3D-Karte</li><li>Modern</li></ul>
+          <a class="btn btn-b" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>
