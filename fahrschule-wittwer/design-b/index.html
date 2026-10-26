@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design B | Fahrschule Wittwer</title>
+  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Wittwer in Vordemwald: Fahrstunden Kategorie B im Mercedes, Verkehrskunde, Fahrberatung und Auffrischung.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/img/hero-b.webp" as="image" media="(min-width: 761px)">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="b">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path stroke="none" fill="currentColor" d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Fahrschule Wittwer, Startseite">
+        <img src="../assets/img/logo-badge.webp" alt="" width="240" height="214">
+        <span class="logo-text">Fahrschule Wittwer<small>Vordemwald</small></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Fahrstunden">Fahrstunden</a></li>
+          <li><a href="#" data-soon="Kurse">Kurse</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Fahrzeuge">Fahrzeuge</a></li>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-yellow nav-cta" href="#" data-soon="Kontakt">Anfragen</a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <picture>
+        <source media="(max-width: 760px)" srcset="../assets/img/hero-b-mobil.webp">
+        <img class="hero-bg" src="../assets/img/hero-b.webp" width="1600" height="1255" fetchpriority="high"
+             alt="Schwarzes Fahrschulauto der Fahrschule Wittwer mit gelbem W-Logo vor einem Maisfeld">
+      </picture>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Fahrschule · Vordemwald AG</p>
+        <h1>Ab ans<br><em>Steuer.</em></h1>
+        <p class="hero-lead">Fahrstunden Kategorie B, Verkehrskunde und Fahrberatung. Persönlich mit Sebastian Wittwer, im schwarzen Mercedes mit dem gelben W.</p>
+        <div class="hero-cta">
+          <a class="btn btn-yellow btn-lg" href="#" data-soon="Kontakt">Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="btn btn-glass btn-lg" href="tel:+41792794829"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 279 48 29</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="wrap">
+          <ul>
+            <li><strong>B</strong><span>Kategorie Auto<br>mit Handschaltung</span></li>
+            <li><strong><small>ab</small>83</strong><span>Franken pro<br>Fahrlektion</span></li>
+            <li><strong>230</strong><span>Franken für die<br>Verkehrskunde</span></li>
+            <li><strong>2</strong><span>Fahrzeuge: Mercedes<br>und Chevrolet</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="road" aria-hidden="true"></div>
+
+    <!-- Angebot -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Alles fürs<br><em>Fahren.</em></h2>
+          <p>Fahrstunden, Verkehrskunde, Fahrberatung und Auffrischung. Persönlich, individuell und mit Fokus auf Sicherheit.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile tile-photo reveal" href="#" data-soon="Fahrstunden">
+            <img src="../assets/img/fahrzeug-seite.webp" width="620" height="1100" loading="lazy" alt="Seite des Fahrschulautos mit dem gelben W der Fahrschule Wittwer">
+            <span class="tile-tag">Kat. B</span>
+            <span class="tile-body">
+              <span class="tile-title">Fahr&shy;stunden</span>
+              <span class="tile-text">Praktischer Fahrunterricht vom Lernfahrausweis bis zur Prüfung. Auto mit Handschaltung.</span>
+              <span class="tile-price">ab CHF 83.–</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Kurse">
+            <span class="tile-no">01</span>
+            <span class="tile-body">
+              <span class="tile-title">Verkehrs&shy;kunde</span>
+              <span class="tile-text">Der obligatorische VKU auf dem Weg zum Führerausweis.</span>
+              <span class="tile-price">CHF 230.–</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Fahrberatung">
+            <span class="tile-no">02</span>
+            <span class="tile-body">
+              <span class="tile-title">Fahr&shy;beratung</span>
+              <span class="tile-text">Individuelle Fahrstilberatung für mehr Sicherheit im Alltag.</span>
+              <span class="tile-price">CHF 85.–</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Auffrischung">
+            <span class="tile-no">03</span>
+            <span class="tile-body">
+              <span class="tile-title">Auf&shy;frischung</span>
+              <span class="tile-text">Individueller Unterricht für alle, die länger nicht mehr gefahren sind.</span>
+              <span class="tile-price">Für Wiedereinsteiger</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile tile-yellow reveal" href="#" data-soon="Kontakt">
+            <span class="tile-no">04</span>
+            <span class="tile-body">
+              <span class="tile-title">Frage&shy;bogen&shy;training</span>
+              <span class="tile-text">Dienstags für die Theorieprüfung üben. Jetzt anmelden.</span>
+              <span class="tile-price">Theorie</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Etappen -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>In 5 Etappen<br>zum <em>Ausweis.</em></h2>
+          <a class="link-arrow" href="#" data-soon="Fahrstunden">Ganzer Ablauf <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="stages">
+          <li class="reveal"><span class="stage-no">01</span><h3>Nothelfer und Sehtest</h3><p>Beides braucht es für das Gesuch um den Lernfahrausweis.</p></li>
+          <li class="reveal"><span class="stage-no">02</span><h3>Theorie&shy;prüfung</h3><p>Gezielt üben mit dem Fragebogentraining am Dienstag.</p></li>
+          <li class="reveal"><span class="stage-no">03</span><h3>Lernfahr&shy;ausweis</h3><p>Ab 17 Jahren. Ab jetzt wird mit Begleitung geübt.</p></li>
+          <li class="reveal"><span class="stage-no">04</span><h3>Fahrstunden und VKU</h3><p>Im Mercedes mit Sebastian Wittwer, dazu die Verkehrskunde.</p></li>
+          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>Prüfung</h3><p>Bestanden! Danach gibt es den Ausweis auf Probe.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Fahrzeuge -->
+    <section class="moto">
+      <div class="moto-media">
+        <img src="../assets/img/fahrzeug-haube.webp" width="1000" height="760" loading="lazy" alt="Motorhaube des Fahrschulautos mit dem Schriftzug Fahrschule Wittwer Vordemwald">
+      </div>
+      <div class="moto-text reveal">
+        <p class="label">Fahrzeuge</p>
+        <h2>Schwarz. Gelb.<br><em>Mercedes.</em></h2>
+        <p class="moto-lead">Die Fahrschule ist mit einer Mercedes A-Klasse und einem Chevrolet Orlando unterwegs. Gelernt wird mit Handschaltung.</p>
+        <dl class="facts">
+          <div><dt>Kategorie</dt><dd>B, Handschaltung</dd></div>
+          <div><dt>Fahrzeug</dt><dd>Mercedes A-Klasse</dd></div>
+          <div><dt>Fahrzeug</dt><dd>Chevrolet Orlando</dd></div>
+          <div><dt>Versicherung</dt><dd>Einmalig CHF 80.–</dd></div>
+        </dl>
+        <div class="highlight">
+          <strong>Treffpunkt</strong>
+          <span>Langenthalerstrasse 36, 4803 Vordemwald. Fahrstunden in Vordemwald und Umgebung.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preise -->
+    <section class="sec sec-light">
+      <div class="wrap price-wrap">
+        <div class="sec-head sec-head-stack reveal">
+          <h2>Klare <em>Preise.</em></h2>
+          <p>Alle Preise in Franken. Fragen dazu beantwortet Sebastian Wittwer gerne am Telefon.</p>
+          <a class="link-arrow" href="#" data-soon="Preise">Alle Preise <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <div class="reveal">
+          <ul class="pricelist">
+            <li><span class="pl-name">Fahrlektion Kat. B<small>Auto mit Handschaltung</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>83 / 85</span></li>
+            <li><span class="pl-name">Fahrberatung<small>Individuelle Fahrstilberatung</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>85</span></li>
+            <li><span class="pl-name">Verkehrskunde VKU<small>Obligatorischer Kurs</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>230</span></li>
+            <li><span class="pl-name">Fahrzeugversicherung<small>einmalig</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>80</span></li>
+          </ul>
+          <p class="pl-note">Preise gemäss bisherigem Eintrag, Änderungen vorbehalten.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fahrlehrer -->
+    <section class="sec sec-dark">
+      <div class="wrap team">
+        <div class="team-photo reveal">
+          <div class="team-badge">
+            <img src="../assets/img/logo-gross.webp" width="560" height="499" loading="lazy" alt="Logo der Fahrschule Wittwer Vordemwald">
+          </div>
+        </div>
+        <div class="team-text reveal">
+          <p class="label">Ihr Fahrlehrer</p>
+          <h2>Sebastian <em>Wittwer.</em></h2>
+          <p class="team-lead">Inhaber und Fahrlehrer der Fahrschule Wittwer. Er unterrichtet selbst, individuell und mit Fokus auf Sicherheit.</p>
+          <figure class="quote">
+            <div class="stars" aria-label="5 von 5 Sternen">
+              <svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-star"/></svg>
+            </div>
+            <blockquote>«Sehr freundlich, man fährt einen Mercedes und seine Erklärungen sind sehr verständlich. Für mich ist Herr Wittwer ein sehr guter Fahrlehrer und ich kann ihn mit gutem Gewissen weiterempfehlen.»</blockquote>
+            <figcaption>Joel Z., Bewertung auf einem Vergleichsportal</figcaption>
+          </figure>
+          <ul class="contacts">
+            <li><span>Natel</span><a href="tel:+41792794829">079 279 48 29</a></li>
+            <li><span>E-Mail</span><a class="contact-mail" href="mailto:info@fahrschulewittwer.ch">info@fahrschulewittwer.ch</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Bereit zum<br>Losfahren?</h2>
+        <div class="cta-side">
+          <a class="cta-phone" href="tel:+41792794829">079 279 48 29</a>
+          <p>Anrufen oder eine E-Mail schreiben. Treffpunkt ist an der Langenthalerstrasse 36 in Vordemwald.</p>
+          <a class="btn btn-black btn-lg" href="mailto:info@fahrschulewittwer.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail schreiben</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="logo" href="./" aria-label="Fahrschule Wittwer, Startseite">
+          <img src="../assets/img/logo-badge.webp" alt="" width="240" height="214" loading="lazy">
+          <span class="logo-text">Fahrschule Wittwer<small>Vordemwald</small></span>
+        </a>
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <p>Fahrschule Wittwer<br>Langenthalerstrasse 36<br>4803 Vordemwald AG</p>
+        <a class="route" href="https://www.google.com/maps/search/?api=1&amp;query=Langenthalerstrasse%2036%2C%204803%20Vordemwald" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-map-pin"/></svg> Route planen</a>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+41792794829">079 279 48 29</a><br><a href="mailto:info@fahrschulewittwer.ch">info@fahrschulewittwer.ch</a></p>
+      </div>
+      <div>
+        <h3>Angebot</h3>
+        <ul>
+          <li><a href="#" data-soon="Fahrstunden">Fahrstunden Kat. B</a></li>
+          <li><a href="#" data-soon="Kurse">Verkehrskunde</a></li>
+          <li><a href="#" data-soon="Fahrberatung">Fahrberatung</a></li>
+          <li><a href="#" data-soon="Auffrischung">Auffrischung</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Fahrschule Wittwer</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    </div>
+  </footer>
+</body>
+</html>

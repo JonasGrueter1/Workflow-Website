@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design B | Fahrschule Schelbert</title>
+  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Schelbert, Fahrschule für Auto und Motorrad in Trachslau, Einsiedeln.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0a0e17">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="b">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-certificate" viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5"/><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73"/><path d="M6 9l12 0"/><path d="M6 12l3 0"/><path d="M6 15l2 0"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+  </svg>
+
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="./" aria-label="Fahrschule Schelbert, Startseite">
+        <span class="wm" aria-hidden="true"><span class="wm-s">S</span>che<span class="wm-l">L</span>bert</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#" data-soon="Auto">Auto</a></li>
+          <li><a href="#" data-soon="Motorrad">Motorrad</a></li>
+          <li><a href="#" data-soon="Kurse">Kurse</a></li>
+          <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
+        <a class="btn btn-blue nav-cta" href="#" data-soon="Anmeldung Fahrstunden und Kurse">Anmelden</a>
+        <a class="btn btn-glass nav-call" href="tel:+41792375013"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 237 50 13</a>
+      </nav>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Fahrschule Schelbert&nbsp;· Trachslau&nbsp;SZ</p>
+        <h1>Auto.<br>Motorrad.<br><em>Einsiedeln.</em></h1>
+        <div class="hero-side">
+          <p class="hero-lead">Fahrstunden mit Bruno Schelbert, Fahrlehrer seit 1997. Mit Handschaltung oder Automat, Lektionen à 50 Minuten und Motorrad-Grundkurs in der Gruppe.</p>
+          <div class="hero-cta">
+            <a class="btn btn-blue btn-lg" href="#" data-soon="Anmeldung Fahrstunden und Kurse">Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <a class="btn btn-glass btn-lg" href="tel:+41792375013"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 237 50 13</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-media">
+        <picture>
+          <source media="(max-width: 760px)" srcset="../assets/img/flotte-mobil.webp">
+          <img src="../assets/img/flotte.webp" width="1920" height="634" fetchpriority="high"
+               alt="Fahrschulautos und Motorräder der Fahrschule Schelbert vor dem Haus">
+        </picture>
+      </div>
+      <div class="hero-stats">
+        <div class="wrap">
+          <ul>
+            <li><strong>1 Mio.</strong><span>Fahrschul-<br>kilometer</span></li>
+            <li><strong>50</strong><span>Minuten pro<br>Fahrlektion</span></li>
+            <li><strong>2</strong><span>Autos: Schaltung<br>und Automat</span></li>
+            <li><strong>6</strong><span>Tage pro Woche<br>Fahrstunden</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="road" aria-hidden="true"></div>
+
+    <!-- Klassen -->
+    <section class="sec sec-dark">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Wählen Sie<br>Ihre <em>Klasse.</em></h2>
+          <p>Ob vier Räder oder zwei: Bei Bruno Schelbert lernen Sie sicher fahren, mit einem Fahrlehrer, der Sie persönlich kennt.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile reveal" href="#" data-soon="Auto">
+            <img src="../assets/img/hero-a-800.webp" width="800" height="600" loading="lazy" alt="Fahrschulauto BMW 218i Gran Coupé">
+            <span class="tile-tag">Kat. B</span>
+            <span class="tile-body">
+              <span class="tile-title">Auto</span>
+              <span class="tile-text">Handschaltung im BMW 218i oder Automat im Seat Ibiza.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Motorrad">
+            <img src="../assets/img/kachel-motorrad.webp" width="690" height="518" loading="lazy" alt="Zwei Motorräder vor der Fahrschule">
+            <span class="tile-tag">Kat. A1 · A</span>
+            <span class="tile-body">
+              <span class="tile-title">Motorrad</span>
+              <span class="tile-text">Grundkurs in der Gruppe, Mietmotorrad für Kat. A beschränkt.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+          <a class="tile reveal" href="#" data-soon="Kurse">
+            <img src="../assets/img/kachel-vku.webp" width="600" height="450" loading="lazy" alt="Cockpit eines Fahrschulautos">
+            <span class="tile-tag">VKU</span>
+            <span class="tile-body">
+              <span class="tile-title">Verkehrskunde</span>
+              <span class="tile-text">8 Lektionen Gefahrenlehre. Nächster Kurs: 23. und 25. November.</span>
+            </span>
+            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Erfolgsquote -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Beim ersten Mal<br><em>bestehen.</em></h2>
+          <p>Das Ziel: Sie möglichst beim ersten Mal durch die Führerprüfung bringen. Der Vergleich zeigt, wie viele Prüfungen beim ersten Versuch nicht bestanden wurden.</p>
+        </div>
+        <div class="score">
+          <div class="score-col reveal">
+            <p class="score-cat">Auto · Kat. B</p>
+            <div class="score-row score-us"><strong>14<small>%</small></strong><span class="score-bar"><span style="--v: 14"></span></span><span class="score-name">Fahrschule Schelbert</span></div>
+            <div class="score-row"><strong>32<small>%</small></strong><span class="score-bar"><span style="--v: 32"></span></span><span class="score-name">Kanton Schwyz</span></div>
+          </div>
+          <div class="score-col reveal">
+            <p class="score-cat">Motorrad · Kat. A und A1</p>
+            <div class="score-row score-us"><strong>12<small>%</small></strong><span class="score-bar"><span style="--v: 12"></span></span><span class="score-name">Fahrschule Schelbert</span></div>
+            <div class="score-row"><strong>32<small>%</small></strong><span class="score-bar"><span style="--v: 32"></span></span><span class="score-name">Kanton Schwyz</span></div>
+          </div>
+        </div>
+        <p class="score-src reveal"><svg class="i" aria-hidden="true"><use href="#i-certificate"/></svg> Beim ersten Mal nicht bestandene Führerprüfungen, Durchschnitt der letzten 10 Jahre. Bestätigt durch Zertifikat vom Verkehrsamt.</p>
+      </div>
+    </section>
+
+    <!-- Motorrad -->
+    <section class="moto">
+      <div class="wrap moto-grid">
+        <div class="moto-text reveal">
+          <p class="label">Motorrad</p>
+          <h2>Zwei Räder.<br><em>Volle Kontrolle.</em></h2>
+          <p class="moto-lead">Motorrad ist für Bruno Schelbert nicht nur Beruf, sondern auch Hobby. Im Grundkurs üben Sie in der Gruppe, Fahrstunden gibt es in der Gruppe, zu zweit oder einzeln.</p>
+          <table class="spec">
+            <tr><th scope="row">Grundkurs</th><td>12 Lektionen, Gruppe ab 3 Personen</td><td>CHF 648</td></tr>
+            <tr><th scope="row">Gruppe</th><td>Lektion à 50 Min., ab 3 Personen</td><td>CHF 54</td></tr>
+            <tr><th scope="row">Zu zweit</th><td>Lektion à 50 Min.</td><td>CHF 64</td></tr>
+            <tr><th scope="row">Einzeln</th><td>Lektion à 50 Min.</td><td>CHF 94</td></tr>
+          </table>
+          <p class="moto-incl">Beim Grundkurs sind Grundkursbestätigung, Prüfungsanmeldung und Versicherung inklusive.</p>
+        </div>
+        <div class="rent reveal">
+          <div class="rent-media">
+            <img src="../assets/img/honda.webp" width="403" height="302" loading="lazy" alt="Mietmotorrad Honda CB 500 FA ABS">
+            <span class="tile-tag">Mietmotorrad</span>
+          </div>
+          <div class="rent-body">
+            <strong>Honda CB 500 FA ABS</strong>
+            <span>Für Kat. A beschränkt: 471 ccm, 35 kW (48 PS) und eine niedrige Sitzhöhe.</span>
+            <ul class="rent-prices">
+              <li><b>70</b>CHF ½ Tag</li>
+              <li><b>100</b>CHF 1 Tag</li>
+              <li><b>180</b>CHF 2 Tage</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Etappen -->
+    <section class="sec sec-light">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>In 5 Etappen<br>zum <em>Ausweis.</em></h2>
+          <a class="link-arrow" href="#" data-soon="Der schnellste Weg zum Führerschein">Der schnellste Weg <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ol class="stages">
+          <li class="reveal"><span class="stage-no">01</span><h3>Nothelferkurs</h3><p>Geht schon vor dem Mindestalter und ist 6 Jahre gültig.</p></li>
+          <li class="reveal"><span class="stage-no">02</span><h3>Lernfahrausweis</h3><p>Gesuch mit Augentest bis 2 Monate vor dem Mindestalter einreichen.</p></li>
+          <li class="reveal"><span class="stage-no">03</span><h3>Theorieprüfung</h3><p>Beim Verkehrsamt in Pfäffikon oder in Schwyz.</p></li>
+          <li class="reveal"><span class="stage-no">04</span><h3>Fahrstunden und VKU</h3><p>Montag bis Samstag, 7.30 bis 21 Uhr, dazu 8 Lektionen Verkehrskunde.</p></li>
+          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>Prüfung</h3><p>Rund 45 Minuten. Danach 3 Jahre auf Probe.</p></li>
+        </ol>
+        <p class="stage-tip reveal"><strong>Wichtig:</strong> Wer mit 18 an die Autoprüfung will, braucht den Lernfahrausweis schon mit 17. Er muss mindestens ein Jahr im Besitz sein, ab 20 Jahren entfällt diese Frist.</p>
+      </div>
+    </section>
+
+    <!-- Preise -->
+    <section class="sec sec-dark sec-prices">
+      <div class="wrap price-wrap">
+        <div class="sec-head sec-head-stack reveal">
+          <h2>Klare <em>Preise.</em></h2>
+          <p>Bezahlen per Einzahlungsschein, E-Banking oder bar. Fahrlektionen bitte mindestens 24 Stunden im Voraus abmelden.</p>
+          <a class="link-arrow" href="#" data-soon="Preise">Alle Preise <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <ul class="pricelist reveal">
+          <li><span class="pl-name">Fahrlektion Auto<small>Einzellektion à 50 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>98</span></li>
+          <li><span class="pl-name">Im 10er-Abo<small>pro Lektion à 50 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>94</span></li>
+          <li><span class="pl-name">Versicherung<small>obligatorisch</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>100</span></li>
+          <li><span class="pl-name">Verkehrskunde VKU<small>8 Lektionen</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>250</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Fahrlehrer -->
+    <section class="sec sec-light">
+      <div class="wrap team">
+        <div class="team-photo reveal">
+          <img src="../assets/img/bruno.webp" width="800" height="954" loading="lazy" alt="Porträt von Bruno Schelbert">
+        </div>
+        <div class="team-text reveal">
+          <p class="label">Ihr Fahrlehrer</p>
+          <h2>Bruno <em>Schelbert.</em></h2>
+          <p class="team-lead">Gelernter Automechaniker, seit 1997 Fahrlehrer für Auto und später auch für Motorrad. Privat fährt er eine Suzuki GSX-R 1000 und ist ab und zu auf Rennstrecken wie Hockenheim, Brünn, Barcelona oder Mugello unterwegs.</p>
+          <ul class="contacts">
+            <li><span>Natel</span><a href="tel:+41792375013">079 237 50 13</a></li>
+            <li><span>E-Mail</span><a class="contacts-mail" href="mailto:info@fahrschule-einsiedeln.ch">info@fahrschule-einsiedeln.ch</a></li>
+            <li><span>Fahrstunden</span><b>Mo bis Sa, 7.30 bis 21 Uhr</b></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Bereit zum<br>Losfahren?</h2>
+        <div class="cta-side">
+          <a class="cta-phone" href="tel:+41792375013">079 237 50 13</a>
+          <p>Rufen Sie an oder melden Sie sich online an für Fahrstunden, den Motorrad-Grundkurs oder den nächsten VKU.</p>
+          <a class="btn btn-black btn-lg" href="#" data-soon="Anmeldung Fahrstunden und Kurse">Online anmelden <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div>
+        <span class="wm" role="img" aria-label="Fahrschule Schelbert"><span class="wm-s">S</span>che<span class="wm-l">L</span>bert</span>
+        <p class="footer-claim">Fahrschule für Auto und Motorrad</p>
+      </div>
+      <div>
+        <h3>Adresse</h3>
+        <p>Fahrschule Schelbert<br>Trachslauerstrasse 4b<br>8840 Trachslau</p>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+41792375013">079 237 50 13</a><br><a href="mailto:info@fahrschule-einsiedeln.ch">info@fahrschule-einsiedeln.ch</a></p>
+      </div>
+      <div>
+        <h3>Fahrstunden</h3>
+        <p>Montag bis Samstag<br>7.30 bis 21 Uhr</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© 2026 Fahrschule Schelbert</p>
+      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="AGB">AGB</a></p>
+    </div>
+  </footer>
+</body>
+</html>

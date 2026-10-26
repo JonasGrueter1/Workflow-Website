@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wunschliste | Neue Website Fahrschule Thomas Berglas</title>
+  <meta name="description" content="Wählen Sie Design, Seiten und Funktionen für die neue Website der Fahrschule Thomas Berglas.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2f8346">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/shared/basis.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"/><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"/><path d="M7 15a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2l0 -4"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11"/><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="../">
+        <span class="wm" role="img" aria-label="Fahrschule Thomas Berglas"><span class="wm-l"></span><span class="wm-txt"><b>Berglas</b><small>Fahrschule</small></span></span>
+        <span>Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="../">Übersicht</a>
+        <a href="../design-a/" target="_blank" rel="noopener">Design A</a>
+        <a href="../design-b/" target="_blank" rel="noopener">Design B</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <p class="kicker">Wunschliste</p>
+      <h1>Ihre Wunschliste für die neue Website</h1>
+      <p>Wählen Sie Ihr Lieblingsdesign und die Seiten und Funktionen, die Sie sich wünschen. Der Preis rechnet automatisch mit und gilt für die ganze neue Website mit allen gewählten Seiten, nicht nur für die Startseite. Am Schluss senden Sie mir Ihre Auswahl mit einem Klick.</p>
+    </div>
+
+    <div class="layout">
+      <form class="wish" id="wish" novalidate>
+
+        <!-- 1 Design -->
+        <section class="block" aria-labelledby="h-design">
+          <div class="block-head">
+            <span class="block-no">1</span>
+            <div>
+              <h2 id="h-design">Welches Design gefällt Ihnen?</h2>
+              <p>Mit «Ansehen» öffnet sich das Design in einem neuen Fenster.</p>
+            </div>
+          </div>
+          <div class="designs" id="designs">
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design A: Klar und freundlich">
+                <img src="../assets/img/vorschau-a.webp" width="960" height="600" alt="Vorschau Design A">
+                <span class="design-text"><strong>Design A</strong><span>Klar und freundlich</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-a/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design B: Sportlich und markant">
+                <img src="../assets/img/vorschau-b.webp" width="960" height="600" alt="Vorschau Design B">
+                <span class="design-text"><strong>Design B</strong><span>Sportlich und markant</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-b/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+          </div>
+          <label class="opt opt-mix">
+            <input type="radio" name="design" value="Mischung aus beiden, gerne besprechen">
+            <span class="opt-box opt-box-round" aria-hidden="true"></span>
+            <span class="opt-text"><strong>Eine Mischung aus beiden</strong><small>Zum Beispiel die hellen Farben von A mit dem Golf-oder-Cupra-Einstieg von B. Das besprechen wir dann gemeinsam.</small></span>
+          </label>
+          <p class="error" id="design-error" hidden>Bitte wählen Sie ein Design aus.</p>
+        </section>
+
+        <!-- 2 Grundpaket -->
+        <section class="block" aria-labelledby="h-base">
+          <div class="block-head">
+            <span class="block-no">2</span>
+            <div>
+              <h2 id="h-base">Grundpaket</h2>
+              <p>Ist immer dabei, damit die Website sauber funktioniert.</p>
+            </div>
+          </div>
+          <ul class="base" id="base">
+            <li data-hours="6"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Konzept und zwei Designentwürfe</span><span class="cost">CHF 270.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ausarbeitung des gewählten Designs</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Startseite</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Texte und Bilder übernehmen und aufbereiten</span><span class="cost">CHF 225.00</span></li>
+            <li data-hours="1.5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Datenschutz und Impressum</span><span class="cost">CHF 67.50</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Optimiert für Smartphone, Tablet und Computer</span><span class="cost">CHF 135.00</span></li>
+            <li data-hours="2"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Aufschalten, Domain und Hosting einrichten</span><span class="cost">CHF 90.00</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Einführung und eine Korrekturrunde</span><span class="cost">CHF 135.00</span></li>
+          </ul>
+        </section>
+
+        <!-- 3 Seiten -->
+        <section class="block" aria-labelledby="h-pages">
+          <div class="block-head">
+            <span class="block-no">3</span>
+            <div>
+              <h2 id="h-pages">Welche Seiten wünschen Sie?</h2>
+              <p>Vorausgewählt sind die Seiten, die Ihre bisherige Website schon hat.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Seiten">
+            <label class="opt"><input type="checkbox" name="seite" value="Über mich" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Über mich</strong><small>Ausbildung, Charakter und Hobbys, dazu Ihre Fotos</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Fahrzeuge: VW Golf und Cupra Born" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Fahrzeuge: VW Golf und Cupra Born</strong><small>Beide Fahrschulautos mit Daten, Fotos und Ihren Gründen für die Wahl</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Eco-Drive" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Eco-Drive</strong><small>Die vier goldenen Regeln und die Spar-Tipps rund ums Auto</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Preise und Abos" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Preise und Abos</strong><small>Lektionen, Abos Gold, Silber und Bronze, FlexRabatt, auch auf dem Smartphone gut lesbar</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kontakt" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kontakt</strong><small>Adresse, Telefonnummern zum Antippen und E-Mail</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Verkehrskunde VKU" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Verkehrskunde VKU</strong><small>Infos zum VKU und wie man sich bei Ihnen dafür meldet</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Gleitschirmflüge" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Gleitschirmflüge</strong><small>Ihre Doppelflüge und Gutscheine, heute nicht im Menü verlinkt</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Häufige Fragen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Häufige Fragen</strong><small>Antworten auf die Fragen, die Fahrschüler und Eltern am meisten stellen</small></span><span class="cost">CHF 90.00</span></label>
+          </div>
+        </section>
+
+        <!-- 4 Funktionen -->
+        <section class="block" aria-labelledby="h-features">
+          <div class="block-head">
+            <span class="block-no">4</span>
+            <div>
+              <h2 id="h-features">Welche Funktionen wünschen Sie?</h2>
+              <p>Extras, die Ihren Fahrschülern das Leben leichter machen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Funktionen">
+            <label class="opt"><input type="checkbox" name="funktion" value="Online-Anmeldung" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Online-Anmeldung</strong><small>Anmeldung für Fahrstunden, VKU und Theorie, kommt direkt per E-Mail zu Ihnen</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Optimierung" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Optimierung</strong><small>Damit man Sie bei «Fahrschule Reiden» oder «Fahrschule Zofingen» gut findet</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Gutschein-Bestellung" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Gutschein-Bestellung</strong><small>Gutscheine mit Betrag und Angebot direkt online bestellen</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Kostenrechner" data-hours="4"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kostenrechner</strong><small>Einzellektionen und Abos vergleichen, Kosten auf einen Blick</small></span><span class="cost">CHF 180.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Video auf der Startseite" data-hours="1"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Video auf der Startseite</strong><small>Ihr Fahrschul-Video, sauber eingebunden und auf dem Smartphone gut abspielbar</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Fotogalerie" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Fotogalerie</strong><small>Ihre Fotos von Golf und Cupra als Galerie zum Durchwischen</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Kundenstimmen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kundenstimmen</strong><small>Echte Bewertungen Ihrer Fahrschüler, zum Beispiel von Google</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="WhatsApp-Button" data-hours="1"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>WhatsApp-Button</strong><small>Fahrschüler schreiben Ihnen mit einem Tipp auf WhatsApp</small></span><span class="cost">CHF 45.00</span></label>
+          </div>
+        </section>
+
+        <!-- 5 Weitere Angaben -->
+        <section class="block" aria-labelledby="h-more">
+          <div class="block-head">
+            <span class="block-no">5</span>
+            <div>
+              <h2 id="h-more">Noch ein paar Fragen</h2>
+              <p>Damit ich gut planen kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-when">Wann soll die neue Website online sein?</label>
+              <select id="f-when" name="termin">
+                <option>So bald wie möglich</option>
+                <option>Bis Ende 2026</option>
+                <option>Bis Frühling 2027</option>
+                <option>Kein fester Termin</option>
+              </select>
+            </div>
+            <fieldset class="field">
+              <legend>Fotos</legend>
+              <label class="mini"><input type="radio" name="fotos" value="Vorhandene Fotos verwenden" checked> Vorhandene Fotos verwenden</label>
+              <label class="mini"><input type="radio" name="fotos" value="Ich liefere neue Fotos"> Ich liefere neue Fotos</label>
+              <label class="mini"><input type="radio" name="fotos" value="Neue Fotos wären schön, bitte beraten"> Neue Fotos wären schön, bitte beraten</label>
+            </fieldset>
+            <div class="field field-full">
+              <label for="f-notes">Weitere Wünsche oder Bemerkungen</label>
+              <textarea id="f-notes" name="bemerkungen" rows="4" placeholder="Was ist Ihnen sonst noch wichtig?"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 Kontakt -->
+        <section class="block" aria-labelledby="h-contact">
+          <div class="block-head">
+            <span class="block-no">6</span>
+            <div>
+              <h2 id="h-contact">Ihre Kontaktangaben</h2>
+              <p>Damit ich mich bei Ihnen melden kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telefon</label>
+              <input id="f-phone" name="telefon" type="tel" autocomplete="tel">
+            </div>
+            <div class="field field-full">
+              <label for="f-mail">E-Mail</label>
+              <input id="f-mail" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <aside class="summary" id="summary" aria-labelledby="h-summary">
+        <h2 id="h-summary">Ihre Auswahl</h2>
+        <dl class="sum-lines">
+          <div><dt>Design</dt><dd id="s-design" class="sum-design">noch nicht gewählt</dd></div>
+          <div><dt>Grundpaket</dt><dd id="s-base">CHF 1’282.50</dd></div>
+          <div><dt>Seiten <span id="s-pages-n">(5)</span></dt><dd id="s-pages">CHF 495.00</dd></div>
+          <div><dt>Funktionen <span id="s-feat-n">(2)</span></dt><dd id="s-feat">CHF 247.50</dd></div>
+        </dl>
+        <div class="sum-total">
+          <span>Total</span>
+          <strong id="s-total">CHF 2’025.00</strong>
+        </div>
+        <p class="sum-hours"><span id="s-hours">45</span> Stunden à CHF 45</p>
+        <div class="sum-actions no-print">
+          <button class="btn btn-main btn-block" type="submit" form="wish">Auswahl senden <svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+          <button class="btn btn-line btn-block" type="button" id="print"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg> Drucken oder als PDF</button>
+        </div>
+        <div class="status" id="status" role="status" aria-live="polite" hidden></div>
+        <p class="sum-note">Alle Preise sind unverbindliche Richtpreise. Zusätzliche Wünsche berechne ich mit CHF 45 pro Stunde.</p>
+        <p class="sum-note">Beim Senden werden Ihre Angaben über den Dienst Web3Forms per E-Mail an mich übermittelt und nur für dieses Projekt verwendet.</p>
+      </aside>
+    </div>
+  </main>
+
+  <div class="mbar no-print">
+    <span>Total <strong id="m-total">CHF 2’025.00</strong></span>
+    <a class="btn btn-main" href="#summary">Zur Auswahl</a>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Jonas Grüter Webdesign, Oktober 2026</span>
+      <a data-mail href="#">E-Mail an Jonas Grüter</a>
+    </div>
+  </footer>
+</body>
+</html>
