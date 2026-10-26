@@ -26,10 +26,8 @@
     .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
     .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
-    .option:nth-child(2) .shots { background: #1d1d1b; }
     .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(18 18 18 / 10%); }
     .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(18 18 18 / 30%); }
-    .option:nth-child(2) .shot-mob { border-color: #3a3a37; }
     .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
     .option-tag { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
     .option-tag::before { content: ""; width: 22px; height: 4px; border-radius: 3px; background: var(--accent); }
@@ -37,6 +35,22 @@
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
 
+    /* Farben passend zu den Designs: A Papier mit Leuchtstift, B Nachtfahrt */
+    .option-a .shots { background: #f6f0d8; }
+    .option-a .option-tag::before { display: none; }
+    .option-a .option-tag { padding: 2px 8px; margin-left: -4px; border-radius: 3px; background: linear-gradient(100deg, rgb(255 219 0 / 0) 0, #ffdb00 6%, #ffdb00 94%, rgb(255 219 0 / 0) 100%); transform: rotate(-1.2deg); align-self: flex-start; }
+    .option-a .chips li { background: #fff1a0; color: #111; }
+    .btn-tinte { background: #111; color: #ffdb00; }
+    .btn-tinte:hover { background: #000; color: #ffdb00; }
+    .option-b { background: #07080a; border-color: #23262b; }
+    .option-b .shots { background: #121417; }
+    .option-b .shot-mob { border-color: #2c3036; }
+    .option-b .option-tag { color: #ffdb00; }
+    .option-b .option-tag::before { box-shadow: 0 0 10px rgb(255 219 0 / 70%); }
+    .option-b h2 { color: #fff6d6; }
+    .option-b p { color: #c9c7bd; }
+    .option-b .chips li { background: #121417; border: 1px solid #2c3036; color: #fff6d6; }
+    .option-b .btn:focus-visible { outline-color: #ffdb00; }
     .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #d3cfc2; color: var(--ink-2); font-size: .975rem; }
     .note .i { color: var(--accent-text); width: 22px; height: 22px; margin-top: 2px; }
 
@@ -94,31 +108,31 @@
     </ol>
 
     <div class="options">
-      <article class="option">
+      <article class="option option-a">
         <a class="shots" href="design-a/" aria-label="Design A ansehen">
           <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
           <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, ruhig und übersichtlich. Viel Weissraum, runde Formen und das Gelb aus Ihrem Logo als Akzent. Wirkt nahbar und vertrauenswürdig, auch für Eltern und Wiedereinsteiger.</p>
-          <ul class="chips"><li>Hell</li><li>Freundlich</li><li>Vertrauensvoll</li></ul>
-          <a class="btn btn-accent" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Leuchtstift</h2>
+          <p>Helles Papier, klare schwarze Schrift und das Gelb Ihres W als Leuchtstift: Er markiert, was zählt, von «Vordemwald» über Ihre Preise bis zum Lob «seine Erklärungen sind sehr verständlich». Ruhig und gut lesbar, spricht auch Eltern und Wiedereinsteiger an.</p>
+          <ul class="chips"><li>Hell wie Papier</li><li>Leuchtstift</li><li>Gut erklärt</li></ul>
+          <a class="btn btn-tinte" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
+      <article class="option option-b">
         <a class="shots" href="design-b/" aria-label="Design B ansehen">
           <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
           <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Schwarz, kräftig und modern wie Ihr Fahrschulauto. Grosse, schräge Schrift wie in Ihrem Logo, Ihr Fahrschulauto gross im Bild und gelbe Strassenmarkierungen als Erkennungszeichen. Spricht junge Fahrschüler direkt an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Sportlich</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Nachtfahrt</h2>
+          <p>Dunkel wie eine Landstrasse bei Nacht: Der Scheinwerfer Ihres schwarzen Mercedes geht an, ein Lichtreflex gleitet über das gelbe W, und eine gelbe Leitlinie führt durch die Seite. Kräftig und modern, für junge Fahrschülerinnen und Fahrschüler.</p>
+          <ul class="chips"><li>Dunkel</li><li>Scheinwerfer</li><li>Gelbe Leitlinie</li></ul>
+          <a class="btn btn-accent" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>

@@ -33,6 +33,30 @@
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
 
+    /* Karten im Look des jeweiligen Designs */
+    @font-face { font-family: "SG A"; src: url("assets/fonts/a-space-grotesk-latin.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+    @font-face { font-family: "SM A"; src: url("assets/fonts/a-space-mono-700-latin.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+    @font-face { font-family: "TW B"; src: url("assets/fonts/b-titillium-900-latin.woff2") format("woff2"); font-weight: 900; font-display: swap; }
+    .opt-a .shots {
+      background-color: #f7f7f4;
+      background-image: linear-gradient(#e6e9f0 1px, transparent 1px), linear-gradient(90deg, #e6e9f0 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .opt-a .option-tag { display: inline-flex; align-items: center; gap: 10px; color: #0b0b0c; font-family: "SM A", ui-monospace, monospace; font-weight: 700; letter-spacing: .08em; }
+    .opt-a .option-tag::before { content: "L"; display: grid; place-items: center; width: 20px; height: 20px; background: #00318e; color: #fff; font-size: .75rem; letter-spacing: 0; }
+    .opt-a h2 { font-family: "SG A", "Manrope", sans-serif; font-weight: 700; letter-spacing: -.03em; }
+    .opt-a .chips li { border-radius: 0; background: #f7f7f4; box-shadow: inset 0 0 0 1px #d5d6d2; color: #2b2c2a; }
+    .btn-tinte { background: #0b0b0c; color: #fff; border-radius: 8px; }
+    .btn-tinte:hover { background: #00318e; color: #fff; }
+
+    .opt-b .shots { background: radial-gradient(520px 260px at 85% 0%, rgb(40 100 220 / 55%), transparent 70%), #00318e; }
+    .opt-b .shot-mob { border-color: #0b0b0c; }
+    .opt-b .option-tag { color: #00318e; font-family: "TW B", "Manrope", sans-serif; font-weight: 900; letter-spacing: .14em; }
+    .opt-b h2 { font-family: "TW B", "Manrope", sans-serif; font-weight: 900; letter-spacing: -.01em; color: #00318e; }
+    .opt-b .chips li { background: #e9effa; color: #00256b; }
+    .btn-koenig { background: #00318e; color: #fff; }
+    .btn-koenig:hover { background: #00256b; color: #fff; }
+
     .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #c9d2e3; color: var(--ink-2); font-size: .975rem; }
     .note .i { color: var(--accent); width: 22px; height: 22px; margin-top: 2px; }
 
@@ -88,31 +112,31 @@
     </ol>
 
     <div class="options">
-      <article class="option">
+      <article class="option opt-a">
         <a class="shots" href="design-a/" aria-label="Design A ansehen">
           <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
           <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, ruhig und übersichtlich. Viel Weissraum, runde Formen und das Blau aus Ihrem Logo als Akzent. Wirkt nahbar und schafft Vertrauen, auch bei Eltern.</p>
-          <ul class="chips"><li>Hell</li><li>Freundlich</li><li>Vertrauensvoll</li></ul>
-          <a class="btn btn-accent" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Kilometerstand</h2>
+          <p>Hell und präzise wie ein Datenblatt aus der Werkstatt. Ein Kilometerzähler rollt auf Ihre rund 1 Million Fahrschulkilometer, darunter folgen Ihre Prüfungsquote als Messprotokoll und Ihre Fahrzeuge als Datenblätter. Schafft Vertrauen, gerade auch bei Eltern.</p>
+          <ul class="chips"><li>Hell</li><li>Werkstatt-Datenblatt</li><li>Rollender Kilometerzähler</li></ul>
+          <a class="btn btn-tinte" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
+      <article class="option opt-b">
         <a class="shots" href="design-b/" aria-label="Design B ansehen">
           <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
           <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Dunkel, kraftvoll und modern. Grosse Schrift, Ihre ganze Flotte aus Autos und Motorrädern im Titelbild und Strassenmarkierungen als Erkennungszeichen. Spricht junge Fahrschüler direkt an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Sportlich</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Auto oder Motorrad</h2>
+          <p>Kräftig in Ihrem Logo-Blau und sportlich. Ein grosser Umschalter schwenkt die Kamera über Ihr Flottenfoto und wechselt Prüfungsquote, Preise und Fahrzeuge zwischen Auto und Motorrad. Spricht junge Fahrschüler direkt an.</p>
+          <ul class="chips"><li>Königsblau</li><li>Sportlich</li><li>Umschalter Auto / Motorrad</li></ul>
+          <a class="btn btn-koenig" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>

@@ -2,14 +2,15 @@
 <html lang="de-CH">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Design B | Fahrschule Hofstetter</title>
-  <meta name="description" content="Designvorschlag B für die Startseite der Fahrschule Hofstetter, Auto- und Motorradfahrschule in Kriens und der Region Luzern.">
+  <meta name="description" content="Fahrschule Hofstetter in Kriens: Fahrstunden für Auto und Motorrad in der Region Luzern mit Beat Hofstetter. Auto CHF 90.-, Motorrad CHF 85.- pro Fahrstunde.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#0b0c0e">
+  <meta name="theme-color" content="#0e0f11">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-  <link rel="preload" href="../assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/b-saira-latin-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/b-saira-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>document.documentElement.classList.add('js')</script>
@@ -19,236 +20,361 @@
 <body data-vorschau="b">
   <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
-    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-pfeil" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-pfeil-links" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></symbol>
+    <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
-    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
-    <symbol id="i-motorbike" viewBox="0 0 24 24"><path d="M2 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4"/><path d="M13 6h2l1.5 3l2 4"/></symbol>
-    <symbol id="i-chalkboard-teacher" viewBox="0 0 24 24"><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1"/><path d="M12 14a2 2 0 1 0 4.001 -.001a2 2 0 0 0 -4.001 .001"/><path d="M17 19a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2"/></symbol>
+    <symbol id="i-auto" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
+    <symbol id="i-moto" viewBox="0 0 24 24"><path d="M2 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4"/><path d="M13 6h2l1.5 3l2 4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
+    <symbol id="i-karo" viewBox="0 0 16 16"><path d="M0 0h4v4H0zM8 0h4v4H8zM4 4h4v4H4zM12 4h4v4h-4zM0 8h4v4H0zM8 8h4v4H8zM4 12h4v4H4zM12 12h4v4h-4z"/></symbol>
   </svg>
 
-  <header class="header">
-    <div class="wrap header-inner">
-      <a class="logo wm" href="./" aria-label="Fahrschule Hofstetter, Startseite">
-        <span class="wm-flag" aria-hidden="true"></span>
-        <span class="wm-txt" aria-hidden="true"><strong>Hofstetter</strong><small>Auto-Moto Fahrschule</small></span>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <header class="kopf">
+    <div class="wrap kopf-inner">
+      <a class="wm" href="./" aria-label="Fahrschule Hofstetter, zur Startseite">
+        <svg class="wm-karo" aria-hidden="true"><use href="#i-karo"/></svg>
+        <span class="wm-txt" aria-hidden="true">
+          <span class="wm-name">Hofstetter</span>
+          <svg class="wm-swoosh" viewBox="0 0 120 8" preserveAspectRatio="none"><path d="M0 8C34 4.6 74 1.8 120 0C80 3.2 42 6 6 8.6Z"/></svg>
+          <span class="wm-sub">Auto-Moto Fahrschule</span>
+        </span>
       </a>
-      <nav class="nav" id="nav" aria-label="Hauptnavigation">
-        <ul>
-          <li><a href="#" data-soon="Auto-Fahrschule">Auto</a></li>
-          <li><a href="#" data-soon="Motorrad-Fahrschule">Motorrad</a></li>
-          <li><a href="#" data-soon="Weg zum Ausweis">Weg zum Ausweis</a></li>
-          <li><a href="#" data-soon="Referenzen">Referenzen</a></li>
-          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
-        </ul>
-        <a class="btn btn-red nav-cta" href="tel:+41793417044"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 341 70 44</a>
+      <nav class="kopf-nav" aria-label="Hauptnavigation">
+        <a href="#startnummern">Auto und Motorrad</a>
+        <a href="#runde">Weg zum Ausweis</a>
+        <a href="#boxenfunk">Referenzen</a>
+        <a href="#ziel">Kontakt</a>
       </nav>
-      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
-        <span></span><span></span>
-      </button>
+      <a class="kopf-tel" href="tel:+41793417044" aria-label="Anrufen: 079 341 70 44">
+        <svg class="i" aria-hidden="true"><use href="#i-tel"/></svg><span class="kopf-tel-nr">079 341 70 44</span>
+      </a>
+      <a class="btn btn-rot kopf-cta" href="#ziel">Fahrstunde vereinbaren</a>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-art" aria-hidden="true">
-        <svg class="hero-swoosh" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet">
-          <path d="M40 560 C 120 380, 420 250, 900 196 C 560 262, 300 360, 230 560 Z" fill="#d51123"/>
+  <main id="main">
+    <!-- Hero: Startaufstellung -->
+    <section class="hero" aria-labelledby="hero-titel">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-glut"></div>
+        <div class="hero-licht"></div>
+        <div class="hero-karo"></div>
+        <div class="hero-streifen"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <svg class="hero-grid" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+          <path d="M-1939 1264L700 208M3379 1264L740 208M-720 1136L-280 850L370 850L216 1136M967 659L923 577L1301 577L1426 659M252 504L311 466L577 466L556 504M842 427L831 405L1036 405L1070 427M441 381L463 367L630 367L622 381M801 351L796 341L937 341L952 351M521 329L532 322L654 322L650 329M781 313L778 307L885 307L894 313M565 300L572 296L668 296L666 300M769 290L767 287L853 287L859 290M594 282L598 279L677 279L676 282M761 275L759 273L832 273L836 275M613 269L617 267L684 267L683 269M755 264L754 263L816 263L819 264"/>
         </svg>
-        <img class="hero-flag" src="../assets/img/zielflagge.svg" width="600" height="420" alt="">
       </div>
+
+      <div class="ampel" aria-hidden="true">
+        <span class="ampel-mast"></span><span class="ampel-mast"></span>
+        <div class="ampel-bruecke">
+          <span class="pod"><i class="lampe"></i><i class="lampe"></i></span>
+          <span class="pod"><i class="lampe"></i><i class="lampe"></i></span>
+          <span class="pod"><i class="lampe"></i><i class="lampe"></i></span>
+          <span class="pod"><i class="lampe"></i><i class="lampe"></i></span>
+          <span class="pod"><i class="lampe"></i><i class="lampe"></i></span>
+        </div>
+      </div>
+
       <div class="wrap hero-inner">
-        <p class="eyebrow">Auto &amp; Motorrad · Kriens LU</p>
-        <h1>Sicher<br>ans <em>Ziel.</em></h1>
-        <p class="hero-lead">Fahrstunden für Auto und Motorrad in der Region Luzern, persönlich mit Beat Hofstetter. Fürs Auto holt er dich auf Wunsch zuhause oder am Arbeitsplatz ab.</p>
+        <h1 id="hero-titel" class="hero-titel">
+          <span class="hero-kicker">Fahrschule Hofstetter, Kriens: Auto und Motorrad</span>
+          <span class="hero-haupt"><span class="hz">Sicher</span> <span class="hz">ans Ziel.</span></span>
+        </h1>
+        <svg class="hero-swoosh" viewBox="0 0 640 72" aria-hidden="true">
+          <defs>
+            <mask id="swoosh-maske" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="72">
+              <path class="swoosh-zug" d="M2 64C140 40 380 18 640 4" pathLength="1"/>
+            </mask>
+          </defs>
+          <path class="swoosh-form" mask="url(#swoosh-maske)" d="M8 58C120 31 360 15 636 5C400 20 172 40 42 66C22 70 3 67 8 58Z"/>
+        </svg>
+        <p class="hero-lead">Fahrstunden mit Beat Hofstetter in der Region Luzern. Fürs Auto holt er dich auf Wunsch zuhause oder am Arbeitsplatz ab.</p>
         <div class="hero-cta">
-          <a class="btn btn-red btn-lg" href="#" data-soon="Kontakt">Fahrstunde vereinbaren <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          <a class="btn btn-glass btn-lg" href="tel:+41793417044"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 341 70 44</a>
+          <a class="btn btn-rot btn-gross" href="tel:+41793417044">Fahrstunde vereinbaren <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          <a class="btn btn-linie btn-gross" href="tel:+41793417044"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg> 079 341 70 44</a>
         </div>
       </div>
-      <div class="hero-stats">
-        <div class="wrap">
-          <ul>
-            <li><strong>90.–</strong><span>CHF pro<br>Fahrstunde Auto</span></li>
-            <li><strong>85.–</strong><span>CHF pro<br>Fahrstunde Motorrad</span></li>
-            <li><strong>50</strong><span>Minuten pro<br>Fahrstunde</span></li>
-            <li><strong>17</strong><span>Jahre: Start<br>mit dem Auto</span></li>
-          </ul>
-        </div>
-      </div>
+      <div class="startlinie" aria-hidden="true"></div>
     </section>
 
-    <div class="checker" aria-hidden="true"></div>
-
-    <!-- Klassen -->
-    <section class="sec sec-dark">
+    <!-- Startnummern: Auto und Motorrad mit Preisen -->
+    <section id="startnummern" class="sek nummern" aria-labelledby="nummern-titel">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <h2>Wähle deine <em>Klasse.</em></h2>
-          <p>Vier Räder oder zwei: Beat Hofstetter bildet dich im Gebiet rund um Luzern aus, für Auto und Motorrad.</p>
-        </div>
-        <div class="tiles">
-          <a class="tile tile-red reveal" href="#" data-soon="Auto-Fahrschule">
-            <span class="tile-big" aria-hidden="true">B</span>
-            <svg class="tile-ico" aria-hidden="true"><use href="#i-car"/></svg>
-            <span class="tile-tag">Kat. B · BE</span>
-            <span class="tile-body">
-              <span class="tile-title">Auto</span>
-              <span class="tile-text">VW Golf mit Handschaltung oder Automat. Auch mit Anhänger.</span>
-            </span>
-            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-          </a>
-          <a class="tile tile-blue reveal" href="#" data-soon="Motorrad-Fahrschule">
-            <span class="tile-big" aria-hidden="true">A</span>
-            <svg class="tile-ico" aria-hidden="true"><use href="#i-motorbike"/></svg>
-            <span class="tile-tag">Kat. A · A1</span>
-            <span class="tile-body">
-              <span class="tile-title">Motorrad</span>
-              <span class="tile-text">Mit deinem eigenen Motorrad, Start an einem Ort deiner Wahl.</span>
-            </span>
-            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-          </a>
-          <a class="tile tile-dark reveal" href="#" data-soon="Weg zum Ausweis">
-            <span class="tile-chk" aria-hidden="true"></span>
-            <svg class="tile-ico" aria-hidden="true"><use href="#i-chalkboard-teacher"/></svg>
-            <span class="tile-tag">Theorie · VKU · WAB</span>
-            <span class="tile-body">
-              <span class="tile-title">Theorie &amp; Kurse</span>
-              <span class="tile-text">Persönlicher Lernplan, VKU in Luzern, WAB-Kurs in Ruswil.</span>
-            </span>
-            <span class="tile-arrow"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-          </a>
-        </div>
+        <header class="sek-kopf rv">
+          <p class="tag">Startnummern</p>
+          <h2 id="nummern-titel">Auto oder Motorrad.</h2>
+          <p class="sek-lead">Eine Fahrstunde dauert 50 Minuten. Der Tipp von Beat: Buche Doppellektionen, das verstärkt den Lerneffekt.</p>
+        </header>
+
+        <article class="nr nr-auto rv rv-links" aria-labelledby="nr-auto-titel">
+          <div class="nr-tafel">
+            <span class="nr-speed" aria-hidden="true"><i></i><i></i><i></i></span>
+            <p class="nr-schild">
+              <span class="nr-chf">CHF</span>
+              <span class="nr-zahl">90</span><span class="nr-strich">.<span class="nr-dash">-</span></span>
+              <span class="sr"> pro Fahrstunde</span>
+            </p>
+            <p class="nr-einheit">pro Fahrstunde à 50 Minuten</p>
+          </div>
+          <div class="nr-info">
+            <p class="nr-kat"><svg class="i" aria-hidden="true"><use href="#i-auto"/></svg> Kategorien B und BE</p>
+            <h3 id="nr-auto-titel">Auto</h3>
+            <ul class="nr-fakten">
+              <li>VW Golf mit Automat oder Handschaltung, auch abwechselnd</li>
+              <li>Start an der Frankenstrasse in Luzern oder Abholung am Arbeitsplatz oder zuhause</li>
+              <li>Mit der Kategorie BE ziehst du auch schwerere Anhänger</li>
+            </ul>
+            <a class="link" href="#" data-soon="Auto-Fahrschule">Zur Auto-Fahrschule <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          </div>
+        </article>
+
+        <article class="nr nr-moto rv rv-links" aria-labelledby="nr-moto-titel">
+          <div class="nr-tafel">
+            <span class="nr-speed" aria-hidden="true"><i></i><i></i><i></i></span>
+            <p class="nr-schild">
+              <span class="nr-chf">CHF</span>
+              <span class="nr-zahl">85</span><span class="nr-strich">.<span class="nr-dash">-</span></span>
+              <span class="sr"> pro Fahrstunde</span>
+            </p>
+            <p class="nr-einheit">pro Fahrstunde à 50 Minuten</p>
+          </div>
+          <div class="nr-info">
+            <p class="nr-kat"><svg class="i" aria-hidden="true"><use href="#i-moto"/></svg> Kategorien A, A beschränkt, A1</p>
+            <h3 id="nr-moto-titel">Motorrad</h3>
+            <ul class="nr-fakten">
+              <li>Du fährst dein eigenes Motorrad, damit absolvierst du auch die Prüfung</li>
+              <li>Die Fahrstunde startet an einem Ort deiner Wahl</li>
+              <li>Grundkurs: Termine gibt dir Beat gerne auf Anfrage bekannt</li>
+            </ul>
+            <a class="link" href="#" data-soon="Motorrad-Fahrschule">Zur Motorrad-Fahrschule <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          </div>
+        </article>
       </div>
     </section>
 
-    <!-- Etappen -->
-    <section class="sec sec-light">
+    <!-- Die Runde zum Ausweis -->
+    <section id="runde" class="sek runde" aria-labelledby="runde-titel">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <h2>In 5 Etappen<br>ans <em>Ziel.</em></h2>
-          <a class="link-arrow" href="#" data-soon="Weg zum Ausweis">Ganzer Ablauf <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <header class="sek-kopf runde-kopf rv">
+          <p class="tag">Weg zum Ausweis</p>
+          <h2 id="runde-titel">Deine Runde zum Ausweis.</h2>
+          <p class="sek-lead">Fünf Sektoren bis zur Zielflagge, danach eine Ehrenrunde. Beat Hofstetter begleitet dich auf der ganzen Strecke.</p>
+        </header>
+
+        <div class="strecke" data-strecke>
+          <svg class="strecke-svg" aria-hidden="true">
+            <path class="strecke-bahn"/>
+            <path class="strecke-mitte"/>
+            <path class="strecke-linie"/>
+            <path class="strecke-ehren-bahn"/>
+            <path class="strecke-ehren"/>
+            <defs><pattern id="karo-start" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#f5f5f5"/><path d="M0 0h3v3H0zM3 3h3v3H3z" fill="#0e0f11"/></pattern></defs>
+            <rect class="strecke-start" x="-3" y="-12" width="6" height="24" fill="url(#karo-start)"/>
+            <g class="strecke-punkt"><circle r="11" class="punkt-halo"/><circle r="5.5" class="punkt-kern"/></g>
+          </svg>
+          <ol class="sektoren">
+            <li class="sektor" data-sektor>
+              <span class="sektor-mk" aria-hidden="true"></span>
+              <p class="sektor-nr">S1</p>
+              <h3>Nothilfekurs</h3>
+              <p>Voraussetzung für die Theorieprüfung. Empfehlung: die Kurse des Schweizerischen Roten Kreuzes.</p>
+            </li>
+            <li class="sektor" data-sektor>
+              <span class="sektor-mk" aria-hidden="true"></span>
+              <p class="sektor-nr">S2</p>
+              <h3>Theorieprüfung</h3>
+              <p>Beat erstellt dir einen Lernplan nach deinen Wünschen, gelernt wird mit der App.</p>
+            </li>
+            <li class="sektor" data-sektor>
+              <span class="sektor-mk" aria-hidden="true"></span>
+              <p class="sektor-nr">S3</p>
+              <h3>Verkehrskunde</h3>
+              <p>Der VKU: vier Abende à zwei Stunden im Theorielokal in Luzern, parallel zu den Fahrstunden.</p>
+            </li>
+            <li class="sektor" data-sektor>
+              <span class="sektor-mk" aria-hidden="true"></span>
+              <p class="sektor-nr">S4</p>
+              <h3>Fahrstunden</h3>
+              <p>Auto oder Motorrad, je 50 Minuten. Empfohlen sind Doppellektionen, sie verstärken den Lerneffekt.</p>
+            </li>
+            <li class="sektor sektor-ziel" data-sektor>
+              <span class="sektor-mk" aria-hidden="true"></span>
+              <p class="sektor-nr">Ziel</p>
+              <h3>Prüfung</h3>
+              <p>Die praktische Prüfung. Beim Motorrad fährst du sie auf deinem eigenen Motorrad.</p>
+              <svg class="flagge" viewBox="0 0 52 46" aria-hidden="true">
+                <defs><clipPath id="flagge-form"><path d="M6 4C16 0 26 8 36 4S48 1 50 3V27C40 31 30 23 20 27S8 30 6 28Z"/></clipPath></defs>
+                <path class="flagge-stange" d="M5 3V44"/>
+                <g class="flagge-tuch" clip-path="url(#flagge-form)">
+                  <rect x="5" y="0" width="46" height="31" fill="#f5f5f5"/>
+                  <path fill="#0e0f11" d="M5 0h7v7H5zM19 0h7v7h-7zM33 0h7v7h-7zM47 0h7v7h-7zM12 7h7v7h-7zM26 7h7v7h-7zM40 7h7v7h-7zM5 14h7v7H5zM19 14h7v7h-7zM33 14h7v7h-7zM47 14h7v7h-7zM12 21h7v7h-7zM26 21h7v7h-7zM40 21h7v7h-7zM5 28h7v7H5zM19 28h7v7h-7zM33 28h7v7h-7z"/>
+                </g>
+              </svg>
+            </li>
+            <li class="sektor sektor-ehren" data-sektor>
+              <span class="sektor-mk" aria-hidden="true"></span>
+              <p class="sektor-nr">Ehrenrunde</p>
+              <h3>WAB-Kurs</h3>
+              <p>Ein Tag im ersten Jahr nach der Prüfung, auf der Piste im WAB Zentrum Ruswil. Beat Hofstetter ist Mitgründer der <span class="nw">WAB-Zentralschweiz AG.</span></p>
+            </li>
+          </ol>
         </div>
-        <ol class="stages">
-          <li class="reveal"><span class="stage-no">01</span><h3>Nothilfekurs</h3><p>Voraussetzung für die Theorieprüfung, zum Beispiel beim Roten Kreuz.</p></li>
-          <li class="reveal"><span class="stage-no">02</span><h3>Theorie&shy;prüfung</h3><p>Mit einem Lernplan, den Beat nach deinen Wünschen erstellt.</p></li>
-          <li class="reveal"><span class="stage-no">03</span><h3>VKU</h3><p>Vier Abende à zwei Stunden im Theorielokal in Luzern.</p></li>
-          <li class="reveal"><span class="stage-no">04</span><h3>Fahrstunden</h3><p>Auto oder Motorrad, am besten als Doppellektion.</p></li>
-          <li class="reveal"><span class="stage-no stage-goal">05</span><h3>Prüfung &amp; WAB</h3><p>Bestanden! Im ersten Jahr folgt noch der WAB-Kurs.</p></li>
-        </ol>
+
+        <aside class="tafel rv" aria-labelledby="tafel-titel">
+          <p class="tafel-kopf" id="tafel-titel"><span>Seit 2021</span></p>
+          <dl class="tafel-zeilen">
+            <div><dt>17</dt><dd>Autofahren lernen ab 17 Jahren</dd></div>
+            <div><dt>12</dt><dd>Monate Lernphase bis zur Prüfung</dd></div>
+          </dl>
+          <p class="tafel-fuss">Ausbildungen und Theorieprüfungen bleiben unbefristet gültig.</p>
+        </aside>
       </div>
     </section>
 
-    <!-- Auto und Motorrad -->
-    <section class="duo">
-      <div class="duo-panel duo-red reveal">
-        <span class="duo-big" aria-hidden="true">B</span>
-        <p class="label">Auto-Fahrschule</p>
-        <h2>Hand oder<br><em>Automat.</em></h2>
-        <p class="duo-lead">Du wählst, ob du im VW Golf mit manuellem oder automatischem Getriebe fährst, auch abwechselnd. Beat empfiehlt sogar, mit beiden zu fahren.</p>
-        <table class="spec">
-          <tr><th scope="row">Kat.</th><td>B und BE, auch mit schwereren Anhängern</td></tr>
-          <tr><th scope="row">Start</th><td>Frankenstrasse, Luzern, oder Abholung zuhause oder am Arbeitsplatz</td></tr>
-          <tr><th scope="row">Preis</th><td>CHF 90.– pro Fahrstunde à 50 Minuten</td></tr>
-        </table>
-        <a class="link-arrow" href="#" data-soon="Auto-Fahrschule">Mehr zum Auto <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-      </div>
-      <div class="duo-panel duo-blue reveal">
-        <span class="duo-big" aria-hidden="true">A</span>
-        <p class="label">Motorrad-Fahrschule</p>
-        <h2>Dein Motorrad.<br><em>Deine Prüfung.</em></h2>
-        <p class="duo-lead">Du bringst dein eigenes Motorrad mit, denn damit absolvierst du auch die Prüfung. Die Fahrstunde startet an einem Ort deiner Wahl.</p>
-        <table class="spec">
-          <tr><th scope="row">Kat.</th><td>A und A1</td></tr>
-          <tr><th scope="row">Kurs</th><td>Grundkurs, Termine gibt dir Beat gerne auf Anfrage bekannt</td></tr>
-          <tr><th scope="row">Preis</th><td>CHF 85.– pro Fahrstunde à 50 Minuten</td></tr>
-        </table>
-        <a class="link-arrow" href="#" data-soon="Motorrad-Fahrschule">Mehr zum Motorrad <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-      </div>
-    </section>
+    <!-- Boxenfunk: Referenzen -->
+    <section id="boxenfunk" class="sek funk" aria-labelledby="funk-titel">
+      <div class="wrap">
+        <div class="funk-oben">
+          <header class="sek-kopf rv">
+            <p class="tag">Referenzen</p>
+            <h2 id="funk-titel">Boxenfunk.</h2>
+            <p class="sek-lead">34 persönliche Rückmeldungen seit 2013. Immer wieder gelobt: Beats Geduld und seine ruhige, aufgestellte Art.</p>
+          </header>
 
-    <!-- Preise -->
-    <section class="sec sec-light">
-      <div class="wrap price-wrap">
-        <div class="sec-head sec-head-stack reveal">
-          <h2>Klare <em>Preise.</em></h2>
-          <p>Eine Fahrstunde dauert 50 Minuten. Der Tipp von Beat: Buche Doppellektionen, das verstärkt den Lerneffekt.</p>
-          <a class="link-arrow" href="#" data-soon="Auto-Fahrschule">Alle Details <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <figure class="funk-haupt rv">
+            <figcaption class="funk-kanal">
+              <span class="funk-signal" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>Lea R.</span><span class="funk-jahr">2023</span>
+            </figcaption>
+            <blockquote>
+              <p>Ich habe deine <mark>ruhige</mark> und <mark>geduldvolle</mark> Art sehr geschätzt. Ich kann dich als Fahrlehrer nur weiter empfehlen.</p>
+            </blockquote>
+          </figure>
         </div>
-        <div class="reveal">
-          <ul class="pricelist">
-            <li><span class="pl-name">Fahrstunde Auto<small>Kategorie B und BE, 50 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>90.–</span></li>
-            <li><span class="pl-name">Fahrstunde Motorrad<small>Kategorie A und A1, 50 Minuten</small></span><span class="pl-dots" aria-hidden="true"></span><span class="pl-price"><small>CHF</small>85.–</span></li>
-          </ul>
-          <div class="highlight">
-            <strong>Doppellektion</strong>
-            <span>2 x 50 Minuten am Stück. So verstärkst du den Lerneffekt.</span>
+
+        <div class="funk-reihe rv">
+          <div class="funk-track" tabindex="0" role="region" aria-label="Weitere Rückmeldungen, seitlich wischen">
+            <figure class="funk-karte">
+              <figcaption class="funk-kanal"><span class="funk-signal" aria-hidden="true"><i></i><i></i><i></i></span><span>Milena S.</span><span class="funk-jahr">2021</span></figcaption>
+              <blockquote><p>Ich durfte Fehler machen, lernte daraus und konnte es dann immer gleich umsetzen. Deine <mark>Geduld</mark> verhalf mir mich selbst nicht zu stressen.</p></blockquote>
+            </figure>
+            <figure class="funk-karte">
+              <figcaption class="funk-kanal"><span class="funk-signal" aria-hidden="true"><i></i><i></i><i></i></span><span>Dominique</span><span class="funk-jahr">2016</span></figcaption>
+              <blockquote><p>Mit deiner freundlichen und aufgestellten Art und deiner endlosen <mark>Geduld</mark> hast du mir die Angst vor dem Autofahren genommen.</p></blockquote>
+            </figure>
+            <figure class="funk-karte">
+              <figcaption class="funk-kanal"><span class="funk-signal" aria-hidden="true"><i></i><i></i><i></i></span><span>Marco G.</span><span class="funk-jahr">2021</span></figcaption>
+              <blockquote><p>Dank deiner lockeren und <mark>aufgestellten Art</mark> fielen mir einige Dinge sehr leicht, vor denen ich zu Beginn noch grossen Respekt hatte.</p></blockquote>
+            </figure>
+            <figure class="funk-karte">
+              <figcaption class="funk-kanal"><span class="funk-signal" aria-hidden="true"><i></i><i></i><i></i></span><span>Cedric</span><span class="funk-jahr">2017</span></figcaption>
+              <blockquote><p>Ohne deine Hilfe hätte ich sicherlich nicht die A1, A und B Prüfung beim ersten Mal bestanden.</p></blockquote>
+            </figure>
+            <figure class="funk-karte">
+              <figcaption class="funk-kanal"><span class="funk-signal" aria-hidden="true"><i></i><i></i><i></i></span><span>Marco H.</span><span class="funk-jahr">2018</span></figcaption>
+              <blockquote><p>Nach den Lektionen für die Autoprüfung durfte ich 10 Jahre später auch Fahrstunden für die Motorradprüfung bei dir besuchen. Jeder Franken war gut investiert.</p></blockquote>
+            </figure>
+            <figure class="funk-karte">
+              <figcaption class="funk-kanal"><span class="funk-signal" aria-hidden="true"><i></i><i></i><i></i></span><span>Alexandra K.</span><span class="funk-jahr">2018</span></figcaption>
+              <blockquote><p>Ich konnte mit einem guten Gefühl an die Prüfung und darf jetzt top ausgebildet meinen Weg ‹fahren›.</p></blockquote>
+            </figure>
+          </div>
+          <div class="funk-fuss">
+            <a class="link" href="#" data-soon="Referenzen">Alle 34 Rückmeldungen lesen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            <div class="funk-pfeile">
+              <button class="rund" type="button" data-funk="-1" aria-label="Vorherige Rückmeldung"><svg class="i" aria-hidden="true"><use href="#i-pfeil-links"/></svg></button>
+              <button class="rund" type="button" data-funk="1" aria-label="Nächste Rückmeldung"><svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></button>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Fahrlehrer -->
-    <section class="sec sec-dark">
-      <div class="wrap team">
-        <div class="team-mono reveal" aria-hidden="true">
-          <span>BH</span>
+    <!-- Dein Vorteil: Fahrlehrer und Boxenstopp-Liste -->
+    <section id="vorteil" class="sek vorteil" aria-labelledby="vorteil-titel">
+      <div class="wrap vorteil-grid">
+        <div class="vorteil-links">
+          <header class="sek-kopf rv">
+            <p class="tag">Boxenstopp</p>
+            <h2 id="vorteil-titel">Dein Vorteil.</h2>
+          </header>
+          <div class="fahrer rv">
+            <div class="fahrer-karo" aria-hidden="true"></div>
+            <p class="fahrer-rolle">Dein Fahrlehrer</p>
+            <h3 class="fahrer-name">Beat Hofstetter</h3>
+            <p class="fahrer-titel">Fahrlehrer und Ausbilder mit eidg. Fachausweis</p>
+            <blockquote class="fahrer-wort">
+              <p>Hast du Fragen zu deiner Auto- oder Motorradausbildung? Ruf mich an. Ich freue mich, dich auf deinem Weg zu begleiten.</p>
+            </blockquote>
+            <a class="fahrer-tel" href="tel:+41793417044"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg> 079 341 70 44</a>
+          </div>
         </div>
-        <div class="team-text reveal">
-          <p class="label">Dein Fahrlehrer</p>
-          <h2>Beat <em>Hofstetter.</em></h2>
-          <p class="team-lead">Fahrlehrer und Ausbilder mit eidg. Fachausweis. Für einen optimalen WAB-Kurs hat er mit weiteren Fahrlehrern aus der Region Luzern die WAB-Zentralschweiz AG gegründet.</p>
-          <ul class="contacts">
-            <li><span>Natel</span><a href="tel:+41793417044">079 341 70 44</a></li>
-            <li><span>E-Mail</span><a class="contacts-mail" href="mailto:info@fahrschulehofstetter.ch">info@fahrschulehofstetter.ch</a></li>
-          </ul>
-        </div>
-      </div>
 
-      <div class="wrap quotes-wrap">
-        <div class="sec-head reveal">
-          <h2>Echte<br><em>Stimmen.</em></h2>
-          <a class="link-arrow" href="#" data-soon="Referenzen">Alle 34 Rückmeldungen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <div class="quotes">
-          <figure class="quote reveal">
-            <blockquote><p>Dank deiner lockeren und aufgestellten Art fielen mir einige Dinge sehr leicht, vor denen ich zu Beginn noch grossen Respekt hatte.</p></blockquote>
-            <figcaption>Marco G. <span>2021</span></figcaption>
-          </figure>
-          <figure class="quote reveal">
-            <blockquote><p>Ich durfte Fehler machen, lernte daraus und konnte es dann immer gleich umsetzen.</p></blockquote>
-            <figcaption>Milena S. <span>2021</span></figcaption>
-          </figure>
-          <figure class="quote reveal">
-            <blockquote><p>Ohne deine Hilfe hätte ich sicherlich nicht die A1, A und B Prüfung beim ersten Mal bestanden.</p></blockquote>
-            <figcaption>Cedric <span>2017</span></figcaption>
-          </figure>
-        </div>
+        <ol class="boxen">
+          <li class="box rv">
+            <span class="box-nr" aria-hidden="true">01</span>
+            <div><h3>Abholung zuhause oder am Arbeitsplatz</h3><p>Normalerweise startet die Autofahrstunde an der Frankenstrasse in Luzern. Gerne holt dich Beat auch direkt ab.</p></div>
+          </li>
+          <li class="box rv">
+            <span class="box-nr" aria-hidden="true">02</span>
+            <div><h3>Automat oder Handschaltung</h3><p>Du wählst das Getriebe im VW Golf, auch abwechselnd. Beat empfiehlt sogar, mit beiden zu fahren.</p></div>
+          </li>
+          <li class="box rv">
+            <span class="box-nr" aria-hidden="true">03</span>
+            <div><h3>Assistenzsysteme verstehen</h3><p>Du lernst dein Fahrzeug in allen Situationen sicher zu führen und verstehst, wie es dich unterstützt.</p></div>
+          </li>
+          <li class="box rv">
+            <span class="box-nr" aria-hidden="true">04</span>
+            <div><h3>Ökologisch und kostengünstig</h3><p>Eine Fahrweise, die deinen Geldbeutel und die Umwelt optimal schont.</p></div>
+          </li>
+          <li class="box rv">
+            <span class="box-nr" aria-hidden="true">05</span>
+            <div><h3>Mitgründer der <span class="nw">WAB-Zentralschweiz AG</span></h3><p>Für einen optimalen WAB-Kurs hat Beat sie mit weiteren Fahrlehrern aus der Region Luzern gegründet.</p></div>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="cta">
-      <div class="wrap cta-inner reveal">
-        <h2>Bereit zum<br>Losfahren?</h2>
-        <div class="cta-side">
-          <a class="cta-phone" href="tel:+41793417044">079 341 70 44</a>
-          <p>Vereinbare noch heute telefonisch oder per E-Mail deine nächste Fahrstunde.</p>
-          <a class="btn btn-black btn-lg" href="mailto:info@fahrschulehofstetter.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail schreiben</a>
+    <!-- Ziel: Kontakt -->
+    <section id="ziel" class="ziel" aria-labelledby="ziel-titel">
+      <div class="ziel-band" aria-hidden="true"></div>
+      <div class="wrap ziel-inner">
+        <div class="ziel-text rv">
+          <p class="tag tag-hell">Ziel</p>
+          <h2 id="ziel-titel">Vereinbare jetzt deine Fahrstunde.</h2>
+          <p class="ziel-lead">Vereinbare noch heute telefonisch oder per <span class="nw">E-Mail</span> deine nächste Fahrstunde.</p>
+        </div>
+        <div class="ziel-kontakt rv">
+          <a class="ziel-tel" href="tel:+41793417044"><span class="ziel-tel-label">Natel</span><span class="ziel-tel-nr">079 341 70 44</span></a>
+          <ul class="ziel-daten">
+            <li><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:info@fahrschulehofstetter.ch">info@fahrschulehofstetter.ch</a></li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span>Mittlerhusweg 8, 6010 Kriens</span></li>
+          </ul>
+          <div class="ziel-knoepfe">
+            <a class="btn btn-weiss btn-gross" href="tel:+41793417044"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg> Jetzt anrufen</a>
+            <a class="btn btn-linie-hell btn-gross" href="mailto:info@fahrschulehofstetter.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail schreiben</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer-grid">
-      <div>
-        <span class="wm wm-foot" role="img" aria-label="Hofstetter Auto-Moto Fahrschule">
-          <span class="wm-flag" aria-hidden="true"></span>
-          <span class="wm-txt" aria-hidden="true"><strong>Hofstetter</strong><small>Auto-Moto Fahrschule</small></span>
+  <footer class="fuss">
+    <div class="wrap fuss-grid">
+      <div class="fuss-marke">
+        <span class="wm wm-fuss" role="img" aria-label="Hofstetter Auto-Moto Fahrschule">
+          <svg class="wm-karo" aria-hidden="true"><use href="#i-karo"/></svg>
+          <span class="wm-txt" aria-hidden="true">
+            <span class="wm-name">Hofstetter</span>
+            <svg class="wm-swoosh" viewBox="0 0 120 8" preserveAspectRatio="none"><path d="M0 8C34 4.6 74 1.8 120 0C80 3.2 42 6 6 8.6Z"/></svg>
+            <span class="wm-sub">Auto-Moto Fahrschule</span>
+          </span>
         </span>
+        <p>Beat Hofstetter bringt dich sicher ans Ziel.</p>
       </div>
       <div>
         <h3>Adresse</h3>
@@ -259,19 +385,24 @@
         <p><a href="tel:+41793417044">079 341 70 44</a><br><a href="mailto:info@fahrschulehofstetter.ch">info@fahrschulehofstetter.ch</a></p>
       </div>
       <div>
-        <h3>Angebot</h3>
+        <h3>Seiten</h3>
         <ul>
           <li><a href="#" data-soon="Auto-Fahrschule">Auto-Fahrschule</a></li>
           <li><a href="#" data-soon="Motorrad-Fahrschule">Motorrad-Fahrschule</a></li>
-          <li><a href="#" data-soon="Weg zum Ausweis">Weg zum Ausweis</a></li>
           <li><a href="#" data-soon="Referenzen">Referenzen</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
         </ul>
       </div>
     </div>
-    <div class="wrap footer-bottom">
-      <p>© 2026 Fahrschule Hofstetter</p>
-      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+    <div class="wrap fuss-unten">
+      <p>© 2026 Fahrschule Hofstetter, Kriens</p>
+      <p><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
     </div>
   </footer>
+
+  <nav class="leiste" aria-label="Schnellkontakt">
+    <a class="leiste-tel" href="tel:+41793417044"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg> Anrufen</a>
+    <a class="leiste-mail" href="mailto:info@fahrschulehofstetter.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail</a>
+  </nav>
 </body>
 </html>

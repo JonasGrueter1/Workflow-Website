@@ -2,14 +2,15 @@
 <html lang="de-CH">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Design A | Fahrschule Schelbert</title>
-  <meta name="description" content="Designvorschlag A für die Startseite der Fahrschule Schelbert, Fahrschule für Auto und Motorrad in Trachslau, Einsiedeln.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Fahrschule Schelbert Einsiedeln: Auto und Motorrad, Bruno Schelbert</title>
+  <meta name="description" content="Fahrschule Schelbert in Trachslau, Einsiedeln: Fahrstunden für Auto und Motorrad bei Bruno Schelbert, Fahrlehrer seit 1997. Lektionen à 50 Minuten, Mo bis Sa 7.30 bis 21 Uhr.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#00318e">
+  <meta name="theme-color" content="#f7f7f4">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/a-space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/a-space-mono-700-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>document.documentElement.classList.add('js')</script>
@@ -17,361 +18,453 @@
   <script src="../assets/shared/vorschau.js" defer></script>
 </head>
 <body data-vorschau="a">
-  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- Icons: nach Tabler Icons (MIT), https://tabler.io/icons -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
-    <symbol id="i-award" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0"/><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889"/><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889"/></symbol>
-    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/></symbol>
-    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
-    <symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 15h-3a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v3"/><path d="M7 10a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1l0 -8"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/></symbol>
-    <symbol id="i-certificate" viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5"/><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73"/><path d="M6 9l12 0"/><path d="M6 12l3 0"/><path d="M6 15l2 0"/></symbol>
-    <symbol id="i-chalkboard-teacher" viewBox="0 0 24 24"><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1"/><path d="M12 14a2 2 0 1 0 4.001 -.001a2 2 0 0 0 -4.001 .001"/><path d="M17 19a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2"/></symbol>
-    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
-    <symbol id="i-license" viewBox="0 0 24 24"><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"/><path d="M9 7l4 0"/><path d="M9 11l4 0"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
-    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
-    <symbol id="i-motorbike" viewBox="0 0 24 24"><path d="M2 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4"/><path d="M13 6h2l1.5 3l2 4"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
-    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"/><path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"/></symbol>
-    <symbol id="i-road" viewBox="0 0 24 24"><path d="M4 19l4 -14"/><path d="M16 5l4 14"/><path d="M12 8v-2"/><path d="M12 13v-2"/><path d="M12 18v-2"/></symbol>
-    <symbol id="i-steering-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14l0 7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12h-14"/><path d="M11 18l-6 -6"/><path d="M11 6l-6 6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
   </svg>
 
-  <header class="header">
-    <div class="wrap header-inner">
-      <a class="logo" href="./" aria-label="Fahrschule Schelbert, Startseite">
-        <span class="wm" aria-hidden="true"><span class="wm-s">S</span>che<span class="wm-l">L</span>bert</span>
-        <span class="logo-sub" aria-hidden="true">Fahrschule Auto und Motorrad</span>
+  <header class="kopf">
+    <div class="wrap kopf-in">
+      <a class="marke" href="./" aria-label="Fahrschule Schelbert, Startseite">
+        <span class="wm" aria-hidden="true"><span class="wm-s">S</span><span class="wm-k">CHE</span><span class="wm-l"><span>L</span></span><span class="wm-k">BERT</span></span>
+        <span class="marke-sub" aria-hidden="true"><span class="ms-1">Fahrschule <i>·</i> </span>Auto und Motorrad <i>·</i> Einsiedeln</span>
       </a>
-      <nav class="nav" id="nav" aria-label="Hauptnavigation">
-        <ul>
-          <li><a href="#" data-soon="Auto">Auto</a></li>
-          <li><a href="#" data-soon="Motorrad">Motorrad</a></li>
-          <li><a href="#" data-soon="Der schnellste Weg zum Führerschein">Weg zum Ausweis</a></li>
-          <li><a href="#" data-soon="Preise">Preise</a></li>
-          <li><a href="#" data-soon="Über mich">Über mich</a></li>
-          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
-        </ul>
-        <a class="btn btn-blue nav-call" href="tel:+41792375013">
-          <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 237 50 13
-        </a>
+      <nav class="nav" aria-label="Bereiche der Startseite">
+        <a href="#erfolg">Erfolg</a>
+        <a href="#fahrzeuge">Fahrzeuge</a>
+        <a href="#preise">Preise</a>
+        <a href="#kurs">Kurse</a>
+        <a href="#fahrlehrer">Über mich</a>
+        <a href="#kontakt">Kontakt</a>
       </nav>
-      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
-        <span></span><span></span>
-      </button>
+      <a class="kopf-tel" href="tel:+41792375013" aria-label="079 237 50 13 anrufen">
+        <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span>079 237 50 13</span>
+      </a>
+      <details class="mnav">
+        <summary aria-label="Menü"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></summary>
+        <nav class="mnav-panel" aria-label="Bereiche der Startseite">
+          <p class="mnav-kopf">Inhalt</p>
+          <a href="#erfolg"><span>02</span>Erfolg beim 1. Mal</a>
+          <a href="#fahrzeuge"><span>03</span>Fahrzeuge</a>
+          <a href="#preise"><span>04</span>Preise</a>
+          <a href="#kurs"><span>05</span>Nächster Kurs</a>
+          <a href="#weg"><span>06</span>Weg zum Führerschein</a>
+          <a href="#fahrlehrer"><span>07</span>Über mich</a>
+          <a href="#kontakt"><span>08</span>Kontakt</a>
+        </nav>
+      </details>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-text">
-          <p class="pill"><span class="pill-dot" aria-hidden="true"></span>Fahrschule für Auto und Motorrad</p>
-          <h1>Fahren lernen in <span class="swoosh">Einsiedeln</span>.</h1>
-          <p class="lead">Persönlich und Schritt für Schritt zum Führerausweis, mit Bruno Schelbert, Fahrlehrer seit 1997. Auf Wunsch mit Handschaltung oder Automat.</p>
-          <div class="hero-cta">
-            <a class="btn btn-blue btn-lg" href="#" data-soon="Anmeldung Fahrstunden und Kurse">
-              Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-            </a>
-            <a class="btn btn-line btn-lg" href="tel:+41792375013">
-              <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 237 50 13
-            </a>
-          </div>
-          <p class="hero-hint"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg> Fahrstunden Mo bis Sa, 7.30 bis 21 Uhr</p>
-        </div>
-        <div class="hero-visual">
-          <img class="hero-photo"
-               src="../assets/img/hero-a.webp"
-               srcset="../assets/img/hero-a-800.webp 800w, ../assets/img/hero-a.webp 1400w"
-               sizes="(max-width: 860px) 100vw, 560px"
-               width="1400" height="1050" fetchpriority="high"
-               alt="Weisses Fahrschulauto BMW 218i Gran Coupé der Fahrschule Schelbert auf einer Landstrasse">
-          <span class="l-plate" aria-hidden="true">L</span>
-          <div class="price-badge">
-            <span>1 Fahrlektion</span>
-            <strong>CHF 98.–</strong>
-            <small>50 statt 45 Minuten</small>
-          </div>
-        </div>
-      </div>
+  <main id="main">
 
+    <!-- 01 Hero: Kilometerzähler -->
+    <section class="hero" aria-labelledby="hero-t">
       <div class="wrap">
-        <ul class="trust">
-          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-award"/></svg></span><div><strong>Seit 1997</strong><span>als Fahrlehrer unterwegs</span></div></li>
-          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span><div><strong>50 Minuten</strong><span>pro Lektion statt der üblichen&nbsp;45</span></div></li>
-          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-steering-wheel"/></svg></span><div><strong>Schaltung oder Automat</strong><span>BMW 218i oder Seat Ibiza</span></div></li>
-          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-road"/></svg></span><div><strong>Rund 1 Million</strong><span>Fahrschulkilometer Erfahrung</span></div></li>
+        <div class="hero-kopf h-a">
+          <p class="kicker">Fahrschule Schelbert <i>·</i> Trachslau / Einsiedeln</p>
+          <p class="hero-kat">Kat. B <i>·</i> A <i>·</i> A1</p>
+        </div>
+
+        <h1 id="hero-t" class="h-b"><span class="z">Auto und Motorrad</span> <span class="z">lernen in Einsiedeln<span class="punkt">.</span></span></h1>
+
+        <p class="lead h-d">Persönlich bei Bruno Schelbert, gelernter Automechaniker und seit 1997 Fahrlehrer. Mit Handschaltung, Automat oder auf dem Motorrad.</p>
+
+        <div class="hero-odo h-c">
+          <div class="odo" role="img" aria-label="Rund 1 Million Fahrschulkilometer">
+            <div class="dim" aria-hidden="true">
+              <span class="dim-end"></span><span class="dim-line dim-l"></span><span class="dim-txt">rund 1 Million Fahrschulkilometer</span><span class="dim-line dim-r"></span><span class="dim-end"></span>
+            </div>
+            <div class="odo-case" aria-hidden="true">
+              <div class="odo-win">
+                <span class="drum" data-to="1" data-turns="0"><span class="reel"><span class="col"><span>1</span></span></span></span>
+                <span class="drum g" data-to="0" data-turns="1"><span class="reel"><span class="col"><span>0</span></span></span></span>
+                <span class="drum" data-to="0" data-turns="1"><span class="reel"><span class="col"><span>0</span></span></span></span>
+                <span class="drum" data-to="0" data-turns="2"><span class="reel"><span class="col"><span>0</span></span></span></span>
+                <span class="drum g" data-to="0" data-turns="2"><span class="reel"><span class="col"><span>0</span></span></span></span>
+                <span class="drum" data-to="0" data-turns="3"><span class="reel"><span class="col"><span>0</span></span></span></span>
+                <span class="drum drum-blau" data-to="0" data-turns="4"><span class="reel"><span class="col"><span>0</span></span></span></span>
+              </div>
+              <span class="odo-unit">km</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta h-e">
+          <a class="btn btn-blau" href="tel:+41792375013"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>079 237 50 13 anrufen</a>
+          <a class="btn btn-linie" href="#" data-soon="Anmelden Fahrstunden / Kurse">Fahrstunde anmelden<svg class="i pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn-text" href="mailto:info@fahrschule-einsiedeln.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>info@fahrschule-einsiedeln.ch</a>
+        </div>
+
+        <ul class="punkte" aria-label="Eckdaten">
+          <li><span class="p-cap">Fahrlehrer</span><span class="p-val">seit 1997</span></li>
+          <li><span class="p-cap">Lektion</span><span class="p-val">50 Minuten</span></li>
+          <li><span class="p-cap"><span class="p-lang">Fahrstunden </span>Mo bis Sa</span><span class="p-val">7.30 bis 21&nbsp;Uhr</span></li>
         </ul>
       </div>
     </section>
 
-    <!-- Angebot -->
-    <section class="sec">
+    <!-- 02 Messprotokoll -->
+    <section class="sek" id="erfolg" aria-labelledby="erfolg-t">
       <div class="wrap">
-        <div class="head reveal">
-          <p class="kicker">Angebot</p>
-          <h2>Was möchten Sie lernen?</h2>
-          <p>Auto, Motorrad und Verkehrskunde aus einer Hand, bei einem Fahrlehrer, der Sie persönlich kennt.</p>
+        <header class="sek-kopf breit rv">
+          <p class="sek-nr"><span>02</span>Erfolg</p>
+          <h2 id="erfolg-t">Beim 1.&nbsp;Mal nicht bestanden: 14&nbsp;% statt 32&nbsp;%.</h2>
+          <p class="sek-lead">Mein Ziel ist es, Sie möglichst beim 1. Mal durch die Führerprüfung zu bringen. Das ist mir seit Anfang an immer sehr gut gelungen.</p>
+        </header>
+
+        <article class="blatt protokoll rv" aria-label="Messprotokoll: nicht bestandene Prüfungen beim 1. Mal">
+          <div class="blatt-kopf">
+            <span class="tag">Protokoll</span>
+            <span>Nicht bestandene Prüfungen beim 1. Mal</span>
+            <span>Durchschnitt 10 Jahre</span>
+            <span class="quelle">Quelle: Zertifikat Verkehrsamt</span>
+          </div>
+
+          <div class="pr">
+            <p class="lesehilfe"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg><span>Nicht bestanden beim 1. Mal: <strong>weniger ist besser</strong></span></p>
+
+            <div class="pr-grid">
+              <div class="skala" aria-hidden="true"><span>0 %</span><span>10 %</span><span>20 %</span><span>30 %</span><span>40 %</span></div>
+
+              <div class="gruppe">
+                <h3>Auto <span>Kat. B</span></h3>
+                <p class="diff">18 Prozentpunkte weniger als der Kanton</p>
+              </div>
+              <span class="m-name">Fahrschule Schelbert</span>
+              <span class="m-track"><span class="m-bar m-s" style="--v:14"></span><span class="m-dim" style="--a:14;--b:32"></span></span>
+              <span class="m-val m-val-s"><span data-count="14">14</span> %</span>
+              <span class="m-name m-name-k">Kanton Schwyz</span>
+              <span class="m-track"><span class="m-bar m-k" style="--v:32"></span></span>
+              <span class="m-val"><span data-count="32">32</span> %</span>
+
+              <div class="gruppe">
+                <h3>Motorrad <span>Kat. A / A1</span></h3>
+                <p class="diff">20 Prozentpunkte weniger als der Kanton</p>
+              </div>
+              <span class="m-name">Fahrschule Schelbert</span>
+              <span class="m-track"><span class="m-bar m-s" style="--v:12"></span><span class="m-dim" style="--a:12;--b:32"></span></span>
+              <span class="m-val m-val-s"><span data-count="12">12</span> %</span>
+              <span class="m-name m-name-k">Kanton Schwyz</span>
+              <span class="m-track"><span class="m-bar m-k" style="--v:32"></span></span>
+              <span class="m-val"><span data-count="32">32</span> %</span>
+            </div>
+          </div>
+
+          <footer class="blatt-fuss">
+            <p>Durchschnitt der beim 1. Mal nicht bestandenen Führerprüfungen der letzten 10 Jahre, bestätigt durch Zertifikat vom Verkehrsamt.</p>
+            <p class="sign">Bruno Schelbert</p>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- 03 Fahrzeuge -->
+    <section class="sek" id="fahrzeuge" aria-labelledby="fz-t">
+      <div class="wrap">
+        <header class="sek-kopf breit rv">
+          <p class="sek-nr"><span>03</span>Fahrzeuge</p>
+          <h2 id="fz-t">Womit Sie fahren lernen.</h2>
+          <p class="sek-lead">Moderne Fahrzeuge, die sehr einfach zu fahren sind und über alle erdenklichen Sicherheits- und Komfortmerkmale verfügen. Handschaltung oder Automat: Sie haben die Wahl.</p>
+        </header>
+
+        <div class="blaetter">
+          <article class="blatt fz rv">
+            <div class="blatt-kopf"><span class="tag">03.1</span><span>Auto <i>·</i> Kat. B</span></div>
+            <figure class="rahmen fz-bild">
+              <img src="../assets/img/a-bmw.webp" srcset="../assets/img/a-bmw-640.webp 640w, ../assets/img/a-bmw.webp 1000w" sizes="(max-width: 959px) calc(100vw - 64px), 380px" width="1000" height="750" loading="lazy" alt="Weisser BMW 218i Gran Coupé der Fahrschule Schelbert mit Logo auf der Tür, auf einer Landstrasse bei Einsiedeln">
+            </figure>
+            <h3>BMW 218i Gran Coupé</h3>
+            <dl class="werte">
+              <div><dt>Getriebe</dt><dd>Handschaltung</dd></div>
+              <div><dt>Kategorie</dt><dd>B</dd></div>
+              <div><dt>Lektion</dt><dd>50 Minuten</dd></div>
+              <div><dt>Ausstattung</dt><dd><a class="verweis" href="#ausstattung">siehe 03.4</a></dd></div>
+            </dl>
+            <p class="fz-fuss"><span>ab</span> CHF 94.00 <small>pro Lektion im 10er-Abo</small></p>
+          </article>
+
+          <article class="blatt fz rv">
+            <div class="blatt-kopf"><span class="tag">03.2</span><span>Auto <i>·</i> Kat. B</span></div>
+            <figure class="rahmen fz-bild">
+              <img src="../assets/img/a-seat.webp" width="392" height="285" loading="lazy" alt="Weisser Seat Ibiza mit Automatikgetriebe der Fahrschule Schelbert vor einer grünen Wiese">
+            </figure>
+            <h3>Seat Ibiza Swiss FR</h3>
+            <dl class="werte">
+              <div><dt>Getriebe</dt><dd>Automat</dd></div>
+              <div><dt>Kategorie</dt><dd>B</dd></div>
+              <div><dt>Lektion</dt><dd>50 Minuten</dd></div>
+              <div><dt>Ausstattung</dt><dd><a class="verweis" href="#ausstattung">siehe 03.4</a></dd></div>
+            </dl>
+            <p class="fz-fuss"><span>ab</span> CHF 94.00 <small>pro Lektion im 10er-Abo</small></p>
+          </article>
+
+          <article class="blatt fz rv">
+            <div class="blatt-kopf"><span class="tag">03.3</span><span>Mietmotorrad <i>·</i> Kat. A beschränkt</span></div>
+            <figure class="rahmen fz-bild">
+              <img src="../assets/img/a-honda.webp" width="403" height="302" loading="lazy" alt="Schwarzes Mietmotorrad Honda CB 500 FA ABS vor einer weissen Wand">
+            </figure>
+            <h3>Honda CB 500 FA ABS</h3>
+            <dl class="werte">
+              <div><dt>Hubraum</dt><dd>471 ccm</dd></div>
+              <div><dt>Leistung</dt><dd>35 kW (48 PS)</dd></div>
+              <div><dt>Gewicht</dt><dd>192 kg vollgetankt</dd></div>
+              <div><dt>Sitzhöhe</dt><dd>niedrig</dd></div>
+            </dl>
+            <p class="fz-fuss"><span>Miete ab</span> CHF 70.00 <small>für einen halben Tag</small></p>
+          </article>
         </div>
-        <div class="offer">
-          <a class="card reveal" href="#" data-soon="Auto">
-            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span>
-            <span class="card-cat">Kategorie B</span>
-            <h3>Auto</h3>
-            <p>Fahrstunden in modernen Autos mit Sitzheizung, Klimaautomatik und Parksensoren. Sie wählen zwischen Handschaltung und Automat.</p>
-            <ul class="ticks">
-              <li>Lektionen à 50 Minuten</li>
-              <li>BMW 218i oder Seat Ibiza Automat</li>
-            </ul>
-            <span class="card-link">Mehr zum Auto <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
-          </a>
-          <a class="card reveal" href="#" data-soon="Motorrad">
-            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-motorbike"/></svg></span>
-            <span class="card-cat">Kategorien A1 und A</span>
-            <h3>Motorrad</h3>
-            <p>Grundkurs in der Gruppe und Fahrstunden in der Gruppe, zu zweit oder einzeln. Für die Kategorie A beschränkt können Sie ein Motorrad mieten.</p>
-            <ul class="ticks">
-              <li>Grundkurs mit 12 Lektionen</li>
-              <li>Mietmotorrad Honda CB 500 FA</li>
-            </ul>
-            <span class="card-link">Mehr zum Motorrad <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
-          </a>
-          <a class="card reveal" href="#" data-soon="Kurse">
-            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-chalkboard-teacher"/></svg></span>
-            <span class="card-cat">Obligatorischer Kurs</span>
-            <h3>Verkehrskunde</h3>
-            <p>Der VKU besteht zur Hauptsache aus Gefahrenlehre: kritische Situationen frühzeitig erkennen und das richtige Verhalten erarbeiten.</p>
-            <ul class="ticks">
-              <li>8 Lektionen</li>
-              <li>Nächster Kurs: 23. und 25. November</li>
-            </ul>
-            <span class="card-link">Zu den Kursdaten <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
-          </a>
+
+        <div class="blatt ausst rv" id="ausstattung">
+          <div class="blatt-kopf"><span class="tag">03.4</span><span>Ausstattung der Fahrschulautos</span></div>
+          <ul class="haken">
+            <li>ABS und ESP</li>
+            <li>2-Zonen-Klimaautomatik</li>
+            <li>LED-Licht</li>
+            <li>Komfortsitze mit Sitzheizung</li>
+            <li>Lederlenkrad, in Höhe und Distanz verstellbar</li>
+            <li>Licht- und Regensensor</li>
+            <li>Parksensoren vorne und hinten</li>
+            <li class="baer">und ein bärenstarker Motor</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- Erfolgsquote -->
-    <section class="sec sec-sky">
-      <div class="wrap quota">
-        <div class="quota-text reveal">
-          <p class="kicker">Erfolgsquote</p>
-          <h2>Gut vorbereitet an die Prüfung</h2>
-          <p class="muted">Mein Ziel ist es, Sie möglichst beim ersten Mal durch die Führerprüfung zu bringen. Das ist mir seit Anfang an immer sehr gut gelungen.</p>
-          <p class="quota-src"><svg class="i" aria-hidden="true"><use href="#i-certificate"/></svg> Durchschnitt der letzten 10 Jahre, bestätigt durch Zertifikat vom Verkehrsamt.</p>
-        </div>
-        <div class="quota-card reveal">
-          <h3>Beim ersten Mal nicht bestanden</h3>
-          <div class="bars">
-            <p class="bars-cat"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg> Auto, Kategorie B</p>
-            <div class="bar bar-us"><span class="bar-name">Fahrschule Schelbert</span><span class="bar-track"><span style="--v: 14"></span></span><strong>14 %</strong></div>
-            <div class="bar"><span class="bar-name">Kanton Schwyz</span><span class="bar-track"><span style="--v: 32"></span></span><strong>32 %</strong></div>
+    <!-- 04 Preise -->
+    <section class="sek" id="preise" aria-labelledby="preise-t">
+      <div class="wrap preise">
+        <header class="sek-kopf preise-kopf rv">
+          <p class="sek-nr"><span>04</span>Preise</p>
+          <h2 id="preise-t">Preise, auf die Minute genau.</h2>
+          <p class="sek-lead">Eine Lektion dauert bei mir volle 50 Minuten. Bezahlen können Sie per Einzahlungsschein, <span class="nw">E-Banking</span> oder bar.</p>
+
+          <figure class="lineal" aria-hidden="true">
+            <div class="ln-skala"><span style="--m:0">0</span><span style="--m:10">10</span><span style="--m:20">20</span><span style="--m:30">30</span><span style="--m:40">40</span><span style="--m:50">50 Min.</span></div>
+            <div class="ln-bar"><span class="ln-fill"></span><span class="ln-45"></span></div>
+            <div class="ln-legende">
+              <span class="ln-b"><i></i>Ihre Lektion: 50 Min., CHF 94.00 im 10er-Abo</span>
+              <span class="ln-a"><i></i>Auf 45 Min. gerechnet: CHF 84.60</span>
+            </div>
+          </figure>
+        </header>
+
+        <div class="blatt tarif rv">
+          <div class="reiter" role="tablist" aria-label="Preise nach Bereich">
+            <button type="button" role="tab" id="r-auto" aria-controls="t-auto" aria-selected="true">Auto</button>
+            <button type="button" role="tab" id="r-moto" aria-controls="t-moto" aria-selected="false">Motorrad</button>
+            <button type="button" role="tab" id="r-miete" aria-controls="t-miete" aria-selected="false">Miete</button>
+            <span class="reiter-strich" aria-hidden="true"></span>
           </div>
-          <div class="bars">
-            <p class="bars-cat"><svg class="i" aria-hidden="true"><use href="#i-motorbike"/></svg> Motorrad, Kategorien A und A1</p>
-            <div class="bar bar-us"><span class="bar-name">Fahrschule Schelbert</span><span class="bar-track"><span style="--v: 12"></span></span><strong>12 %</strong></div>
-            <div class="bar"><span class="bar-name">Kanton Schwyz</span><span class="bar-track"><span style="--v: 32"></span></span><strong>32 %</strong></div>
+
+          <div class="tab" id="t-auto" role="tabpanel" aria-labelledby="r-auto">
+            <h3 class="tab-t">Auto <i>·</i> Kategorie B</h3>
+            <table class="preis">
+              <thead><tr><th scope="col">Leistung</th><th scope="col">CHF</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">1 Lektion à 50 Min. im 10er-Abo<small>45 Min. wären CHF 84.60</small></th><td>94.00</td></tr>
+                <tr><th scope="row">1 Einzellektion à 50 Min.</th><td>98.00</td></tr>
+                <tr><th scope="row">Obligatorische Versicherung</th><td>100.00</td></tr>
+                <tr><th scope="row">Verkehrskunde (VKU)</th><td>250.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab" id="t-moto" role="tabpanel" aria-labelledby="r-moto">
+            <h3 class="tab-t">Motorrad <i>·</i> Kategorie A / A1</h3>
+            <table class="preis">
+              <thead><tr><th scope="col">Leistung</th><th scope="col">CHF</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Gruppenunterricht ab 3 Personen, Lektion à 50 Min.</th><td>54.00</td></tr>
+                <tr><th scope="row">Gruppenunterricht zu zweit</th><td>64.00</td></tr>
+                <tr><th scope="row">Einzellektion</th><td>94.00</td></tr>
+                <tr><th scope="row">Grundkurs 12 Lektionen, Gruppe ab 3 Personen<small>Grundkursbestätigung, Prüfungsanmeldung und Versicherung inklusive</small></th><td>648.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab" id="t-miete" role="tabpanel" aria-labelledby="r-miete">
+            <h3 class="tab-t">Mietmotorrad <i>·</i> Honda CB 500 FA, 35 kW</h3>
+            <table class="preis">
+              <thead><tr><th scope="col">Dauer</th><th scope="col">CHF</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Halber Tag</th><td>70.00</td></tr>
+                <tr><th scope="row">1 Tag</th><td>100.00</td></tr>
+                <tr><th scope="row">2 Tage</th><td>180.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tarif-fuss">
+            <p>Fahrlektionen bitte mindestens 24 Stunden im Voraus abmelden.</p>
+            <a class="btn-text" href="#" data-soon="Preise">Alle Preise<svg class="i pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Ablauf -->
-    <section class="sec">
-      <div class="wrap">
-        <div class="head head-row reveal">
-          <div>
-            <p class="kicker">Weg zum Führerschein</p>
-            <h2>In 5 Schritten zum Führerausweis</h2>
+    <!-- 05 Nächster Kurs -->
+    <section class="sek sek-kurs" id="kurs" aria-labelledby="kurs-t">
+      <div class="wrap kurs">
+        <header class="sek-kopf rv">
+          <p class="sek-nr"><span>05</span>Nächster Kurs</p>
+          <h2 id="kurs-t">Verkehrskunde im November.</h2>
+          <p class="sek-lead">Die Verkehrskunde besteht zur Hauptsache aus Gefahrenlehre: Es geht darum, kritische Situationen frühzeitig zu erkennen und daraus das richtige Verhalten zu erarbeiten.</p>
+        </header>
+
+        <article class="blatt termin rv" aria-labelledby="termin-t">
+          <div class="blatt-kopf"><span class="tag">Termin</span><span id="termin-t">Verkehrskunde (VKU) <i>·</i> 8 Lektionen</span></div>
+          <div class="termin-daten">
+            <p class="datum"><span class="d-tag">Mo</span><span class="d-dat">23.11.<small>2026</small></span><span class="d-zeit">17.30 bis 21.30 Uhr</span></p>
+            <span class="d-verb" aria-hidden="true"></span>
+            <p class="datum"><span class="d-tag">Mi</span><span class="d-dat">25.11.<small>2026</small></span><span class="d-zeit">17.30 bis 21.30 Uhr</span></p>
           </div>
-          <a class="text-link" href="#" data-soon="Der schnellste Weg zum Führerschein">Alle Schritte im Detail <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <ol class="steps">
-          <li class="reveal"><span class="step-no">1</span><h3>Nothelferkurs</h3><p>Geht schon vor dem Mindestalter und ist 6 Jahre gültig.</p></li>
-          <li class="reveal"><span class="step-no">2</span><h3>Lernfahrausweis</h3><p>Gesuch mit Augentest bis 2 Monate vor dem Mindestalter einreichen.</p></li>
-          <li class="reveal"><span class="step-no">3</span><h3>Theorieprüfung</h3><p>Beim Verkehrsamt in Pfäffikon oder in Schwyz.</p></li>
-          <li class="reveal"><span class="step-no">4</span><h3>Fahrstunden und VKU</h3><p>Fahrstunden von Montag bis Samstag, dazu 8 Lektionen Verkehrskunde.</p></li>
-          <li class="reveal"><span class="step-no step-goal"><svg class="i" aria-hidden="true"><use href="#i-license"/></svg></span><h3>Führerprüfung</h3><p>Rund 45 Minuten. Danach 3 Jahre auf Probe.</p></li>
+          <dl class="werte">
+            <div><dt>Umfang</dt><dd>2 Abende, 8 Lektionen</dd></div>
+            <div><dt>Preis</dt><dd>CHF 250.00, bar am 1. Kurstag</dd></div>
+            <div><dt>Mitnehmen</dt><dd>Lernfahrausweis</dd></div>
+          </dl>
+          <div class="termin-cta">
+            <a class="btn btn-blau" href="#" data-soon="Anmelden Fahrstunden / Kurse"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg>Für den Kurs anmelden</a>
+            <a class="btn-text" href="#" data-soon="Alle Kurse">Alle Kursdaten<svg class="i pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 06 Der schnellste Weg -->
+    <section class="sek weg" id="weg" aria-labelledby="weg-t">
+      <div class="weg-band" aria-hidden="true">
+        <img src="../assets/img/a-cockpit.webp" srcset="../assets/img/a-cockpit-960.webp 960w, ../assets/img/a-cockpit.webp 1920w" sizes="100vw" width="1920" height="386" loading="lazy" alt="">
+      </div>
+      <div class="wrap">
+        <header class="sek-kopf weg-kopf rv">
+          <p class="sek-nr"><span>06</span>Weg zum Ausweis</p>
+          <h2 id="weg-t">Der schnellste Weg zum Führerschein.</h2>
+          <p class="sek-lead">Neun Schritte, vom Nothelferkurs bis zum Ausweis auf Probe.</p>
+        </header>
+
+        <ol class="liste">
+          <li class="rv"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">01</span><h3>Nothelferkurs</h3><p>Geht schon vor dem Mindestalter und ist 6 Jahre gültig.</p></li>
+          <li class="rv"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">02</span><h3>Theorie lernen</h3><p>Gutes Lernmaterial besorgen und früh beginnen, zum Beispiel mit einer Lern-App.</p></li>
+          <li class="rv"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">03</span><h3>Gesuch Lernfahrausweis</h3><p>Das Formular des Kantons Schwyz lückenlos ausfüllen.</p></li>
+          <li class="rv"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">04</span><h3>Augentest und Personalien</h3><p>Augentest beim anerkannten Optiker, Personalien auf der Einwohnerkontrolle bestätigen. Gesuch bis 2 Monate vor dem Mindestalter einreichen.</p></li>
+          <li class="rv"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">05</span><h3>Theorieprüfung</h3><p>Beim Verkehrsamt in Pfäffikon oder Schwyz anmelden, frühestens 1 Monat vor dem Mindestalter.</p></li>
+          <li class="rv l-hi"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">06</span><h3>Fahrstunden</h3><p>Endlich geht es los. Online anmelden oder anrufen: <a href="tel:+41792375013">079&nbsp;237&nbsp;50&nbsp;13</a>. Mo bis Sa, 7.30 bis 21 Uhr.</p></li>
+          <li class="rv"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">07</span><h3>Verkehrskunde</h3><p>Der obligatorische VKU mit 8 Lektionen.</p></li>
+          <li class="rv"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">08</span><h3>Führerprüfung</h3><p>Rund 45 Minuten. Schwerpunkte: Beobachtung, Fahrdynamik und Verhalten gegenüber den Verkehrspartnern.</p></li>
+          <li class="rv"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5l9.5 -10"/></svg></span><span class="l-nr">09</span><h3>Ausweis auf Probe</h3><p>3 Jahre auf Probe, im 1. Jahr ein Tag WAB-Kurs. Gute Fahrt und haben Sie Sorge zu Ihrem Führerausweis.</p></li>
         </ol>
-        <p class="tip reveal"><span class="tip-ico"><svg class="i" aria-hidden="true"><use href="#i-bulb"/></svg></span><span><strong>Tipp für Eltern und Fahrschüler:</strong> Wer mit 18 an die Autoprüfung will, braucht den Lernfahrausweis schon mit 17. Er muss mindestens ein Jahr im Besitz sein, ab 20 Jahren entfällt diese Frist.</span></p>
+
+        <div class="hinweis rv">
+          <p class="h-kopf">Hinweis für Eltern und Fahrschüler</p>
+          <p>Wer mit 18 an die Autoprüfung will, muss den Lernfahrausweis schon mit 17 besitzen. Die Mindestbesitzdauer von einem Jahr entfällt ab 20 Jahren.</p>
+          <a class="btn-text" href="#" data-soon="Der schnellste Weg zum Führerschein">Alle Schritte im Detail<svg class="i pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
       </div>
     </section>
 
-    <!-- Fahrzeuge -->
-    <section class="sec sec-sky">
-      <div class="wrap">
-        <div class="head head-row reveal">
-          <div>
-            <p class="kicker">Fahrzeuge</p>
-            <h2>Modern, sicher und einfach zu fahren</h2>
-          </div>
-          <a class="text-link" href="#" data-soon="Die Fahrschulautos">Alle Fahrzeuge ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    <!-- 07 Fahrlehrer -->
+    <section class="sek" id="fahrlehrer" aria-labelledby="fl-t">
+      <div class="wrap fahrlehrer">
+        <div class="bruno rv">
+          <figure class="rahmen bruno-bild">
+            <img src="../assets/img/a-bruno.webp" width="700" height="835" loading="lazy" alt="Porträt von Bruno Schelbert, Fahrlehrer, lächelnd vor blauem Himmel">
+          </figure>
+          <ul class="callouts">
+            <li style="--y:16%"><span class="c-line"></span><span class="c-txt"><b>Beruf</b>gelernter Automechaniker</span></li>
+            <li style="--y:50%"><span class="c-line"></span><span class="c-txt"><b>Fahrlehrer</b>seit 1997, auch Motorrad</span></li>
+            <li style="--y:84%"><span class="c-line"></span><span class="c-txt"><b>Hobbys</b>Motorrad, Ski, gut essen</span></li>
+          </ul>
         </div>
-        <figure class="fleet reveal">
-          <img src="../assets/img/flotte.webp" srcset="../assets/img/flotte-1200.webp 1200w, ../assets/img/flotte.webp 1920w" sizes="(max-width: 1228px) 100vw, 1180px"
-               width="1920" height="634" loading="lazy" alt="Die Fahrschulautos und Motorräder der Fahrschule Schelbert vor dem Haus">
-        </figure>
-        <div class="vehicles">
-          <article class="vehicle reveal">
-            <img src="../assets/img/bmw.webp" width="800" height="500" loading="lazy" alt="BMW 218i Gran Coupé der Fahrschule Schelbert">
-            <div class="vehicle-body">
-              <span class="v-tag">Handschaltung</span>
-              <h3>BMW 218i Gran Coupé</h3>
-              <p>Für Fahrstunden der Kategorie B mit Handschaltung.</p>
-            </div>
-          </article>
-          <article class="vehicle reveal">
-            <img src="../assets/img/seat.webp" width="392" height="285" loading="lazy" alt="Seat Ibiza Swiss FR mit Automatikgetriebe">
-            <div class="vehicle-body">
-              <span class="v-tag">Automat</span>
-              <h3>Seat Ibiza Swiss FR</h3>
-              <p>Für Fahrstunden der Kategorie B mit automatischem Getriebe.</p>
-            </div>
-          </article>
-          <article class="vehicle reveal">
-            <img src="../assets/img/honda.webp" width="403" height="302" loading="lazy" alt="Mietmotorrad Honda CB 500 FA ABS">
-            <div class="vehicle-body">
-              <span class="v-tag">Mietmotorrad</span>
-              <h3>Honda CB 500 FA ABS</h3>
-              <p>Für die Kategorie A beschränkt: 35 kW (48 PS) und eine niedrige Sitzhöhe.</p>
-            </div>
-          </article>
-        </div>
-        <ul class="features reveal" aria-label="Ausstattung der Fahrschulautos">
-          <li class="features-head">Ausstattung der Fahrschulautos</li>
-          <li>ABS und ESP</li>
-          <li>2-Zonen-Klimaautomatik</li>
-          <li>Sitzheizung</li>
-          <li>LED-Licht</li>
-          <li>Licht- und Regensensor</li>
-          <li>Parksensoren vorne und hinten</li>
-        </ul>
-      </div>
-    </section>
 
-    <!-- Preise -->
-    <section class="sec">
-      <div class="wrap">
-        <div class="head head-row reveal">
-          <div>
-            <p class="kicker">Preise</p>
-            <h2>Transparent von Anfang an</h2>
-          </div>
-          <a class="text-link" href="#" data-soon="Preise">Alle Preise ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <div class="prices">
-          <div class="price reveal">
-            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span>
-            <span class="price-name">Fahrlektion Auto</span>
-            <strong>CHF 98.–</strong>
-            <span class="price-note">Einzellektion à 50 Minuten</span>
-            <ul class="price-list">
-              <li><span>Im 10er-Abo, pro Lektion</span><b>CHF 94.–</b></li>
-              <li><span>Obligatorische Versicherung</span><b>CHF 100.–</b></li>
-            </ul>
-          </div>
-          <div class="price price-hi reveal">
-            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-motorbike"/></svg></span>
-            <span class="price-name">Motorrad-Grundkurs</span>
-            <strong>CHF 648.–</strong>
-            <span class="price-note">12 Lektionen in der Gruppe, inklusive Grundkursbestätigung, Prüfungsanmeldung und Versicherung</span>
-            <ul class="price-list">
-              <li><span>Gruppenlektion ab 3 Personen</span><b>CHF 54.–</b></li>
-              <li><span>Lektion zu zweit</span><b>CHF 64.–</b></li>
-              <li><span>Einzellektion</span><b>CHF 94.–</b></li>
-            </ul>
-          </div>
-          <div class="price reveal">
-            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-chalkboard-teacher"/></svg></span>
-            <span class="price-name">Verkehrskunde VKU</span>
-            <strong>CHF 250.–</strong>
-            <span class="price-note">8 Lektionen, bar am ersten Kurstag</span>
-            <ul class="price-list">
-              <li><span>Nächster Kurs</span><b>23. und 25.11.2026</b></li>
-              <li><span>Jeweils</span><b>17.30 bis 21.30 Uhr</b></li>
-            </ul>
-          </div>
-        </div>
-        <p class="pay reveal"><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg> Bezahlen können Sie per Einzahlungsschein, E-Banking oder bar. Fahrlektionen bitte mindestens 24 Stunden im Voraus abmelden.</p>
-      </div>
-    </section>
-
-    <!-- Über mich -->
-    <section class="sec sec-sky">
-      <div class="wrap about">
-        <figure class="about-photo reveal">
-          <img src="../assets/img/bruno.webp" width="800" height="954" loading="lazy" alt="Porträt von Bruno Schelbert, Fahrlehrer">
-          <figcaption><strong>Bruno Schelbert</strong><span>Fahrlehrer Auto und Motorrad</span></figcaption>
-        </figure>
-        <div class="about-text reveal">
-          <p class="kicker">Über mich</p>
-          <h2>Ihr Fahrlehrer, vom ersten Meter bis zur Prüfung</h2>
-          <p class="muted">Ich bin von klein auf mit Autos und Motorrädern aufgewachsen und habe zuerst Automechaniker gelernt. Weil mir der direkte Kundenkontakt fehlte, wurde ich 1997 Fahrlehrer, machte mich kurz darauf selbständig und liess mich danach zusätzlich zum Motorradfahrlehrer ausbilden.</p>
-          <blockquote class="quote">
-            <svg class="i" aria-hidden="true"><use href="#i-quote"/></svg>
+        <div class="fl-text rv">
+          <p class="sek-nr"><span>07</span>Ihr Fahrlehrer</p>
+          <h2 id="fl-t">Bruno Schelbert.</h2>
+          <p>Ich bin von klein auf mit Autos und Motorrädern aufgewachsen und habe nach der Schulzeit Automechaniker gelernt. Weil mir der direkte Kundenkontakt fehlte, begann ich 1996 die Ausbildung zum Autofahrlehrer und schloss sie nur ein Jahr später erfolgreich ab. Kurz darauf machte ich mich selbständig und liess mich zusätzlich zum Motorradfahrlehrer ausbilden.</p>
+          <blockquote class="zitat">
             <p>Inzwischen haben sich rund 1 Million Fahrschulkilometer angehäuft. Mit diesem Erfahrungsschatz bilde ich Sie möglichst schnell und effizient zu einem sicheren, verantwortungsbewussten Fahrzeuglenker aus.</p>
           </blockquote>
-          <ul class="facts">
-            <li><span>Jahrgang</span>1973</li>
-            <li><span>Beruf</span>Automechaniker, seit 1997 Fahrlehrer</li>
-            <li><span>Hobbys</span>Motorrad, Ski und gut essen</li>
-          </ul>
-          <div class="about-contact">
-            <a href="tel:+41792375013"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 237 50 13</a>
-            <a href="mailto:info@fahrschule-einsiedeln.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> info@fahrschule-einsiedeln.ch</a>
-          </div>
+          <a class="btn-text" href="#" data-soon="Über mich">Mehr über mich<svg class="i pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="sec sec-cta">
+    <!-- 08 Kontakt -->
+    <section class="kontakt" id="kontakt" aria-labelledby="k-t">
       <div class="wrap">
-        <div class="cta reveal">
-          <div>
-            <h2>Bereit für Ihre erste Fahrstunde?</h2>
-            <p>Rufen Sie an oder melden Sie sich online an. Fahrstunden sind von Montag bis Samstag zwischen 7.30 und 21 Uhr möglich.</p>
-          </div>
-          <div class="cta-actions">
-            <a class="btn btn-white btn-lg" href="tel:+41792375013"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 237 50 13</a>
-            <a class="btn btn-ghost-white btn-lg" href="#" data-soon="Anmeldung Fahrstunden und Kurse">Online anmelden</a>
-          </div>
+        <div class="k-kopf rv">
+          <p class="sek-nr"><span>08</span>Kontakt</p>
+          <h2 id="k-t">Fragen? Rufen Sie mich an.</h2>
+          <p class="sek-lead">Für weitere Auskünfte und Fragen stehe ich Ihnen sehr gerne zur Verfügung.</p>
+        </div>
+
+        <div class="k-grid">
+          <a class="tel-gross rv" href="tel:+41792375013" aria-label="079 237 50 13 anrufen" data-roll>
+            <span class="tel-cap" aria-hidden="true">Telefon <i>·</i> antippen zum Anrufen</span>
+            <span class="tel-win" aria-hidden="true">
+              <span class="drum" data-to="0" data-turns="1"><span class="reel"><span class="col"><span>0</span></span></span></span><span class="drum" data-to="7" data-turns="0"><span class="reel"><span class="col"><span>7</span></span></span></span><span class="drum" data-to="9" data-turns="0"><span class="reel"><span class="col"><span>9</span></span></span></span>
+              <span class="drum g" data-to="2" data-turns="1"><span class="reel"><span class="col"><span>2</span></span></span></span><span class="drum" data-to="3" data-turns="1"><span class="reel"><span class="col"><span>3</span></span></span></span><span class="drum" data-to="7" data-turns="0"><span class="reel"><span class="col"><span>7</span></span></span></span>
+              <span class="drum g" data-to="5" data-turns="1"><span class="reel"><span class="col"><span>5</span></span></span></span><span class="drum" data-to="0" data-turns="1"><span class="reel"><span class="col"><span>0</span></span></span></span>
+              <span class="drum g" data-to="1" data-turns="1"><span class="reel"><span class="col"><span>1</span></span></span></span><span class="drum drum-blau" data-to="3" data-turns="1"><span class="reel"><span class="col"><span>3</span></span></span></span>
+            </span>
+            <span class="tel-go" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Jetzt anrufen</span>
+          </a>
+
+          <dl class="werte werte-hell rv">
+            <div><dt>Telefon</dt><dd><a href="tel:+41792375013">079 237 50 13</a></dd></div>
+            <div><dt>E-Mail</dt><dd><a href="mailto:info@fahrschule-einsiedeln.ch">info@fahrschule-einsiedeln.ch</a></dd></div>
+            <div><dt>Adresse</dt><dd>Trachslauerstrasse 4b<br>8840 Trachslau (Einsiedeln)<br><a class="karte" href="https://www.google.com/maps/search/?api=1&amp;query=Trachslauerstrasse%204b%2C%208840%20Trachslau" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Auf der Karte zeigen</a></dd></div>
+            <div><dt>Fahrstunden</dt><dd>Mo bis Sa, 7.30 bis 21 Uhr</dd></div>
+            <div><dt>Anmeldung</dt><dd><a href="#" data-soon="Anmelden Fahrstunden / Kurse">Online-Formular</a> oder per Telefon</dd></div>
+          </dl>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer-grid">
-      <div>
-        <span class="wm wm-light" role="img" aria-label="Fahrschule Schelbert"><span class="wm-s">S</span>che<span class="wm-l">L</span>bert</span>
-        <p class="footer-claim">Fahrschule für Auto und Motorrad in Trachslau, Einsiedeln.</p>
+  <footer class="fuss">
+    <div class="wrap fuss-grid">
+      <div class="fuss-marke">
+        <span class="wm" role="img" aria-label="Fahrschule Schelbert"><span class="wm-s" aria-hidden="true">S</span><span class="wm-k" aria-hidden="true">CHE</span><span class="wm-l" aria-hidden="true"><span>L</span></span><span class="wm-k" aria-hidden="true">BERT</span></span>
+        <p>Fahrschule für Auto und Motorrad in Trachslau, Einsiedeln.</p>
       </div>
       <div>
-        <h3>Kontakt</h3>
-        <p>Fahrschule Schelbert<br>Trachslauerstrasse 4b<br>8840 Trachslau</p>
+        <h2 class="fuss-t">Kontakt</h2>
+        <p>Bruno Schelbert<br>Trachslauerstrasse 4b<br>8840 Trachslau</p>
         <p><a href="tel:+41792375013">079 237 50 13</a><br><a href="mailto:info@fahrschule-einsiedeln.ch">info@fahrschule-einsiedeln.ch</a></p>
       </div>
       <div>
-        <h3>Angebot</h3>
+        <h2 class="fuss-t">Seiten</h2>
         <ul>
-          <li><a href="#" data-soon="Auto">Auto</a></li>
-          <li><a href="#" data-soon="Motorrad">Motorrad</a></li>
-          <li><a href="#" data-soon="Kurse">Verkehrskunde VKU</a></li>
+          <li><a href="#" data-soon="Anmelden Fahrstunden / Kurse">Anmelden Fahrstunden / Kurse</a></li>
+          <li><a href="#" data-soon="Der schnellste Weg zum Führerschein">Der schnellste Weg zum Führerschein</a></li>
+          <li><a href="#" data-soon="Die Fahrschulautos">Die Fahrschulautos</a></li>
+          <li><a href="#" data-soon="Fahrschulmotorräder">Fahrschulmotorräder</a></li>
           <li><a href="#" data-soon="Preise">Preise</a></li>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
         </ul>
       </div>
-      <div>
-        <h3>Fahrstunden</h3>
-        <p>Montag bis Samstag<br>7.30 bis 21 Uhr</p>
-        <p><a href="#" data-soon="Anmeldung Fahrstunden und Kurse">Zur Anmeldung</a></p>
-      </div>
     </div>
-    <div class="wrap footer-bottom">
+    <div class="wrap fuss-unten">
       <p>© 2026 Fahrschule Schelbert, Trachslau</p>
-      <p><a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="AGB">AGB</a></p>
+      <p><a href="#" data-soon="AGB">AGB</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
     </div>
   </footer>
+
+  <nav class="aktion" aria-label="Schnellkontakt">
+    <a class="a-tel" href="tel:+41792375013"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
+    <a href="mailto:info@fahrschule-einsiedeln.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
+    <a href="#" data-soon="Anmelden Fahrstunden / Kurse"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg>Anmelden</a>
+  </nav>
 </body>
 </html>

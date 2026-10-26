@@ -2,14 +2,14 @@
 <html lang="de-CH">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Design A | Fahrschule Schelbert Muotathal</title>
-  <meta name="description" content="Designvorschlag A für die Startseite der Fahrschule Schelbert in Muotathal: Fahrschule für Auto und Anhänger.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Fahrschule Schelbert Muotathal: Auto und Anhänger</title>
+  <meta name="description" content="Fahrschule für Auto und Anhänger in Muotathal: Fahrstunden, Verkehrskunde und Anhängerprüfung bei Luca Schelbert. Erfolgsquote jedes Jahr über dem Schwyzer Durchschnitt.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#009fe3">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/a-outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>document.documentElement.classList.add('js')</script>
@@ -17,310 +17,512 @@
   <script src="../assets/shared/vorschau.js" defer></script>
 </head>
 <body data-vorschau="a">
-  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
-    <symbol id="i-award" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0"/><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889"/><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889"/></symbol>
-    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
-    <symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 15h-3a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v3"/><path d="M7 10a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1l0 -8"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/></symbol>
-    <symbol id="i-chalkboard-teacher" viewBox="0 0 24 24"><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1"/><path d="M12 14a2 2 0 1 0 4.001 -.001a2 2 0 0 0 -4.001 .001"/><path d="M17 19a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2"/></symbol>
-    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2"/><path d="M12 8l0 13"/><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5"/></symbol>
-    <symbol id="i-license" viewBox="0 0 24 24"><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"/><path d="M9 7l4 0"/><path d="M9 11l4 0"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M3 7l9 6l9 -6"/></symbol>
-    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0"/></symbol>
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons. Kompass und Grafiken: eigene Zeichnung -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
-    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></symbol>
-    <symbol id="i-steering-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14l0 7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
-    <symbol id="i-taxi" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/><path d="M8 6v-2h3v2"/></symbol>
-    <symbol id="i-trailer" viewBox="0 0 24 24"><path d="M6 16h-3v-9a1 1 0 0 1 1 -1h11a1 1 0 0 1 1 1v9h-4"/><path d="M7 16a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M16 14h5"/><path d="M21 12.5v3"/></symbol>
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-extern" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5l0 14"/><path d="M18 13l-6 6"/><path d="M6 13l6 6"/></symbol>
+    <symbol id="i-trailer" viewBox="0 0 24 24"><path d="M6 16h-3v-9a1 1 0 0 1 1 -1h11a1 1 0 0 1 1 1v9h-4"/><path d="M7 16a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M16 14h5"/><path d="M21 12.5v3"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2"/><path d="M12 8l0 13"/><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 15h-3a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v3"/><path d="M7 10a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1l0 -8"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8l16 0"/><path d="M4 16l16 0"/></symbol>
+
+    <!-- Kompassrose nach dem Logo-Motiv -->
+    <symbol id="rose" viewBox="-100 -100 200 200">
+      <circle r="92" style="fill:var(--rose-scheibe, none)"/>
+      <circle r="88" pathLength="360" stroke-dasharray="0.8 4.2" stroke-dashoffset="0.4" style="fill:none;stroke:var(--rose-ring);stroke-width:8"/>
+      <circle r="82" style="fill:none;stroke:var(--rose-ring);stroke-width:1.5"/>
+      <g style="fill:var(--rose-b)">
+        <path d="M0-58L9-9H0Z" transform="rotate(45)"/><path d="M0-58L9-9H0Z" transform="rotate(135)"/>
+        <path d="M0-58L9-9H0Z" transform="rotate(225)"/><path d="M0-58L9-9H0Z" transform="rotate(315)"/>
+      </g>
+      <g style="fill:var(--rose-a)">
+        <path d="M0-58L-9-9H0Z" transform="rotate(45)"/><path d="M0-58L-9-9H0Z" transform="rotate(135)"/>
+        <path d="M0-58L-9-9H0Z" transform="rotate(225)"/><path d="M0-58L-9-9H0Z" transform="rotate(315)"/>
+      </g>
+      <g style="fill:var(--rose-a)">
+        <path d="M0-78L-14-14H0Z"/><path d="M0-78L-14-14H0Z" transform="rotate(90)"/>
+        <path d="M0-78L-14-14H0Z" transform="rotate(180)"/><path d="M0-78L-14-14H0Z" transform="rotate(270)"/>
+      </g>
+      <g style="fill:var(--rose-b)">
+        <path d="M0-78L14-14H0Z"/><path d="M0-78L14-14H0Z" transform="rotate(90)"/>
+        <path d="M0-78L14-14H0Z" transform="rotate(180)"/><path d="M0-78L14-14H0Z" transform="rotate(270)"/>
+      </g>
+    </symbol>
+    <symbol id="nadel" viewBox="-100 -100 200 200">
+      <path d="M0-74L8 0H-8Z" style="fill:var(--nadel-n)"/>
+      <path d="M0 74L8 0H-8Z" style="fill:var(--nadel-s)"/>
+      <circle r="12" style="fill:var(--nadel-hub)"/>
+      <circle r="4.5" style="fill:var(--nadel-punkt)"/>
+    </symbol>
   </svg>
 
-  <header class="header">
-    <div class="wrap header-inner">
-      <a class="logo" href="./" aria-label="Fahrschule Schelbert, Startseite">
+  <header class="kopf" id="kopf">
+    <div class="wrap kopf-in">
+      <a class="logo" href="./" aria-label="Fahrschule Schelbert, zum Seitenanfang">
         <img src="../assets/img/logo.webp" alt="Fahrschule Schelbert, Auto und Anhänger" width="800" height="294">
       </a>
       <nav class="nav" id="nav" aria-label="Hauptnavigation">
         <ul>
-          <li><a href="#" data-soon="Angebot und Kosten">Angebot</a></li>
-          <li><a href="#" data-soon="Verkehrskunde">Verkehrskunde</a></li>
-          <li><a href="#" data-soon="Anhänger">Anhänger</a></li>
-          <li><a href="#" data-soon="Weg zum Führerausweis">Weg zum Ausweis</a></li>
-          <li><a href="#" data-soon="Über mich">Über mich</a></li>
-          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+          <li><a href="#erfolgsquote">Erfolgsquote</a></li>
+          <li><a href="#angebot">Angebot</a></li>
+          <li><a href="#vku">VKU</a></li>
+          <li><a href="#ueber-mich">Über mich</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
         </ul>
-        <a class="btn btn-blue nav-call" href="tel:+41795636582">
-          <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 563 65 82
-        </a>
+        <p class="nav-mehr">
+          <a href="#" data-soon="Weg zum Führerausweis">Weg zum Führerausweis</a>
+          <a href="#" data-soon="Anhänger">Anhänger</a>
+          <a href="#" data-soon="Gutschein bestellen">Gutschein bestellen</a>
+        </p>
       </nav>
-      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
-        <span></span><span></span>
-      </button>
+      <div class="kopf-knoepfe">
+        <a class="rund" href="tel:+41795636582" aria-label="Anrufen: 079 563 65 82">
+          <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>
+        </a>
+        <a class="rund rund-wa" href="https://wa.me/41795636582" aria-label="WhatsApp schreiben">
+          <svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+        </a>
+        <button class="rund rund-menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+          <span class="menu-striche" aria-hidden="true"><span></span><span></span></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-text">
-          <p class="pill"><span class="pill-dot" aria-hidden="true"></span>Fahrschule für Auto und Anhänger</p>
-          <h1>Fahren lernen in <span class="swoosh">Muotathal</span>.</h1>
-          <p class="lead">Dein Fahrlehrer Luca Schelbert begleitet dich vom Lernfahrausweis bis zur bestandenen Prüfung. Mit Automat oder Handschaltung, und auf Wunsch auch mit dem Anhänger.</p>
-          <div class="hero-cta">
-            <a class="btn btn-blue btn-lg" href="#" data-soon="Kontakt">
-              Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-            </a>
-            <a class="btn btn-line btn-lg" href="tel:+41795636582">
-              <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 563 65 82
-            </a>
-          </div>
-          <a class="wa-link" href="https://wa.me/41795636582"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg> Oder schreib mir auf WhatsApp</a>
+  <main id="inhalt">
+    <!-- 1 Hero: Kompass -->
+    <section class="hero" aria-labelledby="hero-h">
+      <div class="hero-topo" aria-hidden="true"></div>
+      <svg class="hero-bezel" viewBox="-500 -500 1000 1000" aria-hidden="true">
+        <circle r="486" class="bz-linie"/>
+        <circle r="470" pathLength="360" stroke-dasharray="0.16 1.84" stroke-dashoffset="0.08" class="bz-fein"/>
+        <circle r="466" pathLength="360" stroke-dasharray="0.3 9.7" stroke-dashoffset="0.15" class="bz-mittel"/>
+        <circle r="462" pathLength="360" stroke-dasharray="0.5 29.5" stroke-dashoffset="0.25" class="bz-gross"/>
+        <circle r="440" class="bz-linie bz-innen"/>
+        <path d="M0-440l-9-16h18z" class="bz-marke"/>
+        <g class="bz-zahl">
+          <text transform="rotate(-60) translate(0 -412)">300</text>
+          <text transform="rotate(-30) translate(0 -412)">330</text>
+          <text transform="rotate(30) translate(0 -412)">30</text>
+          <text transform="rotate(60) translate(0 -412)">60</text>
+        </g>
+      </svg>
+
+      <div class="wrap hero-in">
+        <div class="hero-kompass" aria-hidden="true">
+          <svg class="hk-rose" viewBox="0 0 200 200"><use href="#rose"/></svg>
+          <svg class="hk-nadel" viewBox="0 0 200 200"><use href="#nadel"/></svg>
         </div>
-        <div class="hero-visual">
-          <img class="hero-photo" src="../assets/img/a-hero.webp" width="861" height="646" fetchpriority="high"
-               alt="Fahrlehrer Luca Schelbert an der offenen Tür seines Fahrschulautos im Schnee">
-          <span class="l-plate" aria-hidden="true">L</span>
-          <div class="quote-badge">
-            <span>Erfolgsquote 2025</span>
-            <strong>80.9 %</strong>
-            <small>Kanton Schwyz: 68.0 %</small>
-          </div>
+        <h1 id="hero-h">
+          <span class="h1-z" style="--i:0">Fahrschule für Auto</span>
+          <span class="h1-z" style="--i:1">und Anhänger</span>
+          <span class="h1-z" style="--i:2">in Muotathal.</span>
+        </h1>
+        <p class="hero-lead" style="--i:3">Fahrstunden, Verkehrskunde und Anhängerprüfung bei Luca Schelbert. Ich freue mich, dich auf deinem Weg zu begleiten.</p>
+        <div class="hero-cta">
+          <a class="btn btn-tinte" style="--i:4" href="mailto:mail@fahrschule-schelbert.ch?subject=Anfrage%20Fahrstunde">
+            Fahrstunde anfragen <svg class="i i-pfeil" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a class="btn btn-weiss" style="--i:5" href="tel:+41795636582">
+            <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Anrufen
+          </a>
+          <a class="btn btn-weiss btn-wa" style="--i:6" href="https://wa.me/41795636582">
+            <svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg> WhatsApp
+          </a>
         </div>
       </div>
+      <p class="wrap hero-rand" style="--i:7" aria-hidden="true"><span>46°58′ N, 8°46′ O</span><span>Muotathal, Kanton Schwyz</span></p>
 
+      <svg class="hero-berge" viewBox="0 0 1440 170" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <path class="berg-hinten" d="M0 120L70 92L132 104L214 52L268 78L322 60L404 102L470 84L540 30L596 64L652 52L728 96L800 70L876 24L940 66L1004 50L1080 92L1150 58L1214 74L1290 34L1352 70L1440 54V170H0Z"/>
+        <path class="berg-vorne" d="M0 150C60 140 110 118 180 122S300 146 380 132S500 96 580 104S700 140 790 134S930 100 1010 108S1140 142 1230 132S1360 112 1440 120V170H0Z"/>
+      </svg>
+    </section>
+
+    <!-- 2 Erfolgsquote -->
+    <section class="quote" id="erfolgsquote" aria-labelledby="quote-h">
       <div class="wrap">
-        <ul class="trust">
-          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-trailer"/></svg></span><div><strong>Auto und Anhänger</strong><span>Kategorie B und BE</span></div></li>
-          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-steering-wheel"/></svg></span><div><strong>Automat oder Handschaltung</strong><span>Skoda Karoq oder VW Golf 8</span></div></li>
-          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-chalkboard-teacher"/></svg></span><div><strong>VKU in Muotathal</strong><span>Im Restaurant Alpenrösli</span></div></li>
-          <li><span class="trust-ico"><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg></span><div><strong>Bar oder auf Rechnung</strong><span>Für alle Angebote</span></div></li>
-        </ul>
+        <article class="q-karte">
+          <header class="q-kopf">
+            <p class="daten">Erfolgsquote 1. Prüfung Kat. B <span class="punkt" aria-hidden="true">·</span> Quelle: Zertifikate Verkehrsamt Kanton Schwyz</p>
+            <h2 id="quote-h">Jedes Jahr über dem Schwyzer&nbsp;Durchschnitt.</h2>
+            <ul class="legende" aria-hidden="true">
+              <li><i class="lg-luca"></i>Luca Schelbert</li>
+              <li><i class="lg-kanton"></i>Kanton Schwyz</li>
+            </ul>
+          </header>
+
+          <div class="q-body">
+            <figure class="chart" aria-hidden="true" data-reveal-chart>
+              <div class="chart-plot">
+                <div class="chart-achse">
+                  <span style="--y:100">100&nbsp;%</span><span style="--y:90">90</span><span style="--y:80">80</span>
+                  <span style="--y:70">70</span><span style="--y:60">60</span><span style="--y:50">50&nbsp;%</span>
+                </div>
+                <ol class="chart-saeulen">
+                  <li style="--v:81.6;--k:68.0;--n:0"><span class="bar"></span><span class="bar-wert"><span data-count="81.6" data-from="50">81.6</span></span><span class="k-punkt"></span><span class="k-wert">68.0</span><span class="jahr">2021</span></li>
+                  <li style="--v:78.4;--k:68.5;--n:1"><span class="bar"></span><span class="bar-wert"><span data-count="78.4" data-from="50">78.4</span></span><span class="k-punkt"></span><span class="k-wert">68.5</span><span class="jahr">2022</span></li>
+                  <li style="--v:75.0;--k:72.1;--n:2"><span class="bar"></span><span class="bar-wert"><span data-count="75.0" data-from="50">75.0</span></span><span class="k-punkt"></span><span class="k-wert">72.1</span><span class="jahr">2023</span></li>
+                  <li style="--v:86.0;--k:68.9;--n:3"><span class="bar"></span><span class="bar-wert"><span data-count="86.0" data-from="50">86.0</span></span><span class="k-punkt"></span><span class="k-wert">68.9</span><span class="jahr">2024</span></li>
+                  <li style="--v:80.9;--k:68.0;--n:4"><span class="bar"></span><span class="bar-wert"><span data-count="80.9" data-from="50">80.9</span></span><span class="k-punkt"></span><span class="k-wert">68.0</span><span class="jahr">2025</span></li>
+                </ol>
+                <svg class="k-linie" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <defs>
+                    <mask id="k-maske" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+                      <path class="k-maske-pfad" d="M10 64L30 63L50 55.8L70 62.2L90 64" pathLength="1"/>
+                    </mask>
+                  </defs>
+                  <path class="k-pfad" d="M10 64L30 63L50 55.8L70 62.2L90 64" mask="url(#k-maske)"/>
+                </svg>
+              </div>
+            </figure>
+
+            <div class="q-seite">
+              <div class="spitze">
+                <p class="sp"><span class="sp-zahl"><span data-count="86.0" data-from="0">86.0</span><small>&nbsp;%</small></span><span class="sp-text">2024 <span aria-hidden="true">·</span> Kanton: 68.9&nbsp;%</span></p>
+                <p class="sp"><span class="sp-zahl"><span data-count="80.9" data-from="0">80.9</span><small>&nbsp;%</small></span><span class="sp-text">2025 <span aria-hidden="true">·</span> Kanton: 68.0&nbsp;%</span></p>
+              </div>
+              <table class="q-tabelle">
+                <caption class="sr-only">Erfolgsquote bei der 1. Prüfung, Kategorie B: Luca Schelbert im Vergleich zum Durchschnitt im Kanton Schwyz, 2021 bis 2025</caption>
+                <thead>
+                  <tr><th scope="col">Jahr</th><th scope="col">Luca Schelbert</th><th scope="col">Kanton Schwyz</th><th scope="col">Vorsprung</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">2021</th><td>81.6&nbsp;%</td><td>68.0&nbsp;%</td><td class="plus">+13.6 Pkt.</td></tr>
+                  <tr><th scope="row">2022</th><td>78.4&nbsp;%</td><td>68.5&nbsp;%</td><td class="plus">+9.9 Pkt.</td></tr>
+                  <tr><th scope="row">2023</th><td>75.0&nbsp;%</td><td>72.1&nbsp;%</td><td class="plus">+2.9 Pkt.</td></tr>
+                  <tr><th scope="row">2024</th><td>86.0&nbsp;%</td><td>68.9&nbsp;%</td><td class="plus">+17.1 Pkt.</td></tr>
+                  <tr><th scope="row">2025</th><td>80.9&nbsp;%</td><td>68.0&nbsp;%</td><td class="plus">+12.9 Pkt.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <footer class="q-fuss">
+            <p>Quelle: Zertifikate des Verkehrsamts des Kantons Schwyz, Führerprüfungen Kategorie B, Erfolgsquote bei der 1. Prüfung im Vergleich zum Kantonsdurchschnitt. Die Grafik beginnt bei 50&nbsp;%.</p>
+            <a class="link" href="#" data-soon="Zertifikate">Zertifikate ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </footer>
+        </article>
       </div>
     </section>
 
-    <!-- Angebot -->
-    <section class="sec">
+    <!-- 3 Angebot um den Kompass -->
+    <section class="angebot" id="angebot" aria-labelledby="angebot-h">
       <div class="wrap">
-        <div class="head reveal">
-          <p class="kicker">Angebot</p>
-          <h2>Was möchtest du lernen?</h2>
-          <p>Fahrstunden für Auto und Anhänger, dazu der Verkehrskundeunterricht direkt im Dorf.</p>
-        </div>
-        <div class="offer">
-          <a class="card reveal" href="#" data-soon="Angebot und Kosten">
-            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span>
-            <span class="card-cat">Kategorie B</span>
+        <div class="rose-grid" data-rose>
+          <header class="ang-kopf" data-reveal>
+            <p class="kicker">Angebot und Preise</p>
+            <h2 id="angebot-h">Vier Richtungen, ein Fahrlehrer.</h2>
+            <p class="lead">Fahrstunden für Auto, Anhänger und Taxi, oder einfach zum Auffrischen. Alle Preise auf einen Blick.</p>
+          </header>
+
+          <div class="ang-mitte" aria-hidden="true">
+            <div class="ang-achse ang-achse-x"></div>
+            <div class="ang-achse ang-achse-y"></div>
+            <div class="ang-kompass">
+              <svg class="ak-rose" viewBox="0 0 200 200"><use href="#rose"/></svg>
+              <svg class="ak-nadel" viewBox="0 0 200 200"><use href="#nadel"/></svg>
+            </div>
+          </div>
+
+          <article class="ang-karte k-n" data-dir="0">
+            <p class="ak-top"><span class="dir" aria-hidden="true">N</span><span class="kat">Kategorie B</span></p>
             <h3>Auto</h3>
-            <p>Vom Lernfahrausweis bis zur Prüfung. Du entscheidest, ob du mit Automat oder mit Handschaltung lernst.</p>
-            <ul class="ticks">
-              <li>Fahrstunde à 50 Minuten</li>
-              <li>Skoda Karoq oder VW Golf 8</li>
+            <p class="preis"><span class="fr">Fr.</span><span class="betrag">100</span><span class="per">pro Fahrstunde<br>à 50 Minuten</span></p>
+            <ul class="extra">
+              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Administration und Versicherung, einmalig Fr.&nbsp;120</li>
+              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Automat oder Handschaltung</li>
             </ul>
-            <span class="card-link">Mehr zum Auto <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
-          </a>
-          <a class="card reveal" href="#" data-soon="Anhänger">
-            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-trailer"/></svg></span>
-            <span class="card-cat">Kategorie BE</span>
+          </article>
+
+          <article class="ang-karte k-o" data-dir="90">
+            <p class="ak-top"><span class="dir" aria-hidden="true">O</span><span class="kat">Kategorie BE</span></p>
             <h3>Anhänger</h3>
-            <p>Für Wohnwagen, Pferde- oder Gütertransport. Theorie, Kontrolle von Fahrzeug und Ladung, Fahren und Manövrieren.</p>
-            <ul class="ticks">
-              <li>Lektion à 45 Minuten</li>
-              <li>Start in Brunnen beim Muotaplatz</li>
+            <p class="preis"><span class="fr">Fr.</span><span class="betrag">140</span><span class="per">pro Lektion<br>à 45 Minuten</span></p>
+            <ul class="extra">
+              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Versicherung, einmalig Fr.&nbsp;100</li>
+              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Start in Brunnen beim Muotaplatz</li>
             </ul>
-            <span class="card-link">Mehr zum Anhänger <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
-          </a>
-          <a class="card reveal" href="#" data-soon="Verkehrskunde">
-            <span class="card-ico"><svg class="i" aria-hidden="true"><use href="#i-chalkboard-teacher"/></svg></span>
-            <span class="card-cat">VKU</span>
-            <h3>Verkehrskunde</h3>
-            <p>8 Lektionen im Eventsaal «hindä ussä» im Restaurant Alpenrösli. Anmelden kannst du dich direkt online.</p>
-            <ul class="ticks">
-              <li>Ab 2027 vor der Theorieprüfung</li>
-              <li>CHF 50.– Gutschein für die Fahrausbildung</li>
-            </ul>
-            <span class="card-link">Zur Verkehrskunde <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
-          </a>
-        </div>
-        <div class="more">
-          <a class="more-item reveal" href="#" data-soon="Angebot und Kosten">
-            <span class="more-ico"><svg class="i" aria-hidden="true"><use href="#i-taxi"/></svg></span>
-            <span><strong>Taxi (BPT)</strong><small>Fahrstunden für den berufsmässigen Personentransport</small></span>
-            <svg class="i more-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-          </a>
-          <a class="more-item reveal" href="#" data-soon="Angebot und Kosten">
-            <span class="more-ico"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg></span>
-            <span><strong>Auffrischen</strong><small>Wieder sicher unterwegs, mit Fahrstunden nach deinen Bedürfnissen</small></span>
-            <svg class="i more-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
+          </article>
 
-    <!-- Erfolgsquote -->
-    <section class="sec sec-ice">
-      <div class="wrap rate">
-        <div class="rate-text reveal">
-          <p class="kicker">Erfolgsquote</p>
-          <h2>Jedes Jahr über dem Kantonsschnitt</h2>
-          <p class="muted">Bei den Führerprüfungen der Kategorie B liegt die Erfolgsquote von Luca Schelbert seit 2021 jedes Jahr über dem Durchschnitt im Kanton Schwyz. Das bestätigt das Verkehrsamt jedes Jahr mit einem Zertifikat.</p>
-          <div class="rate-best">
-            <span class="rate-best-ico"><svg class="i" aria-hidden="true"><use href="#i-award"/></svg></span>
-            <div><strong>86.0 %</strong><span>Bestwert im Jahr 2024, Kantonsschnitt 68.9 %</span></div>
+          <article class="ang-karte k-s" data-dir="180">
+            <p class="ak-top"><span class="dir" aria-hidden="true">S</span><span class="kat">Kategorie BPT</span></p>
+            <h3>Taxi</h3>
+            <p class="preis"><span class="fr">Fr.</span><span class="betrag">100</span><span class="per">pro Fahrstunde<br>à 50 Minuten</span></p>
+            <ul class="extra">
+              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Für den berufsmässigen Personentransport</li>
+            </ul>
+          </article>
+
+          <article class="ang-karte k-w" data-dir="270">
+            <p class="ak-top"><span class="dir" aria-hidden="true">W</span><span class="kat">Für alle mit Ausweis</span></p>
+            <h3>Auffrischen</h3>
+            <p class="preis"><span class="fr">Fr.</span><span class="betrag">100</span><span class="per">pro Fahrstunde<br>à 50 Minuten</span></p>
+            <ul class="extra">
+              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Abgestimmt auf deine persönlichen Bedürfnisse</li>
+            </ul>
+          </article>
+
+          <a class="ang-vku" href="#vku" data-reveal>
+            <span class="av-label">Dazu im Dorf</span>
+            <span class="av-titel">Verkehrskunde (VKU)</span>
+            <span class="av-preis"><span class="fr">Fr.</span> 250 <span class="av-per">8 Lektionen, inkl. Lehrmittel</span></span>
+            <span class="av-link">Zu den Kursdaten <svg class="i" aria-hidden="true"><use href="#i-down"/></svg></span>
+          </a>
+
+          <div class="ang-notiz" data-reveal>
+            <p><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg><span>Alle Angebote bezahlst du bar oder gegen Rechnung.</span></p>
+            <a class="link" href="#" data-soon="Angebot und Kosten">Angebot und Kosten im Detail <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
         </div>
-        <figure class="chart reveal">
-          <figcaption class="chart-head">
-            <strong>Erfolgsquote Kategorie B</strong>
-            <span class="legend">
-              <span><i class="key key-own" aria-hidden="true"></i>Fahrschule Schelbert</span>
-              <span><i class="key key-avg" aria-hidden="true"></i>Kanton Schwyz, 1. Prüfung</span>
-            </span>
-          </figcaption>
-          <table class="bars">
-            <caption class="sr-only">Erfolgsquote der Fahrschule Schelbert im Vergleich zum Durchschnitt im Kanton Schwyz, 2021 bis 2025</caption>
-            <thead class="sr-only"><tr><th scope="col">Jahr</th><th scope="col">Fahrschule Schelbert</th><th scope="col">Kanton Schwyz</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">2025</th><td><span class="bar bar-own" style="--v:80.9" title="2025: Fahrschule Schelbert 80.9 %"></span><span class="val">80.9 %</span></td><td><span class="bar bar-avg" style="--v:68" title="2025: Kanton Schwyz 68.0 %"></span><span class="val">68.0 %</span></td></tr>
-              <tr><th scope="row">2024</th><td><span class="bar bar-own" style="--v:86" title="2024: Fahrschule Schelbert 86.0 %"></span><span class="val">86.0 %</span></td><td><span class="bar bar-avg" style="--v:68.9" title="2024: Kanton Schwyz 68.9 %"></span><span class="val">68.9 %</span></td></tr>
-              <tr><th scope="row">2023</th><td><span class="bar bar-own" style="--v:75" title="2023: Fahrschule Schelbert 75.0 %"></span><span class="val">75.0 %</span></td><td><span class="bar bar-avg" style="--v:72.1" title="2023: Kanton Schwyz 72.1 %"></span><span class="val">72.1 %</span></td></tr>
-              <tr><th scope="row">2022</th><td><span class="bar bar-own" style="--v:78.4" title="2022: Fahrschule Schelbert 78.4 %"></span><span class="val">78.4 %</span></td><td><span class="bar bar-avg" style="--v:68.5" title="2022: Kanton Schwyz 68.5 %"></span><span class="val">68.5 %</span></td></tr>
-              <tr><th scope="row">2021</th><td><span class="bar bar-own" style="--v:81.6" title="2021: Fahrschule Schelbert 81.6 %"></span><span class="val">81.6 %</span></td><td><span class="bar bar-avg" style="--v:68" title="2021: Kanton Schwyz 68.0 %"></span><span class="val">68.0 %</span></td></tr>
-            </tbody>
-          </table>
-          <p class="chart-src">Quelle: Zertifikate des Verkehrsamts des Kantons Schwyz, 2021 bis 2025</p>
-        </figure>
       </div>
     </section>
 
-    <!-- Ablauf -->
-    <section class="sec">
+    <!-- 4 Fahrzeuge -->
+    <section class="fahrzeuge" id="fahrzeuge" aria-labelledby="fz-h">
       <div class="wrap">
-        <div class="head head-row reveal">
-          <div>
-            <p class="kicker">Weg zum Führerausweis</p>
-            <h2>In 5 Schritten zum Führerausweis</h2>
-          </div>
-          <a class="text-link" href="#" data-soon="Weg zum Führerausweis">Ganzer Ablauf mit allen Details <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <ol class="steps">
-          <li class="reveal"><span class="step-no">1</span><h3>Nothelferkurs</h3><p>Der Nothilfeausweis ist 6 Jahre gültig.</p></li>
-          <li class="reveal"><span class="step-no">2</span><h3>Gesuch einreichen</h3><p>Formular ausfüllen, Sehtest beim Optiker, bei der Gemeinde bestätigen lassen.</p></li>
-          <li class="reveal"><span class="step-no">3</span><h3>VKU und Theorie</h3><p>Ab 2027 besuchst du den VKU vor der Theorieprüfung beim Verkehrsamt.</p></li>
-          <li class="reveal"><span class="step-no">4</span><h3>Fahrstunden</h3><p>Mit dem Lernfahrausweis gehts los. Spätestens jetzt komme ich ins Spiel.</p></li>
-          <li class="reveal"><span class="step-no step-goal"><svg class="i" aria-hidden="true"><use href="#i-license"/></svg></span><h3>Prüfung und WAB</h3><p>Nach der bestandenen Prüfung folgt noch der WAB-Kurs.</p></li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Fahrzeuge und Anhänger -->
-    <section class="sec sec-ice">
-      <div class="wrap split">
-        <figure class="split-media reveal">
-          <img src="../assets/img/anhaenger.webp" width="1000" height="1056" loading="lazy" alt="Fahrschulauto der Fahrschule Schelbert mit Kofferanhänger auf einer Landstrasse vor den Bergen">
-          <figcaption><svg class="i" aria-hidden="true"><use href="#i-map-pin"/></svg> Anhänger-Fahrstunden ab Brunnen, Muotaplatz</figcaption>
-        </figure>
-        <div class="split-text reveal">
+        <header class="sek-kopf" data-reveal>
           <p class="kicker">Fahrzeuge</p>
-          <h2>Automat, Handschaltung oder mit Anhänger</h2>
-          <p class="muted">Du lernst auf dem Skoda Karoq mit Automat oder auf dem VW Golf 8 mit Handschaltung. Für die Kategorie BE steht ein Anhänger mit Rückfahrkamera bereit.</p>
-          <ul class="cats">
-            <li><span class="cat-code">B</span><div><strong>Automat</strong><span>Skoda Karoq Sportline</span></div></li>
-            <li><span class="cat-code">B</span><div><strong>Handschaltung</strong><span>VW Golf 8 R-Line</span></div></li>
-            <li><span class="cat-code">BE</span><div><strong>Anhänger</strong><span>mit Rückfahrkamera</span></div></li>
-            <li><span class="cat-code">BE</span><div><strong>Über 750 kg</strong><span>oder Gesamtzug über 3.5 t</span></div></li>
+          <h2 id="fz-h">Automat oder Handschaltung. Du hast die Wahl.</h2>
+        </header>
+
+        <div class="fz-grid">
+          <figure class="foto fz-golf" data-reveal>
+            <div class="foto-rahmen">
+              <picture>
+                <source media="(max-width: 699px)" srcset="../assets/img/a-golf-schnee-mobil.webp" width="900" height="605">
+                <img src="../assets/img/a-golf-schnee.webp" width="1400" height="603" data-parallax
+                     alt="Fahrlehrer Luca Schelbert lehnt an der offenen Tür des weissen Fahrschulautos, rundherum verschneite Felsen">
+              </picture>
+            </div>
+            <figcaption>Luca Schelbert mit dem Fahrschulauto</figcaption>
+          </figure>
+
+          <ul class="fz-liste">
+            <li data-reveal style="--d:0ms">
+              <span class="fz-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" class="schaltung">
+                  <path d="M10 10V38M24 10V38M38 10V24M10 24H38"/>
+                  <circle cx="10" cy="10" r="3.4"/><circle cx="24" cy="10" r="3.4"/><circle cx="38" cy="10" r="3.4"/>
+                  <circle cx="10" cy="38" r="3.4"/><circle cx="24" cy="38" r="3.4"/><circle cx="24" cy="24" r="5.5" class="knauf"/>
+                </svg>
+              </span>
+              <div><p class="fz-typ">Handschaltung</p><h3>VW Golf 8 R-Line</h3></div>
+            </li>
+            <li data-reveal style="--d:90ms">
+              <span class="fz-icon fz-icon-a" aria-hidden="true"><span class="prnd"><span>P</span><span>R</span><span>N</span><span class="an">D</span></span></span>
+              <div><p class="fz-typ">Automat</p><h3>Skoda Karoq Sportline</h3></div>
+            </li>
+            <li data-reveal style="--d:180ms">
+              <span class="fz-icon" aria-hidden="true"><svg class="i"><use href="#i-trailer"/></svg></span>
+              <div><p class="fz-typ">Anhänger</p><h3>Mit Rückfahrkamera</h3></div>
+            </li>
           </ul>
-          <a class="btn btn-dark" href="#" data-soon="Anhänger">Mehr zum Anhänger <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+
+        <div class="fz-be">
+          <div class="fz-be-text" data-reveal>
+            <p class="kicker">Kategorie BE</p>
+            <h3>Wann brauchst du die Anhängerprüfung?</h3>
+            <p>Sobald dein Anhänger mehr als 750&nbsp;kg Gesamtgewicht hat oder Auto und Anhänger zusammen mehr als 3.5&nbsp;t wiegen. Das betrifft vor allem Wohnwagen, Pferde- und Gütertransporte.</p>
+            <p>In der Fahrstunde rechnest du zum Beispiel das Ladegewicht aus, kontrollierst Fahrzeug und Ladung und übst Fahren und Manövrieren.</p>
+            <p class="ort"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Start in Brunnen beim Muotaplatz</p>
+            <a class="link" href="#" data-soon="Anhänger">Mehr zum Anhänger <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+          <figure class="foto fz-anh" data-reveal>
+            <div class="foto-rahmen">
+              <img src="../assets/img/a-anhaenger.webp" width="1000" height="810" data-parallax
+                   alt="Weisses Fahrschulauto mit Kofferanhänger der Fahrschule Schelbert auf einer Landstrasse, im Hintergrund Berge">
+            </div>
+            <figcaption>Anhänger mit Rückfahrkamera</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- Preise -->
-    <section class="sec">
+    <!-- 5 VKU im Dorf -->
+    <section class="vku" id="vku" aria-labelledby="vku-h">
+      <div class="vku-topo" aria-hidden="true"></div>
+      <div class="wrap vku-grid">
+        <div class="vku-text" data-reveal>
+          <p class="kicker kicker-hell">Verkehrskunde (VKU)</p>
+          <h2 id="vku-h">Verkehrskunde direkt im&nbsp;Dorf.</h2>
+          <p class="lead">8 Lektionen im Restaurant Alpenrösli, im Eventsaal «hindä ussä». Hier wird dein Verkehrssinn geschärft.</p>
+          <div class="vku-preis">
+            <p class="vp-betrag"><span class="fr">Fr.</span>250</p>
+            <p class="vp-text">8 Lektionen<br>inklusive Lehrmittel</p>
+          </div>
+          <div class="bonus">
+            <span class="bonus-icon" aria-hidden="true"><svg class="i"><use href="#i-gift"/></svg></span>
+            <p><strong>Fr. 50 Gutschein für deine Fahrausbildung.</strong> Wer den VKU besucht, erhält einen persönlichen Gutschein. Er wird am Ende der Ausbildung automatisch abgezogen.</p>
+          </div>
+          <div class="knoepfe">
+            <a class="btn btn-cyan" href="https://iframe.vku-pgs.asa.ch/de/public/coursegroup/all/VktVXzE3MDY=/0/VKU/" target="_blank" rel="noopener">
+              Online anmelden <svg class="i i-pfeil" aria-hidden="true"><use href="#i-extern"/></svg><span class="sr-only">(öffnet in neuem Fenster)</span>
+            </a>
+            <a class="btn btn-rand-hell" href="#" data-soon="Verkehrskunde">Mehr zur Verkehrskunde</a>
+          </div>
+        </div>
+
+        <div class="vku-kurs">
+          <p class="daten daten-hell" data-reveal>Nächster Kurs <span class="punkt" aria-hidden="true">·</span> VKU 27</p>
+          <ol class="termine">
+            <li data-reveal style="--d:0ms"><span class="t-nr">1</span><span class="t-tag">Mo</span><span class="t-datum">25.01.2027</span><span class="t-zeit">18.45 bis 20.45 Uhr</span></li>
+            <li data-reveal style="--d:90ms"><span class="t-nr">2</span><span class="t-tag">Di</span><span class="t-datum">26.01.2027</span><span class="t-zeit">18.45 bis 20.45 Uhr</span></li>
+            <li data-reveal style="--d:180ms"><span class="t-nr">3</span><span class="t-tag">Do</span><span class="t-datum">28.01.2027</span><span class="t-zeit">18.45 bis 20.45 Uhr</span></li>
+            <li data-reveal style="--d:270ms"><span class="t-nr">4</span><span class="t-tag">Di</span><span class="t-datum">02.02.2027</span><span class="t-zeit">18.45 bis 20.45 Uhr</span></li>
+          </ol>
+          <p class="vku-ort" data-reveal><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span>Restaurant Alpenrösli, Eventsaal «hindä ussä»<br>Hauptstrasse 42, 6436 Muotathal</span></p>
+          <p class="neu" data-reveal><strong>Neu ab 1. Januar 2027:</strong> Der VKU findet vor der Theorieprüfung statt und ist auf vier Tage verteilt. Für die Online-Anmeldung brauchst du den FABER-PIN. Du erhältst ihn, sobald du dein Gesuch beim Verkehrsamt eingereicht hast.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 Weg zum Führerausweis -->
+    <section class="weg" id="weg" aria-labelledby="weg-h">
       <div class="wrap">
-        <div class="head head-row reveal">
-          <div>
-            <p class="kicker">Preise</p>
-            <h2>Transparent von Anfang an</h2>
-          </div>
-          <a class="text-link" href="#" data-soon="Angebot und Kosten">Alle Preise und AGB <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <div class="prices">
-          <div class="price reveal">
-            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span>
-            <span class="price-name">Fahrstunde Auto</span>
-            <strong>CHF 100.–</strong>
-            <span class="price-note">50 Minuten, gleicher Preis für Taxi und Auffrischen</span>
-          </div>
-          <div class="price reveal">
-            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-trailer"/></svg></span>
-            <span class="price-name">Lektion Anhänger</span>
-            <strong>CHF 140.–</strong>
-            <span class="price-note">45 Minuten, Kategorie BE</span>
-          </div>
-          <div class="price reveal">
-            <span class="price-ico"><svg class="i" aria-hidden="true"><use href="#i-chalkboard-teacher"/></svg></span>
-            <span class="price-name">Verkehrskunde VKU</span>
-            <strong>CHF 250.–</strong>
-            <span class="price-note">8 Lektionen, inklusive Lehrmittel</span>
-          </div>
-        </div>
-        <p class="pay reveal"><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg> <span>Einmalig dazu kommen CHF 120.– für Administration und Versicherung, beim Anhänger CHF 100.– für die Versicherung. Bezahlen kannst du bar oder gegen Rechnung.</span></p>
+        <header class="sek-kopf weg-kopf" data-reveal>
+          <p class="kicker">Weg zum Führerausweis</p>
+          <h2 id="weg-h">Sieben Schritte bis zum Ziel.</h2>
+          <p class="lead">Vom Nothelferkurs bis zum WAB-Kurs. Der Kompass zeigt dir, wo du gerade stehst.</p>
+        </header>
 
-        <div class="gift reveal">
-          <span class="gift-ico"><svg class="i" aria-hidden="true"><use href="#i-gift"/></svg></span>
-          <div class="gift-text">
-            <h3>Fahrstunden verschenken</h3>
-            <p>Machen Sie Ihrem Kind, Gottenkind, Enkel oder Freund eine Freude: mit einem Gutschein für Fahrstunden, im Wert von CHF 50.– bis 300.– oder einem Betrag nach Wahl.</p>
+        <div class="weg-grid" data-weg>
+          <div class="weg-dial" aria-hidden="true">
+            <svg class="dial" viewBox="-120 -120 240 240">
+              <circle r="118" class="d-grund"/>
+              <path class="d-spur" d="M-70.71 70.71A100 100 0 1 1 70.71 70.71"/>
+              <path class="d-fort" d="M-70.71 70.71A100 100 0 1 1 70.71 70.71" pathLength="270"/>
+              <path class="d-fein" d="M-60.81 60.81A86 86 0 1 1 60.81 60.81" pathLength="270"/>
+              <g class="d-zahlen">
+                <text x="-46.67" y="46.67">1</text><text x="-66" y="0">2</text><text x="-46.67" y="-46.67">3</text>
+                <text x="0" y="-66">4</text><text x="46.67" y="-46.67">5</text><text x="66" y="0">6</text><text x="46.67" y="46.67">7</text>
+              </g>
+              <text class="d-ziel" x="0" y="96">Ziel: Führerausweis</text>
+              <g class="d-nadel">
+                <path d="M0-56L6.5 0L0 12L-6.5 0Z"/>
+                <circle r="11" class="d-hub"/><circle r="4" class="d-hub-punkt"/>
+              </g>
+            </svg>
+            <p class="weg-status"><span class="ws-nr">Schritt <b>1</b> von 7</span><span class="ws-titel">Nothelferkurs</span></p>
           </div>
-          <a class="btn btn-line" href="#" data-soon="Gutschein bestellen">Gutschein bestellen</a>
+
+          <div class="weg-rechts">
+            <ol class="weg-liste">
+              <li data-step="1"><span class="pkt" aria-hidden="true">1</span><div><h3>Nothelferkurs</h3><p>Der Ausweis vom Nothelferkurs ist 6 Jahre gültig.</p></div></li>
+              <li data-step="2"><span class="pkt" aria-hidden="true">2</span><div><h3>Lernfahrausweis beantragen</h3><p>Formular ausfüllen, Sehtest beim Optiker machen und beim Einwohneramt bestätigen lassen.</p></div></li>
+              <li data-step="3"><span class="pkt" aria-hidden="true">3</span><div><h3>Theorie lernen</h3><p>Verkehrsregeln und Signale lernen, bis du dich bereit fühlst für die Prüfung.</p></div></li>
+              <li data-step="4" class="weg-ich"><span class="pkt" aria-hidden="true">4</span><div><h3>Theorieprüfung</h3><p>Auf dem Tablet beim Verkehrsamt in Schwyz oder Pfäffikon. Amtlichen Ausweis mitnehmen.</p><p class="notiz"><img src="../assets/img/a-luca.webp" width="660" height="660" alt="">Spätestens jetzt komme ich ins Spiel.</p></div></li>
+              <li data-step="5"><span class="pkt" aria-hidden="true">5</span><div><h3>Fahrstunden</h3><p>Mit dem Lernfahrausweis gehts los, mit Automat oder Handschaltung.</p></div></li>
+              <li data-step="6"><span class="pkt" aria-hidden="true">6</span><div><h3>Verkehrskundeunterricht</h3><p>8 Lektionen im Dorf. Ab 2027 besuchst du den VKU vor der Theorieprüfung.</p></div></li>
+              <li data-step="7"><span class="pkt" aria-hidden="true">7</span><div><h3>Prüfung und WAB-Kurs</h3><p>Nach der bestandenen Prüfung folgt der obligatorische WAB-Kurs.</p></div></li>
+            </ol>
+            <p class="weg-mehr"><a class="link" href="#" data-soon="Weg zum Führerausweis">Ganzer Ablauf mit allen Details <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Über mich -->
-    <section class="sec sec-ice">
-      <div class="wrap about">
-        <figure class="about-photo reveal">
-          <img src="../assets/img/luca-portrait.webp" width="600" height="768" loading="lazy" alt="Porträt von Fahrlehrer Luca Schelbert vor seinem Fahrschulauto">
-          <figcaption><strong>Fahrlehrer seit 2016</strong><span>Ausbildung am SVPI in Luzern</span></figcaption>
+    <!-- 7 Über mich -->
+    <section class="ich" id="ueber-mich" aria-labelledby="ich-h">
+      <div class="wrap ich-grid">
+        <figure class="ich-foto" data-reveal>
+          <svg class="ich-ring" viewBox="-100 -100 200 200" aria-hidden="true">
+            <circle r="97" pathLength="360" stroke-dasharray="0.3 4.7" stroke-dashoffset="0.15" class="ir-fein"/>
+            <circle r="97" pathLength="360" stroke-dasharray="0.6 44.4" stroke-dashoffset="0.3" class="ir-gross"/>
+            <path d="M0-100l-4-7h8z" class="ir-n"/>
+          </svg>
+          <img src="../assets/img/a-luca.webp" width="660" height="660" alt="Porträt von Fahrlehrer Luca Schelbert im Schnee vor seinem Fahrschulauto">
+          <figcaption><span class="fc-name">Luca Schelbert</span><span class="fc-rolle">Fahrlehrer</span></figcaption>
         </figure>
-        <div class="about-text reveal">
+
+        <div class="ich-text" data-reveal>
           <p class="kicker">Über mich</p>
-          <h2>Dein Fahrlehrer: Luca Schelbert</h2>
-          <p class="muted">Meine 14-monatige Ausbildung zum Fahrlehrer habe ich am Schweizerischen Verkehrspädagogischen Institut SVPI in Luzern gemacht und im Oktober 2016 abgeschlossen. Seit Frühling 2021 gebe ich auch Fahrstunden mit dem Anhänger.</p>
-          <blockquote>Mit vollem Elan und grosser Freude habe ich schon viele Fahrschülerinnen und Fahrschüler auf ihrem Weg zum Führerausweis begleitet. Ich freue mich, auch dich zu unterstützen.</blockquote>
-          <ul class="reach">
-            <li><a href="tel:+41795636582"><span class="reach-ico"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span>079 563 65 82</a></li>
-            <li><a href="https://wa.me/41795636582"><span class="reach-ico"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg></span>WhatsApp</a></li>
-            <li><a href="mailto:mail@fahrschule-schelbert.ch"><span class="reach-ico"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>mail@fahrschule-schelbert.ch</a></li>
-          </ul>
+          <h2 id="ich-h">Ich bin Luca, dein Fahrlehrer.</h2>
+          <blockquote>
+            <p>«Mit vollem Elan und grosser Freude konnte ich bereits viele Fahrschülerinnen und Fahrschüler auf ihrem Weg zum Führerausweis begleiten und zum Ziel führen. Ich würde mich freuen, auch dich auf diesem Weg zu unterstützen.»</p>
+          </blockquote>
+          <p class="muted">Meine 14-monatige Intensivausbildung zum Fahrlehrer habe ich am Schweizerischen Verkehrspädagogischen Institut SVPI in Luzern gemacht und Ende Oktober 2016 abgeschlossen. Seit Frühling 2021 gebe ich auch Fahrstunden mit dem Anhänger.</p>
+          <dl class="fakten">
+            <div><dt>2016</dt><dd>Fahrlehrer, Ausbildung am SVPI Luzern</dd></div>
+            <div><dt>2021</dt><dd>Zusätzlich Fahrstunden mit Anhänger</dd></div>
+          </dl>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="sec sec-cta">
-      <div class="wrap">
-        <div class="cta reveal">
-          <div>
-            <h2>Bereit für deine erste Fahrstunde?</h2>
-            <p>Ruf mich an oder schreib mir auf WhatsApp. Ich freue mich auf dich.</p>
+    <!-- 8 Gutscheine -->
+    <section class="gutschein" id="gutschein" aria-labelledby="gs-h">
+      <div class="wrap gs-grid">
+        <div class="gs-text" data-reveal>
+          <p class="kicker">Gutscheine</p>
+          <h2 id="gs-h">Fahrstunden verschenken.</h2>
+          <p class="lead">Machen Sie Ihrem Kind, Gottenkind, Enkelkind, einer Freundin oder einem Freund eine Freude und schenken Sie einen Gutschein für Fahrstunden.</p>
+          <div class="chips" role="group" aria-label="Gutscheinwert wählen">
+            <button type="button" class="chip" data-wert="50" aria-pressed="false">Fr. 50</button>
+            <button type="button" class="chip" data-wert="100" aria-pressed="true">Fr. 100</button>
+            <button type="button" class="chip" data-wert="150" aria-pressed="false">Fr. 150</button>
+            <button type="button" class="chip" data-wert="200" aria-pressed="false">Fr. 200</button>
+            <button type="button" class="chip" data-wert="250" aria-pressed="false">Fr. 250</button>
+            <button type="button" class="chip" data-wert="300" aria-pressed="false">Fr. 300</button>
           </div>
-          <div class="cta-actions">
-            <a class="btn btn-white btn-lg" href="tel:+41795636582"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 563 65 82</a>
-            <a class="btn btn-ghost-white btn-lg" href="https://wa.me/41795636582"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg> WhatsApp</a>
+          <p class="muted klein">Oder ein Betrag nach Wahl. Eine Fahrstunde kostet Fr.&nbsp;100.</p>
+          <a class="btn btn-tinte" href="#" data-soon="Gutschein bestellen">Gutschein bestellen <svg class="i i-pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+
+        <div class="gs-buehne" aria-hidden="true" data-reveal>
+          <div class="gs-karte" data-tilt>
+            <div class="gs-topo"></div>
+            <div class="gs-oben">
+              <span class="gs-label">Gutschein für Fahrstunden</span>
+              <svg class="gs-rose" viewBox="0 0 200 200"><use href="#rose"/></svg>
+            </div>
+            <p class="gs-wert"><span class="fr">Fr.</span><span class="gs-zahl" data-gs-zahl>100</span></p>
+            <p class="gs-unten"><span>Fahrschule Schelbert</span><span>Muotathal</span></p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- 9 Kontakt -->
+    <section class="kontakt" id="kontakt" aria-labelledby="kt-h">
+      <div class="kontakt-topo" aria-hidden="true"></div>
+      <div class="wrap">
+        <header class="kt-kopf" data-reveal>
+          <svg class="kt-rose" viewBox="0 0 200 200" aria-hidden="true"><use href="#rose"/></svg>
+          <h2 id="kt-h">Deine erste Fahrstunde beginnt mit einer&nbsp;Nachricht.</h2>
+          <p class="lead">Ruf mich an oder schreib mir auf WhatsApp oder per E-Mail.</p>
+        </header>
+        <ul class="kt-liste">
+          <li data-reveal style="--d:0ms">
+            <a href="tel:+41795636582"><span class="kt-icon"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><span class="kt-label">Anrufen</span><span class="kt-wert">079 563 65 82</span><svg class="i kt-pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </li>
+          <li data-reveal style="--d:80ms">
+            <a href="https://wa.me/41795636582"><span class="kt-icon kt-icon-wa"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg></span><span class="kt-label">WhatsApp</span><span class="kt-wert">Nachricht schreiben</span><svg class="i kt-pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </li>
+          <li data-reveal style="--d:160ms">
+            <a href="mailto:mail@fahrschule-schelbert.ch"><span class="kt-icon"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span><span class="kt-label">E-Mail</span><span class="kt-wert kt-mail">mail@fahrschule-schelbert.ch</span><svg class="i kt-pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </li>
+          <li data-reveal style="--d:240ms">
+            <div class="kt-adresse"><span class="kt-icon"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><span class="kt-label">Adresse</span><span class="kt-wert">Marktstrasse 23<br>6436 Muotathal</span></div>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer-grid">
-      <div>
-        <img class="footer-logo" src="../assets/img/logo-hell.webp" alt="Fahrschule Schelbert" width="800" height="294" loading="lazy">
+  <footer class="fuss">
+    <div class="wrap fuss-grid">
+      <div class="fuss-marke">
+        <img src="../assets/img/logo-hell.webp" alt="Fahrschule Schelbert, Auto und Anhänger" width="800" height="294">
         <p>Fahrschule für Auto und Anhänger in Muotathal.</p>
       </div>
       <div>
@@ -331,21 +533,32 @@
       <div>
         <h3>Angebot</h3>
         <ul>
-          <li><a href="#" data-soon="Angebot und Kosten">Auto, Taxi und Auffrischen</a></li>
+          <li><a href="#" data-soon="Angebot und Kosten">Angebot und Kosten</a></li>
+          <li><a href="#" data-soon="Verkehrskunde">Verkehrskunde</a></li>
           <li><a href="#" data-soon="Anhänger">Anhänger</a></li>
-          <li><a href="#" data-soon="Verkehrskunde">Verkehrskunde VKU</a></li>
+          <li><a href="#" data-soon="Weg zum Führerausweis">Weg zum Führerausweis</a></li>
           <li><a href="#" data-soon="Gutschein bestellen">Gutschein bestellen</a></li>
         </ul>
       </div>
       <div>
-        <h3>VKU-Kurslokal</h3>
-        <p>Restaurant Alpenrösli<br>Eventsaal «hindä ussä»<br>Hauptstrasse 42<br>6436 Muotathal</p>
+        <h3>Über mich</h3>
+        <ul>
+          <li><a href="#" data-soon="Über mich">Über mich</a></li>
+          <li><a href="#" data-soon="Fahrzeuge">Fahrzeuge</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        </ul>
       </div>
     </div>
-    <div class="wrap footer-bottom">
+    <div class="wrap fuss-unten">
       <p>© 2026 Fahrschule Schelbert Muotathal</p>
-      <p><a href="#" data-soon="AGB">AGB</a> <a href="#" data-soon="Datenschutz">Datenschutz</a> <a href="#" data-soon="Impressum">Impressum</a></p>
+      <p class="fuss-links"><a href="#" data-soon="AGB">AGB</a><a href="#" data-soon="Datenschutz">Datenschutz</a><a href="#" data-soon="Impressum">Impressum</a></p>
     </div>
   </footer>
+
+  <nav class="leiste" aria-label="Schnellkontakt">
+    <a href="tel:+41795636582"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
+    <a class="l-wa" href="https://wa.me/41795636582"><svg class="i" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+    <a class="l-anfrage" href="mailto:mail@fahrschule-schelbert.ch?subject=Anfrage%20Fahrstunde"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>Anfrage</a>
+  </nav>
 </body>
 </html>

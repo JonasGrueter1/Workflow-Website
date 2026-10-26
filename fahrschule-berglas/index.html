@@ -33,6 +33,20 @@
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
 
+    /* Farben passend zu den Designs: A «Tafelbild» (Schiefer und Kreidegrün), B «Ladestand» (Mint und Energiegrün) */
+    .option-tag { align-self: flex-start; padding: 6px 12px 5px; border-radius: 999px; }
+    .option-a .shots { background: #232823; }
+    .option-a .option-tag { background: #1a1e1a; color: #6bc17f; }
+    .option-a .chips li { background: #ecede8; color: #232823; }
+    .btn-tafel { background: #1a1e1a; color: #f3f0e8; }
+    .btn-tafel:hover { background: #2c332c; color: #fff; }
+    .btn-tafel .i { color: #6bc17f; }
+    .option-b .shots { background: #e3f2e7; }
+    .option-b .option-tag { background: #e3f2e7; color: #1d5f32; }
+    .option-b .chips li { background: #e3f2e7; color: #1d5f32; }
+    .btn-lade { background: #24733d; color: #fff; }
+    .btn-lade:hover { background: #1d5f32; color: #fff; }
+
     .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #cfced6; color: var(--ink-2); font-size: .975rem; }
     .note .i { color: var(--accent); width: 22px; height: 22px; margin-top: 2px; }
 
@@ -78,7 +92,7 @@
     <div class="hero">
       <p class="kicker">Designvorschläge</p>
       <h1>Zwei Designs für Ihre neue Website</h1>
-      <p>Ich habe für die Startseite der Fahrschule Thomas Berglas zwei unterschiedliche Designs entworfen. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+      <p>Ich habe für die Startseite der Fahrschule Thomas Berglas zwei ganz unterschiedliche Designs entworfen, beide mit Animationen und auf Ihre Fahrschule zugeschnitten. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
     </div>
 
     <ol class="steps">
@@ -88,31 +102,31 @@
     </ol>
 
     <div class="options">
-      <article class="option">
-        <a class="shots" href="design-a/" aria-label="Design A ansehen">
-          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
-          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A «Tafelbild» ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A «Tafelbild» am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A «Tafelbild» auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, warm und übersichtlich. Viel Weissraum, das Grün und Blau aus Ihrem Logo als Akzente und Ihr Foto mit dem Golf gleich zuoberst. Wirkt nahbar und schafft Vertrauen, auch bei Eltern.</p>
-          <ul class="chips"><li>Hell</li><li>Freundlich</li><li>Übersichtlich</li></ul>
-          <a class="btn btn-main" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Tafelbild</h2>
+          <p>Ihre Startseite als Wandtafel, passend zur grünen Kreideschrift in Ihrem Logo: Mit Kreide zeichnet sich eine Kreuzung in Reiden, Golf und Cupra fahren als Magnetautos ein. Persönlich und mit einem Augenzwinkern, und trotzdem stehen alle Preise gross und klar lesbar auf der Preistafel.</p>
+          <ul class="chips"><li>Schiefertafel</li><li>Kreidezeichnung</li><li>Persönlich</li></ul>
+          <a class="btn btn-tafel" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
-        <a class="shots" href="design-b/" aria-label="Design B ansehen">
-          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
-          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B «Ladestand» ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B «Ladestand» am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B «Ladestand» auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Dunkel, kraftvoll und modern. Grosse Schrift, VW Golf und Cupra Born im direkten Vergleich und Strassenmarkierungen als Erkennungszeichen. Wirkt dynamisch und spricht junge Fahrschüler an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Dynamisch</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Ladestand</h2>
+          <p>Hell, klar und modern, mit Energie als Thema: Gleich oben lädt sich der Cupra BORN auf, und Ihre Abos füllen sich als Akkus Zelle für Zelle. So ist sofort klar, wie viel man mit einem Abo spart, für Jugendliche wie für Eltern.</p>
+          <ul class="chips"><li>Hell</li><li>Elektrisch</li><li>Akku-Preise</li></ul>
+          <a class="btn btn-lade" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>

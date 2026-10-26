@@ -32,6 +32,17 @@
     .option h2 { font-size: 1.75rem; margin-top: -8px; }
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
+    /* Farben passend zu den Designs: A Hofstetter-Blau, B Asphalt mit Rennrot */
+    .option-a .shots { background: #e6eef6; }
+    .option-a .option-tag { color: #004b82; }
+    .option-a .chips li { background: #e8f0f7; color: #004b82; }
+    .btn-blau { background: #004b82; color: #fff; }
+    .btn-blau:hover { background: #003d6b; color: #fff; }
+    .option-b .shots { background: #17191d; }
+    .option-b .option-tag { color: #d51123; }
+    .option-b .chips li { background: #fdecee; color: #b00e1d; }
+    .btn-asphalt { background: #0e0f11; color: #fff; }
+    .btn-asphalt:hover { background: #000; color: #fff; }
 
     .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #cfced6; color: var(--ink-2); font-size: .975rem; }
     .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
@@ -78,7 +89,7 @@
     <div class="hero">
       <p class="kicker">Designvorschläge</p>
       <h1>Zwei Designs für Ihre neue Website</h1>
-      <p>Ich habe für die Startseite der Fahrschule Hofstetter zwei unterschiedliche Designs entworfen. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign und die gewünschten Funktionen.</p>
+      <p>Ich habe für die Startseite der Fahrschule Hofstetter zwei ganz unterschiedliche Designs entworfen. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign und die gewünschten Funktionen.</p>
     </div>
 
     <ol class="steps">
@@ -88,31 +99,31 @@
     </ol>
 
     <div class="options">
-      <article class="option">
+      <article class="option option-a">
         <a class="shots" href="design-a/" aria-label="Design A ansehen">
           <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
           <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, klar und übersichtlich. Viel Weissraum, das Rot und Blau aus Ihrem Logo als Akzente und eine Karte mit allen Meilensteinen bis zum Führerausweis. Wirkt nahbar und schafft Vertrauen, auch bei Eltern.</p>
-          <ul class="chips"><li>Hell</li><li>Freundlich</li><li>Übersichtlich</li></ul>
-          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Stimmen</h2>
+          <p>Ein Magazin über Sie, erzählt von Ihren Fahrschülern: Die blaue Titelseite zeigt ein echtes Zitat über Ihre ruhige und geduldvolle Art, Angebot, Preise und der Weg zum Ausweis folgen als Rubriken. Elegante Schrift und sanft einblendende Zitate wirken seriös und schaffen Vertrauen, auch bei Eltern.</p>
+          <ul class="chips"><li>Magazin</li><li>Ihre Referenzen</li><li>Blau und Weiss</li></ul>
+          <a class="btn btn-blau" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
+      <article class="option option-b">
         <a class="shots" href="design-b/" aria-label="Design B ansehen">
           <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
           <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Dunkel, kraftvoll und modern. Grosse Schrift, das Zielflaggen-Karo und der rote Schwung aus Ihrem Logo als Erkennungszeichen. Wirkt dynamisch und spricht junge Fahrschülerinnen und Fahrschüler an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Sportlich</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Startaufstellung</h2>
+          <p>Ihr Rennsport-Logo wird zur Bühne: Fünf Startlichter gehen an und aus, dann steht «Sicher ans Ziel.», die Preise sind Startnummern und der Weg zum Ausweis ist eine Runde, die sich beim Scrollen bis zur Zielflagge zeichnet. Dunkel, kräftig und modern, für junge Fahrschülerinnen und Fahrschüler.</p>
+          <ul class="chips"><li>Rennsport</li><li>Startampel</li><li>Dunkel und kräftig</li></ul>
+          <a class="btn btn-asphalt" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>
