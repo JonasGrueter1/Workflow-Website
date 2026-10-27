@@ -27,7 +27,8 @@ export const BLOCK = '█'; // Schreibmarke (als Rechteck gezeichnet)
  * @returns {Promise<{texture: THREE.DataTexture, index: (ch: string) => number, cell: number}>}
  */
 export async function buildAtlas(THREE, quality) {
-  const fontSpec = (px) => `500 ${px}px "Geist Mono"`;
+  // Gewicht 600: kraeftigere Striche, kleine Zeichen verlieren ihre duennen Linien nicht (aus n wird sonst r)
+  const fontSpec = (px) => `600 ${px}px "Geist Mono"`;
   try {
     if (document.fonts && document.fonts.load) {
       await Promise.race([document.fonts.load(fontSpec(64)), new Promise((r) => setTimeout(r, 2500))]);

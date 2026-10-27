@@ -2,6 +2,7 @@
 //
 // - Tausende leuchtende GPU-Partikel mit eigenem Shader: Curl-Noise-Stroemung, Tiefenunschaerfe (Bokeh),
 //   wenige helle Funken zwischen feinem Staub, Staub, der in einem Lichtkegel aufleuchtet, Reaktion auf die Maus.
+// - Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Visier-Linie, Kern, atmet, Kopf folgt der Maus).
 // - Ab der zweiten Haelfte des Intros ziehen sich die Partikel in einer sanften Spirale zur Roboter-Silhouette
 //   zusammen (von unten nach oben), im Flug als feine Lichtspuren, bei der Ankunft mit kurzem Aufblitzen.
 //   Die Zielpunkte liegen direkt auf der Geometrie des Roboters (robot-geometry.js, nur gelesen), sonst auf
@@ -21,7 +22,9 @@ import { makeNebulaTexture } from './particles-nebula.js';
 import { POINTS_VERT, POINTS_FRAG, BG_VERT, BG_FRAG, BEAM_VERT, BEAM_FRAG } from './particles-glsl.js';
 
 // Mengen bei Stufe high (werden mit tier.particles multipliziert)
-const COUNT = { form: 30000, dust: 12000, fore: 110, far: 300 };
+// Drei Ebenen: wenige grosse unscharfe Punkte vorne (fore), scharfe Mitte (form), feiner Staub (dust) und ferne
+// Lichter. Staub gegenueber Version 1 um 40 % reduziert (wirkte wie Schneegestoeber).
+const COUNT = { form: 30000, dust: 7200, fore: 70, far: 220 };
 
 // Lichtkegel von oben rechts hinten auf die Stelle, an der der Roboter entsteht
 const BEAM = { apex: [2.6, 10.5, -3.0], target: [0, -1.2, 0], length: 15, r0: 0.35, slope: 0.167 };
@@ -58,7 +61,7 @@ export async function create(ctx) {
   }
   const robot = sampleRobot(THREE, anchors, nForm, rnd, robotGeo, MeshSurfaceSampler);
   const bell = () => (rnd() + rnd() + rnd()) / 1.5 - 1; // -1..1, zur Mitte hin dichter
-  const spread = (v) => (rnd() < 0.55 ? v : rnd() * 2 - 1);
+  const spread = (v) => (rnd() < 0.72 ? v : rnd() * 2 - 1); // Wolke zur Mitte hin dichter, Raender ruhiger
 
   for (let i = 0; i < total; i++) {
     const i3 = i * 3;
@@ -121,10 +124,11 @@ export async function create(ctx) {
     uAlpha: { value: 1 },
     uIgnite: { value: 0 },
     uFocus: { value: 15 },
-    uAperture: { value: ctx.isMobile ? 0.006 : 0.0075 },
+    uAperture: { value: ctx.isMobile ? 0.0045 : 0.0055 },
     uFog: { value: 0.035 },
     uSize: { value: 0.03 },
-    uBokeh: { value: 2.2 },
+    uBokeh: { value: 1.6 },
+    uHint: { value: 0 },
     uBoxC: { value: new THREE.Vector3(0, 0.3, -2.5) },
     uBoxH: { value: new THREE.Vector3(12.5, 6.8, 8.5) },
     uTextArea: { value: new THREE.Vector4(-0.45, -0.3, 0.8, 0.62) },
@@ -211,6 +215,62 @@ export async function create(ctx) {
   beam.frustumCulled = false;
   group.add(beam);
 
+  /* ------------------------------------------- Leuchtender Kern (Fokuspunkt) */
+  // Im Hero leuchtet im lose angedeuteten Kopf ein ruhiger Kern, genau dort, wo spaeter das Gehirn sitzt.
+  const coreGeo = new THREE.PlaneGeometry(2, 2);
+  const coreUniforms = {
+    uTime: shared.uTime,
+    uI: { value: 0 },
+    uSize: { value: 1.0 },
+    uFog: { value: 0.035 },
+    uCore: { value: palette.ice.clone().multiplyScalar(3.0) },
+    uHalo: { value: palette.signal.clone().multiplyScalar(0.6) },
+    uWarm: { value: palette.ember.clone().multiplyScalar(1.3) },
+  };
+  const coreMat = new THREE.ShaderMaterial({
+    uniforms: coreUniforms,
+    vertexShader: /* glsl */ `
+      uniform float uSize;
+      uniform float uFog;
+      varying vec2 vQ;
+      varying float vFog;
+      void main() {
+        vQ = position.xy;
+        vec4 mv = modelViewMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+        float f = uFog * 0.8 * -mv.z;
+        vFog = exp(-f * f);
+        mv.xy += position.xy * uSize;
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader: /* glsl */ `
+      uniform float uTime;
+      uniform float uI;
+      uniform vec3 uCore;
+      uniform vec3 uHalo;
+      uniform vec3 uWarm;
+      varying vec2 vQ;
+      varying float vFog;
+      void main() {
+        float r2 = dot(vQ, vQ);
+        if (r2 > 1.0) discard;
+        float pulse = 0.88 + 0.12 * sin(uTime * 1.3);
+        float spark = exp(-r2 * 900.0);
+        float core = exp(-r2 * 160.0);
+        float inner = exp(-r2 * 28.0);
+        float halo = exp(-r2 * 5.0) * (1.0 - smoothstep(0.6, 1.0, r2));
+        vec3 c = uWarm * spark * 0.8 + uCore * core * pulse + uHalo * (inner * 0.55 + halo * 0.35) * pulse;
+        gl_FragColor = vec4(c * uI * vFog, 1.0);
+      }`,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  core.position.copy(anchors.brain.center);
+  core.frustumCulled = false;
+  core.renderOrder = 3;
+  group.add(core);
+
   /* ----------------------------------------------- Groesse, Seitenverhaeltnis */
   const setAspect = (w, h) => {
     const a = w / Math.max(1, h);
@@ -248,8 +308,9 @@ export async function create(ctx) {
       const rb = director.beat('robot');
       const s = intro.p + rb.p; // 0..2: Intro, dann Roboter
 
-      const form = clamp01((s - 0.28) / 1.1);
-      const gather = smoothstep(0.1, 0.6, s);
+      // Reagiert ab dem ersten Scroll-Pixel: die Wolke zieht sich zusammen, die ersten Partikel fliegen los
+      const form = clamp01(s / 1.3);
+      const gather = smoothstep(0.0, 0.5, s);
       // Abtastebene des Roboters (wie robot.js: Aufbau robot@0.26 bis robot@0.64, von y -3.75 bis 1.18)
       const build = smoothstep(0.26, 0.64, rb.p);
       const buildY = build >= 0.999 ? 2 : -3.75 + (1.18 + 3.75) * build;
@@ -262,7 +323,7 @@ export async function create(ctx) {
       u.uForm.value = form;
       u.uGather.value = gather;
       u.uBuildY.value = buildY;
-      u.uTitle.value = 1 - smoothstep(0.1, 0.26, intro.p);
+      u.uTitle.value = 1 - smoothstep(0.45, 0.7, intro.p); // solange der Hero-Text steht (BEATS intro.text)
       // Ist der feste Roboter geladen und sichtbar, uebernimmt sein Hologramm (sonst bleibt der Partikel-Roboter hell)
       if (!robotGroup && time >= robotLookup) {
         robotLookup = time + 1;
@@ -272,6 +333,10 @@ export async function create(ctx) {
       const robotOn = robotGroup !== null && robotGroup.visible && robotGroup.parent !== null;
       u.uHolo.value = robotOn ? smoothstep(0.05, 0.22, rb.p) : 0;
       u.uIgnite.value = ignite;
+      u.uHint.value = ignite;
+      coreUniforms.uI.value = ignite * weight * (1 - smoothstep(0.04, 0.3, rb.p)) * (0.85 + 0.15 * (1 - gather));
+      coreUniforms.uFog.value = scene.fog ? scene.fog.density : 0.035;
+      core.visible = coreUniforms.uI.value > 0.002;
       u.uAlpha.value = weight;
       u.uFocus.value = camera.position.distanceTo(focusPoint);
       u.uFog.value = scene.fog ? scene.fog.density : 0.035;
@@ -318,6 +383,8 @@ export async function create(ctx) {
       nebula.dispose();
       beamGeo.dispose();
       beamMat.dispose();
+      coreGeo.dispose();
+      coreMat.dispose();
       group.clear();
     },
   };

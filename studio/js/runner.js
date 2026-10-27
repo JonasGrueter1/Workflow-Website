@@ -100,7 +100,15 @@ export class Runner {
       try { m.inst.update(time, dt, st.local, d.global, weight); } catch (e) { this.fail(m, e); }
     }
     blendLook(this.entries, undefined, this.look);
-    this.look.fade = Math.max(this.look.fade, d.cutFade);
+    // Schnitt (Ende Code -> Roboter): kein Schwarz, sondern ein kurzer Lichtblitz. Das fertige Geruest blendet auf,
+    // im Licht steht der Roboter, dessen Visier danach erwacht.
+    const c = d.cutFade;
+    if (c > 0) {
+      // kurzer, heller Peak (c^3): wirkt als Lichtblitz, nicht als milchiger Schleier
+      this.look.flash = Math.max(this.look.flash, c * c * c * 0.9);
+      this.look.exposure *= 1 + 0.4 * c * c;
+      this.look.bloom += 0.7 * c * c;
+    }
     return this.look;
   }
 

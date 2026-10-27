@@ -10,16 +10,20 @@ import { FxPass } from './fx/FxPass.js';
 import { PALETTE, QUALITY, BASE_LOOK, LOOK_KEYS } from './config.js';
 
 const damp = (a, b, l, dt) => a + (b - a) * (1 - Math.exp(-l * dt));
+const PIXEL_BUDGET = 3.5e6;
+const DPR_SCALE_MIN = 0.5;
 
 /** Qualitaetsstufe waehlen. ?q=high|medium|low erzwingt eine Stufe (ohne automatische Anpassung). */
 export function pickQuality(search = window.location.search) {
   const forced = new URLSearchParams(search).get('q');
   if (forced && QUALITY[forced]) return { quality: forced, forced: true };
+  // Handy/Tablet: Touch als Hauptzeiger oder schmales Fenster. Laptops mit 1280 x 800 bleiben auf high
+  // (die adaptive Aufloesung faengt schwache Grafik ab).
   const coarse = window.matchMedia('(pointer: coarse)').matches;
-  const small = Math.min(window.screen.width, window.screen.height) < 820;
+  const narrow = Math.min(window.innerWidth, window.screen.width || 9999) < 760;
   const mem = navigator.deviceMemory || 8;
   const cores = navigator.hardwareConcurrency || 8;
-  let quality = coarse || small ? 'medium' : 'high';
+  let quality = coarse || narrow ? 'medium' : 'high';
   if (mem <= 2 || cores <= 2) quality = 'low';
   return { quality, forced: false };
 }
@@ -55,7 +59,8 @@ export class Engine {
     this.size = { width: 1, height: 1, dpr: 1 };
     this.listeners = new Set();
     this.stats = { fps: 60, frameMs: 16.7, calls: 0, triangles: 0, dpr: 1 };
-    this._adapt = { acc: 0, frames: 0, elapsed: 0, done: forced };
+    // base: typischer Bildabstand des Geraets (60 Hz oder gedrosselt auf 30 Hz), in den ersten Sekunden gemessen
+    this._adapt = { acc: 0, frames: 0, good: 0, cool: 0, base: 1 / 60, probe: [], probed: false };
 
     /* Renderer */
     const renderer = new THREE.WebGLRenderer({
@@ -80,11 +85,13 @@ export class Engine {
     this.camera.position.set(0, 0.35, 15.5);
     this.scene.add(this.camera);
 
-    /* Licht: feste Anzahl (sonst kompilieren Shader neu). Module aendern nur Intensitaeten ueber `look`. */
-    const key = new THREE.DirectionalLight(0xffd9b0, BASE_LOOK.key);
-    key.position.set(4, 3.5, 5);
+    /* Licht: feste Anzahl (sonst kompilieren Shader neu). Module aendern nur Intensitaeten ueber `look`.
+       key: warmes Fuehrungslicht (Ember, aufgehellt) von links vorne, rim: kuehles Kantenlicht von rechts hinten.
+       So steht die Figur warm/kalt geteilt im Raum statt monochrom Tuerkis. Nur der Roboter nutzt diese Lichter. */
+    const key = new THREE.DirectionalLight(PALETTE.ember.clone().lerp(new THREE.Color(0xffffff), 0.38), BASE_LOOK.key);
+    key.position.set(-4.4, 2.8, 5.0);
     const rim = new THREE.DirectionalLight(PALETTE.signal.clone(), BASE_LOOK.rim);
-    rim.position.set(-5, 2.2, -4);
+    rim.position.set(5.0, 2.4, -4.2);
     const amb = new THREE.HemisphereLight(0x8fb8d8, 0x05070a, BASE_LOOK.amb);
     this.lights = { key, rim, amb };
     this.scene.add(key, rim, amb);
@@ -149,9 +156,24 @@ export class Engine {
     this.resize(true);
   }
 
+  // Pixelbudget: hoechstens ~3.5 Megapixel pro Bild (16 Vollbild-Passes mit HalfFloat), danach adaptive Skala
   get dpr() {
-    const base = Math.min(window.devicePixelRatio || 1, this.tier.dprMax);
+    const w = Math.max(1, this.canvas.clientWidth || window.innerWidth);
+    const h = Math.max(1, this.canvas.clientHeight || window.innerHeight);
+    const budget = Math.sqrt(PIXEL_BUDGET / (w * h));
+    const base = Math.min(window.devicePixelRatio || 1, this.tier.dprMax, Math.max(1, budget));
     return Math.max(0.6, Math.max(this.tier.dprMin, base) * this.dprScale);
+  }
+
+  /** true, wenn die Aufloesung nicht weiter sinken kann (fuer den FPS-Waechter in main.js) */
+  atFloor() { return this.dprScale <= DPR_SCALE_MIN + 1e-3 && !this._msaa; }
+
+  /** Abdunkeln hinter dem Text (director.scrim) */
+  setScrim(sc) {
+    const u = this.fx.uniforms;
+    if (!sc) { u.uScrim.value = 0; return; }
+    u.uScrimRect.value.set(sc.x, sc.y, Math.max(0.02, sc.rx), Math.max(0.02, sc.ry));
+    u.uScrim.value = sc.a;
   }
 
   resize(force = false) {
@@ -164,9 +186,14 @@ export class Engine {
     this.size.dpr = dpr;
     this.stats.dpr = dpr;
     const samples = dpr < 1.5 ? this._msaa : 0;
-    for (const t of [this.composer.renderTarget1, this.composer.renderTarget2]) {
-      if (t.samples !== samples) { t.samples = samples; t.dispose(); }
-    }
+    // MSAA nur dort, wo die Szene hinein gerendert wird (RenderPass schreibt immer in renderTarget1).
+    // renderTarget2 bekommt nur fertige Vollbild-Passes: dort bringt Multisampling nichts und kostet Speicher.
+    const rt1 = this.composer.renderTarget1;
+    const rt2 = this.composer.renderTarget2;
+    if (rt1.samples !== samples) { rt1.samples = samples; rt1.dispose(); }
+    if (rt2.samples !== 0) { rt2.samples = 0; rt2.dispose(); }
+    // Ohne MSAA und bei kleiner Aufloesung (Handy, nach Adaption): FXAA im letzten Pass gegen Treppen an Kanten
+    this.fx.uniforms.uFxaa.value = samples === 0 && dpr < 1.6 ? 1 : 0;
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(w, h, false);
     this.composer.setPixelRatio(dpr);
@@ -240,25 +267,59 @@ export class Engine {
     this.stats.triangles = info.triangles;
   }
 
-  /** Automatisch Aufloesung senken, wenn das Geraet nicht mitkommt (nur in den ersten 25 s) */
+  /**
+   * Adaptive Aufloesung, dauernd aktiv: schnell runter, wenn Frames zu lange dauern, langsam wieder rauf,
+   * wenn ueber mehrere Sekunden Reserve da ist (Hysterese, nach einem Absenken 20 s Pause fuer das Anheben).
+   */
   adapt(dtRaw) {
     const a = this._adapt;
     this.stats.frameMs = this.stats.frameMs * 0.92 + dtRaw * 1000 * 0.08;
     this.stats.fps = Math.round(1000 / Math.max(1, this.stats.frameMs));
-    if (a.done) return;
+    if (this.forced) return;
+    // Grundtakt erkennen: iOS-Stromsparmodus, Chrome-Energiesparen und Android Battery Saver drosseln
+    // requestAnimationFrame fix auf 30 Hz (33.3 ms), auch wenn die GPU kaum zu tun hat. Liegen die Abstaende
+    // eng um 33 ms, gilt 30 Hz als Basis: sonst wuerde die Aufloesung ohne Grund bis aufs Minimum sinken.
+    if (!a.probed) {
+      if (dtRaw > 0 && dtRaw < 0.1) a.probe.push(dtRaw);
+      if (a.probe.length < 45) return;
+      const sorted = a.probe.slice().sort((x, y) => x - y);
+      const med = sorted[sorted.length >> 1];
+      const q1 = sorted[Math.floor(sorted.length * 0.2)];
+      const q3 = sorted[Math.floor(sorted.length * 0.8)];
+      a.base = med > 0.028 && med < 0.04 && q3 - q1 < 0.004 ? 1 / 30 : 1 / 60;
+      a.probed = true;
+      a.probe.length = 0;
+      a.acc = 0;
+      a.frames = 0;
+      return;
+    }
     a.acc += dtRaw;
     a.frames += 1;
-    a.elapsed += dtRaw;
-    if (a.acc < 1.5) return;
+    a.cool = Math.max(0, a.cool - dtRaw);
+    if (a.acc < 1.0) return;
     const avg = a.acc / a.frames;
     a.acc = 0;
     a.frames = 0;
-    if (avg > 1 / 34) {
+    // Schwellen relativ zum Grundtakt: 60 Hz -> runter ab ~29 ms, rauf unter ~19 ms; 30 Hz -> runter ab 40 ms,
+    // rauf unter 35 ms (gedrosselt kann man Reserve nur an knapp eingehaltenen 33 ms erkennen)
+    const slow = a.base > 1 / 40 ? a.base * 1.2 : 1 / 34;
+    const fast = a.base > 1 / 40 ? a.base * 1.05 : 1 / 52;
+    if (avg > slow) {
+      a.good = 0;
+      a.cool = 20;
       if (this._msaa) { this._msaa = 0; this.resize(true); return; }
-      const next = Math.max(0.5, this.dprScale - (avg > 1 / 20 ? 0.25 : 0.12));
-      if (next < this.dprScale) { this.dprScale = next; this.resize(true); }
+      const next = Math.max(DPR_SCALE_MIN, this.dprScale - (avg > 1 / 20 ? 0.25 : 0.12));
+      if (next < this.dprScale - 1e-3) { this.dprScale = next; this.resize(true); }
+    } else if (avg < fast && this.dprScale < 1) {
+      a.good += 1;
+      if (a.good >= 4 && a.cool <= 0) {
+        a.good = 0;
+        this.dprScale = Math.min(1, this.dprScale + 0.1);
+        this.resize(true);
+      }
+    } else {
+      a.good = 0;
     }
-    if (a.elapsed > 25) a.done = true;
   }
 
   dispose() {

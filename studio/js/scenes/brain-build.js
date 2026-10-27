@@ -82,13 +82,14 @@ export function makeSimplex(rnd) {
 // Laengsspalt und Sylvische Furche von selbst. Darauf Windungen aus verzerrtem Rauschen.
 const LOBES = [];
 for (const sx of [-1, 1]) {
-  LOBES.push({ c: [sx * 0.4, 0.12, 0.0], r: [0.61, 0.86, 0.97], kind: 0, side: sx }); // Hauptkoerper (Stirn, Scheitel)
+  // Hauptkoerper (Stirn, Scheitel): Haelften ueberlappen breit, darum oben ein schmaler Spalt statt einer Herzform
+  LOBES.push({ c: [sx * 0.34, 0.12, 0.0], r: [0.67, 0.86, 0.97], kind: 0, side: sx });
   LOBES.push({ c: [sx * 0.53, -0.45, 0.14], r: [0.37, 0.37, 0.56], kind: 1, side: sx }); // Schlaefenlappen
   LOBES.push({ c: [sx * 0.38, -0.1, -0.55], r: [0.54, 0.6, 0.47], kind: 2, side: sx }); // Hinterhaupt
 }
 // Tiefe der Kerbe, wo sich zwei Lappen treffen: [Art a][Art b], gleiche Seite / andere Seite
 const CREASE_SAME = [[0, 0.07, 0.015], [0.07, 0, 0.02], [0.015, 0.02, 0]];
-const CREASE_CROSS = 0.3; // Laengsspalt zwischen den Haelften
+const CREASE_CROSS = 0.2; // Laengsspalt zwischen den Haelften
 
 // Austrittsdistanz eines Strahls vom Ursprung (Richtung d) aus einem Ellipsoid, 0 wenn kein Treffer
 function exitT(dx, dy, dz, L) {
@@ -118,7 +119,7 @@ function baseRadius(dx, dy, dz) {
     const A = LOBES[best]; const B = LOBES[second];
     // Laengsspalt nur oben, vorne und hinten (unten liegen Stamm und Schlaefenlappen)
     const depth = A.side !== B.side ? CREASE_CROSS * smooth(-0.6, -0.05, dy) : CREASE_SAME[A.kind][B.kind];
-    const k = Math.exp(-(((s - s2) / (A.side !== B.side ? 0.035 : 0.05)) ** 2));
+    const k = Math.exp(-(((s - s2) / (A.side !== B.side ? 0.028 : 0.05)) ** 2));
     carve = depth * k;
   }
   BR.crease = carve;
@@ -249,7 +250,8 @@ export function buildBrain(o) {
 
   // Kleinhirn und Hirnstamm (lokal)
   const CB = { c: [0, -0.29, -0.43], r: [0.31, 0.14, 0.2] };
-  const stemP = [[0, -0.27, -0.1], [0, -0.47, -0.22], [root.x, root.y, root.z]];
+  // Hirnstamm hinten unten (vor dem Kleinhirn), von vorne kaum sichtbar
+  const stemP = [[0, -0.25, -0.2], [0, -0.45, -0.34], [root.x, root.y, root.z]];
   const bez = (t, out) => {
     const a = (1 - t) * (1 - t); const b = 2 * (1 - t) * t; const c = t * t;
     for (let i = 0; i < 3; i++) out[i] = a * stemP[0][i] + b * stemP[1][i] + c * stemP[2][i];

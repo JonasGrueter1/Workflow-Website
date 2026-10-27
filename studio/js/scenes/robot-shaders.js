@@ -49,11 +49,15 @@ float rbSnoise(vec3 v) {
 }
 `;
 
-// Sichtbarkeit in digitalen Zellen (Voxel 1/15 Einheit): Aufbau von unten nach oben und Aufloesen vom
-// Fokuspunkt aus. Zellen nahe der Schwelle leuchten mit ihrem Raster auf. Rueckgabe < 0: verwerfen.
+// Sichtbarkeit: Aufbau von unten nach oben als feine waagrechte Abtastlinie (leicht unruhig durch Rauschen und
+// feine Zellen von 1/60 Einheit, mit einzelnen Funken). Roentgen-Wechsel als praeziser Scan: eine helle, duenne
+// Linie laeuft von oben nach unten (uScanY), darueber ist der Roboter Roentgen, darunter noch Schale.
+// Rueckgabe < 0: verwerfen. Nur im Fragment-Shader verwenden (fwidth).
 const MASK = /* glsl */ `
+uniform float uTime;
 uniform float uBuildY;
 uniform float uDissolve;
+uniform float uScanY;
 uniform vec3 uFocus;
 float rbHash(vec3 p) {
   p = fract(p * vec3(0.1031, 0.1030, 0.0973));
@@ -63,19 +67,31 @@ float rbHash(vec3 p) {
 float rbMask(vec3 p, float bias, out float edge) {
   edge = 0.0;
   if (uBuildY > 1.4 && uDissolve <= 0.0) return 1.0;
-  vec3 q = p * 15.0;
-  vec3 c = floor(q);
-  float r = rbHash(c);
-  vec3 cc = (c + 0.5) / 15.0;
-  float b = uBuildY - (cc.y + r * 0.14);
-  float f = length(cc - uFocus) * 0.52 + r * 0.3 + bias;
-  float d = uDissolve > 0.0 ? f - (uDissolve * 2.5 - 0.36) : 9.0;
-  float m = min(b, d);
-  vec3 fc = abs(fract(q) - 0.5);
-  float grid = smoothstep(0.43, 0.49, max(max(fc.x, fc.y), fc.z));
-  float hot = 1.0 - smoothstep(0.0, 0.07, abs(m));
-  edge = hot * (0.22 + 0.78 * grid);
-  return m;
+  float b = 9.0;
+  if (uBuildY <= 1.4) {
+    vec3 c = floor(p * 60.0);
+    float r = rbHash(c);
+    float n = rbSnoise(vec3(p.x * 5.0, p.z * 5.0, p.y * 1.5 + uTime * 0.3));
+    b = uBuildY - (p.y + n * 0.012 + (r - 0.5) * 0.006);
+    // Linienbreite begrenzen: an streifend gesehenen Flaechen (Rumpf von oben) sonst ein dicker Ring
+    float w = clamp(fwidth(b) * 1.1, 0.0025, 0.008);
+    float line = 1.0 - smoothstep(w * 0.5, w * 2.0, abs(b));
+    float glow = exp(-abs(b) / 0.025) * 0.08;
+    float spark = step(0.99, rbHash(c + floor(uTime * 9.0))) * (1.0 - smoothstep(0.0, 0.03, abs(b)));
+    edge = line * 0.42 + glow + spark * 1.1;
+  }
+  float d = 9.0;
+  if (uDissolve > 0.0) {
+    // Scan: scharfe Linie ohne Rauschen, darunter ein kurzer, weicher Lichtsaum auf der Schale
+    d = uScanY - p.y;
+    float wd = clamp(fwidth(d) * 1.2, 0.002, 0.006);
+    // Auf dem Rumpf leiser (von oben gesehen wuerde die Linie sonst ein grosser heller Bogen)
+    float onHead = mix(0.22, 1.0, smoothstep(-2.0, -1.2, p.y));
+    float lineD = 1.0 - smoothstep(wd * 0.5, wd * 2.0, abs(d));
+    float glowD = exp(-abs(d) / 0.05) * 0.14;
+    edge = max(edge, (lineD * 0.8 + glowD) * onHead);
+  }
+  return min(b, d);
 }
 `;
 
@@ -114,7 +130,6 @@ vec3 rbPerturb(vec3 surfPos, vec3 n, vec2 dHdxy, float faceDir) {
 
 // Teile: liefern Fugen (g, dH), Verdeckung (ao), Ausblenden nach unten (fade), Emission, Rauheit
 const PARTS = /* glsl */ `
-uniform float uTime;
 uniform vec3 uSig;
 uniform vec3 uIce;
 uniform float uEar;
@@ -162,9 +177,19 @@ void rbPart(inout float g, inout vec2 dH, inout float ao, inout float fade, inou
   // Lueftung: kurze Schlitze hinter dem Seitenpaneel
   float ventM = smoothstep(0.64, 0.68, aSide) * (1.0 - smoothstep(0.86, 0.9, aSide)) * smoothstep(-0.02, 0.02, ph - 0.02) * (1.0 - smoothstep(0.2, 0.24, ph)) * step(0.0, -dir.z);
   rbSeamM((fract(ph / 0.045) - 0.5) * 0.045, 0.0045, 0.004, ventM, g, dH);
+  // Stirnplatte: feine Fuge im Bogen ueber dem Visier, zwischen den Seitenpaneelen
+  float browM = step(0.0, dir.z) * (1.0 - smoothstep(0.42, 0.5, aSide)) * smoothstep(0.1, 0.13, abs(vRL.x));
+  rbSeamM((ph - 0.5) * 0.95, 0.0035, 0.0026, browM, g, dH);
+  // Kinnplatte: Fuge unter dem Visier, dazu zwei kurze senkrechte Fugen zu den Wangen
+  float chinM = step(0.0, dir.z) * (1.0 - smoothstep(0.44, 0.5, aSide));
+  rbSeamM((ph + 0.74) * 0.95, 0.0035, 0.0026, chinM, g, dH);
+  float cheekM = step(0.0, dir.z) * smoothstep(-0.9, -0.85, ph) * (1.0 - smoothstep(-0.76, -0.72, ph));
+  rbSeamM(abs(vRL.x) - 0.36, 0.003, 0.0022, cheekM, g, dH);
   // Umgebungsverdeckung: Unterseite des Kopfes, Kinn
   ao = mix(0.22, 1.0, smoothstep(-0.98, -0.5, dir.y));
-  rough += vRN * 0.08;
+  // Rauheit: grobe und feine Variation (seidenmatte Keramik statt Plastik), Scheitelstreifen etwas glaenzender
+  float micro = rbSnoise(vRL * 17.0);
+  rough += vRN * 0.08 + micro * 0.035 - crown * (1.0 - smoothstep(0.08, 0.09, abs(vRL.x))) * 0.07;
 #endif
 #ifdef RB_TORSO
   float a = vRP.x;
@@ -192,7 +217,7 @@ void rbPart(inout float g, inout vec2 dH, inout float ao, inout float fade, inou
   float r = length(vec2(p.x, p.z + 0.1));
   ao = mix(0.22, 1.0, smoothstep(0.4, 1.0, r));
   fade = rbBottomFade(p.y);
-  rough += vRN * 0.08;
+  rough += vRN * 0.08 + rbSnoise(p * 15.0) * 0.03;
 #endif
 #ifdef RB_EAR
   float r = vRRad;
@@ -371,7 +396,7 @@ clearcoatNormal = rbPerturb(-vViewPosition, clearcoatNormal, rbDH, faceDirection
 `);
     fs = fs.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
 float rbNdV = saturate(dot(normal, normalize(vViewPosition)));
-totalEmissiveRadiance += rbEmit + uLeakCol * (uLeak * rbG) + uEdgeCol * rbEdge + uRimCol * (${rim.toFixed(3)} * pow(1.0 - rbNdV, 4.0));
+totalEmissiveRadiance += rbEmit + uLeakCol * (uLeak * rbG * smoothstep(-1.25, -0.95, vRL.y)) + uEdgeCol * rbEdge + uRimCol * (${rim.toFixed(3)} * pow(1.0 - rbNdV, 4.0));
 `);
     fs = fs.replace('#include <lights_physical_fragment>', `#include <lights_physical_fragment>
 #ifdef USE_CLEARCOAT
@@ -393,7 +418,14 @@ clearcoatSpecularIndirect = min(clearcoatSpecularIndirect, vec3(1.6));
 reflectedLight.directSpecular = min(reflectedLight.directSpecular, vec3(1.2));
 reflectedLight.indirectSpecular = min(reflectedLight.indirectSpecular, vec3(1.6));
 `);
-    fs = fs.replace('#include <opaque_fragment>', `outgoingLight = min(outgoingLight * rbFade, vec3(7.0));
+    // Rumpf: Unterkante ueber die Deckkraft ausblenden (geht in den Hintergrund ueber, statt als schwarzes Loch
+    // davor zu stehen). Der Rumpf ist dafuer transparent angelegt (robot.js), die anderen Teile bleiben deckend.
+    fs = fs.replace('#include <opaque_fragment>', `#ifdef RB_TORSO
+diffuseColor.a *= rbFade * rbFade;
+outgoingLight = min(outgoingLight, vec3(7.0));
+#else
+outgoingLight = min(outgoingLight * rbFade, vec3(7.0));
+#endif
 #include <opaque_fragment>`);
     shader.vertexShader = vs;
     shader.fragmentShader = fs;
@@ -436,8 +468,9 @@ export function makeHoloMaterial(THREE, U, { skin = false } = {}) {
     fragmentShader: /* glsl */ `
       ${NOISE}
       ${MASK}
-      uniform float uTime;
       uniform float uHolo;
+      uniform float uHoloFloor;
+      uniform float uXray;
       uniform vec3 uHoloCol;
       uniform vec3 uHoloHi;
       varying vec3 vL;
@@ -458,11 +491,17 @@ export function makeHoloMaterial(THREE, U, { skin = false } = {}) {
         float lines = contour(vL.y / 0.05, 0.035);
         float sweep = exp(-pow((fract(vL.y * 0.2 - uTime * 0.09) - 0.5) * 10.0, 2.0));
         float near = smoothstep(0.2, 1.3, length(vV));
-        float fade = smoothstep(-2.9, -2.1, vL.y);
+        // Unterkante: im Roentgen bleiben nur Kopf und Hals (keine Schulter-Schale wie ein Teller unter dem Kopf)
+        #ifdef RB_SKIN
+          float fade = smoothstep(-2.9, -2.1, vL.y);
+        #else
+          float fade = smoothstep(uHoloFloor - 0.7, uHoloFloor + 0.1, vL.y);
+        #endif
         float body = fres * 0.9 + lines * (0.1 + 0.55 * fres) * (0.6 + 0.8 * sweep) + 0.006;
         vec3 col = uHoloCol * body * ghost + uHoloHi * edge * 0.25;
         #ifdef RB_SKIN
-          col *= 0.45; // Hals: viele Rohre ueberlagern sich additiv
+          // Hals: viele Rohre ueberlagern sich additiv. Im Roentgen deutlich zurueck (sonst wirkt er wie eine Dose)
+          col *= 0.45 * mix(1.0, 0.3, uXray);
         #endif
         gl_FragColor = vec4(col * uHolo * near * fade, 1.0);
       }`,

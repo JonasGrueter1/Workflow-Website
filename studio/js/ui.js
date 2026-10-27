@@ -32,9 +32,17 @@ export class UI {
     this.hudIndex = $('#hud-index');
     this.hudLabel = $('#hud-label');
     this.progressEls = $$('.hud, .story-bar');
+    this._static = false;
+    // ui.js laeuft: die CSS-Sicherung fuer [data-reveal] (falls dieses Skript nie startet) wird nicht gebraucht
+    this.root.classList.add('ui-on');
+    // 3D-Modus: Panels sind bis zum Einblenden unsichtbar (--o 0) und duerfen keinen Fokus bekommen
+    if (this.root.classList.contains('gl')) {
+      for (const sec of $$('.chapter')) this.setInteractive(sec, sec.dataset.scene === 'intro');
+    }
     this.splitText();
     this.initHeader();
     this.initNav();
+    this.initAnchors();
     this.initReveal();
     this.initCounters();
     this.initForm();
@@ -45,15 +53,19 @@ export class UI {
 
   /* ------------------------------------------------- Woerter aufteilen */
   // Jedes Wort in <span class="w"><i>..</i></span>, damit es aus einer Maske aufsteigen kann.
-  // Leerzeichen bleiben echte Textknoten (Screenreader und Suche lesen den Satz normal).
+  // Die Ueberschrift bekommt den ganzen Satz als aria-label, die Wort-Spans sind fuer Screenreader versteckt
+  // (VoiceOver liest inline-block-Woerter sonst einzeln). Leerzeichen bleiben echte Textknoten (Suche, Kopieren).
   splitText() {
     for (const el of $$('[data-split]')) {
       if (el.classList.contains('is-split')) continue;
-      const words = el.textContent.trim().split(/\s+/);
+      const text = el.textContent.trim().replace(/\s+/g, ' ');
+      const words = text.split(' ');
+      el.setAttribute('aria-label', text);
       el.textContent = '';
       words.forEach((word, i) => {
         const w = document.createElement('span');
         w.className = 'w';
+        w.setAttribute('aria-hidden', 'true');
         const inner = document.createElement('i');
         inner.textContent = word;
         w.appendChild(inner);
@@ -167,6 +179,8 @@ export class UI {
   panel(section, on, { first = false } = {}) {
     const g = this.gsap;
     const p = this._parts(section);
+    if (this._static) return;
+    this.setInteractive(section, on);
     if (!g || this.reduced) {
       [...p.words, ...p.lines, ...p.items].forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
       return;
@@ -198,6 +212,37 @@ export class UI {
     p.tl = tl;
   }
 
+  /**
+   * Unsichtbare Panels: Links und Buttons aus der Tab-Reihenfolge nehmen (tabindex -1). Kein inert: Texte und
+   * Ueberschriften bleiben im Accessibility-Baum, Screenreader lesen alle Kapitel (Deckkraft 0 stoert sie nicht).
+   */
+  setInteractive(section, on) {
+    const panel = section.querySelector('.chapter__panel');
+    if (!panel) return;
+    for (const a of panel.querySelectorAll('a, button')) {
+      if (on) a.removeAttribute('tabindex');
+      else a.setAttribute('tabindex', '-1');
+    }
+  }
+
+  /**
+   * Statischer Fallback (kein WebGL, Kontextverlust, zu langsam): alle Einblend-Animationen stoppen,
+   * Inline-Stile von GSAP entfernen, alle Panels sichtbar und bedienbar.
+   */
+  toStatic() {
+    this._static = true;
+    const g = this.gsap;
+    for (const sec of $$('.chapter')) {
+      const p = this._parts(sec);
+      if (p.tl) { p.tl.kill(); p.tl = null; }
+      p.on = true;
+      const els = [...p.words, ...p.lines, ...p.items];
+      if (g) { g.killTweensOf(els); g.set(els, { clearProps: 'all' }); }
+      els.forEach((el) => { el.style.opacity = ''; el.style.transform = ''; });
+      this.setInteractive(sec, true);
+    }
+  }
+
   /* --------------------------------------------------------------- HUD */
   setChapter(index, label) {
     const idx = String(index).padStart(2, '0');
@@ -214,6 +259,18 @@ export class UI {
         g.fromTo(el, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' });
       },
     });
+  }
+
+  /** Angebotszeile unter dem fertigen Website-Geruest (Kapitel Code, dna-Fortschritt p 0..1) */
+  setOffer(p, inContent) {
+    const on = !inContent && p > 0.8 && p < 0.985;
+    if (on === this._offerOn) return;
+    this._offerOn = on;
+    const el = this._offer || (this._offer = $('#offer'));
+    if (!el) return;
+    el.classList.toggle('is-on', on);
+    const a = el.querySelector('a');
+    if (a) { if (on) a.removeAttribute('tabindex'); else a.setAttribute('tabindex', '-1'); }
   }
 
   setStory(p, inContent) {
@@ -244,16 +301,30 @@ export class UI {
     const header = $('.site-header');
     const label = $('.nav-toggle__text');
     if (btn && header) {
-      const set = (open) => {
+      // Offenes Vollbild-Menue: alles dahinter ist gesperrt (inert), der Fokus bleibt im Menue
+      const behind = () => $$('main, .site-footer, .hud, .skip-link');
+      const isOpen = () => header.classList.contains('is-open');
+      const set = (open, { restoreFocus = false } = {}) => {
         header.classList.toggle('is-open', open);
         btn.setAttribute('aria-expanded', String(open));
         btn.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
         if (label) label.textContent = open ? 'Schliessen' : 'Menü';
         document.body.style.overflow = open ? 'hidden' : '';
+        for (const el of behind()) el.inert = open;
+        if (open) {
+          const first = $('.nav a');
+          if (first) requestAnimationFrame(() => first.focus());
+        } else if (restoreFocus) {
+          btn.focus();
+        }
       };
-      btn.addEventListener('click', () => set(!header.classList.contains('is-open')));
-      $$('.nav a').forEach((a) => a.addEventListener('click', () => set(false)));
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+      btn.addEventListener('click', () => set(!isOpen(), { restoreFocus: isOpen() }));
+      $$('.nav a').forEach((a) => a.addEventListener('click', () => { if (isOpen()) set(false); }));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) set(false, { restoreFocus: true }); });
+      // Breiter als das Handy-Layout: Menue schliessen (sonst blieben die Inhalte gesperrt)
+      const mq = window.matchMedia('(min-width: 961px)');
+      const onMq = () => { if (mq.matches && isOpen()) set(false); };
+      if (mq.addEventListener) mq.addEventListener('change', onMq);
     }
     // Aktiver Abschnitt in der Navigation
     const links = $$('.nav a[href^="#"]:not(.nav__cta)');
@@ -266,6 +337,32 @@ export class UI {
       }
     }, { rootMargin: '-45% 0px -50% 0px' });
     map.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+  }
+
+  /* ------------------------------------------------------ Anker-Links */
+  // Im 3D-Modus ist scroll-behavior aus (ScrollTrigger misst sonst beim Refresh falsch). Anker scrollen darum
+  // per JS weich. Im Fallback uebernimmt das CSS (html:not(.gl) { scroll-behavior: smooth }).
+  initAnchors() {
+    document.addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (!this.root.classList.contains('gl') || this.reduced) return;
+      const a = e.target instanceof Element ? e.target.closest('a[href^="#"]') : null;
+      if (!a) return;
+      const id = a.getAttribute('href').slice(1);
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      const header = $('.site-header');
+      const pad = id === 'top' ? 0 : (header ? header.offsetHeight : 0);
+      const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - pad);
+      window.scrollTo({ top, behavior: 'smooth' });
+      if (window.history && history.pushState) history.pushState(null, '', `#${id}`);
+      // Fokus an das Ziel (Tastatur und Screenreader lesen dort weiter), ohne den weichen Scroll zu stoeren
+      if (!target.hasAttribute('tabindex') && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(target.tagName)) {
+        target.setAttribute('tabindex', '-1');
+      }
+      try { target.focus({ preventScroll: true }); } catch (err) { /* alter Browser */ }
+    });
   }
 
   /* ---------------------------------------------------- Einblendungen */
@@ -286,8 +383,10 @@ export class UI {
     const els = $$('[data-count]');
     const g = this.gsap;
     if (!els.length || !g || this.reduced || !('IntersectionObserver' in window)) return;
+    // Nur die Zahl (.n) zaehlt hoch, Zusaetze wie "+" oder "unter ... Std." bleiben stehen
     const fmt = (el, v) => {
-      el.textContent = `${el.dataset.prefix || ''}${Math.round(v)}${el.dataset.suffix || ''}`;
+      const n = el.querySelector('.n') || el;
+      n.textContent = String(Math.round(v));
     };
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
@@ -305,25 +404,40 @@ export class UI {
 
   /* ------------------------------------------------------------ Cursor */
   initCursor() {
+    // Nur Dekoration: der Systemzeiger bleibt (auch vergroesserte Zeiger und Barrierefreiheit), ein feiner Ring folgt
+    // ihm weich. Erst nach dem Preloader und nur mit echter Maus.
     if (this.reduced || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     const el = document.createElement('div');
     el.className = 'cursor';
     el.setAttribute('aria-hidden', 'true');
-    el.innerHTML = '<span class="cursor__ring"></span><span class="cursor__dot"></span>';
+    el.innerHTML = '<span class="cursor__ring"></span>';
     document.body.appendChild(el);
     this.root.classList.add('has-cursor');
     const ring = el.firstElementChild;
-    const dot = el.lastElementChild;
     let x = -100;
     let y = -100;
     let rx = x;
     let ry = y;
     let last = performance.now();
+    let raf = 0;
+    let idle = 0;
+    const loop = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const k = 1 - Math.exp(-dt * 16);
+      rx += (x - rx) * k;
+      ry += (y - ry) * k;
+      ring.style.transform = `translate3d(${rx.toFixed(1)}px, ${ry.toFixed(1)}px, 0)`;
+      // Ruhe: Schleife anhalten, bis die Maus sich wieder bewegt
+      idle = Math.abs(x - rx) + Math.abs(y - ry) < 0.3 ? idle + 1 : 0;
+      raf = idle > 10 ? 0 : requestAnimationFrame(loop);
+    };
     window.addEventListener('pointermove', (e) => {
       if (e.pointerType !== 'mouse') return;
       x = e.clientX;
       y = e.clientY;
       el.classList.add('is-visible');
+      if (!raf) { last = performance.now(); idle = 0; raf = requestAnimationFrame(loop); }
     }, { passive: true });
     document.addEventListener('pointerover', (e) => {
       const t = e.target;
@@ -334,17 +448,6 @@ export class UI {
     document.documentElement.addEventListener('pointerleave', () => el.classList.remove('is-visible'));
     window.addEventListener('pointerdown', () => el.classList.add('is-down'));
     window.addEventListener('pointerup', () => el.classList.remove('is-down'));
-    const loop = (now) => {
-      const dt = Math.min(0.05, (now - last) / 1000);
-      last = now;
-      const k = 1 - Math.exp(-dt * 14);
-      rx += (x - rx) * k;
-      ry += (y - ry) * k;
-      dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
-      requestAnimationFrame(loop);
-    };
-    requestAnimationFrame(loop);
   }
 
   /* ------------------------------------------------------- Formular */
@@ -382,16 +485,17 @@ export class UI {
       input.addEventListener('input', () => { if (input.closest('.field.is-invalid')) check(input); });
     });
 
+    // Die Status-Region (role=status) bleibt immer im DOM, nur ihr Inhalt wechselt: so lesen Screenreader jede Meldung vor
     const show = (kind, text, extra) => {
       if (!status) return;
-      status.hidden = false;
-      status.className = 'form-status' + (kind === 'error' ? ' is-error' : ' is-ok');
+      status.className = 'form-status' + (kind === 'error' ? ' is-error' : kind === 'ok' ? ' is-ok' : ' is-info');
       status.textContent = '';
       const span = document.createElement('span');
       span.textContent = text;
       status.append(span);
       if (extra) status.append(extra);
     };
+    const clear = () => { if (status) { status.className = 'form-status'; status.textContent = ''; } };
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -424,19 +528,25 @@ export class UI {
         botcheck: '',
       };
       if (btn) { btn.disabled = true; btn.textContent = MSG.sending; }
-      if (status) status.hidden = true;
+      show('info', MSG.sending);
+      // Haengt die Verbindung, nach 15 s abbrechen und den mailto-Weg anbieten
+      const ctrl = 'AbortController' in window ? new AbortController() : null;
+      const timer = ctrl ? setTimeout(() => ctrl.abort(), 15000) : 0;
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
+        signal: ctrl ? ctrl.signal : undefined,
       })
         .then((res) => res.json().then((json) => {
           if (!res.ok || !json.success) throw new Error(json.message || `HTTP ${res.status}`);
         }))
+        .finally(() => clearTimeout(timer))
         .then(() => {
           show('ok', MSG.ok);
           form.reset();
           inputs.forEach((i) => { delete i.dataset.touched; fieldError(i, ''); });
+          form.addEventListener('input', clear, { once: true });
           if (btn) { btn.disabled = false; btn.innerHTML = label; }
         })
         .catch(() => {

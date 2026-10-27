@@ -129,6 +129,14 @@ export class Director {
     this.portrait = false;
     this.aspect = 16 / 9;
     this.cutFade = 0;
+    // Bildverschiebung (Lens-Shift) als Anteil der Bildbreite: haelt das Motiv neben dem Text-Panel frei,
+    // wenn das Seitenverhaeltnis vom Entwurf (1440 x 900) abweicht. + = Motiv nach rechts.
+    this.shift = 0;
+    this._shiftTarget = 0;
+    this._clear = {};
+    this._rects = {};
+    // Abdunkeln hinter dem Text im Bild (FxPass): Mitte und halbe Groesse in UV (y oben), Staerke 0..1
+    this.scrim = { x: 0.25, y: 0.5, rx: 0.2, ry: 0.2, a: 0 };
     this.current = BEATS[0].name; // Beat mit hoechstem Gewicht
     this.beats = {};
     this.modules = {};
@@ -186,6 +194,7 @@ export class Director {
       }));
     }
     this._windows = windows;
+    this._measureClearance();
     this._shotsL = buildShots(CAMERA_KEYS, windows, false);
     this._shotsP = buildShots(CAMERA_KEYS, windows, true);
     this.cuts = this._shotsL.slice(1).map((s) => s.t0);
@@ -215,11 +224,21 @@ export class Director {
     if (this._proxy) this.target = clamp01(this._proxy.p);
   }
 
-  dispose() {
-    if (this._tween) { this._tween.scrollTrigger.kill(); this._tween.kill(); }
+  /** resetDom: CSS-Variablen und Klassen der Abschnitte entfernen (Wechsel auf den statischen Fallback) */
+  dispose(resetDom = false) {
+    if (this._tween) { this._tween.scrollTrigger.kill(); this._tween.kill(); this._tween = null; }
     if (this._onRefresh && window.ScrollTrigger) window.ScrollTrigger.removeEventListener('refresh', this._onRefresh);
+    this._proxy = null;
     this.listeners.clear();
     this.panelListeners.clear();
+    if (resetDom) {
+      for (const el of Object.values(this.sections)) {
+        for (const k of ['--len', '--o', '--p']) el.style.removeProperty(k);
+        el.classList.remove('is-on');
+      }
+      this._dom.clear();
+      this.story = null;
+    }
   }
 
   setAspect(aspect) {
@@ -245,6 +264,7 @@ export class Director {
     if (Math.abs(diff) < 1e-5) this.global = this.target;
     else this.global = damp(this.global, this.target, this.lambda * (Math.abs(diff) > 0.12 ? 1.8 : 1), dt);
     this.velocity = dt > 0 ? (this.global - prev) / dt : 0;
+    this.shift = damp(this.shift, this.portrait ? 0 : this._shiftTarget, 3.2, dt > 0 ? dt : 1);
     const g = this.global;
 
     // Beats
@@ -325,9 +345,39 @@ export class Director {
     if (this._roll) camera.up.applyAxisAngle(dir, THREE.MathUtils.degToRad(this._roll));
     camera.lookAt(this._look);
     const fov = this.fovFor(this._fov, camera.aspect);
-    if (Math.abs(camera.fov - fov) > 1e-3) {
+    // Lens-Shift ueber filmOffset: verschiebt das Bild seitlich, ohne die Perspektive zu aendern
+    const off = -this.shift * camera.getFilmWidth() * camera.aspect * 2 * Math.tan(THREE.MathUtils.degToRad(fov / 2));
+    if (Math.abs(camera.fov - fov) > 1e-3 || Math.abs(camera.filmOffset - off) > 1e-4) {
       camera.fov = fov;
+      camera.filmOffset = off;
       camera.updateProjectionMatrix();
+    }
+  }
+
+  /**
+   * Wie weit muss das Motiv seitlich ausweichen, damit es nicht unter dem Text liegt?
+   * Die Kamera-Keys sind fuer 1440 x 900 komponiert: Text links endet dort bei ~41 % der Breite (rechts beginnt er bei ~59 %).
+   * Ist der Text relativ breiter (z. B. Tablet quer), wird die Differenz als Lens-Shift ausgeglichen.
+   */
+  _measureClearance() {
+    this._clear = {};
+    this._rects = {};
+    if (!this.story || typeof window === 'undefined') return;
+    const W = Math.max(1, window.innerWidth);
+    const H = Math.max(1, window.innerHeight);
+    for (const b of BEATS) {
+      const el = this.sections[b.name];
+      if (!el) continue;
+      const t = el.querySelector('.chapter__text');
+      if (!t) continue;
+      const r = t.getBoundingClientRect();
+      if (!r.width) continue;
+      // Lage im klebenden Panel (unabhaengig von der aktuellen Scrollposition), in Pixeln des Viewports
+      this._rects[b.name] = { x: t.offsetLeft, y: t.offsetTop, w: t.offsetWidth, h: t.offsetHeight, W, H, sec: el.offsetHeight };
+      if (b.name === 'intro') continue;
+      const right = el.classList.contains('chapter--right');
+      const need = right ? -Math.min(0.15, Math.max(0, 0.59 - r.left / W)) : Math.min(0.15, Math.max(0, r.right / W - 0.41));
+      this._clear[b.name] = need;
     }
   }
 
@@ -335,6 +385,10 @@ export class Director {
   // Sichtbarkeit pro Beat aus BEATS[].text = [ein0, ein1, aus0, aus1] (p im Beat), sonst aus der Klebedauer.
   _writeDom() {
     if (!this.story) return;
+    let shiftT = 0;
+    let bestO = 0;
+    let bestName = null;
+    let bestP = 0;
     const last = BEATS.length - 1;
     BEATS.forEach((b, i) => {
       const el = this.sections[b.name];
@@ -349,9 +403,12 @@ export class Director {
         fout = i === last && t[2] >= 1 ? 1 : 1 - smoothstep(t[2], t[3], p);
       } else {
         fin = i === 0 ? 1 : smoothstep(0.02, 0.12, p);
-        fout = i === last ? 1 : 1 - smoothstep(s.pinOut - 0.16, s.pinOut - 0.04, p);
+        // Ausblenden erst, waehrend das Panel nach oben wegscrollt (rund 40 vh): kurze Strecken ohne Text
+        fout = i === last ? 1 : 1 - smoothstep(s.pinOut - 0.06, s.pinOut + 40 / b.len, p);
       }
       const o = Math.round(fin * fout * 1000) / 1000;
+      shiftT += (this._clear[b.name] || 0) * o;
+      if (o > bestO) { bestO = o; bestName = b.name; bestP = p; }
       const pr = Math.round(p * 1000) / 1000;
       const cache = this._dom.get(el) || {};
       if (cache.o !== o) { el.style.setProperty('--o', o); cache.o = o; }
@@ -364,5 +421,25 @@ export class Director {
       }
       this._dom.set(el, cache);
     });
+    this._shiftTarget = shiftT;
+    this._updateScrim(bestName, bestO, bestP);
+  }
+
+  // Abdunkeln hinter dem sichtbarsten Text-Panel (Staerke aus BEATS[].scrim). Scrollt das Panel nach pinOut weg,
+  // wandert die Zone mit.
+  _updateScrim(name, o, p) {
+    const sc = this.scrim;
+    const r = name ? this._rects[name] : null;
+    const def = BEATS.find((b) => b.name === name);
+    if (!r || !def || o <= 0.001) { sc.a = 0; return; }
+    const s = this.beats[name];
+    const up = Math.max(0, p - s.pinOut) * r.sec;
+    const padX = r.w * 0.08;
+    const padY = r.h * 0.12;
+    sc.x = (r.x + r.w / 2) / r.W;
+    sc.y = 1 - (r.y - up + r.h / 2) / r.H;
+    sc.rx = (r.w / 2 + padX) / r.W;
+    sc.ry = (r.h / 2 + padY) / r.H;
+    sc.a = o * (def.scrim ?? 0.45);
   }
 }

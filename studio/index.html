@@ -30,27 +30,57 @@
   <link rel="stylesheet" href="css/style.css">
   <script>
     // Frueh entscheiden: 3D (gl) oder statischer Fallback (no-gl). ?nogl erzwingt den Fallback.
+    // Software-Rendering (SwiftShader, llvmpipe, Microsoft Basic Render, gesperrte GPU) bekommt den Fallback,
+    // ausser bei automatisierten Tests (navigator.webdriver) oder ?q=... / ?gl (dann html[data-gl-force]).
+    // ?glcheck prueft auch in Tests streng.
     (function () {
-      var d = document.documentElement, ok = false;
+      var d = document.documentElement, ok = false, s = location.search;
       d.classList.remove('no-js'); d.classList.add('js');
       try {
         var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var im = window.HTMLScriptElement && HTMLScriptElement.supports && HTMLScriptElement.supports('importmap');
-        if (!rm && im && !/[?&]nogl\b/.test(location.search)) {
+        var force = /[?&](q=|gl\b)/.test(s) || (navigator.webdriver === true && !/[?&]glcheck\b/.test(s));
+        if (!rm && im && !/[?&]nogl\b/.test(s)) {
           var c = document.createElement('canvas');
-          var gl = c.getContext('webgl2');
+          var gl = c.getContext('webgl2', force ? undefined : { failIfMajorPerformanceCaveat: true });
           ok = !!gl;
+          if (gl && !force) {
+            var info = gl.getExtension('WEBGL_debug_renderer_info');
+            var r = String(gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER) || '');
+            if (/swiftshader|llvmpipe|softpipe|software|basic render/i.test(r)) ok = false;
+          }
           var lose = gl && gl.getExtension('WEBGL_lose_context');
           if (lose) lose.loseContext();
         }
         if (rm) d.classList.add('reduced');
+        if (ok && force) d.setAttribute('data-gl-force', '1');
       } catch (e) { ok = false; }
       d.classList.add(ok ? 'gl' : 'no-gl');
+      // Notausgang: startet main.js nie (Netzabbruch, Parse-Fehler in einem alten Browser), bliebe die Seite beim
+      // Preloader stehen. Nach 20 s (Tests: 75 s) ohne laufendes main.js auf den statischen Fallback wechseln.
+      if (ok) {
+        setTimeout(function () {
+          if (window.__studioMain || d.classList.contains('is-ready')) return;
+          d.classList.remove('gl'); d.classList.add('no-gl', 'is-ready');
+          var p = document.getElementById('preloader'); if (p) p.hidden = true;
+        }, force ? 75000 : 20000);
+      }
+      // Nur mit 3D: Module der Engine und der Szenen gleich parallel laden (statt Kette main -> engine -> three -> Szenen)
+      if (ok) {
+        var mods = 'vendor/three/three.module.min.js,js/config.js,js/engine.js,js/director.js,js/runner.js,js/fx/FxPass.js,vendor/three/addons/postprocessing/EffectComposer.js,vendor/three/addons/postprocessing/RenderPass.js,vendor/three/addons/postprocessing/UnrealBloomPass.js,vendor/three/addons/postprocessing/OutputPass.js,vendor/three/addons/postprocessing/Pass.js,vendor/three/addons/postprocessing/ShaderPass.js,vendor/three/addons/postprocessing/MaskPass.js,vendor/three/addons/shaders/CopyShader.js,vendor/three/addons/shaders/LuminosityHighPassShader.js,vendor/three/addons/shaders/OutputShader.js,vendor/three/addons/environments/RoomEnvironment.js,vendor/three/addons/math/MeshSurfaceSampler.js,vendor/three/addons/utils/BufferGeometryUtils.js,js/scenes/brain-build.js,js/scenes/brain-shaders.js,js/scenes/brain.js,js/scenes/cables-paths.js,js/scenes/cables-shaders.js,js/scenes/cables.js,js/scenes/dna-atlas.js,js/scenes/dna-build.js,js/scenes/dna-code.js,js/scenes/dna-shaders.js,js/scenes/dna.js,js/scenes/particles-glsl.js,js/scenes/particles-nebula.js,js/scenes/particles-shape.js,js/scenes/particles.js,js/scenes/robot-env.js,js/scenes/robot-geometry.js,js/scenes/robot-shaders.js,js/scenes/robot.js'.split(',');
+        for (var i = 0; i < mods.length; i++) {
+          var l = document.createElement('link');
+          l.rel = 'modulepreload'; l.href = mods[i];
+          document.head.appendChild(l);
+        }
+      }
     })();
   </script>
   <script type="importmap">
     { "imports": { "three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/" } }
   </script>
+  <link rel="modulepreload" href="js/main.js">
+  <link rel="modulepreload" href="js/ui.js">
   <script src="vendor/gsap/gsap.min.js" defer></script>
   <script src="vendor/gsap/ScrollTrigger.min.js" defer></script>
   <script type="module" src="js/main.js"></script>
@@ -92,7 +122,7 @@
       <a href="#kontakt">Kontakt</a>
       <a class="nav__cta" href="#kontakt">Projekt anfragen</a>
     </nav>
-    <a class="btn btn--ghost btn--small header-cta" href="#kontakt">Projekt anfragen</a>
+    <a class="btn btn--ghost btn--small header-cta" href="#kontakt"><span class="header-cta__long">Projekt anfragen</span><span class="header-cta__short">Kontakt</span></a>
     <button class="nav-toggle" type="button" aria-controls="nav" aria-expanded="false" aria-label="Menü öffnen">
       <span class="nav-toggle__text" aria-hidden="true">Menü</span>
       <span class="nav-toggle__icon" aria-hidden="true"><i></i><i></i></span>
@@ -116,6 +146,11 @@
             <p class="eyebrow" data-intro>Jonas Grüter · Region Sempach</p>
             <h1 class="display" id="t-intro" data-intro data-split>Websites und KI für Unternehmen.</h1>
             <p class="lead" data-intro>Ich baue Websites, die auf jedem Handy überzeugen, und Software, die KI in Ihren Betrieb bringt.</p>
+            <div class="actions hero-actions" data-intro>
+              <a class="btn" href="#kontakt">Kostenlosen Entwurf anfragen <span class="btn__arrow" aria-hidden="true"></span></a>
+              <a class="btn btn--ghost" href="#leistungen">Direkt zu den Leistungen</a>
+            </div>
+            <p class="hero-facts" data-intro>Kostenloser Entwurf vorab · Fixpreis · Persönlich betreut</p>
           </div>
           <p class="scroll-cue" data-intro><span>Scrollen</span><i></i></p>
         </div>
@@ -176,6 +211,11 @@
             <h2 class="headline" id="t-dna" data-split>Die DNA Ihrer Website.</h2>
             <p data-anim>Jede Website entsteht aus eigenem Code, zugeschnitten auf Ihren Betrieb. Keine Vorlage, bei der nur Farben und Bilder getauscht werden.</p>
           </div>
+        </div>
+        <!-- Angebotsmoment unter dem fertigen Website-Geruest (nur mit 3D, eingeblendet von js/ui.js setOffer) -->
+        <div class="chapter__offer" id="offer">
+          <p>Ihr erster Entwurf ist kostenlos. Danach erhalten Sie eine Fixpreis-Offerte.</p>
+          <a class="btn" href="#kontakt" tabindex="-1">Kostenlosen Entwurf anfragen <span class="btn__arrow" aria-hidden="true"></span></a>
         </div>
       </section>
 
@@ -281,10 +321,10 @@
             <p class="lead">Bevor ich KI bei Ihnen einsetze, setze ich sie bei mir selbst ein. Für die Suche nach neuen Kunden habe ich einen Workflow mit KI-Agenten gebaut, der von der Recherche bis zur fertigen Mail alles vorbereitet.</p>
           </header>
           <div class="facts" data-reveal>
-            <div class="fact"><span class="fact__num" data-count="200" data-suffix="+">200+</span><span class="fact__label">Websites automatisch geprüft</span></div>
-            <div class="fact"><span class="fact__num" data-count="28">28</span><span class="fact__label">Betriebe genau analysiert</span></div>
-            <div class="fact"><span class="fact__num" data-count="18">18</span><span class="fact__label">Website-Demos mit je zwei Designs</span></div>
-            <div class="fact fact--warm"><span class="fact__num" data-count="3" data-prefix="unter " data-suffix=" Std.">unter 3 Std.</span><span class="fact__label">bis zur ersten positiven Antwort</span></div>
+            <div class="fact"><span class="fact__num" data-count="200"><span class="n">200</span>+</span><span class="fact__label">Websites automatisch geprüft</span></div>
+            <div class="fact"><span class="fact__num" data-count="28"><span class="n">28</span></span><span class="fact__label">Betriebe genau analysiert</span></div>
+            <div class="fact"><span class="fact__num" data-count="18"><span class="n">18</span></span><span class="fact__label">Website-Demos mit je zwei Designs</span></div>
+            <div class="fact fact--warm"><span class="fact__num" data-count="3"><small>unter</small> <span class="n">3</span> <small>Std.</small></span><span class="fact__label">bis zur ersten positiven Antwort</span></div>
           </div>
           <div class="case">
             <div class="case__flow" data-reveal>
@@ -319,6 +359,13 @@
               <li>Region Sempach, Kanton Luzern</li>
               <li>Arbeitet mit KI-Agenten</li>
             </ul>
+            <!-- Portraet von Jonas: sobald das Foto da ist (assets/img/jonas.webp, Hochformat 4:5, etwa 800 x 1000 px,
+                 dunkler Hintergrund, kuehles Kantenlicht), diesen Block einkommentieren. CSS steht bereit (.portrait).
+            <figure class="portrait">
+              <img src="assets/img/jonas.webp" width="800" height="1000" loading="lazy" decoding="async" alt="Jonas Grüter">
+              <figcaption class="mono">Jonas Grüter · Region Sempach</figcaption>
+            </figure>
+            -->
           </header>
           <div class="prose" data-reveal>
             <p>Ich bin Jonas Grüter, 16 Jahre alt, und wohne in der Region Sempach. Ich mache eine KV-Lehre bei einer grossen Versicherung und baue daneben Websites und KI-Lösungen für Unternehmen.</p>
@@ -338,7 +385,10 @@
             <p class="contact-note">Ich antworte in der Regel innert 24 Stunden. Unter der Woche bin ich tagsüber in der Lehre, darum meistens am Abend.</p>
             <p class="contact-mail"><span class="mono">Lieber per Mail?</span><a class="link" href="mailto:jonas.grueter.web@gmail.com">jonas.grueter.web@gmail.com</a></p>
           </header>
-          <form class="form" id="kontakt-form" data-reveal novalidate>
+          <form class="form" id="kontakt-form" action="https://api.web3forms.com/submit" method="POST" data-reveal novalidate>
+            <input type="hidden" name="access_key" value="d2e340ec-3d1e-4baf-9f1a-cdb4e59d18e9">
+            <input type="hidden" name="subject" value="Anfrage über jonasgrueter Website">
+            <input type="hidden" name="from_name" value="Website Jonas Grüter">
             <div class="form__row">
               <div class="field">
                 <label for="f-name">Ihr Name</label>
@@ -379,7 +429,7 @@
             </div>
             <input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
             <button class="btn btn--wide" type="submit">Anfrage senden <span class="btn__arrow" aria-hidden="true"></span></button>
-            <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
             <p class="form__privacy">Ihre Angaben verwende ich nur, um Ihre Anfrage zu beantworten. Das Formular wird über den Dienst Web3Forms an mich weitergeleitet.</p>
           </form>
         </div>

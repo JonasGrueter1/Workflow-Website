@@ -19,13 +19,14 @@ import { makeMaterials } from './cables-shaders.js';
 
 export const NODE_LABELS = { email: 'E-Mail', website: 'Website', kalender: 'Kalender', dokumente: 'Dokumente', kunden: 'Kunden' };
 
-// Wachstum je Kabel [Start, Ende] in u
+// Wachstum je Kabel [Start, Ende] in u: deutlich gestaffelt, damit die Kabel unterschiedlich lang aus dem Gehirn
+// kommen (gleichzeitig wirkten die Spitzen von innen wie ein Windrad)
 const GROW = {
-  email: [-0.25, 0.16],
-  dokumente: [-0.23, 0.22],
-  kalender: [-0.21, 0.28],
-  kunden: [-0.19, 0.34],
-  website: [-0.17, 0.42],
+  email: [-0.27, 0.16],
+  dokumente: [-0.2, 0.23],
+  kalender: [-0.13, 0.29],
+  kunden: [-0.06, 0.35],
+  website: [0.0, 0.42],
 };
 const SPEED = 3.4;        // Impulse in Welt-Einheiten pro Sekunde
 const GAP = 4.2;          // Pause zwischen zwei Impulsen (in Laengeneinheiten)
@@ -49,6 +50,7 @@ export function create(ctx) {
     uResolution: shared.uResolution,
     uPixelRatio: shared.uPixelRatio,
     uAlpha: { value: 1 },
+    uTrunk: { value: 1 },
     uFog: { value: 0.03 },
     uR: { value: A.nodeRadius },
     uCab: { value: vec4s() },
@@ -63,7 +65,7 @@ export function create(ctx) {
     uPulse: { value: palette.ice.clone().multiplyScalar(2.3) },
     uPulseTail: { value: palette.signal.clone().multiplyScalar(1.05) },
     uEmber: { value: palette.ember.clone().multiplyScalar(2.0) },
-    uTipCol: { value: palette.ice.clone().multiplyScalar(2.4) },
+    uTipCol: { value: palette.ice.clone().multiplyScalar(1.7) },
     uSheath: { value: palette.signal.clone().lerp(palette.mist, 0.35).multiplyScalar(0.34) },
     uSig: { value: palette.signal.clone() },
     uIce: { value: palette.ice.clone() },
@@ -126,6 +128,65 @@ export function create(ctx) {
       vis: 0, occ: 1, depth: 0, cx: 0, cy: 0, r: 0, nx: 0, ny: 0, on1: 0, flash: 0,
     };
   });
+
+  /* ------------------------------------------------- Sichere Zonen der Labels */
+  // Labels duerfen nicht unter Kopfzeile, HUD (unten rechts) oder dem Text-Panel liegen: dort weich ausblenden.
+  const safe = { top: 76, hud: null, dirty: true };
+  const measureSafe = () => {
+    safe.dirty = false;
+    if (typeof document === 'undefined') return;
+    const cs = getComputedStyle(document.documentElement);
+    const hh = parseFloat(cs.getPropertyValue('--header-h'));
+    safe.top = (Number.isFinite(hh) ? hh : 76) + 24;
+    const hud = document.querySelector('.hud');
+    const r = hud ? hud.getBoundingClientRect() : null;
+    safe.hud = r && r.width > 0 ? { x0: r.left - 16, y0: r.top - 14, x1: r.right + 16, y1: r.bottom + 14 } : null;
+  };
+  const offSafe = ctx.onResize(() => { safe.dirty = true; });
+  const boxDist = (ax0, ay0, ax1, ay1, b) => {
+    const dx = Math.max(b.x0 - ax1, ax0 - b.x1, 0);
+    const dy = Math.max(b.y0 - ay1, ay0 - b.y1, 0);
+    return Math.hypot(dx, dy);
+  };
+  const textBox = { x0: 0, y0: 0, x1: 0, y1: 0, on: 0 };
+  // Text-Panel (Zone aus director.scrim, in UV mit y oben), einmal pro Frame
+  function measureText(W, H) {
+    const sc = director.scrim;
+    textBox.on = sc && sc.a > 0.01 ? Math.min(1, sc.a * 2.5) : 0;
+    if (!textBox.on) return;
+    textBox.x0 = (sc.x - sc.rx) * W - 12;
+    textBox.x1 = (sc.x + sc.rx) * W + 12;
+    textBox.y0 = (1 - sc.y - sc.ry) * H - 12;
+    textBox.y1 = (1 - sc.y + sc.ry) * H + 12;
+  }
+  const textDist = (lb, side) => {
+    const x0 = side > 0 ? lb.nx0r : lb.nx0l - lb.w;
+    return boxDist(x0, lb.ny - 9, x0 + lb.w, lb.ny + 9, textBox);
+  };
+  function safeFade(lb, W, H) {
+    const x0 = lb.side > 0 ? lb.nx : lb.nx - lb.w;
+    const x1 = x0 + lb.w;
+    const y0 = lb.ny - 9;
+    const y1 = lb.ny + 9;
+    // Kopfzeile: Knoten und Label muessen ganz darunter liegen
+    let f = smoothstep(safe.top - 4, safe.top + 22, Math.min(y0, lb.cy - lb.r));
+    if (safe.hud) f *= smoothstep(0, 22, boxDist(x0, y0, x1, y1, safe.hud));
+    if (textBox.on) f *= 1 - (1 - smoothstep(0, 26, boxDist(x0, y0, x1, y1, textBox))) * textBox.on;
+    return f;
+  }
+  // Knoten (3D) unter der Kopfzeile: weich ausblenden, wie die Labels
+  function nodeHeaderFade(i) {
+    tmpV.copy(nodePos[i]).applyMatrix4(camera.matrixWorldInverse);
+    const depth = -tmpV.z;
+    if (depth < 0.4) return 1;
+    tmpV.copy(nodePos[i]).project(camera);
+    const H = ctx.size.height;
+    const cy = (-tmpV.y * 0.5 + 0.5) * H;
+    const rPx = (A.nodeRadius * camera.projectionMatrix.elements[5] * H * 0.5) / depth;
+    if (safe.dirty) measureSafe();
+    // Halo der Kugel mitrechnen (etwa 1.6 r)
+    return smoothstep(safe.top - 10, safe.top + 36, cy - rPx * 1.6);
+  }
 
   /* ------------------------------------------------------------ Zustand */
   const state = curves.map((c, i) => ({
@@ -214,11 +275,13 @@ export function create(ctx) {
     update(time, dt, local, global, weight = 1) {
       const u = timeline(global);
       U.uAlpha.value = weight;
+      U.uTrunk.value = smoothstep(-0.06, 0.12, u);
       U.uFog.value = ctx.scene.fog ? ctx.scene.fog.density : 0.03;
       camera.updateMatrixWorld();
       camPos.setFromMatrixPosition(camera.matrixWorld);
 
       const focus = smoothstep(0.62, 0.95, u);
+      measureText(ctx.size.width, ctx.size.height);
       U.uMotes.value = smoothstep(-0.25, 0.5, u) * 1.15;
       for (let i = 0; i < count; i++) {
         const cv = curves[i];
@@ -273,7 +336,7 @@ export function create(ctx) {
         const portal = name === 'website' ? 1 - smoothstep(0.7, 3.2, dist) : 0;
         const inside = smoothstep(0.32, 0.6, dist);
         const fc = name === 'website' ? focus : 0;
-        U.uNodeA.value[i].set(appear * inside, st.on, Math.min(1.4, flash), fc);
+        U.uNodeA.value[i].set(appear * inside * nodeHeaderFade(i), st.on, Math.min(1.4, flash), fc);
         U.uNodeB.value[i].set(shockAge, shockAmp, portal, name === 'website' ? 0 : focus);
 
         // Spitze
@@ -294,6 +357,7 @@ export function create(ctx) {
     },
 
     dispose() {
+      offSafe();
       fibreGeo.dispose();
       ringGeo.dispose();
       nodeGeo.dispose();
@@ -324,16 +388,23 @@ export function create(ctx) {
     lb.cx = (tmpV.x * 0.5 + 0.5) * W;
     lb.cy = (-tmpV.y * 0.5 + 0.5) * H;
     lb.r = rPx;
-    // Seite mit Hysterese: rechts der Kugel, nahe am rechten Rand links davon
+    // Seite mit Hysterese: rechts der Kugel, nahe am rechten Rand oder am Text-Panel links davon
+    // (ein Label neben dem Text wuerde sonst ausgeblendet und wirkte blasser als die anderen)
+    lb.nx0r = lb.cx + (rPx * 1.18 + 2);
+    lb.nx0l = lb.cx - (rPx * 1.18 + 2);
+    lb.ny = lb.cy;
     const room = W - (lb.cx + rPx * 1.2 + lb.w + 16);
-    if (lb.side > 0 && room < 0) lb.side = -1;
-    else if (lb.side < 0 && room > 40) lb.side = 1;
+    const textR = textBox.on ? textDist(lb, 1) < 30 : false;
+    const textL = textBox.on ? textDist(lb, -1) < 30 : false;
+    if (lb.side > 0 && (room < 0 || (textR && !textL))) lb.side = -1;
+    else if (lb.side < 0 && room > 40 && !(textR && !textL) && (!textBox.on || textDist(lb, 1) > 60)) lb.side = 1;
     lb.nx = lb.cx + lb.side * (rPx * 1.18 + 2);
     lb.ny = lb.cy;
     // Knoten muss im Bild sein, Label ganz lesbar
     const x0 = lb.side > 0 ? lb.nx : lb.nx - lb.w;
     if (lb.cx < 8 || lb.cx > W - 8 || lb.cy < 12 || lb.cy > H - 12 || x0 < 4 || x0 + lb.w > W - 4 || rPx < 5) return;
-    lb.vis = vis * smoothstep(5, 12, rPx) * (1 - smoothstep(Math.min(W, H) * 0.22, Math.min(W, H) * 0.36, rPx));
+    if (safe.dirty) measureSafe();
+    lb.vis = vis * smoothstep(5, 12, rPx) * (1 - smoothstep(Math.min(W, H) * 0.22, Math.min(W, H) * 0.36, rPx)) * safeFade(lb, W, H);
   }
 
   // Pass 2: Labels, die von einem naeheren Knoten oder Label verdeckt werden, weich ausblenden

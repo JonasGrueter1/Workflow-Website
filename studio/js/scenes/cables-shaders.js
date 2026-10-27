@@ -78,7 +78,7 @@ const FIBRE_VS = /* glsl */ `
 
 const FIBRE_FS = /* glsl */ `
   ${FOG}
-  uniform float uTime, uAlpha;
+  uniform float uTime, uAlpha, uTrunk;
   uniform vec3 uBase, uPulse, uPulseTail, uEmber, uTipCol, uSheath;
   varying vec2 vSide;
   varying float vS, vCover, vDepth, vSeed, vPhase, vGain, vKind, vL, vPortal;
@@ -135,6 +135,9 @@ const FIBRE_FS = /* glsl */ `
     }
     // im Website-Knoten beim Hineinfliegen: Faserenden ausblenden
     a *= 1.0 - smoothstep(vL - 0.7, vL - 0.2, vS) * vPortal;
+    // Gemeinsamer Stamm: solange die Kamera im Gehirn ist, ausgeblendet (von innen las er sich mit den ersten
+    // Aesten als Windrad- oder Y-Form). Die Kabel tauchen dann einzeln aus dem Dunkel hinter dem Gehirn auf.
+    a *= 1.0 - (1.0 - uTrunk) * (1.0 - smoothstep(1.2, 2.8, vS));
     a *= uAlpha * fogVis(vDepth) * smoothstep(0.03, 0.3, vDepth);
     gl_FragColor = vec4(col * a, 1.0);
   }

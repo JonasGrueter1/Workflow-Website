@@ -6,9 +6,11 @@
 //          0.26-0.64  Aufbau in digitalen Zellen von unten nach oben, frische Zellen leuchten kurz auf
 //          0.64       Visier startet (kurzes Flackern), danach Leerlauf: Atmen, Blick folgt der Maus
 //   zoom   0.00-0.40  Kopf haelt still, Licht tritt aus den Fugen, Datenimpulse im Hals werden schneller
-//          0.30-0.84  Roentgenblick: Schale zerfaellt vom Gesicht her in Zellen, Hologramm bleibt, Gehirn sichtbar
-//          0.60-1.00  Kamera taucht ein, Hologramm blendet aus
-//   outro            Roboter ganz und ruhig, Visier startet nach der Abblende neu
+//          0.30-0.84  Roentgenblick als Scan: eine helle Linie laeuft von oben nach unten, darueber Roentgen
+//                     (Hologramm), darunter noch Schale. Kopf bis ~0.64, danach Hals und Rumpf
+//          0.40-1.00  Kamera kreist frueh nach links oben (Seitenansicht, Gehirn nie frontal als zwei Halbkugeln)
+//   brain  0.00-0.50  Hologramm-Schale bleibt leise um das Gehirn, blendet beim Eintauchen aus (Fenster bis brain@0.6)
+//   outro            Roboter ganz und ruhig, Augen leuchten schon im Lichtblitz des Schnitts
 //
 // Qualitaetsstufen: Segmentzahlen ueber SEG (high 1, medium 0.68, low 0.48).
 // Dateien: robot-geometry.js (Formen), robot-shaders.js (Materialien), robot-env.js (Studio-Spiegelungen).
@@ -59,6 +61,9 @@ export function create(ctx) {
     uTime: shared.uTime,
     uBuildY: { value: 2 },
     uDissolve: { value: 0 },
+    uScanY: { value: 9 },
+    uHoloFloor: { value: -2.5 },
+    uXray: { value: 0 },
     uFocus: { value: new THREE.Vector3(0, 0.22, 1.0) },
     uLeak: { value: 0 },
     uHeadMat: { value: headMat },
@@ -81,13 +86,17 @@ export function create(ctx) {
   const ceramic = palette.steel.clone().lerp(palette.ink, 0.35);
   const metal = palette.steel.clone().lerp(palette.mist, 0.3);
   const envP = { envMap: env.texture, envMapIntensity: 1 };
-  const low = quality === 'low'; // schwache Geraete: ohne Klarlack am Rumpf und ohne Duennschicht im Visier
+  // Handy (medium) und schwache Geraete (low): Klarlack nur am Kopf, keine Duennschicht (Iridescence) im Visier.
+  // Der Roboter fuellt im Zoom fast das ganze Bild, jeder Effekt kostet dort pro Pixel.
+  const low = quality !== 'high';
   const mats = {
     head: makeShellMaterial(THREE, U, 'head', {
       ...envP, color: ceramic, metalness: 0.05, roughness: 0.4, clearcoat: 1, clearcoatRoughness: 0.12,
     }, { rim: 1 }),
+    // transparent: die Unterkante blendet ueber die Deckkraft in den Hintergrund aus (robot-shaders.js)
     torso: makeShellMaterial(THREE, U, 'torso', {
       ...envP, color: ceramic, metalness: 0.05, roughness: 0.42, clearcoat: low ? 0 : 1, clearcoatRoughness: 0.14,
+      transparent: true,
     }, { rim: 1 }),
     ear: makeShellMaterial(THREE, U, 'ear', { ...envP, color: metal, metalness: 1, roughness: 0.32 }),
     neck: makeShellMaterial(THREE, U, 'neck', { ...envP, color: metal, metalness: 1, roughness: 0.34 }),
@@ -97,7 +106,7 @@ export function create(ctx) {
     }, { rim: 0.6 }),
     bezel: makeShellMaterial(THREE, U, 'bezel', { ...envP, color: metal, metalness: 1, roughness: 0.26 }, { bias: 0.08 }),
     visor: makeShellMaterial(THREE, U, 'visor', {
-      ...envP, color: palette.void.clone(), metalness: 0.0, roughness: 0.05, clearcoat: 1, clearcoatRoughness: 0.02,
+      ...envP, color: palette.void.clone(), metalness: 0.0, roughness: 0.05, clearcoat: low ? 0 : 1, clearcoatRoughness: 0.02,
       iridescence: low ? 0 : 0.45, iridescenceIOR: 1.45, iridescenceThicknessRange: [200, 480],
     }, { bias: 0.12 }),
   };
@@ -142,8 +151,9 @@ export function create(ctx) {
     yaw: 0, pitch: 0, ex: 0, ey: 0,
     visorOn: false, boot: 10, power: 0,
   };
+  // key: warmes Fuehrungslicht von links vorne (engine.js), macht Form und Material lesbar und die Figur freundlicher
   const look = {
-    bloom: 0.95, bloomRadius: 0.6, key: 1.5, rim: 3.0, amb: 0.1, exposure: 1.05,
+    bloom: 0.95, bloomRadius: 0.6, key: 1.85, rim: 2.8, amb: 0.1, exposure: 1.05,
     parallax: 0.26, drift: 0.025, aberration: 0.006, flash: 0, vignette: 0.8,
   };
 
@@ -162,6 +172,7 @@ export function create(ctx) {
     update(time, dt, local, global, weight = 1) {
       const rb = director.beat('robot');
       const zm = director.beat('zoom');
+      const br = director.beat('brain');
       const out = director.beat('outro');
       const inOutro = global >= out.start - 0.04;
 
@@ -174,7 +185,9 @@ export function create(ctx) {
       let visorWanted = false;
       let zoomIn = 0;
       if (inOutro) {
-        visorWanted = out.p > 0.12; // erst nach der Abblende des Schnitts
+        // Augen leuchten schon im Lichtblitz des Schnitts (ein schwarzer Helm ohne Augen wirkt kurz bedrohlich)
+        visorWanted = true;
+        if (!st.visorOn) { st.visorOn = true; st.boot = 0.3; }
       } else {
         build = smoothstep(0.26, 0.64, rb.p);
         holoAmt = smoothstep(0.08, 0.26, rb.p) * (1 - smoothstep(0.6, 0.68, rb.p));
@@ -182,7 +195,9 @@ export function create(ctx) {
         zoomIn = zm.p;
         leak = smoothstep(0.04, 0.42, zm.p) * (1 - smoothstep(0.7, 0.85, zm.p));
         dissolve = smoothstep(0.3, 0.84, zm.p);
-        holoAmt = Math.max(holoAmt, 0.6 * smoothstep(0.3, 0.42, zm.p) * (1 - smoothstep(0.6, 0.8, zm.p)));
+        // Roentgen-Schale: bleibt (leiser) um das Gehirn, bis die Kamera bei brain@~0.45 eintaucht
+        holoAmt = Math.max(holoAmt, 0.6 * smoothstep(0.3, 0.42, zm.p) * (1 - 0.55 * smoothstep(0.6, 0.95, zm.p))
+          * (1 - smoothstep(0.32, 0.5, br.p)));
         follow = 1 - smoothstep(0.0, 0.32, zm.p);
         boost = 1 + 0.6 * smoothstep(0.0, 0.5, zm.p);
       }
@@ -225,10 +240,16 @@ export function create(ctx) {
       const ease = sp < 1 ? sp * sp * (3 - 2 * sp) : 1;
       U.uVisor.value.set(st.power * weight, boost, -0.85 + 1.7 * ease, scanOn * (0.8 + 0.6 * zoomIn));
 
-      /* Aufbau, Roentgen, Fugenlicht */
+      /* Aufbau, Roentgen (Scanlinie von oben nach unten), Fugenlicht */
       const buildY = build >= 0.999 ? 2 : -3.75 + (1.18 + 3.75) * build;
       U.uBuildY.value = buildY;
       U.uDissolve.value = dissolve;
+      // Kopf (Scheitel 1.15 bis Kinn -1.2) im ersten Teil, danach Hals und Rumpf zuegig
+      U.uScanY.value = dissolve <= 0 ? 9 : 1.15 - 2.35 * smoothstep(0, 0.62, dissolve) - 2.4 * smoothstep(0.62, 1, dissolve);
+      const xray = inOutro ? 0 : smoothstep(0.42, 0.62, zm.p);
+      U.uXray.value = xray;
+      // Im Roentgen nur Kopf und Hals: das Hologramm der Schultern blendet nach unten aus
+      U.uHoloFloor.value = -2.5 + 1.6 * xray;
       U.uLeak.value = leak * weight;
       U.uHolo.value = holoAmt * weight;
       U.uEar.value = (0.55 * st.power + 1.6 * leak) * weight;
@@ -240,11 +261,12 @@ export function create(ctx) {
       for (const m of holos) m.visible = holoOn;
 
       /* Bildwirkung */
-      look.bloom = 0.95 + 0.35 * smoothstep(0.1, 0.7, zoomIn);
+      look.bloom = (0.95 + 0.35 * smoothstep(0.1, 0.7, zoomIn)) * (ctx.isMobile ? 0.86 : 1);
+      look.key = inOutro ? 1.95 : 1.85;
       look.parallax = (inOutro ? 0.28 : 0.26) * follow + 0.02;
       look.drift = 0.025 * (1 - smoothstep(0.4, 0.9, zoomIn)) + 0.004;
-      look.aberration = 0.006 + 0.008 * smoothstep(0.6, 0.95, zoomIn);
-      look.flash = 0.07 * Math.exp(-Math.pow((zoomIn - 0.86) / 0.05, 2));
+      look.aberration = 0.006 + 0.003 * smoothstep(0.6, 0.95, zoomIn); // wenig Farbsaum an der Roentgen-Schale
+      look.flash = inOutro ? 0 : 0.06 * Math.exp(-Math.pow((br.p - 0.46) / 0.05, 2));
 
     },
     setActive(active) {

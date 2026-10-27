@@ -22,11 +22,11 @@ export const bandHalfWidth = (q) => ((q.lines - 1) / 2) * q.gap + q.gap * 0.62;
 // Zeitplan in local (siehe dna.js)
 const LEAD = 5.0;        // ein Zeichen loest sich, wenn die Kamera noch so weit davor ist
 const FLY_MIN = 0.44;    // vorher fliegt nichts
-const FLY_END = 0.72;    // das Ende der Helix loest sich zuletzt
+const FLY_END = 0.58;    // das Ende der Helix loest sich zuletzt, bevor die Headline im Geruest erscheint (kein Knaeuel)
 const DUR_MIN = 0.07;
 const DUR_MAX = 0.28;
 const FADE_AFTER = 0.05; // Zeichen hinter der Kamera verloeschen kurz nach dem Vorbeiflug
-const FLY_SHARE = 0.45;   // Anteil der Kontur-Zeichen, die wirklich fliegen (der Rest verglueht an Ort)
+const FLY_SHARE = 0.3;    // Anteil der Kontur-Zeichen, die wirklich fliegen (der Rest verglueht an Ort)
 
 /**
  * Startzeiten der Helix: vor der Kamera fliegen die Zeichen ab FLY_MIN ins Geruest (linear entlang der Achse
@@ -62,15 +62,19 @@ export function mulberry32(a) {
   };
 }
 
-/** Kamera-z ueber local (stueckweise linear aus CAMERA_KEYS), daraus: wann passiert die Kamera z? */
+/**
+ * Kamera-z ueber local (stueckweise linear aus CAMERA_KEYS), daraus: wann passiert die Kamera z?
+ * Keys mit `zTrack` (Kamera ausserhalb der Helix, Ansicht von aussen) zaehlen mit diesem Wert statt pos.z.
+ */
 function cameraTrack() {
   const i0 = CAMERA_KEYS.findIndex((k) => String(k.at).startsWith('dna@'));
   const keys = [];
-  if (i0 > 0) keys.push({ p: 0, z: CAMERA_KEYS[i0 - 1].pos[2] });
+  const zOf = (k) => (k.zTrack ?? k.pos[2]);
+  if (i0 > 0) keys.push({ p: 0, z: Math.max(zOf(CAMERA_KEYS[i0 - 1]), zOf(CAMERA_KEYS[i0]) + 0.5) });
   for (let i = Math.max(0, i0); i < CAMERA_KEYS.length; i++) {
     const k = CAMERA_KEYS[i];
     if (!String(k.at).startsWith('dna@')) break;
-    keys.push({ p: parseFloat(String(k.at).split('@')[1]), z: k.pos[2] });
+    keys.push({ p: parseFloat(String(k.at).split('@')[1]), z: zOf(k) });
   }
   return (z) => {
     if (!keys.length) return 0.5;
@@ -219,6 +223,7 @@ export function buildGlyphs(anchors, atlas, q, wire) {
   // Texte: Ziel-Zeichen, Ankunft gestaffelt (Zeichen fuer Zeichen)
   const textTargets = [];
   for (const t of wire.texts) {
+    if (!t.L) continue; // jedes Zeichen braucht ein Ziel im Querformat (Hochformat-Ziel ist optional)
     const chars = [...t.str];
     const cls = CLS[t.cls] ?? CLS.label;
     const place = (spec, w, h) => {
@@ -233,7 +238,7 @@ export function buildGlyphs(anchors, atlas, q, wire) {
     chars.forEach((ch, i) => {
       if (ch === ' ') return;
       textTargets.push({
-        arr: t.t0 + i * 0.0045,
+        arr: t.t0 + i * 0.0025,
         L: pl[i],
         P: pp ? pp[i] : null,
         ch: ch === BLOCK ? atlas.index(BLOCK) : atlas.index(ch),
@@ -334,7 +339,7 @@ export function buildGlyphs(anchors, atlas, q, wire) {
     const k = i * 4;
     aHel.set([g.th, g.z, g.r, g.kind], k);
     aChr.set([g.ch, g.cls, g.seed, g.size], k);
-    const swirl = 0.7 + rnd() * 0.9;
+    const swirl = 0.22 + rnd() * 0.36; // wenig Drall: klare Bahnen statt Knaeuel
     aFly.set([g.rel, g.dur, g.mode, swirl], k);
     aTgt.set(g.tL || [0, 0, g.size, 0], k);
     aTgtP.set(g.tP || [0, 0, g.size, 0], k);

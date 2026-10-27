@@ -179,8 +179,10 @@ export function create(ctx) {
 
   const look = {
     bloom: 0.85, bloomRadius: 0.6, bloomThreshold: 0.72, exposure: 1.0,
-    parallax: 0.03, drift: 0.008, fogDensity: 0.03, vignette: 0.85, aberration: 0.008,
+    parallax: 0.05, drift: 0.008, fogDensity: 0.03, vignette: 0.85, aberration: 0.006,
   };
+  // Integration: im Hochformat (Handy) liegt der Text ueber dem dichten Netz, darum etwas weniger Glow
+  if (ctx.isMobile) { look.bloom = 0.72; look.exposure = 0.94; }
 
   const api = {
     group,
@@ -215,6 +217,14 @@ export function create(ctx) {
         const cyc = Math.floor(t / period[k]);
         clocks[k] = t - cyc * period[k];
         amps[k] = (0.45 + 0.55 * hash(cyc * 13.1 + k * 7.7)) * act;
+      }
+      // Markanter Moment beim Flug durch das Gehirn: aus dem Kern (Thalamus, letzter Ausloeser) laeuft eine starke
+      // Welle durch das ganze Netz, an den Scroll gekoppelt. Danach fliessen die Faserbahnen zum Kabelaustritt.
+      const kw = CASCADES - 1;
+      const wv = smoothstep(0.5, 0.86, br.p);
+      if (wv > 0 && wv < 1) {
+        clocks[kw] = wv * (data.cascades.reach[kw] + 0.5);
+        amps[kw] = 1.7 * act;
       }
       U.uClock0.value.set(clocks[0], clocks[1], clocks[2], clocks[3]);
       U.uClock1.value.set(clocks[4], clocks[5], clocks[6], clocks[7]);

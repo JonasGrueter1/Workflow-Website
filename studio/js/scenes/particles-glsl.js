@@ -96,6 +96,7 @@ uniform float uAperture;  // Blende: Groesse der Unschaerfe-Kreise
 uniform float uFog;
 uniform float uSize;
 uniform float uBokeh;
+uniform float uHint;      // 0..1 lose angedeuteter Kopf im Hero (Teil der Form-Partikel wartet schon nah am Ziel)
 uniform vec3 uBoxC;       // Schwebe-Wolke: Mitte
 uniform vec3 uBoxH;       // Schwebe-Wolke: halbe Ausdehnung
 uniform vec4 uTextArea;   // Bereich des Titels (NDC: Mitte xy, Radien zw): Partikel dort gedaempft, solange der Titel steht
@@ -130,13 +131,13 @@ vec3 rotY(vec3 p, float a) {
 
 // Flugbahn: der Startpunkt dreht sich leicht um die Hochachse (alle in dieselbe Richtung) und wird dabei
 // zum Ziel gezogen: eine sanfte Spirale nach innen. Ohne Winkel-Spruenge, darum auch bei stehendem Scroll ruhig.
-vec3 formPath(vec3 p, vec3 tgt, float f) {
+vec3 formPath(vec3 p, vec3 tgt, float f, float spin) {
   float eR = f * f * (3.0 - 2.0 * f);
   float eA = 1.0 - (1.0 - f) * (1.0 - f);
   float bump = sin(PI * f);
-  vec3 src = rotY(p, (0.55 + 0.45 * aInfo.z) * eA);
+  vec3 src = rotY(p, (0.55 + 0.45 * aInfo.z) * eA * spin);
   vec3 q = mix(src, tgt, eR);
-  q.y += bump * (aRand.y - 0.5) * 0.22;
+  q.y += bump * (aRand.y - 0.5) * 0.22 * spin;
   return q;
 }
 
@@ -178,22 +179,34 @@ void main() {
   }
 
   /* --- Formung zum Roboter */
-  vec3 pos = p;
   float f = 0.0;
   float flash = 0.0;
   vec3 nrm = normal;
   vec3 tgt = aTarget;
+  float pre = 0.0;
   if (isForm) {
     tgt = mix(aTarget, (uHeadMat * vec4(aTarget, 1.0)).xyz, aHw);
     tgt.y += uBodyY;
     nrm = normalize(mix(normal, mat3(uHeadMat) * normal, aHw));
     tgt += nrm * (0.005 * sin(t * 1.7 + aRand.y * 40.0));
-
+    // Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Kopf und Visier dichter, Schultern lockerer),
+    // atmet mit dem Rumpf und folgt mit dem Kopf der Maus. Beim Scrollen verdichtet sie sich zum Hologramm.
+    float share = kind > 1.5 ? 0.92 : (aHw > 0.5 ? 0.72 : 0.62 * smoothstep(-3.3, -2.7, aTarget.y));
+    pre = step(aInfo.z, share) * uHint;
+    if (pre > 0.0) {
+      vec3 jd = normalize(vec3(sin(aRand.y * 91.7), cos(aRand.y * 37.3 + aRand.x * 5.0), sin(aRand.x * 53.1) + 0.01));
+      float rad = (0.012 + 0.1 * aRand.x * aRand.x * aRand.x) * (kind > 1.5 ? 0.3 : 1.0);
+      vec3 dr = vec3(sin(t * 0.31 + aRand.y * TAU), sin(t * 0.23 + aRand.x * 9.0), cos(t * 0.27 + aRand.y * 5.0)) * 0.035;
+      p = mix(p, tgt + jd * rad + nrm * (0.015 + 0.045 * aRand.w) + dr, pre);
+    }
+  }
+  vec3 pos = p;
+  if (isForm) {
     float delay = aInfo.y * 0.42 + aInfo.z * 0.34;
     float k = (uForm - delay) / 0.24;
     f = clamp(k, 0.0, 1.0);
     flash = smoothstep(0.82, 1.0, k) * (1.0 - smoothstep(1.0, 1.7, k));
-    if (f > 0.0) pos = formPath(p, tgt, f);
+    if (f > 0.0) pos = formPath(p, tgt, f, 1.0 - pre);
   }
 
   /* --- Farbe und Helligkeit */
@@ -201,17 +214,18 @@ void main() {
   float hero = step(0.86, aRand.w);
   float tw = mix(0.8, 0.55, hero) + mix(0.2, 0.45, hero) * sin(t * (0.6 + aRand.x * 1.8) + aRand.y * 31.0);
   vec3 col = mix(uColA, uColB, pow(aRand.z, 3.0) * 0.9);
-  if (aRand.z > 0.94) col = uColC;
+  if (aRand.z > 0.988) col = uColC; // warme Funken nur vereinzelt
   float bright = mix(0.06 + 0.22 * aRand.w, 0.9 + 11.0 * (aRand.w - 0.86), hero) * tw;
   float wsize = uSize * mix(0.45 + 0.55 * aRand.x, 0.8 + 1.5 * aRand.x * aRand.x, hero);
   if (isDust) {
     bright = (0.05 + 0.1 * aRand.w) * tw;
     wsize = uSize * (0.35 + 0.4 * aRand.x);
     col = mix(col, uColW, 0.3);
-    if (aInfo.w > 0.5) { bright = 0.35 + 0.4 * aRand.w; wsize = uSize * (1.2 + 1.4 * aRand.x); }
+    // Vordergrund nah an der Kamera: hoechstens halbe Groesse und Deckkraft (grosse Baelle wirken wie Flecken)
+    if (aInfo.w > 0.5) { bright = (0.35 + 0.4 * aRand.w) * 0.5; wsize = uSize * (0.6 + 0.7 * aRand.x); }
   }
   if (isFar) {
-    col = aRand.z > 0.86 ? uColC : (aRand.z > 0.45 ? uColA : uColW);
+    col = aRand.z > 0.95 ? uColC : (aRand.z > 0.45 ? uColA : uColW);
     bright = 0.14 + 0.4 * aRand.w;
     wsize = 0.16 + 0.34 * aRand.x;
   }
@@ -228,6 +242,29 @@ void main() {
     col = mix(col, uColW, clamp(lit * 0.45, 0.0, 0.8));
   }
 
+  if (pre > 0.0) {
+    // Bueste aus Licht im Hero: Silhouette hell, Flaechen fein, Rueckseite gedaempft, Visier als leuchtende Linie
+    vec3 Vp = normalize(cameraPosition - tgt);
+    float ndp = dot(nrm, Vp);
+    float rimP = 1.0 - abs(ndp);
+    float backP = ndp < 0.0 ? 0.35 : 1.0;
+    float twP = 0.75 + 0.25 * sin(t * (0.7 + aRand.x) + aRand.y * 20.0);
+    float bp = (0.34 + 2.6 * rimP * rimP * rimP) * backP * twP * (aHw > 0.5 ? 1.0 : 1.3);
+    vec3 pc = mix(uColA, uColB, 0.35 + 0.4 * rimP);
+    float ps = uSize * (0.5 + 0.35 * aRand.x);
+    if (kind > 1.5) {
+      float vy = aTarget.y - 0.05;
+      float line = exp(-vy * vy / 0.0012) * (1.0 - smoothstep(0.5, 0.72, abs(aTarget.x)));
+      float eyes = exp(-pow((abs(aTarget.x) - 0.29) / 0.1, 2.0)) * exp(-vy * vy / 0.003);
+      float breathe = 0.85 + 0.15 * sin(t * 1.6);
+      bp = (0.22 + 1.5 * line + 1.9 * eyes) * breathe * backP;
+      pc = mix(uColA, uColB, 0.3 + 0.6 * eyes);
+      ps = uSize * (0.45 + 0.3 * eyes + 0.15 * line);
+    }
+    bright = mix(bright, bp, pre);
+    col = mix(col, pc, pre);
+    wsize = mix(wsize, ps, pre);
+  }
   if (isForm && f > 0.0) {
     // Roboter-Zustand: Hologramm. Kanten (Silhouette) hell, Flaechen fein, Rueckseite gedaempft
     vec3 V = normalize(cameraPosition - tgt);
@@ -279,6 +316,7 @@ void main() {
   float d = max(depth, 0.05);
   float px = wsize * proj / d;
   float coc = uAperture * proj * abs(d - uFocus) / d;
+  if (isDust && aInfo.w > 0.5) coc *= 0.5;
   float size = sqrt(px * px + coc * coc);
   float minPx = 1.4 * uPixelRatio;
   float drawn = clamp(size, minPx, 64.0);
@@ -307,7 +345,7 @@ void main() {
   vStreak = vec4(0.0, 0.0, 1.0, 0.0);
   float pointSize = drawn;
   if (isForm && f > 0.0 && f < 1.0 && aRand.x < 0.55) {
-    vec4 prevClip = projectionMatrix * (modelViewMatrix * vec4(formPath(p, tgt, max(f - 0.07, 0.0)), 1.0));
+    vec4 prevClip = projectionMatrix * (modelViewMatrix * vec4(formPath(p, tgt, max(f - 0.07, 0.0), 1.0 - pre), 1.0));
     vec2 a = gl_Position.xy / max(gl_Position.w, 1e-4);
     vec2 b = prevClip.xy / max(prevClip.w, 1e-4);
     vec2 sv = (a - b) * 0.5 * uResolution;

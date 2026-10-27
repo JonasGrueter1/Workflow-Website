@@ -140,8 +140,8 @@ export function wireframeSpec(W, H) {
     { id: 'image', kind: 3, L: [3.0, 0.98, W - 0.36, 2.48], P: [0.3, 3.3, H - 0.3, 4.5], r: 0.08, sw: 0.012, fill: 0.04, t0: 0.67, dur: 0.1, layer: 1.2, bright: 0.95 },
     { id: 'sub1', kind: 1, L: [0.36, 1.97, 2.6, 1.97], P: [0.3, 2.1, H - 0.5, 2.1], sw: 0.042, t0: 0.72, dur: 0.05, layer: 1.6, bright: 0.32 },
     { id: 'sub2', kind: 1, L: [0.36, 2.08, 2.05, 2.08], P: [0.3, 2.22, H - 1.1, 2.22], sw: 0.042, t0: 0.735, dur: 0.05, layer: 1.6, bright: 0.32 },
-    { id: 'btn1', kind: 0, L: [0.36, 2.24, 1.52, 2.48], P: [0.3, 2.44, H - 0.3, 2.72], r: 0.12, rP: 0.14, sw: 0.014, fill: 0.2, t0: 0.74, dur: 0.05, layer: 2, bright: 1.25 },
-    { id: 'btn2', kind: 0, L: [1.64, 2.24, 2.64, 2.48], P: [0.3, 2.84, H - 0.3, 3.12], r: 0.12, rP: 0.14, sw: 0.012, fill: 0.0, t0: 0.755, dur: 0.05, layer: 2, bright: 0.9 },
+    { id: 'btn1', kind: 0, L: [0.36, 2.2, 1.8, 2.5], P: [0.3, 2.44, H - 0.3, 2.72], r: 0.15, rP: 0.14, sw: 0.014, fill: 0.2, t0: 0.74, dur: 0.05, layer: 2, bright: 1.25 },
+    { id: 'btn2', kind: 0, L: [1.94, 2.2, 2.9, 2.5], P: [0.3, 2.84, H - 0.3, 3.12], r: 0.15, rP: 0.14, sw: 0.012, fill: 0.0, t0: 0.755, dur: 0.05, layer: 2, bright: 0.9 },
   ];
   cardsL.forEach((x0, i) => {
     const P = i === 0;
@@ -154,7 +154,7 @@ export function wireframeSpec(W, H) {
 
   // Texte: x/y = Ankerpunkt, size = Zellgroesse der Glyphe, align: 'l' links, 'c' zentriert
   const texts = [
-    { str: 'ihre-firma.ch', L: [cx, 0.17, 0.12, 'c'], P: [H / 2, 0.21, 0.16, 'c'], cls: 'label', t0: 0.69, layer: 0.2 },
+    { str: 'ihre-firma.ch', L: [cx, 0.17, 0.17, 'c'], P: [H / 2, 0.21, 0.16, 'c'], cls: 'label', t0: 0.69, layer: 0.2 },
     { str: 'IHRE FIRMA', L: [0.66, 0.62, 0.13, 'l'], P: [0.58, 0.7, 0.17, 'l'], cls: 'label', t0: 0.695, layer: 0.8 },
     { str: 'Angebot', L: [W - 2.6, 0.62, 0.12, 'l'], P: null, cls: 'label', t0: 0.705, layer: 0.8 },
     { str: 'Über uns', L: [W - 2.06, 0.62, 0.12, 'l'], P: null, cls: 'label', t0: 0.712, layer: 0.8 },
@@ -162,11 +162,39 @@ export function wireframeSpec(W, H) {
     { str: 'Anfrage', L: [W - 0.65, 0.62, 0.12, 'c'], P: null, cls: 'button', t0: 0.73, layer: 0.8 },
     { str: 'Ihre neue', L: [0.36, 1.2, 0.46, 'l'], P: [0.3, 1.32, 0.44, 'l'], cls: 'head', t0: 0.72, layer: 1.8 },
     { str: 'Website.█', L: [0.36, 1.62, 0.46, 'l'], P: [0.3, 1.72, 0.44, 'l'], cls: 'head', t0: 0.745, layer: 1.8 },
-    { str: 'Offerte anfragen', L: [0.94, 2.36, 0.1, 'c'], P: [H / 2, 2.58, 0.15, 'c'], cls: 'button', t0: 0.76, layer: 2 },
-    { str: 'Mehr erfahren', L: [2.14, 2.36, 0.1, 'c'], P: [H / 2, 2.98, 0.15, 'c'], cls: 'label', t0: 0.77, layer: 2 },
+    { str: 'Offerte anfragen', L: [1.08, 2.35, 0.165, 'c'], P: [H / 2, 2.58, 0.15, 'c'], cls: 'button', t0: 0.76, layer: 2 },
+    { str: 'Mehr erfahren', L: [2.42, 2.35, 0.1, 'c'], P: [H / 2, 2.98, 0.15, 'c'], cls: 'label', t0: 0.77, layer: 2 },
     ...['Leistungen', 'Team', 'Standort'].map((s, i) => ({
       str: s, L: [cardsL[i] + 0.36, 2.87, 0.11, 'l'], P: i === 0 ? [0.72, 4.92, 0.16, 'l'] : null, cls: 'label', t0: 0.77 + i * 0.01, layer: 1.4,
     })),
   ];
-  return { els, texts };
+  // Zeitplan straffen: das Geruest steht bei local ~0.72, alle Texte sind spaetestens bei ~0.76 entschluesselt
+  // (danach bleibt das Bild ruhig stehen). Die Werte oben sind relativ zueinander gepflegt.
+  const T = (t) => 0.5 + (t - 0.53) * 0.72;
+  for (const e of els) { e.t0 = T(e.t0); e.dur *= 0.75; }
+  for (const t of texts) t.t0 = T(t.t0);
+  // Kleine Beschriftungen waeren bei wenigen Pixeln Pixelbrei (aus n wird r). Sie werden zu ruhigen Balken.
+  // Querformat: als Text bleiben nur Headline, Adresse und Hauptbutton (gross genug, mindestens ~14 px Versalhoehe).
+  // Hochformat (Handy): nur die grosse Headline.
+  const SMALL = 0.3;
+  const KEEP_L = new Set(['ihre-firma.ch', 'Offerte anfragen']);
+  const bar = (spec, str, w) => {
+    const [x, y, size, align] = spec;
+    const len = Math.min(w - 0.9, [...str].length * size * 0.42);
+    const x0 = align === 'c' ? x - len / 2 : x;
+    return [x0, y, x0 + len, y];
+  };
+  for (const t of texts) {
+    const barL = t.L && t.cls !== 'head' && !KEEP_L.has(t.str);
+    const barP = t.P && t.P[2] < SMALL;
+    if (!barL && !barP) continue;
+    const size = (barP ? t.P : t.L)[2];
+    els.push({
+      id: `bar-${t.str}`, kind: 1, L: barL ? bar(t.L, t.str, W) : null, P: barP ? bar(t.P, t.str, H) : null,
+      sw: size * 0.34, t0: t.t0 + 0.01, dur: 0.03, layer: t.layer, bright: 0.38,
+    });
+    if (barL) t.L = null;
+    if (barP) t.P = null;
+  }
+  return { els, texts: texts.filter((t) => t.L || t.P) };
 }

@@ -63,7 +63,7 @@ const GLYPH_VS = /* glsl */ `
   #define COLS ${COLS.toFixed(1)}
   #define ROWS ${ROWS.toFixed(1)}
   #define SCRAMBLE ${SCRAMBLE.toFixed(1)}
-  uniform float uTime, uLocal, uAlpha, uFog, uFogT, uLen, uPointerOn, uBlock, uSpotOn;
+  uniform float uTime, uLocal, uDec, uAlpha, uFog, uFogT, uLen, uPointerOn, uBlock, uSpotOn;
   uniform vec2 uResolution, uPointer, uSpot;
   uniform vec3 uCol[12];
   uniform vec3 uHot;
@@ -77,6 +77,7 @@ const GLYPH_VS = /* glsl */ `
   varying vec3 vCol;
   varying float vAlpha;
   varying float vSoft;
+  varying float vPx;
 
   // Lesekoepfe laufen die Straenge entlang (wie beim Ablesen der DNA), mit weichem Schweif
   float readPulse(float s, float strand) {
@@ -134,6 +135,10 @@ const GLYPH_VS = /* glsl */ `
         scr = max(scr, step(0.6, hv * (0.55 + 0.45 * hash11(seed * 91.0 + floor(uTime * 5.0)))));
       }
     }
+    // Zeichen, die im Geruest als Text stehen, flackern nie: sonst heben sie kurz ueber die Bloom-Schwelle und
+    // ein heller Glow-Fleck bleibt auf der Headline stehen
+    bool textGlyph = mode > 1.5 && mode < 2.5 && (uPortrait < 0.5 || aTgtP.w > 0.5);
+    if (textGlyph && uLocal > rel) scr = 0.0;
     hot += scr * 0.35;
 
     // Verloeschen (Zeichen hinter der Kamera, Klammern beim Aufreissen)
@@ -165,7 +170,7 @@ const GLYPH_VS = /* glsl */ `
     if (textHere && fp > 0.0) {
       vec3 fin = uCol[int(aFin.y + 0.5)];
       col = mix(col, fin, smoothstep(0.6, 1.0, fp));
-      float dec = (uLocal - arrive) / 0.04;
+      float dec = (uDec - arrive) / 0.03;
       if (dec > -0.5 && dec < 1.0) {
         ch = floor(hash11(floor(uTime * 16.0) * 1.7 + seed * 733.0) * SCRAMBLE);
         hot += 0.35 * (1.0 - max(dec, 0.0));
@@ -192,6 +197,7 @@ const GLYPH_VS = /* glsl */ `
     vCol = col + uHot * hot * 0.42;
     vSoft = clamp(hot * 0.35, 0.0, 0.8) * small;
     vAlpha = alpha;
+    vPx = px;
     mv.xy += position.xy * size;
     gl_Position = projectionMatrix * mv;
     if (alpha < 0.002) gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
@@ -209,11 +215,14 @@ const GLYPH_FS = /* glsl */ `
   varying vec3 vCol;
   varying float vAlpha;
   varying float vSoft;
+  varying float vPx;
   void main() {
     float d = texture2D(uAtlas, vUv).r;
     float w = clamp(fwidth(d) * 0.7, 0.012, 0.3);
-    float a = smoothstep(CUT - w, CUT + w, d);
-    float halo = smoothstep(CUT - 0.35, CUT, d);
+    // Kleine Zeichen (Zelle unter ~26 px, Versalhoehe unter ~12 px): Kante tiefer legen, Striche werden kraeftiger
+    float cut = mix(CUT - 0.07, CUT, smoothstep(14.0, 30.0, vPx));
+    float a = smoothstep(cut - w, cut + w, d);
+    float halo = smoothstep(cut - 0.35, cut, d);
     float k = (a + halo * halo * vSoft * 0.5) * vAlpha;
     if (!(k > 0.003)) discard;
     gl_FragColor = vec4(max(vCol, 0.0), min(k, 1.0));
@@ -446,7 +455,8 @@ const WIRE_FS = /* glsl */ `
       float edge = (1.0 - smoothstep(0.0, 0.006, min(abs(fx), abs(fx - cw)))) * inCol;
       float appear = smoothstep(ci / cols * 0.7, ci / cols * 0.7 + 0.3, vRev);
       float fadeY = smoothstep(-h.y, h.y * 0.2, p.y);
-      float dim = 1.0 - 0.75 * smoothstep(0.78, 0.92, uLocal);
+      // Raster nur kurz als Aufbauhilfe, danach auf ~28 %: es liegt sonst wie ein Strichcode ueber allem
+      float dim = 1.0 - 0.72 * smoothstep(0.58, 0.66, uLocal);
       col = uGridCol * (inCol * 0.6 + edge * 1.4) * appear * fadeY * (dim + spot * 1.6);
       a = 1.0;
       gl_FragColor = vec4(max(col, 0.0), clamp(a * vAlpha, 0.0, 1.0));
@@ -483,7 +493,7 @@ const WIRE_FS = /* glsl */ `
     float sd = p.x * 0.8 + p.y * 0.35 - sweepPos;
     float sweep = exp(-sd * sd * 2.2) * uBuilt;
 
-    float strokeCol = vBright * (1.0 + 0.4 * sweep + 0.9 * spot);
+    float strokeCol = vBright * (1.0 + 0.22 * sweep + 0.9 * spot);
     col += uLine * stroke * shown * strokeCol;
     col += uHead * (stroke * head + headGlow * 0.12);
 

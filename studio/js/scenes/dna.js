@@ -9,12 +9,17 @@
 //   0.00..0.12  Flug in den Website-Knoten, die Helix tritt dahinter aus der Faser
 //   0.12..0.44  Flug durch die Helix: Lesekoepfe laufen die Baender entlang, Basenpaare leuchten,
 //               die Maus entschluesselt Zeichen unter dem Zeiger
-//   0.44..0.72  vor der Kamera reisst die Helix auf (Basenpaare oeffnen sich), ein Teil der Zeichen fliegt
-//               mit Lichtspuren ins Geruest, der Rest verglueht
-//   0.53..0.86  Layout-Raster, Konturen mit Schreibkopf, Flaechen, Texte entschluesseln sich Zeichen fuer Zeichen
-//   0.79..0.94  Ebenen setzen sich, danach Ruhe: Lichtlauf, Lichtkegel der Maus, leichte Neigung
+//   0.00..0.21  Helix einmal von aussen (Dreiviertelansicht), dann schwenkt die Kamera vor den Anfang
+//   0.21..0.44  Eintauchen entlang der Achse
+//   0.44..0.58  vor der Kamera reisst die Helix auf (Basenpaare oeffnen sich), ein Teil der Zeichen fliegt
+//               ins Geruest (ohne Lichtspuren: sie wirkten ueber dem Geruest wie Splitter), der Rest verglueht
+//   0.50..0.74  Layout-Raster, Konturen mit Schreibkopf, Flaechen, Texte entschluesseln sich Zeichen fuer Zeichen
+//               (zeitbasiert: uDec laeuft auch ohne Scrollen weiter, spaetestens bei ~0.76 ist alles lesbar)
+//   0.66..0.80  Ebenen setzen sich, danach Ruhe: Lichtlauf, Lichtkegel der Maus, leichte Neigung.
+//               Kleine Beschriftungen sind Balken, als Text bleiben Headline, Adresse und Hauptbutton (lesbar).
+//               Darunter blendet ui.js die Angebotszeile ein (HTML, #offer).
 //
-// Leistung: 5 Draw Calls (Rueckgrat-Baender, Basenpaare, Geruest, Lichtspuren, Zeichen), Stufe high rund
+// Leistung: 4 Draw Calls (Rueckgrat-Baender, Basenpaare, Geruest, Zeichen), Stufe high rund
 // 7300 Instanzen und 37k Dreiecke. Alles Bewegte im Shader, pro Frame nur Uniforms, keine Allokationen.
 import { buildAtlas, BLOCK } from './dna-atlas.js';
 import { CLS } from './dna-code.js';
@@ -63,6 +68,7 @@ export async function create(ctx) {
     uResolution: shared.uResolution,
     uPixelRatio: shared.uPixelRatio,
     uLocal: { value: 0 },
+    uDec: { value: 0 },
     uRot: { value: 0 },
     uAlpha: { value: 1 },
     uFog: { value: 0.03 },
@@ -122,14 +128,13 @@ export async function create(ctx) {
   const glyphs = new THREE.Mesh(glyphGeo, mats.glyph);
   const rungs = new THREE.Mesh(rungGeo, mats.rung);
   const bands = new THREE.Mesh(bandGeo, mats.band);
-  const streaks = new THREE.Mesh(glyphGeo, mats.streak);
+  // Lichtspuren der fliegenden Zeichen sind aus: ueber dem Geruest wirkten sie wie Splitter (gesprungenes Display)
   const frame = new THREE.Mesh(wireGeo, mats.wire);
   bands.renderOrder = 29;
   rungs.renderOrder = 30;
   frame.renderOrder = 31;
-  streaks.renderOrder = 32;
   glyphs.renderOrder = 33;
-  for (const o of [bands, rungs, frame, streaks, glyphs]) {
+  for (const o of [bands, rungs, frame, glyphs]) {
     o.frustumCulled = false;
     group.add(o);
   }
@@ -146,6 +151,8 @@ export async function create(ctx) {
   const wirePlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -A.wireframe.center.z);
   const hit = new THREE.Vector3();
   let trail = 0;
+  let decLocal = 0;
+  let decWall = -1;
 
   const api = {
     group,
@@ -158,8 +165,16 @@ export async function create(ctx) {
       U.uRot.value = time * 0.14 + local * 2.2;
       U.uFog.value = (ctx.scene.fog ? ctx.scene.fog.density : 0.03) * 1.25;
       U.uPortrait.value = director.portrait ? 1 : 0;
-      U.uSettle.value = smooth(0.79, 0.94, local);
-      const built = smooth(0.86, 0.93, local);
+      U.uSettle.value = smooth(0.66, 0.8, local);
+      const built = smooth(0.76, 0.83, local);
+      // Entschluesselung laeuft auch ohne Scrollen weiter: uDec eilt local zeitbasiert bis 0.06 voraus.
+      // So steht nie halb entschluesselter Zeichensalat, wenn jemand stehen bleibt.
+      // Wanduhr statt dt (dt ist pro Frame gedeckelt): auch bei wenigen Bildern pro Sekunde in ~0.3 s fertig
+      const now = performance.now();
+      const wall = decWall < 0 ? 0 : Math.min(0.5, (now - decWall) / 1000);
+      decWall = now;
+      decLocal = Math.min(local + 0.06, Math.max(local, decLocal + wall * 0.2));
+      U.uDec.value = decLocal;
       U.uBuilt.value = built;
 
       // Lichtspuren: Laenge aus der Scroll-Geschwindigkeit (local pro Sekunde), weich gefuehrt
@@ -167,14 +182,13 @@ export async function create(ctx) {
       lastLocal = local;
       trail += (Math.min(0.022, speed * 0.12) - trail) * (1 - Math.exp(-6 * dt));
       U.uTrail.value = trail;
-      streaks.visible = local > 0.42 && local < 0.92;
 
       // Maus: im Tunnel entschluesselt der Zeiger Zeichen, am Ende neigt sich das Geruest leicht
       const tunnel = 1 - smooth(0.42, 0.55, local);
       U.uPointerOn.value = pointer.touch ? 0 : tunnel * (pointer.inside ? 1 : 0);
       U.uPointer.value.set(pointer.sx, pointer.sy);
       const k = 1 - Math.exp(-4 * dt);
-      const tw = smooth(0.7, 0.95, local);
+      const tw = smooth(0.66, 0.86, local);
       tiltY += (pointer.sx * 0.07 * tw - tiltY) * k;
       tiltX += (-pointer.sy * 0.05 * tw - tiltX) * k;
       euler.set(tiltX, tiltY, 0);
@@ -182,7 +196,7 @@ export async function create(ctx) {
       U.uWireRot.value.setFromMatrix4(m4);
 
       // Lichtkegel der Maus auf dem fertigen Geruest (nur mit Maus, nicht auf Touch)
-      const spotTarget = !pointer.touch && pointer.inside ? smooth(0.8, 0.9, local) : 0;
+      const spotTarget = !pointer.touch && pointer.inside ? smooth(0.74, 0.84, local) : 0;
       spotOn += (spotTarget - spotOn) * (1 - Math.exp(-3 * dt));
       U.uSpotOn.value = spotOn;
       if (spotOn > 0.001) {
@@ -192,7 +206,7 @@ export async function create(ctx) {
       }
 
       // Geruest erst zeichnen, wenn es gebraucht wird (spart Fuellrate im Tunnel)
-      frame.visible = local > 0.5;
+      frame.visible = local > 0.47;
 
       const L = api.look;
       L.flash = 0.05 * Math.exp(-(((local - 0.1) / 0.03) ** 2));
@@ -201,7 +215,7 @@ export async function create(ctx) {
     },
 
     setActive(active) {
-      if (!active) { lastLocal = -1; trail = 0; }
+      if (!active) { lastLocal = -1; trail = 0; decWall = -1; }
     },
 
     dispose() {
