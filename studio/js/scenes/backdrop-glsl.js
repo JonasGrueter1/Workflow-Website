@@ -3,12 +3,14 @@
 // mit der Kamera, liegt aber unendlich weit weg. Ausnahmen mit echter Parallaxe: Boden (Ebene y = uFloorY) und der
 // Code-Tunnel (Zylinder um die Helix-Achse), beide aus der Kameraposition geschnitten.
 //
-// Bausteine (alle ueber Uniforms gewichtet, Werte aus director.backdrop):
-//   Verlauf + Horizontband, Akzent-Dunst, Halo der Lichtquelle, Nebel (2..3 Rausch-Zugriffe, Domain-Warp, vom Licht
-//   beleuchtet), Lichtstrahlen um die Lichtachse, Aurora-Vorhaenge, Sterne, Staub, Bokeh, Boden mit Spiegelung und
-//   Raster (+ Datenpakete auf den Rasterlinien), Messraster mit Scanlinie und Messkreis, Code-Regen im Tunnel.
+// Bausteine (alle ueber Uniforms gewichtet, Werte aus backdrop.js, gemischt aus BACKDROPS in config.js):
+//   Verlauf + Horizontband, Akzent-Dunst, Gegenlicht-Halo (uGlowDir), Nebel (1..3 Rausch-Zugriffe, Domain-Warp, vom
+//   Gegenlicht beleuchtet), Lichtstrahlen um eine eigene Quelle (uRayDir), Biolumineszenz der Nebelschwaden (uAurora),
+//   Sterne, Staub, Bokeh, Boden mit Spiegelung und Punktraster (+ Datenpakete auf den Rasterlinien, uStreaks),
+//   Messraster mit Scanlinie und Messkreis, Code-Regen im Tunnel.
 // BD_Q: 2 = high, 1 = medium, 0 = low (weniger Zugriffe, weniger Ebenen).
-// Hellste Flaechen bleiben unter ~0.3 linear, nur Halo-Kern, Strahlen und Pakete duerfen leicht bluehen (bis ~0.9).
+// Helligkeit (linear, vor dem Tonemapping): Flaechen bleiben unter ~0.06, nur Halo-Kern, Pakete, Sterne und Bokeh
+// werden heller (bis ~0.5, leichtes Bluehen). Die Mengen aus BACKDROPS (0..1) sind hier auf diese Werte skaliert.
 
 export const BACKDROP_VERT = /* glsl */ `
 uniform mat4 uInvProj;
@@ -39,12 +41,13 @@ uniform vec3 uAccent;
 uniform vec3 uAccentDir;
 uniform float uHorizon;
 uniform float uHorizonGlow;
-uniform vec3 uLightDir;
+uniform vec3 uGlowDir;
 uniform float uGlow;
 uniform float uGlowSize;
 uniform float uFog;
 uniform float uFogScale;
 uniform vec2 uFogRot;
+uniform vec3 uRayDir;
 uniform float uRays;
 uniform float uRayFreq;
 uniform vec3 uRayColor;
@@ -71,7 +74,6 @@ uniform float uBokeh;
 uniform vec3 uBokehColor;
 uniform float uCode;
 uniform vec3 uCodeColor;
-uniform float uCodeZ;
 uniform float uDetail;
 uniform vec4 uScrimRect;
 uniform float uScrimA;
@@ -128,29 +130,32 @@ void main() {
     float dq = length(max(abs(q) - vec2(0.62), vec2(0.0)));
     txt = clamp(uScrimA * 1.6, 0.0, 1.0) * (1.0 - smoothstep(0.0, 0.85, dq));
   }
-  float det = uDetail * (1.0 - 0.7 * txt);
+  float det = uDetail * (1.0 - 0.75 * txt);
 
   float e = d.y - uHorizon;
-  float cl = dot(d, uLightDir);
+  float cl = dot(d, uGlowDir);
   float lit = max(cl, 0.0);
   vec2 dxz = normalize(d.xz + vec2(1e-5, 0.0));
-  vec2 lxz = normalize(uLightDir.xz + vec2(1e-5, 0.0));
+  vec2 lxz = normalize(uGlowDir.xz + vec2(1e-5, 0.0));
   float side = max(dot(dxz, lxz), 0.0);
   float side2 = side * side;
+  float az = atan(d.x, -d.z);
+  float hl = max(length(d.xz), 1e-3);
+  float tanE = d.y / hl;
 
-  /* ---- Verlauf und Horizont */
+  /* ---- Verlauf und Horizont (Hohlkehle) */
   float ae = abs(e);
   vec3 col = mix(uMid, uBase, smoothstep(0.02, 0.6, ae));
   col *= e < 0.0 ? 1.0 - 0.3 * smoothstep(0.0, 0.55, -e) : 1.0;
   float band = exp(-e * e * 70.0);
   float bandWide = exp(-e * e * 8.0);
-  col += uHi * (band * 0.5 + bandWide * 0.1) * uHorizonGlow * (0.2 + 0.8 * side2);
-  col += uAccent * pow(max(dot(d, uAccentDir), 0.0), 3.0) * 2.4;
+  col += uHi * (band * 0.16 + bandWide * 0.035) * uHorizonGlow * (0.2 + 0.8 * side2);
+  col += uAccent * pow(max(dot(d, uAccentDir), 0.0), 3.0) * 0.6;
 
-  /* ---- Halo der Lichtquelle */
+  /* ---- Gegenlicht-Halo: heller Kern, weicher Hof, breiter Schein (Studio-Hintergrund) */
   float gs = max(uGlowSize, 0.2);
   float halo = pow(lit, 70.0 / gs) * 0.6 + pow(lit, 10.0 / gs) * 0.26 + pow(lit, 2.6 / gs) * 0.07;
-  col += uHi * halo * uGlow;
+  col += uHi * halo * uGlow * 0.22;
 
   /* ---- Boden (echte Ebene, Parallaxe) */
   float floorMask = 0.0;
@@ -158,26 +163,28 @@ void main() {
     float t = (uFloorY - uCamPos.y) / d.y;
     vec3 P = uCamPos + d * t;
     vec3 r = vec3(d.x, -d.y, d.z);
-    float rl = max(dot(r, uLightDir), 0.0);
+    float rl = max(dot(r, uGlowDir), 0.0);
     float fres = 0.05 + 0.95 * pow(1.0 - abs(d.y), 5.0);
     // glaenzende Spiegelung: Lichtquelle als in die Tiefe gezogener Streifen, Horizont gespiegelt
     float er = r.y - uHorizon;
-    vec3 refl = uHi * (pow(rl, 26.0) * 0.55 + pow(rl, 5.0) * 0.14) * uGlow;
-    refl += uHi * exp(-er * er * 26.0) * uHorizonGlow * 0.32 * (0.2 + 0.8 * side2);
+    vec3 refl = uHi * (pow(rl, 26.0) * 0.55 + pow(rl, 5.0) * 0.14) * uGlow * 0.22;
+    refl += uHi * exp(-er * er * 26.0) * uHorizonGlow * 0.1 * (0.2 + 0.8 * side2);
     float lane = pow(side, 90.0) * exp(-abs(d.y) * 3.0);
-    refl += uHi * lane * 0.22 * uGlow;
+    refl += uHi * lane * 0.05 * uGlow;
     vec3 fl = uBase * 0.6 + refl * (0.3 + 0.7 * fres) * uFloorShine;
-    float gridF = 0.0;
     if (uFloorGrid > 0.001) {
       vec2 g = P.xz / uFloorGrid;
       vec2 fw = max(fwidth(g), vec2(1e-4));
       vec2 gl = abs(fract(g - 0.5) - 0.5) / fw;
       float line = 1.0 - min(min(gl.x, gl.y) * 0.8, 1.0);
-      float fade = 1.0 - smoothstep(0.18, 0.7, max(fw.x, fw.y));
-      gridF = line * fade;
-      fl += uGridColor * gridF * 0.5 * det;
+      float fade = 1.0 - smoothstep(0.12, 0.45, max(fw.x, fw.y));
+      // Punkte an den Kreuzungen (ruhiger als ein volles Raster), die Linien nur als Hauch
+      vec2 cg = abs(fract(g - 0.5) - 0.5);
+      float dotR = max(0.035, 1.2 * max(fw.x, fw.y));
+      float dotm = 1.0 - smoothstep(dotR * 0.5, dotR, length(cg));
+      fl += uGridColor * (line * 0.1 + dotm * 0.55) * fade * det;
 #if BD_Q > 0
-      // Datenpakete laufen auf einzelnen Rasterlinien (Kapitel Verbindung)
+      // Datenpakete laufen auf einzelnen Rasterlinien
       if (uStreaks > 0.001) {
         float onZ = (1.0 - min(gl.y, 1.0)) * fade; // Linie z = konst., Paket laeuft in x
         float onX = (1.0 - min(gl.x, 1.0)) * fade; // Linie x = konst., Paket laeuft in z
@@ -186,11 +193,11 @@ void main() {
         float hz = hash12(vec2(lz, 3.7));
         float hx = hash12(vec2(lx, 9.1));
         float pk = 0.0;
-        if (hz > 0.55) {
+        if (hz > 0.72) {
           float ph = fract(g.x * 0.045 + uTime * (0.06 + 0.1 * hz) + hz * 13.0);
           pk += onZ * (smoothstep(0.0, 0.008, ph) * (1.0 - smoothstep(0.008, 0.11, ph)));
         }
-        if (hx > 0.6) {
+        if (hx > 0.78) {
           float ph = fract(-g.y * 0.04 + uTime * (0.05 + 0.08 * hx) + hx * 7.0);
           pk += onX * (smoothstep(0.0, 0.008, ph) * (1.0 - smoothstep(0.008, 0.11, ph)));
         }
@@ -204,74 +211,61 @@ void main() {
     floorMask = uFloor * (1.0 - haze);
     col = mix(col, fl, floorMask);
   }
+  float sky = 1.0 - floorMask;
 
-  /* ---- Nebel: zwei Schichten, verschieden schnell um Y gedreht (Parallaxe), vom Licht beleuchtet */
+  /* ---- Nebel: zwei Schichten, verschieden schnell um Y gedreht (Parallaxe), vom Gegenlicht beleuchtet */
   float dens = 0.0;
+  float bioN = 0.5;
   if (uFog > 0.001) {
     vec3 p1 = rotY(d, uFogRot.x) * (2.2 * uFogScale) + vec3(11.3, 4.1, 7.7);
     vec4 n1 = nz(p1);
     float f = n1.x;
+    bioN = n1.w;
 #if BD_Q > 0
     vec3 p2 = rotY(d, uFogRot.y) * (5.0 * uFogScale) + (n1.yzw - 0.5) * 1.7 + vec3(3.7, 9.2, 1.3);
     vec4 n2 = nz(p2);
     f = f * 0.6 + n2.x * 0.4;
-#endif
+    bioN = n1.w * 0.55 + n2.z * 0.45;
 #if BD_Q > 1
     vec4 n3 = nz(p2 * 2.1 + vec3(5.1, 1.7, 9.3));
     f = f * 0.84 + n3.y * 0.16;
 #endif
+#endif
     dens = smoothstep(0.36, 0.8, f);
     float lf = 0.2 + 0.95 * pow(lit, 3.0) + 0.3 * band * side;
     vec3 fc = mix(uMid * 1.5, uHi, clamp(0.12 + 0.9 * pow(lit, 2.0), 0.0, 1.0));
-    col += fc * dens * lf * uFog * 0.5 * det * (1.0 - 0.5 * floorMask);
+    col += fc * dens * lf * uFog * 0.14 * det * (1.0 - 0.5 * floorMask);
   }
 
-  /* ---- Lichtstrahlen um die Lichtachse, im Nebel staerker (wirkt volumetrisch) */
+  /* ---- Lichtstrahlen um die eigene Quelle (uRayDir), im Nebel staerker (wirkt volumetrisch) */
   if (uRays > 0.001) {
-    vec3 L = uLightDir;
+    vec3 L = uRayDir;
+    float rc = dot(d, L);
     vec3 t1 = normalize(cross(L, abs(L.y) < 0.9 ? vec3(0.0, 1.0, 0.0) : vec3(1.0, 0.0, 0.0)));
     vec3 t2 = cross(L, t1);
     vec2 pc = normalize(vec2(dot(d, t1), dot(d, t2)) + vec2(1e-6, 0.0));
-    float ang = acos(clamp(cl, -1.0, 1.0));
+    float ang = acos(clamp(rc, -1.0, 1.0));
     float s = nz(vec3(pc * uRayFreq, uTime * 0.03)).x;
 #if BD_Q > 0
     s = s * 0.62 + nz(vec3(pc * uRayFreq * 2.7, 7.3 + uTime * 0.05)).y * 0.38;
 #endif
     float streak = smoothstep(0.4, 0.9, s);
     float fall = exp(-ang * 2.1);
-    col += uRayColor * streak * fall * (0.4 + 0.6 * dens) * uRays * 0.26 * det * (1.0 - 0.6 * floorMask);
+    col += uRayColor * streak * fall * (0.4 + 0.6 * dens) * uRays * 0.1 * det * (1.0 - 0.6 * floorMask);
   }
 
-  /* ---- Aurora: Vorhaenge ueber dem Horizont, Unterkante hell, Falten senkrecht */
-  if (uAurora > 0.001) {
-    float az = atan(d.x, -d.z);
-    vec3 ac = vec3(0.0);
-#if BD_Q > 1
-    const int AUR = 2;
-#else
-    const int AUR = 1;
-#endif
-    for (int i = 0; i < AUR; i++) {
-      float fi = float(i);
-      float x = az * (1.5 + fi * 0.8) + fi * 2.3;
-      float edge = 0.02 + fi * 0.1 + (nz(vec3(x * 1.2, fi * 5.0 + 2.0, uTime * 0.03)).x - 0.5) * 0.2;
-      float h = e - edge;
-      float curtain = smoothstep(-0.02, 0.015, h) * exp(-max(h, 0.0) * (6.5 - fi * 2.5));
-      float folds = nz(vec3(x * 8.0 + uTime * 0.05, fi * 3.0 + 1.0, h * 2.0 - uTime * 0.02)).y;
-      folds = 0.3 + 0.7 * smoothstep(0.25, 0.85, folds);
-      vec3 cc = mix(uAuroraEdge, uAuroraA, smoothstep(0.0, 0.06, h));
-      cc = mix(cc, uAuroraB, smoothstep(0.08, 0.32, h));
-      ac += cc * curtain * folds * (1.0 - 0.35 * fi);
-    }
-    float aside = smoothstep(-0.25, 0.75, dot(dxz, lxz));
-    col += ac * uAurora * aside * det * (1.0 - floorMask);
+  /* ---- Biolumineszenz (Farbwelt Gehirn): die Nebelschwaden selbst leuchten violett bis magenta, ihre Raender
+     tuerkis. Haengt nur an der Blickrichtung, nicht am Horizont (die Kamera schaut im Gehirn steil nach unten). */
+  if (uAurora > 0.001 && uFog > 0.001) {
+    float rim = dens * (1.0 - dens) * 4.0;
+    float tone = smoothstep(0.25, 0.75, bioN);
+    vec3 bio = mix(uAuroraA, uAuroraB, tone);
+    float bl = 0.35 + 0.65 * pow(lit, 1.5);
+    col += (bio * dens * 0.7 + uAuroraEdge * rim * pow(lit, 2.0) * 0.5) * bl * uAurora * 0.16 * det * sky;
   }
 
   /* ---- Messraster (Scan-Labor): Zylinder-Raster, Scanlinie, Messkreis um den Kopf */
   if (uGrid > 0.001) {
-    float az = atan(d.x, -d.z);
-    float hl = max(length(d.xz), 1e-3);
-    float tanE = d.y / hl;
     float ga = az * (180.0 / 3.14159265 / 8.0);
     float gaw = max(fwidth(ga), 1e-4);
     float ge = tanE / 0.14;
@@ -313,7 +307,7 @@ void main() {
       vec3 P = uCamPos + d * t;
       float th = atan(P.y - 0.5, P.x);
       float u = (th / TAU + 0.5) * 96.0;
-      float rowf0 = (P.z - uCodeZ) / 0.5;
+      float rowf0 = P.z / 0.5;
       float ci = floor(u);
       float hc = hash12(vec2(ci, 7.1));
       float rowf = rowf0 + uTime * (1.2 + 2.4 * hc) + hc * 50.0;
@@ -346,7 +340,6 @@ void main() {
   }
 
   /* ---- Sterne (fein, funkelnd) und Staub (weich, steigt langsam) */
-  float sky = 1.0 - floorMask;
   if (uStars > 0.001) {
     vec3 q = d * 150.0;
     vec3 ci = floor(q);
@@ -372,7 +365,7 @@ void main() {
       float dist = length(fract(q) - sp);
       float r = 0.05 + 0.07 * h.y;
       float m = 1.0 - smoothstep(r * 0.2, r, dist);
-      col += mix(uHi, uStarColor, 0.35) * m * (0.08 + 0.18 * h.z) * uDust * det;
+      col += mix(uHi, uStarColor, 0.35) * m * (0.08 + 0.18 * h.z) * uDust * det * (0.35 + 0.65 * lit);
     }
   }
 #endif

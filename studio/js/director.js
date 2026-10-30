@@ -129,6 +129,8 @@ export class Director {
     this.portrait = false;
     this.aspect = 16 / 9;
     this.cutFade = 0;
+    // Inhaltsbereich 0..1 (setzt main.js, gedaempft): der Hintergrund wechselt dort zur Farbwelt "inhalt"
+    this.content = 0;
     // Bildverschiebung (Lens-Shift) als Anteil der Bildbreite: haelt das Motiv neben dem Text-Panel frei,
     // wenn das Seitenverhaeltnis vom Entwurf (1440 x 900) abweicht. + = Motiv nach rechts.
     this.shift = 0;

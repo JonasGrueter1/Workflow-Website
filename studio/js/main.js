@@ -198,6 +198,7 @@ async function boot() {
     engine.shared.uTime.value = time;
 
     contentDim = damp(contentDim, contentTarget, 6, dtRaw);
+    director.content = contentDim;
     const background = contentDim > 0.98;
     ui.setStory(director.global, contentDim > 0.35);
     director.pullScroll();

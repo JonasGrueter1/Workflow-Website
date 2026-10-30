@@ -5,6 +5,7 @@
 // at       statt local ein fester Punkt der Story (beat@p, z. B. at=zoom@0.4)
 // cam      path (Kamerapfad der Seite), orbit (ziehen, Mausrad) oder fix (pos=x,y,z tgt=x,y,z fov=32)
 // q        high|medium|low   post=0 ohne Postprocessing   play laeuft selbst   scroll=0 nur Regler
+// bg       der Hintergrund (Szene backdrop) laeuft immer mit, bg=0 schaltet ihn ab (reiner Szenen-Test)
 // Sonst steuert das Scrollen local (fuer studio_capture.js).
 // Konsole und Testskripte: window.__dev (setLocal, setAt, setCam, fix, orbit, advance, freeze, setTime, ready).
 import * as THREE from 'three';
@@ -19,12 +20,16 @@ const rawScene = params.get('scene') || 'robot';
 let sceneList = rawScene === 'all' ? ['all'] : rawScene.split(',').filter((n) => names.includes(n));
 if (!sceneList.length) sceneList = ['robot'];
 const sceneName = sceneList[0];
+// Hintergrund wie auf der Seite immer dazu (ausser bg=0); er laeuft in seinem eigenen Fenster (ganze Story)
+const loadList = sceneName === 'all' ? names
+  : (params.get('bg') === '0' || sceneList.includes('backdrop') ? sceneList : [...sceneList, 'backdrop']);
 const useScroll = params.get('scroll') !== '0';
 let local = clamp01(parseFloat(params.get('local') || '0') || 0);
 const vec = (s, d) => (s ? s.split(',').map(Number) : d);
 
 // Orbit-Zentrum und Abstand je Szene
 const FOCUS = {
+  backdrop: { target: [0, -0.5, 0], radius: 9 },
   particles: { target: [0, -0.5, 0], radius: 14 },
   robot: { target: [0, -0.6, 0], radius: 7.5 },
   brain: { target: ANCHORS.brain.center.toArray(), radius: 2.4 },
@@ -74,7 +79,7 @@ async function boot() {
   director.setAspect(camera.aspect);
   engine.onResize((w, h) => director.setAspect(w / h));
   const ctx = makeContext(engine, director, { dev: true });
-  const mods = await loadScenes(sceneName === 'all' ? names : sceneList, ctx);
+  const mods = await loadScenes(loadList, ctx);
   const runner = new Runner({ director, mods });
   if (sceneName !== 'all') runner.force = sceneName;
 
