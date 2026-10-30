@@ -1,21 +1,22 @@
-// Eigene Studio-Umgebung fuer die Spiegelungen des Roboters (nur seine Materialien).
-// Schwarzer Raum mit weichen Leuchtflaechen wie im Fotostudio: warme Hauptflaeche vorne rechts,
-// Cyan-Streiflicht hinten links, kuehles Streiflicht hinten rechts, Deckenlicht, feine Linie vorne.
-// So wirkt die dunkle Schale dunkel, mit klaren, ruhigen Glanzlichtern statt grauem Schleier.
+// Eigene Studio-Umgebung fuer die Spiegelungen des Roboters (nur seine Materialien, Version 2).
+// Fuer die hellere Keramik: grosse Deckenflaeche (Scheitel-Glanzlicht), zwei senkrechte Streifen hinten links und
+// rechts (saubere Kantenlinien auf den Platten), warme Flaeche vorne rechts, feine Linie vorne (Glanz im Visier),
+// schwache Aufhellung vorne links. Dunkler Raum dazwischen, damit Titan Kontrast zeigt.
+// Die Einfaerbung pro Beat (Lichtfarbe des Hintergrunds) passiert im Shader ueber uEnvTint, nicht hier.
 export function buildStudioEnv(THREE, renderer, palette) {
   const scene = new THREE.Scene();
   scene.background = palette.void.clone().multiplyScalar(0.6);
   const disposables = [];
 
-  // Kuppel mit leichtem Verlauf (Horizont minimal heller), damit Schattenseiten nicht tot schwarz sind
+  // Kuppel mit leichtem Verlauf: Boden dunkel, Horizont etwas heller, Decke tief blau
   const domeGeo = new THREE.SphereGeometry(30, 32, 16);
   const domeMat = new THREE.ShaderMaterial({
     side: THREE.BackSide,
     depthWrite: false,
     uniforms: {
-      uLow: { value: palette.void.clone().multiplyScalar(0.4) },
-      uMid: { value: palette.steel.clone().multiplyScalar(0.55) },
-      uHigh: { value: palette.deep.clone().multiplyScalar(1.2) },
+      uLow: { value: palette.void.clone().multiplyScalar(0.5) },
+      uMid: { value: palette.steel.clone().multiplyScalar(0.75) },
+      uHigh: { value: palette.deep.clone().multiplyScalar(1.6) },
     },
     vertexShader: /* glsl */ `
       varying vec3 vP;
@@ -62,14 +63,15 @@ export function buildStudioEnv(THREE, renderer, palette) {
     return m;
   };
   const V = (x, y, z) => new THREE.Vector3(x, y, z);
-  const warm = new THREE.Color(1.0, 0.86, 0.72);
+  const warm = new THREE.Color(1.0, 0.88, 0.76);
   const white = palette.white.clone();
-  panel(2.6, 4.4, warm, 2.6, V(4.4, 2.6, 5.0), 0.8);             // Hauptlicht vorne rechts
-  panel(1.0, 7.0, palette.signal, 4.0, V(-5.2, 0.6, -3.4), 0.5); // Cyan-Streiflicht hinten links
-  panel(0.7, 6.0, palette.ice, 1.6, V(5.4, 0.2, -3.0), 0.5);     // kuehles Streiflicht hinten rechts
-  panel(3.6, 3.6, white, 1.1, V(0.0, 7.0, 0.8), 0.6);            // Deckenlicht
-  panel(3.0, 2.2, palette.mist, 0.35, V(-4.0, -0.4, 5.0), 0.6);  // schwache Aufhellung vorne links
-  panel(7.0, 0.22, white, 1.5, V(0.0, 1.6, 6.5), 0.4);           // feine Linie vorne (Glanzstreifen im Visier)
+  panel(4.0, 4.0, white, 1.6, V(0.0, 7.0, 0.6), 0.65);           // Deckenflaeche: Scheitel-Glanzlicht
+  panel(0.8, 7.0, white, 2.2, V(-5.4, 0.8, -3.2), 0.45);         // Streifen hinten links
+  panel(0.8, 7.0, palette.ice, 1.8, V(5.4, 0.6, -3.0), 0.45);    // Streifen hinten rechts
+  panel(2.6, 4.2, warm, 1.4, V(4.4, 2.4, 5.0), 0.8);             // warme Flaeche vorne rechts
+  panel(3.0, 2.2, palette.mist, 0.45, V(-4.2, -0.2, 5.0), 0.6);  // schwache Aufhellung vorne links
+  panel(7.0, 0.2, white, 1.5, V(0.0, 1.6, 6.5), 0.4);            // feine Linie vorne (Glanzstreifen im Visier)
+  panel(5.0, 0.9, palette.steel, 0.9, V(0.0, -4.5, 2.0), 0.7);   // Bodenreflex (Unterseiten nicht tot schwarz)
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   const rt = pmrem.fromScene(scene, 0.02, 0.1, 60);

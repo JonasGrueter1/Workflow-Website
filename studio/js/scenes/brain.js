@@ -12,6 +12,10 @@
 //              sich wie Blitze, die Rinde leuchtet dabei weich mit. Dazu einzelne spontane Funken.
 //   Fasern     Projektionsbahnen laufen zum Hirnstamm und tragen Lichtpakete Richtung Kabelaustritt.
 //   Licht      Aufblitzen an den Ausloesern, Glimmen am Kabelaustritt, Hauch. Maus: Zellen unter dem Zeiger glimmen.
+//   Hardware   Das Gehirn liegt in einer Wiege (brain-hardware.js): Ring, Spanten, Buegel, Klammern, Streben zur Schale,
+//              Saeule in den Hals, Rundstecker am Kabelaustritt, Platinen mit Leiterbahnen und Chips (brain-hw-atlas.js),
+//              Kuehlrippen, Luefter, Elektroden-Kabel. Elektroden und Polster leuchten mit den Erregungswellen.
+//              Sichtbar ab dem Roentgen-Scan (gleiche Formel wie robot.js robotScan), 2 Draw Calls.
 //
 // Ablauf (ctx.director.beat):
 //   zoom   0.30-0.92  Enthuellung von vorne nach hinten (passend zur Schale, die vom Gesicht her zerfaellt)
@@ -21,10 +25,12 @@
 // Von aussen ist das Netz gedaempft (Windungen lesbar), innen voll und mit Tiefenstaffelung.
 //
 // Qualitaet: Mengen mit tier.particles (1 / 0.5 / 0.25), Teilstuecke pro Verbindung 4 / 3 / 2, auf Handy
-// groessere und hellere Rindenpunkte. Draw Calls: 6. Pro Frame nur Uniforms, keine Allokationen.
+// groessere und hellere Rindenpunkte. Draw Calls: 6 (+2 Hardware). Pro Frame nur Uniforms, keine Allokationen.
 // Unsichtbares (noch nicht enthuellt, zu nah, im Nebel) wird schon im Vertex-Shader verworfen.
 import { buildBrain, CASCADES, ARR_SCALE } from './brain-build.js';
 import { makeMaterials } from './brain-shaders.js';
+import { createHardware } from './brain-hardware.js';
+import { makeHeadShape } from './robot-geometry.js';
 
 const SUBDIV = { high: 4, medium: 3, low: 2 };
 const FIBER_SEG = { high: 28, medium: 18, low: 12 };
@@ -173,6 +179,11 @@ export function create(ctx) {
   const { period, phase } = data.cascades;
   const clocks = new Float32Array(CASCADES);
   const amps = new Float32Array(CASCADES);
+
+  /* ---------------------------------------------------------- Hardware (Wiege, Platinen, Kabel) */
+  const hw = createHardware(ctx, data, { headShape: makeHeadShape(A.head.radii) });
+  group.add(hw.group);
+  const hwState = { weight: 1, reveal: 0, clocks, amps };
   const cIce = palette.ice;
   const cSig = palette.signal;
   const cEmber = palette.ember;
@@ -231,6 +242,10 @@ export function create(ctx) {
       U.uAmp0.value.set(amps[0], amps[1], amps[2], amps[3]);
       U.uAmp1.value.set(amps[4], amps[5], amps[6], amps[7]);
 
+      hwState.weight = weight;
+      hwState.reveal = reveal;
+      hw.update(time, dt, hwState);
+
       /* Licht: Aufblitzen an den Ausloesern, warme Kerne, Kabelaustritt, Hauch */
       for (let k = 0; k < CASCADES; k++) {
         const c = clocks[k];
@@ -248,6 +263,7 @@ export function create(ctx) {
     },
     setActive() {},
     dispose() {
+      hw.dispose();
       geos.forEach((g) => g.dispose());
       Object.values(mats).forEach((m) => m.dispose());
       group.clear();
