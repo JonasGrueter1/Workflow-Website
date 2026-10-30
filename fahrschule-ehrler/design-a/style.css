@@ -1,0 +1,732 @@
+/* Fahrschule Ehrler, Design A «Der Schritt»: Nachtblau und Neongrün wie Logo und Visitenkarte */
+
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("../assets/fonts/a-schibsted-latin-wght.woff2") format("woff2");
+  font-weight: 400 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("../assets/fonts/a-schibsted-latin-italic-wght.woff2") format("woff2");
+  font-weight: 400 900; font-style: italic; font-display: swap;
+}
+
+:root {
+  --nacht: #001532;
+  --nacht-tief: #000e24;
+  --nacht-2: #0a2247;
+  --nacht-3: #0f2d5c;
+  --linie: #1e3a66;
+  --haar: rgb(255 255 255 / 8%);
+  --weiss: #fff;
+  --text-2: #c9d5e3;
+  --grau: #8fa3b8;
+  --neon: #11ff00;
+  --gruen: #84be43;
+  --r: 24px;
+  --r-m: 18px;
+  --wrap: 1200px;
+  --gut: 24px;
+  --kopf-h: 76px;
+  --ease: cubic-bezier(.22, .8, .24, 1);
+}
+@media (max-width: 520px) { :root { --gut: 20px; --kopf-h: 64px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--kopf-h) + 16px); }
+body {
+  margin: 0;
+  background: var(--nacht);
+  color: var(--weiss);
+  font: 400 17px/1.6 "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+@media (min-width: 1024px) { body { font-size: 18px; } }
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3 { margin: 0; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+p { margin: 0; }
+ul, ol, dl, dd, figure { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+a { color: inherit; }
+b, strong { font-weight: 700; }
+::selection { background: var(--neon); color: var(--nacht); }
+:focus-visible { outline: 3px solid var(--neon); outline-offset: 3px; border-radius: 10px; }
+
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.i { width: 1.2em; height: 1.2em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { width: 100%; max-width: calc(var(--wrap) + 2 * var(--gut)); margin: 0 auto; padding: 0 var(--gut); }
+.neon { color: var(--neon); }
+
+.skip {
+  position: absolute; left: 16px; top: -60px; z-index: 300;
+  padding: 10px 16px; border-radius: 10px;
+  background: var(--neon); color: var(--nacht); font-weight: 700; text-decoration: none;
+}
+.skip:focus { top: 12px; }
+
+.kicker {
+  font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--grau);
+}
+.kicker span { color: var(--gruen); padding: 0 .3em; }
+
+/* ---------- Knöpfe ---------- */
+.knopf {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 56px; padding: 0 26px; border-radius: 999px;
+  font-size: 17px; font-weight: 700; letter-spacing: -0.005em; text-decoration: none; white-space: nowrap;
+  border: 1.5px solid transparent;
+  transition: transform .3s var(--ease), background-color .25s, border-color .25s, box-shadow .3s var(--ease), color .25s;
+  -webkit-tap-highlight-color: transparent;
+}
+.knopf .i { width: 20px; height: 20px; }
+.knopf-neon { background: var(--neon); color: var(--nacht); box-shadow: 0 12px 32px -12px rgb(17 255 0 / 55%); }
+.knopf-neon:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -12px rgb(17 255 0 / 65%); }
+.knopf-linie { border-color: rgb(255 255 255 / 30%); color: var(--weiss); }
+.knopf-linie:hover { border-color: var(--weiss); background: rgb(255 255 255 / 6%); transform: translateY(-2px); }
+.knopf:active { transform: scale(.98); }
+.knopf-klein { min-height: 44px; padding: 0 18px; font-size: 15px; }
+.knopf-klein .i { width: 18px; height: 18px; }
+
+.mehr {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  color: var(--neon); font-weight: 700; text-decoration: none;
+}
+.mehr .i { width: 18px; height: 18px; transition: transform .3s var(--ease); }
+.mehr:hover .i { transform: translateX(4px); }
+.mehr:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- Kopf ---------- */
+.kopf {
+  position: sticky; top: 0; z-index: 100;
+  background: rgb(0 21 50 / 84%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, background-color .3s;
+}
+.kopf.gescrollt { border-bottom-color: var(--haar); background: rgb(0 21 50 / 94%); }
+.kopf-innen { display: flex; align-items: center; gap: 24px; height: var(--kopf-h); }
+
+.marke { display: inline-flex; align-items: center; gap: 10px; color: var(--weiss); text-decoration: none; flex: none; }
+.marke-signet { width: 40px; height: 39px; fill: var(--neon); flex: none; }
+.marke-text { display: flex; flex-direction: column; line-height: 1; }
+.marke-name { font-size: 21px; font-weight: 800; font-style: italic; letter-spacing: -0.015em; white-space: nowrap; }
+.marke-name b { color: var(--neon); font-weight: 800; }
+.marke-slogan { margin-top: 5px; font-size: 11.5px; font-weight: 600; font-style: italic; color: var(--text-2); white-space: nowrap; }
+
+.kopf-nav { display: flex; gap: 2px; margin-left: auto; }
+.kopf-nav a {
+  padding: 10px 14px; border-radius: 999px;
+  color: var(--text-2); font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap;
+  transition: color .2s, background-color .2s;
+}
+.kopf-nav a:hover { color: var(--weiss); background: rgb(255 255 255 / 7%); }
+.kopf-tel {
+  display: inline-flex; align-items: center; gap: 8px; flex: none;
+  height: 46px; padding: 0 20px; border-radius: 999px;
+  background: var(--neon); color: var(--nacht);
+  font-size: 16px; font-weight: 800; text-decoration: none; white-space: nowrap;
+  transition: transform .3s var(--ease), box-shadow .3s;
+}
+.kopf-tel:hover { transform: translateY(-1px); box-shadow: 0 10px 26px -10px rgb(17 255 0 / 70%); }
+.kopf-tel .i { width: 19px; height: 19px; }
+.kopf-tel-kurz { display: none; }
+@media (max-width: 1080px) { .kopf-nav { display: none; } .kopf-tel { margin-left: auto; } }
+@media (max-width: 520px) {
+  .marke-signet { width: 34px; height: 33px; }
+  .marke-name { font-size: 18.5px; }
+  .marke-slogan { font-size: 10.5px; margin-top: 4px; }
+  .kopf-tel { height: 44px; padding: 0 16px; font-size: 15px; }
+  .kopf-tel-lang { display: none; }
+  .kopf-tel-kurz { display: inline; }
+}
+/* Schmale Handys: Kopf kompakter, damit Logo und Anruf-Knopf nebeneinander Platz haben */
+@media (max-width: 374px) {
+  .kopf-innen { gap: 12px; }
+  .marke { gap: 8px; }
+  .marke-signet { width: 30px; height: 29px; }
+  .marke-name { font-size: 17px; }
+  .marke-slogan { font-size: 9.5px; }
+  .kopf-tel { padding: 0 14px; gap: 6px; font-size: 14.5px; }
+  .kopf-tel .i { width: 17px; height: 17px; }
+}
+@media (max-width: 374px) {
+  /* Das Namensschild würde hier Andrés Gesicht verdecken; Name und "seit 1999" stehen im Lead */
+  .hero-name { display: none; }
+}
+@media (max-width: 349px) {
+  .kopf-tel { width: 44px; padding: 0; justify-content: center; }
+  .kopf-tel .i { width: 20px; height: 20px; }
+  .kopf-tel-kurz { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  padding: 48px 0 88px;
+  background:
+    radial-gradient(1100px 680px at 88% 0%, rgb(20 78 168 / 38%), transparent 62%),
+    radial-gradient(760px 520px at -5% 105%, rgb(17 255 0 / 6%), transparent 60%),
+    var(--nacht);
+}
+.hero-raster {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 4%) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 30% 40%, #000 10%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 80% at 30% 40%, #000 10%, transparent 75%);
+}
+.hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  grid-template-rows: auto auto;
+  grid-template-areas: "kopf bild" "aktion bild";
+  column-gap: 72px;
+  min-height: calc(86vh - var(--kopf-h) - 136px);
+}
+.hero-kopf { grid-area: kopf; align-self: end; }
+.hero-aktion { grid-area: aktion; align-self: start; }
+.hero-bild { grid-area: bild; position: relative; align-self: center; }
+
+.hero-titel {
+  margin-top: 22px;
+  font-size: clamp(40px, 5.4vw, 70px);
+  line-height: .98; letter-spacing: -0.04em;
+}
+.hero-titel .zeile { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.hero-titel .zeile > span { display: block; }
+
+.slogan { display: flex; align-items: flex-end; gap: 14px; margin-top: 30px; }
+.slogan-signet { width: 78px; height: 76px; flex: none; fill: var(--neon); overflow: visible; }
+.slogan-text {
+  padding-bottom: 6px;
+  font-size: clamp(24px, 2.5vw, 36px); line-height: 1; font-weight: 800; font-style: italic;
+  letter-spacing: -0.015em; color: var(--neon);
+}
+
+.hero-lead { margin-top: 30px; max-width: 27em; font-size: clamp(18px, 1.45vw, 21px); line-height: 1.55; color: var(--text-2); }
+.hero-knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+
+.hero-foto { position: relative; margin-left: auto; max-width: 540px; }
+.hero-foto img {
+  width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%;
+  max-height: calc(100vh - var(--kopf-h) - 120px); min-height: 420px;
+  border-radius: var(--r);
+  box-shadow: 0 40px 80px -30px rgb(0 0 0 / 60%);
+}
+.hero-name {
+  position: absolute; top: 18px; right: 18px;
+  padding: 10px 14px; border-radius: 14px;
+  background: rgb(0 21 50 / 62%);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgb(255 255 255 / 14%);
+  font-size: 13.5px; line-height: 1.3; color: var(--text-2);
+}
+.hero-name b { display: block; font-size: 15px; color: var(--weiss); }
+
+.flotte {
+  position: absolute; left: -88px; bottom: 28px; width: 280px;
+  padding: 10px; border-radius: 20px;
+  background: rgb(10 34 71 / 92%);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid var(--linie);
+  box-shadow: 0 30px 70px -20px rgb(0 0 0 / 65%);
+}
+.flotte-bild img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 62%; border-radius: 12px; }
+.flotte-liste { padding: 6px 8px 0; }
+.flotte-liste li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  padding: 9px 0; border-bottom: 1px solid var(--haar);
+  font-size: 15.5px; font-weight: 700;
+}
+.flotte-liste em { font-style: normal; font-size: 14px; font-weight: 500; color: var(--grau); }
+.flotte-preis { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 11px 8px 4px; font-size: 14px; color: var(--grau); }
+.flotte-preis strong { font-size: 23px; font-weight: 800; color: var(--neon); letter-spacing: -0.01em; }
+
+/* ---------- Preise auf einen Blick ---------- */
+.preise { position: relative; margin-top: -40px; padding-bottom: 24px; }
+.preis-kacheln {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--linie); border-radius: var(--r);
+  background: var(--nacht-2);
+  overflow: hidden;
+}
+.preis-kacheln li + li { border-left: 1px solid var(--linie); }
+.preis-kacheln a {
+  position: relative; display: flex; flex-direction: column; gap: 2px;
+  height: 100%; padding: 26px 28px 24px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+.preis-kacheln a:hover { background: var(--nacht-3); }
+.pk-kat { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--grau); }
+.pk-preis { margin-top: 8px; font-size: clamp(26px, 2.6vw, 34px); font-weight: 800; letter-spacing: -0.02em; color: var(--neon); line-height: 1.1; }
+.pk-text { font-size: 15px; color: var(--text-2); }
+.pk-pfeil { position: absolute; top: 24px; right: 22px; width: 20px; height: 20px; color: var(--grau); transition: transform .3s var(--ease), color .3s; }
+.preis-kacheln a:hover .pk-pfeil { color: var(--neon); transform: translateX(4px); }
+
+/* ---------- Abschnitte allgemein ---------- */
+.abschnitt-kopf { max-width: 760px; margin-bottom: 56px; }
+.abschnitt-kopf h2, .moto-band-text h2, .theorie-text h2, .kontakt-text h2 {
+  margin-top: 14px;
+  font-size: clamp(32px, 4.2vw, 56px); line-height: 1.04; letter-spacing: -0.035em;
+}
+.abschnitt-lead { margin-top: 18px; max-width: 36em; font-size: clamp(17px, 1.35vw, 20px); color: var(--text-2); }
+.abschnitt-kopf-breit { max-width: none; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+.abschnitt-kopf-breit .abschnitt-lead { margin-top: 0; }
+
+/* ---------- Treppe ---------- */
+.schritte { padding: 112px 0 120px; }
+.treppe {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end;
+  border-bottom: 1px solid var(--linie);
+}
+.stufe { display: flex; flex-direction: column; }
+.stufe-info {
+  display: block; padding: 0 22px 24px 22px;
+  text-decoration: none; color: inherit;
+  border-radius: 14px 14px 0 0;
+}
+.stufe-alter {
+  display: flex; align-items: baseline; gap: 6px;
+  font-size: clamp(48px, 4.6vw, 66px); font-weight: 800; line-height: .9; letter-spacing: -0.045em;
+  color: var(--neon); font-variant-numeric: tabular-nums;
+  transition: transform .35s var(--ease);
+}
+.stufe-alter small { font-size: 15px; font-weight: 600; letter-spacing: 0; color: var(--grau); }
+.stufe-kat {
+  display: inline-block; margin-top: 16px; padding: 4px 11px; border-radius: 999px;
+  border: 1px solid rgb(132 190 67 / 55%); color: var(--gruen);
+  font-size: 13px; font-weight: 700; letter-spacing: .05em;
+}
+.stufe-text { display: block; margin-top: 10px; font-size: 15.5px; line-height: 1.45; color: var(--text-2); }
+.stufe-info:hover .stufe-alter { transform: translateY(-4px); }
+.stufe-block {
+  position: relative; display: block;
+  height: calc(52px + var(--n) * 64px);
+  background: linear-gradient(180deg, var(--nacht-3) 0%, var(--nacht-2) 45%, rgb(10 34 71 / 30%) 100%);
+  border-left: 1px solid rgb(255 255 255 / 6%);
+  transform-origin: 50% 100%;
+}
+.stufe:first-child .stufe-block { border-left: 0; }
+.stufe-kante {
+  position: absolute; left: 0; right: 0; top: 0; height: 3px;
+  background: var(--neon);
+  box-shadow: 0 0 22px rgb(17 255 0 / 45%);
+  transform-origin: 0 50%;
+}
+.stufe-nr {
+  position: absolute; left: 22px; bottom: 14px;
+  font-size: 12px; font-weight: 700; letter-spacing: .14em; color: rgb(255 255 255 / 30%);
+}
+.stufe-nr::before { content: "Stufe "; }
+.stufe-auto .stufe-block { background: linear-gradient(180deg, #13366d 0%, var(--nacht-2) 50%, rgb(10 34 71 / 30%) 100%); }
+.treppe-notiz { display: flex; gap: 12px; align-items: flex-start; margin-top: 28px; color: var(--text-2); font-size: 16px; }
+.treppe-notiz .i { color: var(--gruen); margin-top: 2px; }
+
+/* ---------- Auto ---------- */
+.auto { padding: 40px 0 120px; }
+.auto-grid { display: grid; grid-template-columns: 1fr 1fr .86fr; gap: 24px; align-items: stretch; }
+.wagen {
+  display: flex; flex-direction: column;
+  border-radius: var(--r); overflow: hidden;
+  background: var(--nacht-2); border: 1px solid var(--linie);
+  transition: transform .4s var(--ease), border-color .3s;
+}
+.wagen:hover { transform: translateY(-4px); border-color: #2c518b; }
+.wagen-bild { aspect-ratio: 4 / 3; overflow: hidden; }
+.wagen-bild img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease); }
+.wagen:hover .wagen-bild img { transform: scale(1.04); }
+.wagen-text { padding: 22px 24px 24px; display: flex; flex-direction: column; flex: 1; }
+.wagen-tag {
+  align-self: flex-start; padding: 4px 11px; border-radius: 999px;
+  background: var(--gruen); color: var(--nacht);
+  font-size: 13px; font-weight: 800; letter-spacing: .03em;
+}
+.wagen h3 { margin-top: 14px; font-size: 26px; letter-spacing: -0.025em; }
+.wagen h3 span { font-size: 17px; font-weight: 500; letter-spacing: 0; color: var(--grau); margin-left: 4px; }
+.wagen-preis {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  margin-top: auto; padding-top: 18px;
+  border-top: 1px solid var(--haar);
+  color: var(--text-2); font-size: 16px;
+}
+.wagen h3 + .wagen-preis { margin-top: 20px; }
+.wagen-preis strong { font-size: 28px; font-weight: 800; color: var(--neon); letter-spacing: -0.02em; }
+
+.auto-info {
+  display: flex; flex-direction: column;
+  padding: 28px; border-radius: var(--r);
+  border: 1px solid var(--linie);
+  background: linear-gradient(160deg, rgb(17 255 0 / 5%), transparent 45%), var(--nacht);
+}
+.auto-vers {
+  display: flex; flex-direction: column; gap: 6px;
+  padding-bottom: 22px; border-bottom: 1px solid var(--haar);
+}
+.auto-vers span { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--grau); }
+.auto-vers strong { font-size: 30px; line-height: 1.1; font-weight: 800; color: var(--weiss); letter-spacing: -0.02em; white-space: nowrap; }
+.auto-vorteile-titel { margin-top: 24px; font-size: 18px; letter-spacing: -0.01em; }
+.haken li { display: flex; gap: 12px; margin-top: 14px; color: var(--text-2); font-size: 16px; line-height: 1.5; }
+.haken b { color: var(--weiss); }
+.haken .i { width: 22px; height: 22px; color: var(--neon); margin-top: 1px; stroke-width: 2.4; }
+.auto-info .mehr { margin-top: auto; padding-top: 20px; }
+
+/* ---------- Motorrad ---------- */
+.moto-band {
+  position: relative; overflow: hidden;
+  display: flex; align-items: flex-end;
+  height: 64vh; min-height: 440px; max-height: 680px;
+}
+.moto-band-bild { position: absolute; left: 0; right: 0; top: -40px; bottom: -40px; will-change: transform; }
+.moto-band-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 9%; }
+.moto-band::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgb(0 21 50 / 0%) 62%, rgb(0 21 50 / 55%) 88%, var(--nacht) 100%),
+    linear-gradient(90deg, var(--nacht) 0%, var(--nacht) 22%, rgb(0 21 50 / 55%) 36%, rgb(0 21 50 / 0%) 52%);
+}
+@media (min-width: 761px) {
+  /* Foto rechts, Titel links daneben: der Fahrer bleibt frei */
+  .moto-band-bild { left: 22%; }
+  .moto-band::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 90px; z-index: 1; pointer-events: none;
+    background: linear-gradient(180deg, var(--nacht), rgb(0 21 50 / 0%));
+  }
+}
+.moto-band-text { position: relative; z-index: 1; padding-bottom: 40px; }
+.moto-band-text .kicker { color: var(--text-2); }
+.moto-band-text h2 { max-width: 10.5em; text-shadow: 0 2px 30px rgb(0 0 0 / 35%); }
+.moto-band-sub { margin-top: 14px; font-size: 18px; color: var(--text-2); }
+
+.moto-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 32px; padding-top: 32px; padding-bottom: 120px; align-items: start; }
+.reiter {
+  position: relative; display: inline-flex; gap: 2px; padding: 5px; border-radius: 999px;
+  background: var(--nacht-2); border: 1px solid var(--linie);
+}
+html:not(.js) .reiter { display: none; }
+.reiter-knopf {
+  position: relative; z-index: 1;
+  min-height: 46px; padding: 0 24px; border: 0; border-radius: 999px;
+  background: transparent; color: var(--text-2);
+  font: inherit; font-size: 16px; font-weight: 700; cursor: pointer;
+  transition: color .3s;
+}
+.reiter-knopf:hover { color: var(--weiss); }
+.reiter-knopf[aria-selected="true"] { color: var(--nacht); }
+.reiter-marke {
+  position: absolute; top: 5px; bottom: 5px; left: 0; width: 0;
+  border-radius: 999px; background: var(--neon);
+  transform: translateX(0);
+  transition: transform .45s var(--ease), width .45s var(--ease);
+}
+.teil { margin-top: 28px; max-width: 40em; }
+html:not(.js) .teil + .teil { padding-top: 28px; border-top: 1px solid var(--haar); }
+.teil-titel { font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.025em; }
+.teil p { margin-top: 12px; color: var(--text-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.chips li {
+  padding: 7px 14px; border-radius: 999px;
+  background: rgb(255 255 255 / 5%); border: 1px solid rgb(255 255 255 / 12%);
+  font-size: 14.5px; font-weight: 600;
+}
+.fx .teil.wechsel { animation: teilEin .5s var(--ease) both; }
+@keyframes teilEin { from { opacity: 0; transform: translateY(10px); } }
+
+.moto-pruef {
+  padding: 28px; border-radius: var(--r);
+  background: var(--nacht-2); border: 1px solid var(--linie);
+}
+.moto-pruef-icon { width: 30px; height: 30px; color: var(--gruen); }
+.moto-pruef h3 { margin-top: 16px; font-size: 22px; }
+.preisliste { margin-top: 12px; }
+.preisliste div {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 14px 0; border-bottom: 1px solid var(--haar);
+}
+.preisliste dt { color: var(--text-2); }
+.preisliste dt small { display: block; font-size: 14px; color: var(--grau); }
+.preisliste dd { font-size: 22px; font-weight: 800; color: var(--neon); white-space: nowrap; letter-spacing: -0.01em; }
+.moto-pruef .mehr { margin-top: 16px; }
+
+/* ---------- VKU und Theorie ---------- */
+.theorie { padding: 112px 0 120px; background: linear-gradient(180deg, var(--nacht) 0%, #021a3d 100%); border-top: 1px solid var(--haar); }
+.theorie-grid { display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); gap: 80px; align-items: start; }
+.theorie-foto { position: sticky; top: calc(var(--kopf-h) + 32px); }
+.theorie-foto img { width: 100%; aspect-ratio: 746 / 985; object-fit: cover; border-radius: var(--r); }
+.theorie-foto figcaption { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 15px; color: var(--grau); }
+.theorie-foto figcaption .i { color: var(--gruen); }
+.vku-liste { margin-top: 36px; border-bottom: 1px solid var(--haar); }
+.vku-liste li { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 20px 0; border-top: 1px solid var(--haar); }
+.vku-nr { padding-top: 2px; font-size: 17px; font-weight: 800; letter-spacing: .06em; color: var(--neon); font-variant-numeric: tabular-nums; }
+.vku-liste h3 { font-size: 21px; letter-spacing: -0.02em; }
+.vku-liste p { margin-top: 4px; font-size: 16px; color: var(--grau); }
+.preisliste-gross { margin-top: 28px; padding: 6px 24px; border-radius: var(--r-m); background: var(--nacht-2); border: 1px solid var(--linie); }
+.preisliste-gross div:last-child { border-bottom: 0; }
+.preisliste-gross dt { color: var(--weiss); font-weight: 700; }
+.preisliste-gross dd { font-size: 26px; }
+.app-tipp { display: flex; gap: 12px; align-items: flex-start; margin-top: 22px; font-size: 16px; color: var(--text-2); }
+.app-tipp .i { color: var(--gruen); margin-top: 2px; }
+.app-tipp b { color: var(--weiss); }
+.theorie-text > .mehr { margin-top: 18px; }
+
+/* ---------- Gut zu wissen ---------- */
+.wissen { padding: 112px 0 120px; }
+.wissen-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.info-karte {
+  display: flex; flex-direction: column;
+  padding: 28px 26px; border-radius: var(--r-m);
+  background: var(--nacht-2); border: 1px solid var(--linie);
+}
+.info-icon { width: 30px; height: 30px; color: var(--gruen); }
+.info-karte h3 { margin-top: 20px; font-size: 21px; letter-spacing: -0.02em; }
+.info-karte p { margin-top: 10px; font-size: 16px; line-height: 1.55; color: var(--text-2); }
+.info-karte-gutschein {
+  border-color: rgb(17 255 0 / 40%);
+  background: linear-gradient(165deg, rgb(17 255 0 / 9%), rgb(17 255 0 / 0%) 55%), var(--nacht-2);
+}
+.info-karte-gutschein .info-icon { color: var(--neon); }
+.info-karte .mehr { margin-top: auto; padding-top: 14px; }
+
+/* ---------- Kontakt ---------- */
+.kontakt {
+  position: relative; overflow: hidden;
+  padding: 112px 0 120px;
+  border-top: 1px solid var(--haar);
+  background: radial-gradient(900px 520px at 10% 0%, rgb(20 78 168 / 28%), transparent 65%), var(--nacht);
+}
+.kontakt-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
+.kontakt-tel {
+  display: inline-flex; align-items: center; gap: 16px; margin-top: 34px;
+  font-size: clamp(38px, 5.4vw, 72px); font-weight: 800; letter-spacing: -0.035em; line-height: 1;
+  color: var(--neon); text-decoration: none; white-space: nowrap;
+}
+.kontakt-tel .i { width: .62em; height: .62em; stroke-width: 2.2; }
+.kontakt-tel:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 8px; }
+.kontakt-mail { display: flex; align-items: center; gap: 12px; margin-top: 22px; min-height: 44px; font-size: clamp(17px, 1.6vw, 21px); font-weight: 600; text-decoration: none; }
+.kontakt-mail .i { color: var(--gruen); }
+.kontakt-mail:hover { color: var(--neon); }
+.kontakt-karten { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.adresse {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+  padding: 24px; border-radius: var(--r-m);
+  background: var(--nacht-2); border: 1px solid var(--linie);
+  font-size: 16.5px; line-height: 1.5;
+}
+.adresse-titel { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gruen); }
+.adresse .knopf { margin-top: auto; }
+.adresse-breit { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 28px; }
+.adresse-zeile { display: flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; color: var(--text-2); }
+.adresse-zeile .i { color: var(--gruen); }
+a.adresse-zeile:hover { color: var(--weiss); }
+
+/* ---------- Fusszeile ---------- */
+.fuss { padding: 64px 0 36px; background: var(--nacht-tief); border-top: 1px solid var(--haar); font-size: 15.5px; color: var(--grau); }
+.fuss-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; }
+.fuss-marke p { margin-top: 18px; max-width: 26em; }
+.fuss-links { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; align-content: start; }
+.fuss-links a, .fuss-kontakt a, .fuss-recht a { color: var(--text-2); text-decoration: none; min-height: 32px; display: inline-flex; align-items: center; }
+.fuss-links a:hover, .fuss-kontakt a:hover, .fuss-recht a:hover { color: var(--neon); }
+.fuss-kontakt { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+.fuss-kontakt p { margin-top: 6px; }
+.fuss-unten { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--haar); font-size: 14px; }
+.fuss-unten p { display: flex; gap: 20px; }
+
+/* ---------- Aktionsleiste am Handy ---------- */
+.aktion {
+  position: fixed; left: 12px; right: 12px; z-index: 900;
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  display: grid; grid-template-columns: 1.35fr 1fr; gap: 6px;
+  padding: 5px; border-radius: 999px;
+  background: rgb(10 34 71 / 94%);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid rgb(17 255 0 / 45%);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 40%);
+}
+.aktion a {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; border-radius: 999px;
+  font-size: 16px; font-weight: 700; text-decoration: none; color: var(--weiss);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .2s;
+}
+.aktion a .i { width: 19px; height: 19px; }
+.aktion-tel { background: var(--neon); color: var(--nacht) !important; }
+.aktion-mail .i { color: var(--neon); }
+.aktion a:active { transform: scale(.97); }
+.js .aktion { opacity: 0; transform: translate3d(0, 30px, 0); pointer-events: none; transition: opacity .3s, transform .45s var(--ease); }
+.js .aktion.zeigen { opacity: 1; transform: none; pointer-events: auto; }
+@media (min-width: 761px) { .aktion { display: none; } }
+
+/* ---------- Animationen (nur mit .fx, also mit JS und ohne reduzierte Bewegung) ---------- */
+@keyframes auf { to { opacity: 1; transform: none; } }
+@keyframes zeichnen { to { stroke-dashoffset: 0; } }
+@keyframes fuellen { to { fill-opacity: 1; stroke-width: 0; } }
+
+.fx .auf { opacity: 0; transform: translate3d(0, 18px, 0); animation: auf .9s var(--ease) forwards; animation-delay: calc(.2s + var(--d, 0) * .09s); }
+.fx .hero-titel .auf { opacity: 1; transform: translate3d(0, 106%, 0); animation-duration: 1s; }
+.fx .sg {
+  stroke: var(--neon); stroke-width: 2.4; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; fill-opacity: 0;
+  animation: zeichnen 1s cubic-bezier(.6, .1, .3, 1) forwards, fuellen .5s ease forwards;
+  animation-delay: calc(.35s + var(--i) * .11s), calc(1.05s + var(--i) * .1s);
+}
+.fx .auf-foto { opacity: 0; transform: translate3d(0, 30px, 0) scale(.985); animation: auf 1.1s var(--ease) .3s forwards; }
+.fx .auf-karte { opacity: 0; transform: translate3d(0, 44px, 0); animation: auf 1s var(--ease) .8s forwards; }
+
+.fx .rv { opacity: 0; transform: translate3d(0, 26px, 0); transition: opacity .8s var(--ease), transform .9s var(--ease); transition-delay: calc(var(--d, 0) * .09s); }
+.fx .rv.ist-da { opacity: 1; transform: none; }
+
+.fx .stufe-block { transform: scaleY(.12); opacity: 0; transition: transform .9s var(--ease), opacity .4s; transition-delay: calc(var(--n) * .13s); }
+.fx .stufe-kante { transform: scaleX(0); transition: transform .5s var(--ease); transition-delay: calc(.55s + var(--n) * .13s); }
+.fx .stufe-info { opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .6s var(--ease), transform .7s var(--ease); transition-delay: calc(.7s + var(--n) * .13s); }
+.fx .treppe.ist-da .stufe-block { transform: none; opacity: 1; }
+.fx .treppe.ist-da .stufe-kante { transform: none; }
+.fx .treppe.ist-da .stufe-info { opacity: 1; transform: none; }
+
+/* ---------- Kompakte Fahrzeugkarte (schmaleres Hero-Foto) ---------- */
+@media (max-width: 1180px) {
+  .flotte { left: -40px; bottom: 24px; width: 330px; padding: 10px 10px 8px; display: grid; grid-template-columns: 104px minmax(0, 1fr); column-gap: 14px; align-items: center; }
+  .flotte-bild img { aspect-ratio: 4 / 3; height: auto; object-position: 50% 62%; border-radius: 10px; }
+  .flotte-liste { padding: 0; }
+  .flotte-liste li { justify-content: flex-start; flex-wrap: wrap; column-gap: 8px; row-gap: 0; padding: 6px 0; font-size: 15.5px; line-height: 1.3; }
+  .flotte-liste li:last-child { border-bottom: 0; }
+  .flotte-liste em { font-size: 14px; }
+  .flotte-preis { grid-column: 1 / -1; margin-top: 8px; padding: 10px 4px 2px; border-top: 1px solid var(--haar); }
+  .flotte-preis strong { font-size: 21px; }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1100px) {
+  .wissen-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .auto-grid { grid-template-columns: 1fr 1fr; }
+  .auto-info { grid-column: 1 / -1; }
+  .stufe-info { padding: 0 14px 20px; }
+  .stufe-text { font-size: 14.5px; }
+  .stufe-nr { left: 14px; }
+}
+
+@media (max-width: 900px) {
+  .hero { padding: 24px 0 72px; }
+  .hero-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "kopf" "bild" "aktion"; min-height: 0; }
+  .hero-bild { margin-top: 28px; }
+  .hero-foto { max-width: none; }
+  .hero-foto img { aspect-ratio: 16 / 10; min-height: 0; max-height: none; object-position: 50% 30%; }
+  .flotte { position: relative; left: auto; bottom: auto; width: auto; max-width: 520px; margin: -52px 12px 0; }
+  .hero-aktion { margin-top: 8px; }
+  .preise { margin-top: -28px; }
+  .preis-kacheln { grid-template-columns: 1fr 1fr; }
+  .preis-kacheln li:nth-child(3) { border-left: 0; }
+  .preis-kacheln li:nth-child(n+3) { border-top: 1px solid var(--linie); }
+  .abschnitt-kopf-breit { grid-template-columns: 1fr; gap: 0; }
+  .abschnitt-kopf-breit .abschnitt-lead { margin-top: 18px; }
+  .moto-grid { grid-template-columns: minmax(0, 1fr); }
+  .theorie-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .theorie-foto { position: static; }
+  .theorie-foto img { aspect-ratio: 4 / 3; object-position: 50% 30%; }
+  .kontakt-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .fuss-grid { grid-template-columns: 1fr 1fr; }
+  .fuss-marke { grid-column: 1 / -1; }
+}
+
+/* ---------- Handy ---------- */
+@media (max-width: 760px) {
+  body { font-size: 17px; }
+  .hero { padding-top: 18px; }
+  .hero-titel { margin-top: 12px; }
+  .hero-bild { margin-top: 22px; }
+  .hero .kicker { font-size: 12px; letter-spacing: .1em; }
+  .hero-foto img { aspect-ratio: 3 / 2; object-position: 50% 12%; }
+  .slogan { margin-top: 16px; gap: 10px; }
+  .slogan-signet { width: 46px; height: 45px; }
+  .slogan-text { padding-bottom: 4px; }
+  .hero-lead { margin-top: 26px; }
+  .hero-knoepfe { display: grid; grid-template-columns: 1fr; margin-top: 26px; }
+  .knopf { width: 100%; }
+  .adresse .knopf { width: auto; }
+  .hero-name { top: 12px; right: 12px; padding: 8px 11px; font-size: 12.5px; }
+  .hero-name b { font-size: 14px; }
+  .preis-kacheln a { padding: 20px 18px 18px; }
+  .pk-kat { font-size: 11.5px; letter-spacing: .1em; }
+  .pk-text { font-size: 14px; }
+  .pk-pfeil { top: 18px; right: 14px; width: 18px; height: 18px; }
+
+  .schritte, .wissen, .theorie, .kontakt { padding: 80px 0 88px; }
+  .auto { padding: 8px 0 88px; }
+  .abschnitt-kopf { margin-bottom: 36px; }
+
+  .treppe { grid-template-columns: minmax(0, 1fr); gap: 10px; border-bottom: 0; }
+  .stufe { position: relative; isolation: isolate; margin-left: calc(var(--n) * 12px); }
+  .stufe-info { display: grid; grid-template-columns: 92px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 12px; padding: 20px 18px 18px; border-radius: 0; }
+  .stufe-alter { grid-row: 1 / span 2; align-self: center; font-size: 46px; flex-direction: column; align-items: flex-start; gap: 4px; }
+  .stufe-alter small { font-size: 13px; }
+  .stufe-alter-text { font-size: 46px; }
+  .stufe-kat { margin-top: 0; justify-self: start; }
+  .stufe-text { margin-top: 8px; font-size: 15px; }
+  .stufe-block { position: absolute; inset: 0; z-index: -1; height: auto; border-left: 0; border-radius: 0 16px 16px 0; background: linear-gradient(90deg, var(--nacht-3), var(--nacht-2) 60%); }
+  .stufe-auto .stufe-block { background: linear-gradient(90deg, #13366d, var(--nacht-2) 60%); }
+  .stufe-kante { top: 0; bottom: 0; right: auto; width: 3px; height: auto; transform-origin: 50% 0; }
+  .stufe-nr { display: none; }
+  /* Handy: jede Stufe erscheint einzeln, sobald sie ins Bild kommt */
+  .fx .stufe-block { transform: translate3d(-28px, 0, 0); transition-delay: 0s; }
+  .fx .stufe-kante { transform: scaleY(0); transition-delay: .3s; }
+  .fx .stufe-info { transition-delay: .14s; }
+  .fx .treppe .stufe:not(.ist-da) .stufe-block { transform: translate3d(-28px, 0, 0); opacity: 0; }
+  .fx .treppe .stufe:not(.ist-da) .stufe-kante { transform: scaleY(0); }
+  .fx .treppe .stufe:not(.ist-da) .stufe-info { opacity: 0; transform: translate3d(0, 16px, 0); }
+  .fx .stufe.ist-da .stufe-block, .fx .stufe.ist-da .stufe-info { opacity: 1; transform: none; }
+  .fx .stufe.ist-da .stufe-kante { transform: none; }
+  .treppe-notiz { font-size: 15px; }
+
+  .auto-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .wagen h3 { font-size: 24px; }
+  .auto-info { padding: 24px; }
+
+  /* Handy: Foto oben ganz sichtbar, Titel darunter auf Navy, damit nichts über Warndreieck und Pylonen läuft */
+  .moto-band { display: block; height: auto; min-height: 0; max-height: none; }
+  .moto-band-bild { position: relative; top: auto; bottom: auto; aspect-ratio: 4 / 3; }
+  .moto-band-bild img { object-position: 50% 50%; }
+  .moto-band-bild::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgb(0 21 50 / 0%) 62%, rgb(0 21 50 / 70%) 88%, var(--nacht) 100%);
+  }
+  .moto-band::after { display: none; }
+  .moto-band-text { margin-top: -28px; padding-bottom: 4px; }
+  .moto-grid { padding-top: 24px; padding-bottom: 88px; }
+  .reiter { display: flex; }
+  .reiter-knopf { flex: 1; padding: 0 12px; }
+  .moto-pruef { padding: 24px; }
+
+  .vku-liste li { grid-template-columns: 48px 1fr; }
+  .vku-liste h3 { font-size: 19px; }
+  .preisliste-gross { padding: 4px 18px; }
+  .preisliste-gross dd { font-size: 22px; }
+
+  .wissen-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .info-karte { padding: 24px 22px; }
+
+  .kontakt-tel { font-size: clamp(34px, 10vw, 44px); gap: 12px; }
+  .kontakt-mail { font-size: 17px; }
+  .fuss { padding-bottom: calc(170px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 520px) {
+  .kontakt-karten { grid-template-columns: minmax(0, 1fr); }
+  .fuss-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .hero-titel { font-size: clamp(38px, 10.6vw, 46px); }
+}
+
+/* ---------- Reduzierte Bewegung ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+  .moto-band-bild { transform: none !important; }
+}
+
+@media print {
+  .kopf, .aktion, .hero-raster { display: none !important; }
+  body { background: #fff; color: #000; }
+}

@@ -218,6 +218,89 @@ function foldNormal(shape, R, dx, dy, dz, s0, out) {
 }
 const FN = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
+/* ------------------------------------------------------------- Kleinhirn, Hirnstamm, Sonde */
+// Gemeinsam mit brain-hardware.js: die Hardware (Wiege, Klammern, Elektroden) wird an diese Form angepasst.
+export const CEREB = Object.freeze({ c: [0, -0.29, -0.43], r: [0.31, 0.14, 0.2] });
+export const STEM_R = (t) => 0.078 - 0.026 * t;
+export function stemPoints(root) {
+  return [[0, -0.25, -0.2], [0, -0.45, -0.34], [root.x, root.y, root.z]];
+}
+export function stemAt(P, t, out) {
+  const a = (1 - t) * (1 - t); const b = 2 * (1 - t) * t; const c = t * t;
+  for (let i = 0; i < 3; i++) out[i] = a * P[0][i] + b * P[1][i] + c * P[2][i];
+  return out;
+}
+
+/**
+ * Sonde fuer die Form des Gehirns (lokal, gleiche Windungen wie buildBrain): Innen-Test und Oberflaeche entlang eines
+ * Strahls. Wird nur beim Bauen gebraucht (Hardware anpassen), nie pro Frame.
+ */
+export function makeBrainProbe(R, root) {
+  const shape = makeShape(makeSimplex(mulberry32(77)));
+  const SP = stemPoints(root);
+  const sp = [0, 0, 0];
+  const stemSamples = [];
+  for (let i = 0; i <= 24; i++) stemSamples.push([...stemAt(SP, i / 24, [0, 0, 0]), STEM_R(i / 24)]);
+  function insideCerebrum(x, y, z) {
+    const qx = x / R.x; const qy = y / R.y; const qz = z / R.z;
+    const l = Math.hypot(qx, qy, qz);
+    if (l < 1e-6) return true;
+    return l < shape(qx / l, qy / l, qz / l).s;
+  }
+  function insideCereb(x, y, z) {
+    const a = (x - CEREB.c[0]) / CEREB.r[0]; const b = (y - CEREB.c[1]) / CEREB.r[1]; const c = (z - CEREB.c[2]) / CEREB.r[2];
+    return a * a + b * b + c * c < 1;
+  }
+  function insideStem(x, y, z) {
+    for (const s of stemSamples) {
+      const dx = x - s[0]; const dy = y - s[1]; const dz = z - s[2];
+      if (dx * dx + dy * dy + dz * dz < s[3] * s[3]) return true;
+    }
+    return false;
+  }
+  const inside = (x, y, z, stem = true) => insideCerebrum(x, y, z) || insideCereb(x, y, z) || (stem && insideStem(x, y, z));
+  // Aeusserste Oberflaeche entlang des Strahls c + d * t (t in 0..maxT), 0 wenn der Strahl das Gehirn nicht trifft
+  function surfaceAlong(cx, cy, cz, dx, dy, dz, maxT = 1.2, stem = true) {
+    const step = 0.008;
+    let t = maxT;
+    while (t > 0) {
+      if (inside(cx + dx * t, cy + dy * t, cz + dz * t, stem)) {
+        let a = t; let b = t + step;
+        for (let i = 0; i < 8; i++) {
+          const m = (a + b) * 0.5;
+          if (inside(cx + dx * m, cy + dy * m, cz + dz * m, stem)) a = m; else b = m;
+        }
+        return a;
+      }
+      t -= step;
+    }
+    return 0;
+  }
+  // Erster Eintritt in das Gehirn entlang c + d * t (Strahl von aussen), 0 wenn kein Treffer
+  function hitAlong(cx, cy, cz, dx, dy, dz, maxT = 0.5, stem = true) {
+    const step = 0.004;
+    for (let t = 0; t < maxT; t += step) {
+      if (inside(cx + dx * t, cy + dy * t, cz + dz * t, stem)) {
+        let a = Math.max(0, t - step); let b = t;
+        for (let i = 0; i < 8; i++) {
+          const m = (a + b) * 0.5;
+          if (inside(cx + dx * m, cy + dy * m, cz + dz * m, stem)) b = m; else a = m;
+        }
+        return b;
+      }
+    }
+    return 0;
+  }
+  // Punkt auf der Rinde in Richtung d (vom Mittelpunkt aus) und Flaechennormale (numerisch, Grundform ohne Windungen)
+  function cortexPoint(dx, dy, dz, out) {
+    const l = Math.hypot(dx, dy, dz) || 1;
+    const t = surfaceAlong(0, 0, 0, dx / l, dy / l, dz / l, 1.2, false);
+    out[0] = (dx / l) * t; out[1] = (dy / l) * t; out[2] = (dz / l) * t;
+    return out;
+  }
+  return { inside, insideCerebrum, insideCereb, insideStem, surfaceAlong, hitAlong, cortexPoint, stemPoints: SP, stemAt: (t, o) => stemAt(SP, t, o), sp };
+}
+
 /* ------------------------------------------------------------- Hauptfunktion */
 /**
  * @param {object} o
@@ -249,15 +332,11 @@ export function buildBrain(o) {
   const dir = [0, 0, 0];
 
   // Kleinhirn und Hirnstamm (lokal)
-  const CB = { c: [0, -0.29, -0.43], r: [0.31, 0.14, 0.2] };
+  const CB = CEREB;
   // Hirnstamm hinten unten (vor dem Kleinhirn), von vorne kaum sichtbar
-  const stemP = [[0, -0.25, -0.2], [0, -0.45, -0.34], [root.x, root.y, root.z]];
-  const bez = (t, out) => {
-    const a = (1 - t) * (1 - t); const b = 2 * (1 - t) * t; const c = t * t;
-    for (let i = 0; i < 3; i++) out[i] = a * stemP[0][i] + b * stemP[1][i] + c * stemP[2][i];
-    return out;
-  };
-  const stemR = (t) => 0.078 - 0.026 * t;
+  const stemP = stemPoints(root);
+  const bez = (t, out) => stemAt(stemP, t, out);
+  const stemR = STEM_R;
 
   const insideBrain = (x, y, z, margin = 0.985) => {
     const qx = x / R.x;

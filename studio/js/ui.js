@@ -45,7 +45,9 @@ export class UI {
     this.initAnchors();
     this.initReveal();
     this.initCounters();
+    this.initFaq();
     this.initForm();
+    this.initTopicLinks();
     this.initCursor();
     const y = $('#year');
     if (y) y.textContent = String(new Date().getFullYear());
@@ -192,22 +194,28 @@ export class UI {
     if (!on) {
       // Panel ist schon ausgeblendet (--o = 0): Ausgangslage fuer das naechste Mal
       g.set(p.words, { yPercent: 115, rotate: 4 });
-      g.set(p.items, { opacity: 0, y: 22 });
+      g.set(p.items, { opacity: 0, y: 14 });
       g.set(p.lines, { opacity: 0, x: -12 });
       return;
     }
-    const delay = first ? 0.15 : 0.05;
+    // Lesbarkeit vor Effekt: Die Woerter stehen nach hoechstens 0.6 s (inkl. Versatz) still, der Rest folgt kurz danach.
+    // Nur der Hero direkt nach dem Preloader darf etwas laenger aufsteigen.
+    const delay = first ? 0.15 : 0.02;
     const tl = g.timeline({ delay });
-    if (p.lines.length) tl.fromTo(p.lines, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 0);
-    if (p.words.length) {
+    const n = p.words.length;
+    const wDur = first ? 0.8 : 0.48;
+    const wTotal = first ? 1.1 : 0.6;
+    const stagger = n > 1 ? Math.min(first ? 0.06 : 0.035, (wTotal - wDur) / (n - 1)) : 0;
+    if (p.lines.length) tl.fromTo(p.lines, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' }, 0);
+    if (n) {
       tl.fromTo(p.words, { yPercent: 115, rotate: 4 }, {
-        yPercent: 0, rotate: 0, duration: 1.25, ease: 'expo.out', stagger: first ? 0.06 : 0.045,
-      }, 0.08);
+        yPercent: 0, rotate: 0, duration: wDur, ease: 'expo.out', stagger,
+      }, 0.04);
     }
     if (p.items.length) {
-      tl.fromTo(p.items, { opacity: 0, y: 22 }, {
-        opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.09, clearProps: 'transform',
-      }, first ? 0.5 : 0.32);
+      tl.fromTo(p.items, { opacity: 0, y: 14 }, {
+        opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', stagger: 0.06, clearProps: 'transform',
+      }, first ? 0.45 : 0.16);
     }
     p.tl = tl;
   }
@@ -370,20 +378,22 @@ export class UI {
     const els = $$('[data-reveal]');
     if (!els.length) return;
     if (this.reduced || !('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('is-in')); return; }
+    // Frueh ausloesen (Element 10 % ueber dem unteren Rand), damit beim Lesen nichts mehr nachrutscht
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
         if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
       }
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
     els.forEach((el) => io.observe(el));
   }
 
-  /* Zahlen im Fallbeispiel zaehlen hoch, sobald sie sichtbar werden */
+  /* Zahlen im Fallbeispiel zaehlen einmal hoch (1.2 s), sobald sie sichtbar werden. Der Endwert steht im HTML
+     (Google, Screenreader, Fallback ohne JS). Bei reduzierter Bewegung bleibt er einfach stehen. */
   initCounters() {
     const els = $$('[data-count]');
     const g = this.gsap;
     if (!els.length || !g || this.reduced || !('IntersectionObserver' in window)) return;
-    // Nur die Zahl (.n) zaehlt hoch, Zusaetze wie "+" oder "unter ... Std." bleiben stehen
+    // Nur die Zahl (.n) zaehlt hoch, Zusaetze wie "+" bleiben stehen
     const fmt = (el, v) => {
       const n = el.querySelector('.n') || el;
       n.textContent = String(Math.round(v));
@@ -394,12 +404,62 @@ export class UI {
         io.unobserve(e.target);
         const el = e.target;
         const end = parseFloat(el.dataset.count);
+        if (!(end > 0)) continue;
         const o = { v: 0 };
         fmt(el, 0);
-        g.to(o, { v: end, duration: end > 20 ? 1.8 : 1.2, ease: 'power3.out', delay: 0.15, onUpdate: () => fmt(el, o.v) });
+        g.to(o, { v: end, duration: 1.2, ease: 'power3.out', delay: 0.1, onUpdate: () => fmt(el, o.v), onComplete: () => fmt(el, end) });
       }
-    }, { threshold: 0.6 });
+    }, { threshold: 0.5 });
     els.forEach((el) => io.observe(el));
+  }
+
+  /* -------------------------------------------- Haeufige Fragen (Akkordeon) */
+  // Muster nach WAI-ARIA APG: Ueberschrift mit Knopf (aria-expanded, aria-controls), Antwort darunter.
+  // Im HTML sind alle Antworten offen (aria-expanded="true"): ohne JS bleibt alles lesbar. Hier wird zugeklappt,
+  // nur die erste Frage bleibt offen. Tastatur: Enter/Leertaste (Knopf), Pfeil hoch/runter, Pos1, Ende.
+  // Geschlossene Antworten sind per CSS visibility: hidden (kein Fokus, nicht im Accessibility-Baum).
+  initFaq() {
+    const btns = $$('.faq__q button[aria-controls]');
+    if (!btns.length) return;
+    const set = (btn, open) => {
+      btn.setAttribute('aria-expanded', String(open));
+      const item = btn.closest('.faq__item');
+      if (item) item.classList.toggle('is-open', open);
+    };
+    btns.forEach((btn, i) => {
+      set(btn, i === 0);
+      btn.addEventListener('click', () => set(btn, btn.getAttribute('aria-expanded') !== 'true'));
+      btn.addEventListener('keydown', (e) => {
+        let to = -1;
+        if (e.key === 'ArrowDown') to = (i + 1) % btns.length;
+        else if (e.key === 'ArrowUp') to = (i - 1 + btns.length) % btns.length;
+        else if (e.key === 'Home') to = 0;
+        else if (e.key === 'End') to = btns.length - 1;
+        if (to < 0) return;
+        e.preventDefault();
+        btns[to].focus();
+      });
+    });
+    // Link direkt auf eine Frage oder Antwort (z. B. #faq-a3): diese Frage oeffnen
+    const openFor = (el) => {
+      const item = el && el.closest ? el.closest('.faq__item') : null;
+      const btn = item && item.querySelector('.faq__q button');
+      if (btn) set(btn, true);
+    };
+    if (location.hash) openFor(document.getElementById(location.hash.slice(1)));
+  }
+
+  /* Knoepfe mit data-thema (z. B. "KI für meinen Betrieb besprechen") waehlen im Formular das Thema vor */
+  initTopicLinks() {
+    const select = $('#f-thema');
+    if (!select) return;
+    document.addEventListener('click', (e) => {
+      const a = e.target instanceof Element ? e.target.closest('a[data-thema]') : null;
+      if (!a) return;
+      const want = a.dataset.thema;
+      const opt = Array.from(select.options).find((o) => o.value === want || o.text === want);
+      if (opt) select.value = opt.value;
+    });
   }
 
   /* ------------------------------------------------------------ Cursor */

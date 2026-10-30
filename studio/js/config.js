@@ -55,6 +55,96 @@ export const ANCHORS = Object.freeze({
   wireframe: Object.freeze({ center: v(0, 0.5, -36), width: 5.6, height: 3.4 }),
 });
 
+/* ------------------------------------------------------------ Szene robot */
+// ownBackdrop: eigener Hintergrund der Android-Bueste (weicher Lichtkegel und Nebel hinter dem Kopf,
+// js/scenes/robot-env.js buildBackdrop). Seit dem globalen Hintergrund-Modul (js/scenes/backdrop.js) aus: dessen
+// Farbwelt "robot" uebernimmt das Studio-Gegenlicht hinter der Bueste. Ohne Code-Aenderung vergleichen: index.html
+// oder dev.html mit ?robotbg=1 (alter Hintergrund zusaetzlich an) bzw. ?robotbg=0.
+export const ROBOT = Object.freeze({ ownBackdrop: false });
+
+/* ------------------------------------------------------- Hintergrund */
+// Farbwelten des Hintergrund-Moduls (js/scenes/backdrop.js), eine pro Beat plus "inhalt" (Inhaltsbereich).
+// backdrop.js mischt sie nach dem Fortschritt: weiche Kante BACKDROP_FADE (global) um jede Beat-Grenze, am Schnitt
+// (Ende Code -> Ausklang) ein harter Wechsel im Lichtblitz, im Inhaltsbereich nach director.content zu "inhalt".
+// Farben sRGB-Hex (wie HEX), gemischt wird linear. Punkte in Weltkoordinaten (ANCHORS):
+//   glowAt     Gegenlicht-Halo liegt (vom Auge aus) hinter diesem Punkt, glowShift verschiebt ihn im Bild
+//              (Anteil, x rechts, y oben). So bleibt das Licht beim Kreisen der Kamera hinter dem Motiv.
+//   rayAt      Quelle der Lichtstrahlen (darf ausserhalb des Bildes liegen, die Strahlen fallen dann ins Bild)
+//   accentAt   Richtung des Akzent-Dunsts (accent, meist ein warmer oder kuehler Gegenpol)
+// Mengen 0..1 (Helligkeit linear, Kapitel 12 in ARCHITEKTUR.md). Fehlende Schluessel kommen aus `base` in backdrop.js.
+// Kontrast-Regel: base unter 0.006, mid unter 0.025 relative Leuchtdichte; helle Teile (glow, rays, horizonGlow) nur
+// auf der Seite des Motivs, nie hinter der Textspalte.
+export const BACKDROP_FADE = 0.035;
+export const BACKDROPS = Object.freeze({
+  // Tiefsee-Petrol: Nebel, Lichtstrahlen von oben (aus der Richtung des Lichtkegels der Partikel), Staub
+  intro: {
+    base: 0x03121a, mid: 0x072a35, hi: 0x1f6f7c, accent: 0x2b1a10, fogColor: 0x04161d,
+    rayColor: 0x8fe3ee, starColor: 0xbdf6ff,
+    glowAt: [0.3, -0.6, 0], glowShift: [0.02, 0.1], rayAt: [2.6, 10.5, -3.0], accentAt: [14, -6, -12],
+    horizon: -0.02, horizonGlow: 0.2, glow: 0.42, glowSize: 1.3,
+    fog: 0.9, fogScale: 1.0, fogSpeed: 0.004, rays: 1.0, rayFreq: 7, stars: 0.5, dust: 0.5, bokeh: 0.12,
+  },
+  // Kuehles Fotostudio passend zur Android-Bueste: weiches Gegenlicht hinter dem Kopf, leiser Dunst, breite
+  // schraege Lichtbahnen von oben rechts (Seite des Kantenlichts), fast statisch
+  robot: {
+    base: 0x060c14, mid: 0x0f1d2c, hi: 0x3d6e93, accent: 0x14100c, fogColor: 0x070d15,
+    rayColor: 0x6f9fc0, starColor: 0xbdf6ff,
+    glowAt: [0, -0.35, 0], glowShift: [0.0, 0.06], rayAt: [6, 9, -7], accentAt: [-12, -4, 8],
+    horizon: -0.12, horizonGlow: 0.12, glow: 0.95, glowSize: 1.7,
+    fog: 0.35, fogScale: 0.8, fogSpeed: 0.002, rays: 0.28, rayFreq: 3, dust: 0.12,
+  },
+  // Scan-Labor: wie das Studio, dazu Messraster, Scanlinie und Messkreis (steigen mit dem Roentgen-Scan)
+  zoom: {
+    base: 0x04101a, mid: 0x0a2532, hi: 0x2a8fa8, accent: 0x0f4a5a, fogColor: 0x05141c,
+    rayColor: 0x6fbfd0, gridColor: 0x2aa6bf, starColor: 0xbdf6ff,
+    glowAt: [0, -0.2, 0], glowShift: [0.0, 0.04], rayAt: [6, 9, -7], accentAt: [0, -10, -10],
+    horizon: -0.08, horizonGlow: 0.15, glow: 0.8, glowSize: 1.5,
+    fog: 0.4, fogScale: 0.9, fogSpeed: 0.003, rays: 0.12, rayFreq: 3, grid: 0.12, dust: 0.1,
+  },
+  // Biolumineszenz: violetter Nebel, dessen Schwaden selbst leuchten (magenta, Raender tuerkis), Sporen; das Gehirn
+  // bleibt Cyan davor. Gegenlicht hinter dem Hinterkopf (die Kamera taucht spaeter genau dorthin)
+  brain: {
+    base: 0x090518, mid: 0x1b0c33, hi: 0x7434a8, accent: 0x102a30, fogColor: 0x0b0716,
+    auroraA: 0x6a2fd8, auroraB: 0xb8338a, auroraEdge: 0x2fb7b0, starColor: 0x8fe8e0, bokehColor: 0xb8338a,
+    glowAt: [0, 0.35, -1.6], glowShift: [0.04, 0.04], rayAt: [0, 10, -10], accentAt: [-6, -8, -14],
+    horizon: -0.05, horizonGlow: 0.1, glow: 0.75, glowSize: 1.5,
+    fog: 0.75, fogScale: 1.2, fogSpeed: 0.006, aurora: 1.0, dust: 0.35, bokeh: 0.18,
+  },
+  // Glasfaser-Blau: tiefe Ebene weit unten mit Lichtpaketen auf feinen Bahnen, Bokeh, Sterne; Licht hinter dem
+  // Website-Knoten (dort geht die Reise weiter)
+  cables: {
+    base: 0x030916, mid: 0x0a1a33, hi: 0x2a63b8, accent: 0x0a1f40, fogColor: 0x040b1a,
+    streakColor: 0x46e6ff, gridColor: 0x1d4f8f, bokehColor: 0x3a7fe0, starColor: 0xbdf6ff,
+    glowAt: [0, 0.5, -14], glowShift: [0, 0], rayAt: [0, 10, -10], accentAt: [10, -10, -20],
+    horizon: -0.04, horizonGlow: 0.3, glow: 0.55, glowSize: 1.4,
+    fog: 0.3, fogScale: 1.0, fogSpeed: 0.004, streaks: 0.45, bokeh: 0.3, stars: 0.25,
+    floor: 0.85, floorY: -9, floorGrid: 2.2, floorShine: 0.8,
+  },
+  // Code-Raum Gruen-Tuerkis: leiser Code-Regen auf der Tunnelwand, Lichtkern beim Website-Geruest (-z)
+  dna: {
+    base: 0x02100e, mid: 0x05302a, hi: 0x17a888, accent: 0x0a3a30, fogColor: 0x03130f,
+    codeColor: 0x1fd1a5, starColor: 0xbdf6ff,
+    glowAt: [0, 0.5, -60], glowShift: [0, 0], rayAt: [0, 10, -10], accentAt: [0, -10, -30],
+    horizon: 0, horizonGlow: 0.2, glow: 0.6, glowSize: 1.2,
+    fog: 0.3, fogScale: 1.1, fogSpeed: 0.004, code: 0.06, dust: 0.15,
+  },
+  // Morgenlicht: goldenes Horizontgluehen hinter den Schultern rechts (nie hinter dem Kontakt-Text links), Strahlen
+  // von rechts oben, Goldstaub, oben kuehl
+  outro: {
+    base: 0x0a0908, mid: 0x21170f, hi: 0xe0a05a, accent: 0x1d3550, fogColor: 0x110c08,
+    rayColor: 0xffd29a, starColor: 0xffd7a0,
+    glowAt: [0.4, -1.3, -0.6], glowShift: [0.3, -0.05], rayAt: [9, 6, -10], accentAt: [-6, 30, -4],
+    horizon: -0.12, horizonGlow: 0.8, glow: 0.42, glowSize: 1.5,
+    fog: 0.35, fogScale: 0.9, fogSpeed: 0.003, rays: 0.4, rayFreq: 5, dust: 0.3,
+  },
+  // Inhaltsbereich: ruhig, nur Verlauf und ein Rest Waerme
+  inhalt: {
+    base: 0x05080d, mid: 0x0a0f16, hi: 0x2a1c12, accent: 0x000000, fogColor: 0x05080d,
+    glowAt: [1.4, -1.7, -1.0], glowShift: [0.06, 0.0], horizon: -0.1, horizonGlow: 0.3, glow: 0.2, glowSize: 1.6,
+    detail: 0.1,
+  },
+});
+
 /* ------------------------------------------------------- Szenen (Beats) */
 // Reihenfolge = Reihenfolge der <section data-scene> in index.html.
 // len = Hoehe des Abschnitts in vh. Daraus misst der Director die Zeitfenster (global 0..1).
@@ -75,6 +165,8 @@ export const BEAT_FADE = 0.02;
 // Module (js/scenes/<name>.js) und ihre Zeitfenster. 'beat@p' = Punkt p (0..1) im Beat.
 // windows[0] ist das Hauptfenster: daraus kommt `local`. Weitere Fenster halten das Modul nur aktiv.
 export const MODULES = Object.freeze({
+  // Hintergrund hinter allem: immer aktiv (Gewicht 1), Farbwelten aus BACKDROPS
+  backdrop: { windows: [{ from: 'intro@0', to: 'outro@1' }] },
   particles: { windows: [{ from: 'intro@0', to: 'robot@0.7' }] },
   // robot bleibt bis brain@0.6 aktiv: die Roentgen-Schale (Hologramm) umgibt das Gehirn, bis die Kamera eintaucht
   robot: { windows: [{ from: 'robot@0', to: 'brain@0.6' }, { from: 'outro@0', to: 'outro@1' }] },
@@ -91,21 +183,45 @@ export const CAMERA_KEYS = Object.freeze([
   // Hero: lose angedeuteter Kopf mit leuchtendem Kern rechts der Mitte (Hochformat: oberes Drittel), Titel links unten
   { at: 'intro@0', pos: [0.15, 0.32, 13.4], look: [-1.75, -0.3, 0], fov: 30, posM: [0, 0.35, 11.0], lookM: [0, -3.25, 0] },
   { at: 'intro@1', pos: [0.6, 0.3, 12.0], look: [-0.9, -0.3, 0], fov: 31, posM: [0.5, 0.3, 9.6], lookM: [0, -2.1, 0] },
-  // Roboter leicht rechts der Mitte, links Platz fuer den Text (Hochformat: zentriert, Text unten)
-  { at: 'robot@0.5', pos: [3.6, 0.9, 8.2], look: [-0.32, -0.45, 0.14], fov: 32, lookM: [0, -0.45, 0] },
-  { at: 'robot@1', pos: [1.8, 0.45, 5.6], look: [-0.5, -0.15, 0.16], fov: 33, posM: [1.8, 0.45, 6.4], lookM: [0, -1.5, 0] },
-  // "Was dahinter steckt": Kopf rechts, die Schale wird durchsichtig. Danach kreist die Kamera vor dem Gesicht vorbei
-  // nach vorne links oben: Dreiviertelansicht des Gehirns in der Roentgen-Schale (Stirn, Schlaefe, Kleinhirn lesbar)
-  // Hochformat: naeher und hoeher, die Unterkante der Bueste bleibt ausserhalb des Bildes
-  { at: 'zoom@0.35', pos: [1.0, 0.32, 4.3], look: [-0.58, 0.02, 0.14], fov: 36, posM: [0.5, 0.4, 4.6], lookM: [0, -1.15, 0] },
-  // Waehrend des Roentgen-Scans schon seitlich: das Gehirn ist nie frontal (zwei runde Haelften) zu sehen
-  { at: 'zoom@0.5', pos: [-1.5, 0.95, 3.7], look: [-0.45, 0.12, 0], fov: 38, posM: [-1.3, 0.5, 3.9], lookM: [-0.05, -0.8, 0] },
-  { at: 'zoom@0.7', pos: [-2.0, 1.35, 3.1], look: [-0.3, 0.12, 0], fov: 39, posM: [-1.6, 0.8, 2.85], lookM: [-0.04, -0.6, -0.05] },
-  { at: 'zoom@1', pos: [-2.15, 1.5, 2.85], look: [-0.7, 0.12, -0.12], fov: 40, posM: [-1.68, 1.21, 2.3], lookM: [-0.03, -0.46, -0.1] },
+  // Android-Bueste in Dreiviertelansicht von rechts vorne (+x): das Gesicht wendet sich dem Text links zu, die Bueste
+  // steht rechts der Mitte. Danach kreist die Kamera ruhig auf derselben Seite weiter (Hochformat: Bueste oben, Text unten)
+  {
+    at: 'robot@0.5', pos: [4.2, 0.75, 7.4], look: [-0.98, -0.69, 0.58], fov: 31,
+    lookM: [0.18, -2.8, 0.3],
+  },
+  {
+    at: 'robot@1', pos: [6.3, 0.55, 3.9], look: [-0.54, -0.63, 0.78], fov: 32,
+    lookM: [0.24, -2.48, 0.05],
+  },
+  // "Was dahinter steckt": Profil von schraeg hinten, solange der Text steht. Gesicht blickt nach links zum Text,
+  // rechts im Bild der offene Hinterkopf mit Schaedelgitter, Glaskappe und Kabeln.
+  {
+    at: 'zoom@0.22', pos: [7.0, 0.45, -2.3], look: [0.23, -0.46, 0.61], fov: 30,
+    posM: [7.0, 0.5, -2.3], lookM: [0.18, -1.89, -0.35],
+  },
+  {
+    at: 'zoom@0.38', pos: [6.6, 0.55, -1.9], look: [0.19, -0.41, 0.59], fov: 31,
+    posM: [6.6, 0.6, -1.95], lookM: [0.2, -1.8, -0.35],
+  },
+  // Roentgen-Scan (zoom@0.3 bis 0.84): die Kamera kommt seitlich nach vorne oben, das Gehirn erscheint in seiner
+  // Hardware (Seitenansicht, nie frontal), am Ende Dreiviertelansicht von vorne rechts oben
+  {
+    at: 'zoom@0.6', pos: [4.3, 0.95, 0.6], look: [-0.07, -0.16, 0.33], fov: 34,
+    posM: [4.4, 1.0, 0.6], lookM: [0.25, -1.11, -0.06],
+  },
+  {
+    at: 'zoom@0.8', pos: [3.2, 1.15, 1.7], look: [-0.2, 0.04, 0.26], fov: 37,
+    posM: [3.6, 1.25, 2.0], lookM: [0.25, -0.94, 0.04],
+  },
+  {
+    at: 'zoom@1', pos: [2.3, 1.35, 2.55], look: [-0.44, 0.14, 0.26], fov: 40,
+    posM: [2.3, 1.5, 3.0], lookM: [0.22, -0.9, 0.19],
+  },
   // Text "Intelligenz" links, Gehirn rechts; dann taucht die Kamera ein, fliegt durch und hinten hinaus.
   // Hochformat: der Kopf fuellt rund 70 % der Bildbreite
-  { at: 'brain@0.3', pos: [-1.62, 1.2, 2.18], look: [-0.58, 0.16, -0.12], fov: 40, posM: [-1.6, 1.15, 2.2], lookM: [-0.03, -0.45, -0.1] },
-  { at: 'brain@0.55', pos: [-0.5, 0.52, 0.42], look: [0.15, 0.22, -0.5], fov: 54 },
+  // (Seit dem Einbau der Android-Bueste von vorne rechts, gleiche Seite wie Roboter und Zoom.)
+  { at: 'brain@0.3', pos: [1.62, 1.2, 2.18], look: [-0.42, 0.12, 0.21], fov: 40, posM: [1.9, 1.35, 2.6], lookM: [0.18, -0.7, 0.15] },
+  { at: 'brain@0.55', pos: [0.5, 0.52, 0.42], look: [-0.15, 0.22, -0.5], fov: 54 },
   // Austrittspunkt der Kabel nicht in der Bildmitte, leichte Neigung: liest sich als "Kabel werden gezogen"
   { at: 'brain@0.78', pos: [0.02, 0.32, -0.25], look: [0.25, -0.05, -1.0], fov: 58, roll: 6 },
   { at: 'brain@1', pos: [-0.35, 0.55, -0.85], look: [0, 0, -3], fov: 55, roll: 2.5 },
@@ -136,10 +252,12 @@ export const CAMERA_KEYS = Object.freeze([
   // Geruest fertig: oben im Bild, darunter Platz fuer die Angebotszeile (HTML, js/ui.js setOffer)
   { at: 'dna@0.74', pos: [0, 0.44, -29.25], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -28.85], lookM: [0, -0.5, -36] },
   { at: 'dna@1', pos: [0, 0.42, -29.45], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -29.05], lookM: [0, -0.5, -36] },
-  { at: 'outro@0', cut: true, pos: [0, 0.0, 4.6], look: [0, -0.2, 0], fov: 34, posM: [0, 0.2, 6.5], lookM: [0, -2.25, 0] },
+  // Ausklang: Schnitt auf das Gesicht (die Augen erwachen im Lichtblitz), dann zieht die Kamera langsam zurueck in eine
+  // ruhige Dreiviertelansicht leicht von unten: die Bueste rechts, der Blick zum Kontakt links (Hochformat: Bueste oben)
+  { at: 'outro@0', cut: true, pos: [0.5, 0.05, 4.5], look: [-0.22, -0.27, 0.03], fov: 34, posM: [0.4, 0.2, 6.0], lookM: [0.01, -1.95, 0.09] },
   {
-    at: 'outro@1', pos: [-1.9, 0.15, 8.6], look: [-1.1, -0.45, 0], fov: 32,
-    posM: [0, 0.4, 9.0], lookM: [0, -3.1, 0],
+    at: 'outro@1', pos: [3.7, -0.3, 7.9], look: [-1.19, -0.75, 0.56], fov: 31,
+    posM: [3.4, 0.1, 8.4], lookM: [0.06, -2.83, 0.15],
   },
 ]);
 export const CUT_FADE = 0.008; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 9 vh)

@@ -18,7 +18,9 @@ studio/
   js/ui.js              Ohne three.js: Preloader, Cursor, Navigation, HUD, Einblendungen, Kontaktformular
   js/dev.js             Logik von dev.html
   js/fx/FxPass.js       Eigener Bild-Pass: chromatische Aberration, Vignette, Filmkorn, Blitz, Abblende, Abdunkeln
-  js/scenes/*.js        particles, robot, brain, cables, dna (zurzeit PLATZHALTER mit einfachen Formen)
+  js/scenes/*.js        particles, robot, brain, cables, dna (je ein Szenen-Modul, Hilfsdateien <name>-*.js)
+  js/scenes/robot*.js   Android-Bueste (Kapitel 11): robot.js Einstieg, robot-mesh/-layout/-materials/-mech/-env/-geometry
+  assets/robot/         bust.bin: Netz der Android-Bueste (MakeHuman CC0, offline aufbereitet, 76 KB)
   assets/fonts/         Geist (variabel 300..700) und Geist Mono (variabel 400..600), latin, woff2, OFL
   vendor/               three r170 (ES-Module) und GSAP 3.12.5 + ScrollTrigger (UMD, global window.gsap)
 ```
@@ -88,14 +90,14 @@ Wirft `update` einen Fehler, blendet der Runner die Szene aus und meldet es einm
 
 - Y zeigt nach oben, rechtshändig. Die Startkamera steht auf +Z und schaut Richtung -Z.
 - 1 Einheit entspricht etwa 10 cm. Der Kopf ist also rund 2 Einheiten hoch.
-- **Der Kopf des Roboters steht im Ursprung**, das Gesicht (Visier) zeigt nach +Z.
+- **Der Kopf des Roboters steht im Ursprung**, das Gesicht zeigt nach +Z (Augen der Android-Bueste bei y ≈ 0, z ≈ 0.6).
 - Alle Werte stehen in `js/config.js` unter `ANCHORS`. Nie Zahlen doppelt hart codieren.
 
 | Anker | Wert | Bedeutung |
 | --- | --- | --- |
 | `head.center` | (0, 0, 0) | Kopfmitte |
 | `head.radii` | (0.82, 1.0, 0.92) | Halbachsen des Kopf-Ellipsoids (Breite 1.64, Höhe 2.0, Tiefe 1.84) |
-| `visor.center` | (0, 0.05, 0.86) | Mitte des Visiers auf der Vorderseite, Breite 1.3, Höhe 0.26 |
+| `visor.center` | (0, 0.05, 0.86) | Rest vom Helm-Roboter (Visier), von keiner Szene mehr genutzt. Augen: `bust.bin`-Landmarken `eyeL`/`eyeR` (±0.30, 0, 0.60) |
 | `neck.top` / `neck.bottom` | (0, -0.85, -0.05) / (0, -1.55, -0.1) | Hals, Radius 0.32 |
 | `bust.center` | (0, -2.4, -0.15) | Schulterpartie, Schulterbreite 4.2, Unterkante y = -3.4 |
 | `brain.center` | (0, 0.24, -0.06) | Gehirn im Kopf, Halbachsen (0.6, 0.48, 0.7), liegt ganz im Kopf |
@@ -134,9 +136,9 @@ Der Director misst die Abschnitte und rechnet Start/Ende in `global` um. Nominal
 
 | Beat | len (vh) | start | end | Inhalt |
 | --- | --- | --- | --- | --- |
-| intro | 120 | 0.0000 | 0.1111 | Hero: Partikel-Büste (zu zwei Dritteln geformt, Visier-Linie, atmet, folgt der Maus), Titel, Buttons |
-| robot | 180 | 0.1111 | 0.2778 | Partikel formen den Roboter, Maus-Reaktion |
-| zoom | 170 | 0.2778 | 0.4352 | Kopf rechts, Schale wird transparent, Kamera kreist nach vorne links oben |
+| intro | 120 | 0.0000 | 0.1111 | Hero: Partikel-Büste (Android-Form, Augen und Plattenlinien, atmet, folgt der Maus), Titel, Buttons |
+| robot | 180 | 0.1111 | 0.2778 | Partikel formen die Android-Büste (Hologramm, dann fest), Dreiviertelansicht, Maus-Reaktion |
+| zoom | 170 | 0.2778 | 0.4352 | Profil mit offenem Hinterkopf und Kabeln, Röntgen-Scan, Gehirn in der Hardware, Kamera kreist nach vorne rechts oben |
 | brain | 150 | 0.4352 | 0.5741 | Dreiviertelansicht des Gehirns in der Röntgen-Schale, Eintauchen, Flug hinten hinaus |
 | cables | 190 | 0.5741 | 0.7500 | Kabel werden gezogen, Übersicht von schräg oben, Knoten der Werkzeuge |
 | dna | 210 | 0.7500 | 0.9444 | Flug in den Website-Knoten, Helix aus Code, Website-Gerüst |
@@ -186,14 +188,15 @@ der Mitte (Blickziel nach links versetzt); im Hochformat steht der Text unten, d
 | --- | --- | --- | --- | --- | --- |
 | intro@0 | (0.15, 0.32, 13.4) | (-1.75, -0.3, 0) | 30 | pos (0, 0.35, 11), look (0, -3.25, 0) | Hero: Partikel-Büste rechts neben dem Text, Hochformat oberes Drittel |
 | intro@1 | (0.6, 0.3, 12) | (-0.9, -0.3, 0) | 31 | pos (0.5, 0.3, 9.6), look (0, -2.1, 0) | |
-| robot@0.5 | (3.6, 0.9, 8.2) | (-0.32, -0.45, 0.14) | 32 | look (0, -0.45, 0) | Roboter leicht rechts |
-| robot@1 | (1.8, 0.45, 5.6) | (-0.5, -0.15, 0.16) | 33 | pos (1.8, 0.45, 6.4), look (0, -1.5, 0) | |
-| zoom@0.35 | (1.0, 0.32, 4.3) | (-0.58, 0.02, 0.14) | 36 | pos (0.5, 0.4, 4.6), look (0, -1.15, 0) | Kopf rechts, Text links, Scan beginnt |
-| zoom@0.5 | (-1.5, 0.95, 3.7) | (-0.45, 0.12, 0) | 38 | pos (-1.3, 0.5, 3.9), look (-0.05, -0.8, 0) | schon seitlich: Gehirn nie frontal (zwei Hälften) |
-| zoom@0.7 | (-2.0, 1.35, 3.1) | (-0.3, 0.12, 0) | 39 | pos (-1.6, 0.8, 2.85), look (-0.04, -0.6, -0.05) | |
-| zoom@1 | (-2.15, 1.5, 2.85) | (-0.7, 0.12, -0.12) | 40 | pos (-1.68, 1.21, 2.3), look (-0.03, -0.46, -0.1) | Dreiviertelansicht vorne links oben, Hochformat: Kopf ~70 % der Breite |
-| brain@0.3 | (-1.62, 1.2, 2.18) | (-0.58, 0.16, -0.12) | 40 | pos (-1.6, 1.15, 2.2), look (-0.03, -0.45, -0.1) | Text links, Gehirn rechts |
-| brain@0.55 | (-0.5, 0.52, 0.42) | (0.15, 0.22, -0.5) | 54 | | Eintauchen durch Schale und Rinde |
+| robot@0.5 | (4.2, 0.75, 7.4) | (-0.98, -0.69, 0.58) | 31 | look (0.18, -2.8, 0.3) | Android-Büste Dreiviertelansicht von rechts vorne (+x), Gesicht zum Text, Büste rechts |
+| robot@1 | (6.3, 0.55, 3.9) | (-0.54, -0.63, 0.78) | 32 | look (0.24, -2.48, 0.05) | kreist auf derselben Seite weiter |
+| zoom@0.22 | (7.0, 0.45, -2.3) | (0.23, -0.46, 0.61) | 30 | pos (7, 0.5, -2.3), look (0.18, -1.89, -0.35) | Profil von schräg hinten: Gesicht zum Text, rechts offener Hinterkopf mit Kabeln |
+| zoom@0.38 | (6.6, 0.55, -1.9) | (0.19, -0.41, 0.59) | 31 | pos (6.6, 0.6, -1.95), look (0.2, -1.8, -0.35) | ruhig, solange der Text steht; Scan beginnt |
+| zoom@0.6 | (4.3, 0.95, 0.6) | (-0.07, -0.16, 0.33) | 34 | pos (4.4, 1, 0.6), look (0.25, -1.11, -0.06) | Röntgen seitlich: Gehirn in der Hardware, nie frontal |
+| zoom@0.8 | (3.2, 1.15, 1.7) | (-0.2, 0.04, 0.26) | 37 | pos (3.6, 1.25, 2), look (0.25, -0.94, 0.04) | |
+| zoom@1 | (2.3, 1.35, 2.55) | (-0.44, 0.14, 0.26) | 40 | pos (2.3, 1.5, 3), look (0.22, -0.9, 0.19) | Dreiviertelansicht vorne rechts oben |
+| brain@0.3 | (1.62, 1.2, 2.18) | (-0.42, 0.12, 0.21) | 40 | pos (1.9, 1.35, 2.6), look (0.18, -0.7, 0.15) | Text links, Gehirn rechts (seit dem Einbau der Android-Büste von rechts) |
+| brain@0.55 | (0.5, 0.52, 0.42) | (-0.15, 0.22, -0.5) | 54 | | Eintauchen durch Schale und Rinde |
 | brain@0.78 | (0.02, 0.32, -0.25) | (0.25, -0.05, -1) | 58 | | mitten im Gehirn, roll 6°: Kabelaustritt nicht in der Bildmitte |
 | brain@1 | (-0.35, 0.55, -0.85) | (0, 0, -3) | 55 | | hinten aus dem Gehirn, roll 2.5° |
 | cables@0.1 | (-2.3, 1.75, -0.1) | (0.55, 0.78, -3.9) | 52 | | Aufstieg, Kalender-Knoten bleibt unter der Kopfzeile |
@@ -207,8 +210,8 @@ der Mitte (Blickziel nach links versetzt); im Hochformat steht der Text unten, d
 | dna@0.58 | (0.1, 0.48, -28) | (0, 0.33, -36) | 43 | | Gerüst entsteht, früh gross im Bild |
 | dna@0.74 | (0, 0.44, -29.25) | (0, 0.3, -36) | 41 | pos (0, 0.5, -28.85), look (0, -0.5, -36) | Gerüst fertig oben im Bild, darunter die Angebotszeile |
 | dna@1 | (0, 0.42, -29.45) | (0, 0.3, -36) | 41 | pos (0, 0.5, -29.05), look (0, -0.5, -36) | |
-| outro@0 (Schnitt) | (0, 0, 4.6) | (0, -0.2, 0) | 34 | pos (0, 0.2, 6.5), look (0, -2.25, 0) | Augen leuchten schon im Lichtblitz |
-| outro@1 | (-1.9, 0.15, 8.6) | (-1.1, -0.45, 0) | 32 | pos (0, 0.4, 9), look (0, -3.1, 0) | Roboter rechts, Text links; Hochformat: Kopf oben, Text unten |
+| outro@0 (Schnitt) | (0.5, 0.05, 4.5) | (-0.22, -0.27, 0.03) | 34 | pos (0.4, 0.2, 6), look (0.01, -1.95, 0.09) | Gesicht nah, die Augen erwachen im Lichtblitz |
+| outro@1 | (3.7, -0.3, 7.9) | (-1.19, -0.75, 0.56) | 31 | pos (3.4, 0.1, 8.4), look (0.06, -2.83, 0.15) | ruhige Dreiviertelansicht leicht von unten, Büste rechts, Blick zum Kontakt; Hochformat: Büste oben |
 
 **Lens-Shift für andere Seitenverhältnisse:** Die Keys sind für 1440 x 900 komponiert (Text links endet bei ~41 % der Breite,
 rechts beginnt er bei ~59 %). Der Director misst bei jedem Refresh, wie weit die Text-Panels tatsächlich reichen
@@ -241,7 +244,7 @@ Fixpreis-Offerte." mit Button "Kostenlosen Entwurf anfragen". Die Kamera-Keys dn
 linearer Verlauf vom unteren Rand (`.chapter__panel::before`). Die Kabel-Labels weichen derselben Zone aus. Die Wörter steigen per GSAP aus einer Maske auf (`js/ui.js`, `panel()`); `gsap.ticker.lagSmoothing(0)`
 sorgt dafür, dass das in echter Zeit läuft, auch wenn ein 3D-Frame länger dauert.
 
-Folgen für Szenen: Der Röntgen-Wechsel ist ein Scan: eine helle, dünne Linie läuft von zoom@0.3 bis zoom@0.84 von oben nach
+Folgen für Szenen (Android-Büste siehe Kapitel 11): Der Röntgen-Wechsel ist ein Scan: eine helle, dünne Linie läuft von zoom@0.3 bis zoom@0.84 von oben nach
 unten (`uScanY`, Kopf bis ~zoom@0.64), darüber Röntgen-Hologramm, darunter noch Schale. Im Röntgen bleiben nur Kopf und Hals
 (Hologramm der Schultern blendet aus, Hals auf 30 %). Das Hologramm bleibt leise um das Gehirn, bis die Kamera bei brain@~0.45
 eintaucht (Fenster robot bis brain@0.6). Die Rumpf-Unterkante blendet über die Deckkraft aus (Rumpf-Material transparent). Im Beat `brain` fliegt die Kamera danach durch das
@@ -271,7 +274,7 @@ Bild-Pipeline: Szene rendert linear in HalfFloat (HDR) -> UnrealBloom -> OutputP
 | `grain` | 0.045 | Filmkorn (24 Bilder/s), verhindert auch Banding |
 | `fogDensity` | 0.035 | `FogExp2` in Hintergrundfarbe |
 | `env` | 0.35 | Stärke der Spiegelungen (`scene.environmentIntensity`) |
-| `key`, `rim`, `amb` | 1.3, 2.0, 0.12 | warmes Führungslicht in Ember (links vorne), Cyan-Kantenlicht (rechts hinten), Hemisphäre. Nur der Roboter nutzt Lichter (robot und outro: key 1.85 bis 1.95) |
+| `key`, `rim`, `amb` | 1.3, 2.0, 0.12 | warmes Führungslicht in Ember (links vorne), Cyan-Kantenlicht (rechts hinten), Hemisphäre. Nur der Roboter nutzt Lichter (Android-Büste: key nur 0.14 bis 0.45, rim 1.4 bis 1.8; der Glanz kommt aus ihrer eigenen Studio-Umgebung) |
 | `parallax`, `drift` | 0.22, 0.025 | Maus-Parallax und Schweben der Kamera (im Kopf/Gehirn klein halten) |
 | `flash` | 0 | additiver Lichtblitz 0..1, klein in Signal-Cyan, ab ~0.3 weisser (Schnitt) |
 | `fade` | 0 | Abblende zu Schwarz 0..1 (am Schnitt nur leicht, der Runner setzt dort vor allem `flash`) |
@@ -302,8 +305,8 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
 
 | Stufe | Wann | DPR | MSAA | Partikel-Faktor | Aberration | Roboter |
 | --- | --- | --- | --- | --- | --- | --- |
-| high | Desktop (Maus, Fenster ab 760 px, auch 1280 x 800) | bis 2, Budget 3.5 MP | 4x, nur wenn DPR unter 1.5 | 1 | ja | Klarlack, Iridescence |
-| medium | Touch (`pointer: coarse`) oder Fenster unter 760 px | bis 1.5 | nein, dafür FXAA | 0.5 | nein | Klarlack nur am Kopf, keine Iridescence |
+| high | Desktop (Maus, Fenster ab 760 px, auch 1280 x 800) | bis 2, Budget 3.5 MP | 4x, nur wenn DPR unter 1.5 | 1 | ja | Büste 2 x Catmull-Clark (~69k Ecken), 84 Kabel, Klarlack 0.4, Muskel-Innenstruktur |
+| medium | Touch (`pointer: coarse`) oder Fenster unter 760 px | bis 1.5 | nein, dafür FXAA | 0.5 | nein | 1 x Catmull-Clark, 36 Kabel, ohne Rillen und Innenstruktur (`AB_CHEAP`) |
 | low | 2 GB RAM oder 2 Kerne | 1 | nein, FXAA | 0.25 | nein | wie medium |
 
 - Bloom läuft immer in halber Auflösung (UnrealBloom intern), Stufe low noch etwas kleiner.
@@ -414,11 +417,61 @@ FPS-Wächter. Echte Besucher mit Software-Rendering bekommen den Fallback; das p
 
 dev.html:
 
-- `?scene=particles|robot|brain|cables|dna|all`, `&local=0.4` (Startwert), `&cam=orbit` (ziehen, Mausrad), `&q=high`,
-  `&post=0` (ohne Postprocessing), `&play` (läuft selbst), `&scroll=0` (nur Regler).
+- `?scene=particles|robot|brain|cables|dna|all` oder mehrere mit Komma (`scene=robot,brain` für den Röntgen-Zoom: die erste
+  Szene bestimmt `local` und bleibt aktiv, die weiteren laufen in ihren Fenstern), `&local=0.4` (Startwert), `&at=zoom@0.4`
+  (fester Punkt der Story), `&cam=orbit` (ziehen, Mausrad) oder `&cam=fix&pos=x,y,z&tgt=x,y,z&fov=30`, `&q=high`,
+  `&post=0` (ohne Postprocessing), `&play` (läuft selbst), `&scroll=0` (nur Regler). Szene robot zusätzlich:
+  `&robotbg=0|1` (eigener Hintergrund), `&ab=mech|debug|glass|nobloom|nokey|noenv` (Diagnose).
 - Scrollen auf der Testseite fährt `local` von 0 bis 1. Darum tastet `studio_capture.js` mit `--steps=N` das ganze Fenster ab.
 - In dev.html laufen Director, Runner und Looks exakt wie auf der Seite (nur ohne Dämpfung, wenn "Daempfung" aus ist).
 - Konsole: `window.__dev` (dev.html) und `window.__studio` (index.html) mit `engine`, `director`, `runner`, `ctx`.
-  Beispiel: `__dev.setLocal(0.5)`, `__studio.director.beat('zoom')`.
+  Beispiel: `__dev.setLocal(0.5)`, `__studio.director.beat('zoom')`. Für Standbilder: `__dev.freeze(true)`,
+  `__dev.setAt('robot@0.9')`, `__dev.setCam('fix')`, `__dev.fix.pos.set(...)`, `__dev.advance(3)` (Zeit vorspulen, rendert
+  das letzte Bild).
 
 Keine Konsolenfehler und keine Warnungen: studio_capture.js meldet beides. Szenen nicht mit `console.log` im Loop debuggen.
+
+## 11. Szene robot: Android-Büste
+
+Jonas hat am 30.10.2026 Variante B gewählt: weisse, glänzende Android-Büste mit türkis-transparenten Muskelteilen, offenem
+Hinterkopf mit Schädelgitter und Kabelbündeln. Der frühere Helm-Roboter und Variante A sind entfernt.
+
+| Datei | Inhalt |
+| --- | --- |
+| `robot.js` | Einstieg (create), Ablauf pro Beat, Look, Hintergrund-Schalter |
+| `robot-mesh.js` | `bust.bin` laden (einmal, Promise im Cache), Gesichtsausdruck (Lider, Mundwinkel), Catmull-Clark, Normalen |
+| `robot-layout.js` | Fugen und Öffnungen als Felder (GLSL): Gesichtsplatten, Lidfuge, Hinterkopf-Fenster, Glaskappe, Brustplatte |
+| `robot-materials.js` | Schale (Klarlack, Spaltmass als feine Rinne mit Fase), Muskel-Gel, Innenschale, Glas, Hologramm, Mechanik |
+| `robot-mech.js` | Augen (Blick folgt dezent der Kamera, Hornhaut mit Glanzlicht), Hals, Schädelgitter, Kabel, Ohrmodul |
+| `robot-env.js` | eigene Studio-Umgebung für die Spiegelungen, eigener Hintergrund (`buildBackdrop`) |
+| `robot-geometry.js` | `makeHeadShape`: Kopfform für brain.js (Gehirn-Hardware sitzt an der Innenseite der Schale) |
+| `particles-shape.js` | Zielpunkte der Partikel-Büste (gleiches Netz, gleicher Drehpunkt `HEAD_PIVOT` wie robot.js) |
+
+- **Hintergrund abschalten:** `ROBOT.ownBackdrop` in `js/config.js` (true/false). Ohne Code-Änderung: URL `?robotbg=0`
+  (aus) oder `?robotbg=1` (an). Ein globales Hintergrund-Modul setzt den Schalter auf false.
+- Ablauf: Aufbau im Beat robot (Hologramm robot@0.08 bis 0.26, dann von unten fest bis robot@0.64, Augen schalten bei
+  robot@0.64 bis 0.74 ein), Röntgen-Scan im Beat zoom (`robotScan`, gleiche Formel wie brain-hardware.js), Ausklang im
+  Beat outro (Augen leuchten im Lichtblitz).
+- Spaltmasse: keine verworfenen Pixel mehr (früher schwarzer Strich). Die Fuge ist eine Rinne (Halbbreite 0.0021 Einheiten)
+  mit Fase und weichem Schatten; ist sie schmaler als ein Bildpunkt (Handy), wird sie heller statt breiter. Die Lidfuge ist
+  nur eine halb so tiefe Falte (`lSeamK`).
+- Poster (Fallback) und OG-Bild am 30.10.2026 mit der Android-Büste neu gerendert (Kapitel 10, `make_posters.sh`).
+- Budget der Szene allein (gemessen in dev.html): high 41 Draw Calls, rund 525k Dreiecke; medium und low 41 Draw Calls,
+  rund 136k Dreiecke (eine Glättungsstufe, 44 statt 112 Kabel).
+- Kabel im Nacken: 112 (high) bzw. 44 lose Leitungen in sieben Strängen, kaum verdrillt, drei Schellen, silbergraue
+  Schläuche und schwarze Kabel gemischt; sie tauchen in einen oben breiten Schlitz zwischen den Schulterblättern.
+
+### Quellen und Lizenzen (CREDITS)
+
+- Grundmodell: **MakeHuman** (Grundnetz `base.obj` hm08, Targets, Skelett und Gewichte), ausdrücklich als **CC0 1.0**
+  freigegeben (September 2020, MakeHuman-Lizenz Abschnitt C "The license for the bundled assets"). Keine Namensnennung
+  nötig, festgehalten trotzdem: Manuel Bastioni, Data Collection AB, Joel Palmius, Jonas Hauquier.
+  Quelle: https://github.com/makehumancommunity/makehuman (Ordner `makehuman/data/`).
+- Verwendete Targets (Auszug): macrodetails jung weiblich (caucasian 0.75, asian 0.25), athletisch-schlank, flache Brust,
+  Nase, Wangenknochen, Kinn, Kiefer, Lippen, Schläfen, Brauenbogen; Arme per Skinning um 27 Grad gesenkt, Mundhöhle und
+  Ohrmuschel entfernt, Lippen geschlossen, Ambient Occlusion pro Ecke offline gerechnet. Ergebnis `assets/robot/bust.bin`
+  (76 KB, quantisiert). Die vollständige Liste mit Gewichten liegt bei den Aufbereitungs-Skripten im Scratchpad
+  (`S/android/android-b/CREDITS.md`, Skripte `scripts/`, `scripts2/`).
+- three.js r170 (MIT), schon unter `vendor/`. Keine weiteren Bibliotheken, keine weiteren Downloads.
+- Alles andere ist eigener Code (prozedural): Platten, Fugen, Muskeln, Mechanik, Kabel, Augen, Licht, Hintergrund.
+- Nicht verwendet: Kopf-Scan Lee Perry-Smith (CC BY 3.0).

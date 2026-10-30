@@ -2,11 +2,10 @@
 //
 // - Tausende leuchtende GPU-Partikel mit eigenem Shader: Curl-Noise-Stroemung, Tiefenunschaerfe (Bokeh),
 //   wenige helle Funken zwischen feinem Staub, Staub, der in einem Lichtkegel aufleuchtet, Reaktion auf die Maus.
-// - Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Visier-Linie, Kern, atmet, Kopf folgt der Maus).
+// - Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Augen, Plattenlinien, Kern, atmet, Kopf folgt der Maus).
 // - Ab der zweiten Haelfte des Intros ziehen sich die Partikel in einer sanften Spirale zur Roboter-Silhouette
 //   zusammen (von unten nach oben), im Flug als feine Lichtspuren, bei der Ankunft mit kurzem Aufblitzen.
-//   Die Zielpunkte liegen direkt auf der Geometrie des Roboters (robot-geometry.js, nur gelesen), sonst auf
-//   einer eigenen Form mit denselben Massen aus ctx.anchors.
+//   Die Zielpunkte liegen auf der Android-Bueste der Szene robot (particles-shape.js, Netz aus robot-mesh.js).
 // - Uebergabe an die Szene "robot": erscheint ihr Hologramm, treten die fertigen Partikel zurueck (nur Funkeln);
 //   an ihrer Abtastebene leuchten die Partikel auf und gehen darunter in die Schale ueber.
 // - Dahinter ein ruhiger Hintergrund: Verlaufs-Nebel (vorab gerechnete Textur) und ferne, unscharfe Lichter.
@@ -16,8 +15,7 @@
 // Hilfsdateien: particles-shape.js (Zielpunkte), particles-glsl.js (Shader), particles-nebula.js (Nebel-Textur).
 // Qualitaet: Mengen x tier.particles, Stufe low mit einfacherem Curl-Rauschen und kleinerer Nebel-Textur.
 
-import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
-import { sampleRobot, mulberry32, KIND } from './particles-shape.js';
+import { sampleRobot, mulberry32, KIND, HEAD_PIVOT } from './particles-shape.js';
 import { makeNebulaTexture } from './particles-nebula.js';
 import { POINTS_VERT, POINTS_FRAG, BG_VERT, BG_FRAG, BEAM_VERT, BEAM_FRAG } from './particles-glsl.js';
 
@@ -50,16 +48,8 @@ export async function create(ctx) {
   const aInfo = new Float32Array(total * 4);
   const aHw = new Float32Array(total);
 
-  // Zielpunkte direkt auf der Geometrie des Roboters (gleiche Form wie die Schale). Fehlt sie: eigene Form.
-  let robotGeo = null;
-  try {
-    const m = await import('./robot-geometry.js');
-    const need = ['makeHeadShape', 'buildHead', 'buildNeckMetal', 'buildTendons', 'buildTorso'];
-    if (need.every((k) => typeof m[k] === 'function')) robotGeo = m;
-  } catch (e) {
-    robotGeo = null;
-  }
-  const robot = sampleRobot(THREE, anchors, nForm, rnd, robotGeo, MeshSurfaceSampler);
+  // Zielpunkte auf der Android-Bueste (gleiche Form wie die Szene robot, particles-shape.js)
+  const robot = sampleRobot(THREE, anchors, nForm, rnd);
   const bell = () => (rnd() + rnd() + rnd()) / 1.5 - 1; // -1..1, zur Mitte hin dichter
   const spread = (v) => (rnd() < 0.72 ? v : rnd() * 2 - 1); // Wolke zur Mitte hin dichter, Raender ruhiger
 
@@ -288,7 +278,7 @@ export async function create(ctx) {
   /* ------------------------------------------------------------ Zustand */
   const focusPoint = new THREE.Vector3(0, -0.3, 0).add(anchors.head.center);
   // Kopfbewegung wie in robot.js (Drehpunkt im Hals, Maus, Eigenleben), damit die Uebergabe deckungsgleich ist
-  const pivot = new THREE.Vector3(0, -0.62, -0.08);
+  const pivot = new THREE.Vector3().fromArray(HEAD_PIVOT);
   const euler = new THREE.Euler(0, 0, 0, 'YXZ');
   const tmpV = new THREE.Vector3();
   const root = document.documentElement;
@@ -311,9 +301,9 @@ export async function create(ctx) {
       // Reagiert ab dem ersten Scroll-Pixel: die Wolke zieht sich zusammen, die ersten Partikel fliegen los
       const form = clamp01(s / 1.3);
       const gather = smoothstep(0.0, 0.5, s);
-      // Abtastebene des Roboters (wie robot.js: Aufbau robot@0.26 bis robot@0.64, von y -3.75 bis 1.18)
+      // Abtastebene des Roboters (wie robot.js: Aufbau robot@0.26 bis robot@0.64, von y -3.6 bis 1.25)
       const build = smoothstep(0.26, 0.64, rb.p);
-      const buildY = build >= 0.999 ? 2 : -3.75 + (1.18 + 3.75) * build;
+      const buildY = build >= 0.999 ? 2 : -3.6 + (1.25 + 3.6) * build;
 
       // Aufleuchten, sobald der Preloader weg ist (Wanduhr, damit es auch bei kurzer Bildrate ruhig bleibt)
       if (igniteStart < 0 && (ctx.dev || root.classList.contains('is-ready'))) igniteStart = performance.now();
@@ -348,12 +338,12 @@ export async function create(ctx) {
       u.uPointer.value.set(pointer.sx, pointer.sy);
 
       // Kopf folgt der Maus, mit leichtem Eigenleben (gleiche Werte wie robot.js)
-      const kk = 1 - Math.exp(-dt * 2.4);
-      const idleYaw = Math.sin(time * 0.21) * 0.05 + Math.sin(time * 0.071) * 0.03;
-      const idlePitch = Math.sin(time * 0.17 + 1.0) * 0.022;
-      yaw += (pointer.sx * 0.3 + idleYaw - yaw) * kk;
-      pitch += (-pointer.sy * 0.12 + idlePitch - pitch) * kk;
-      euler.set(pitch, yaw, Math.sin(time * 0.13) * 0.012 - yaw * 0.05);
+      const kk = 1 - Math.exp(-dt * 2.2);
+      const idleYaw = Math.sin(time * 0.19) * 0.04 + Math.sin(time * 0.067) * 0.025;
+      const idlePitch = Math.sin(time * 0.15 + 1.0) * 0.018;
+      yaw += (pointer.sx * 0.26 + idleYaw - yaw) * kk;
+      pitch += (-pointer.sy * 0.1 + idlePitch - pitch) * kk;
+      euler.set(pitch, yaw, Math.sin(time * 0.11) * 0.01 - yaw * 0.06);
       const hm = u.uHeadMat.value.makeRotationFromEuler(euler);
       tmpV.copy(pivot).applyMatrix4(hm);
       hm.setPosition(pivot.x - tmpV.x, pivot.y - tmpV.y + Math.sin(time * 1.1 - 0.7) * 0.005, pivot.z - tmpV.z);

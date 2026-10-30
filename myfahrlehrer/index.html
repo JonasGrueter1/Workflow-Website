@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website myfahrlehrer.ch</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website von myfahrlehrer.ch, Fahrlehrer Dani Koch in Neuenkirch.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b59a7">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    .hero { padding: 64px 0 44px; max-width: 780px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--red); color: #fff; font-weight: 800; font-size: .95rem; }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(14 27 44 / 10%); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(14 27 44 / 30%); }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { display: inline-flex; align-items: center; gap: 8px; font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option-tag::before { content: ""; width: 10px; height: 10px; border-radius: 3px; }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+
+    /* Design A: hell, Eisblau, Blau und Lindgrün */
+    .option-a .shots { background: #eef4f9; }
+    .option-a .option-tag { color: var(--red); }
+    .option-a .option-tag::before { background: var(--lime); }
+    .option-a .chips li { background: var(--red-soft); color: var(--red-dark); }
+
+    /* Design B: kräftiges Blau mit Lindgrün */
+    .option-b .shots { background: linear-gradient(160deg, #0b59a7, #083f78); }
+    .option-b .shot-desk { box-shadow: 0 -2px 24px rgb(0 0 0 / 22%); }
+    .option-b .shot-mob { border-color: #06284d; box-shadow: 0 0 0 1px rgb(192 207 66 / 45%), 0 10px 30px rgb(0 0 0 / 35%); }
+    .option-b .option-tag { color: var(--red-dark); }
+    .option-b .option-tag::before { background: var(--red); box-shadow: inset 0 -3px 0 var(--lime); }
+    .option-b .chips li { background: var(--lime); color: var(--ink); }
+    .btn-b { background: var(--red-dark); color: var(--lime); }
+    .btn-b:hover { background: #06284d; color: var(--lime); }
+
+    /* In beiden Entwürfen */
+    .both { margin: 32px 0 0; padding: 26px 28px; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); }
+    .both h2 { font-size: 1.25rem; margin-bottom: 18px; }
+    .both ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .both li { display: flex; gap: 12px; align-items: flex-start; }
+    .both .ic { display: grid; place-items: center; width: 40px; height: 40px; flex: none; border-radius: 12px; background: var(--red-soft); color: var(--red); }
+    .both .ic .i { width: 22px; height: 22px; }
+    .both strong { display: block; line-height: 1.3; margin-bottom: 3px; }
+    .both small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 24px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #c3d2e0; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
+
+    .next { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px; border-radius: var(--r-lg); background: var(--red-dark); color: #fff; }
+    .next > div { position: relative; max-width: 640px; }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .next p { color: rgb(255 255 255 / 80%); }
+    .next .btn { position: relative; }
+    .next-mark { position: absolute; right: -36px; bottom: -52px; width: 240px; height: auto; opacity: .55; pointer-events: none; }
+
+    @media (max-width: 960px) {
+      .both ul { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .shot-mob { right: 16px; }
+      .both { padding: 22px 18px; }
+      .both ul { grid-template-columns: 1fr; gap: 16px; }
+      .next { padding: 26px 22px; }
+      .next .btn { width: 100%; }
+      .next-mark { width: 130px; right: -26px; bottom: -40px; opacity: .4; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons. Signet aus dem Logo von myfahrlehrer.ch nachgezeichnet. -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></symbol>
+    <symbol id="i-devices" viewBox="0 0 24 24"><path d="M13 9a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1v-10z"/><path d="M18 8v-3a1 1 0 0 0 -1 -1h-13a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h9"/><path d="M16 9h2"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./">
+        <img src="assets/img/logo.png" alt="myfahrlehrer.ch, Dani Koch" width="580" height="120">
+        <span>Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite von myfahrlehrer.ch zwei unterschiedliche Designs entworfen, mit Ihren eigenen Texten, Preisen und Fotos. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Dein Coach</h2>
+          <p>Hell, frisch und sportlich in Blau und Lindgrün. Ihr Foto mit den zwei Golf zieht sich als breites Bildband über die Seite, darunter der klare Ablauf bis zur Prüfung in Sursee oder Luzern, die Feedbacks Ihrer Fahrschüler und Ihr Satz aus dem Radio-Interview. Wirkt offen und vertrauenswürdig, auch für Eltern.</p>
+          <ul class="chips"><li>Hell</li><li>Bildband</li><li>Klarer Ablauf</li></ul>
+          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Schilderwald</h2>
+          <p>Kräftiges Blau mit Lindgrün. Im ersten Bild setzt sich ein aufgeräumtes Feld aus Verkehrsschildern zusammen, wie auf der Folierung Ihrer Autos. Die Karten tragen die Pfeilform aus Ihrem Signet, die Preise stehen auf einem lindgrünen Band. Spricht junge Fahrschülerinnen und Fahrschüler direkt an.</p>
+          <ul class="chips"><li>Kräftiges Blau</li><li>Verkehrsschilder</li><li>Pfeilform</li></ul>
+          <a class="btn btn-b" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <section class="both" aria-labelledby="h-both">
+      <h2 id="h-both">In beiden Designs umgesetzt</h2>
+      <ul>
+        <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-phone"/></svg></span><div><strong>Nummer zum Antippen</strong><small>Direkt bei «Am besten rufst du mich an» und in der Leiste auf dem Smartphone</small></div></li>
+        <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-clock"/></svg></span><div><strong>Öffnungszeiten überall</strong><small>Auch auf dem Smartphone gleich sichtbar</small></div></li>
+        <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-star"/></svg></span><div><strong>Ihre 122 Bewertungen</strong><small>5,0 Sterne vom Vergleichsportal für Fahrlehrer, mit Quelle</small></div></li>
+        <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-devices"/></svg></span><div><strong>Eine Website für alle Geräte</strong><small>Passt sich an Smartphone, Tablet und Computer an</small></div></li>
+      </ul>
+    </section>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Verkehrskunde, Theorie oder Kosten werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Preise, Fotos und Feedbacks stammen von Ihrer bisherigen Website, die Bewertungszahl vom Vergleichsportal für Fahrlehrer (Stand Oktober 2026).</span>
+    </p>
+
+    <div class="next">
+      <svg class="next-mark" viewBox="0 0 194 194" aria-hidden="true"><path d="M0 18H162V65L194 97L162 129V176H0Z" fill="#0b59a7"/><path d="M33 36H51V82L36 97L51 112V158H33Z" fill="#c0cf42" fill-opacity=".45"/><path d="M117 36L129 48L80 97L129 146L117 158L56 97Z" fill="#083f78"/></svg>
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn btn-lime" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Jonas Grüter Webdesign</span>
+      <span>Oktober 2026</span>
+    </div>
+  </footer>
+</body>
+</html>
