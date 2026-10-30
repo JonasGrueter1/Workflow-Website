@@ -7,6 +7,15 @@
   font-style: normal;
   font-display: swap;
 }
+/* Bindestrich schmaler: Host Grotesk zeichnet ihn so lang wie ein Minus, das wirkt wie ein Gedankenstrich */
+@font-face {
+  font-family: "Host Grotesk";
+  src: url("../assets/fonts/b-host-grotesk-bindestrich.woff2") format("woff2");
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+2D;
+}
 
 :root {
   --blau: #1430C8;
@@ -704,6 +713,9 @@ html.fx .ausweis-buehne.kippt .ausweis { animation: none; }
 }
 @media (max-width: 374px) {
   .nobr { white-space: normal; }
+  .pfeil-zeile { margin-right: 0; }
+  .gross-pfeil { font-size: 14.5px; letter-spacing: -.02em; padding-right: 36px; }
+  .tel-riesig { font-size: min(44px, 12.4vw); }
   .logo svg { width: 140px; }
   .hero-cta { grid-template-columns: minmax(0, 1fr); }
 }

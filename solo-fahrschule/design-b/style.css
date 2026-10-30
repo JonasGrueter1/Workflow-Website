@@ -531,7 +531,7 @@ html.fx .phasen.ist-sichtbar .ph-nr { transform: none; opacity: 1; }
 /* ---------- Mobil ---------- */
 @media (max-width: 760px) {
   :root { --gutter: 18px; --radius: 20px; }
-  body { font-size: 17px; line-height: 1.55; padding-bottom: 160px; }
+  body { font-size: 17px; line-height: 1.55; }
   html { scroll-padding-top: 72px; }
   .kopf-in { height: 64px; gap: 12px; }
   .marke-oben { font-size: 22px; }
@@ -540,22 +540,29 @@ html.fx .phasen.ist-sichtbar .ph-nr { transform: none; opacity: 1; }
   .kopf-tel { width: 44px; padding: 0; }
   .kopf-tel span { display: none; }
 
-  .hero { padding-top: 12px; }
-  .hero-in { grid-template-columns: 1fr; gap: 26px; }
+  .hero { padding-top: 10px; }
+  .hero-in { grid-template-columns: 1fr; gap: 20px; }
+  /* Am Handy: Knöpfe direkt unter die Aussage, damit Foto, Titel und Knöpfe im ersten Bild stehen */
+  .hero-text { display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-text > * { max-width: 100%; }
+  .hero-text .knoepfe { order: 3; align-self: stretch; }
+  .hero-text .lead { order: 4; --i: 4 !important; }
+  .hero-text .knoepfe { --i: 3 !important; }
   .hero-visual { order: -1; margin: 0 calc(var(--gutter) * -1 + 6px); }
-  .hero-bild { aspect-ratio: 1 / .88; border-radius: 22px; }
-  .hero-bild img { object-position: 50% 26%; transform: none; transform-origin: 50% 30%; }
+  .hero-bild { aspect-ratio: 16 / 10; border-radius: 22px; }
+  .hero-bild img { object-position: 50% 14%; transform: none; transform-origin: 50% 30%; }
   .ticket { display: none; }
   html.fx.ist-bereit .hero-bild img { animation-name: bild-zoom-m; }
   .hero-name { left: 12px; top: 12px; bottom: auto; padding: 9px 14px; }
   .hero-name b { font-size: 16px; }
   .hero-name span { font-size: 13.5px; }
   .kicker { font-size: 12px; padding: 7px 12px 7px 9px; letter-spacing: .08em; white-space: normal; }
-  .hero h1 { margin-top: 18px; font-size: clamp(36px, 10.4vw, 46px); }
-  .claim { margin-top: 14px; font-size: 23px; }
-  .lead { font-size: 17px; margin-top: 16px; }
-  .knoepfe { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; }
-  .knoepfe .btn-linie { grid-column: 1 / -1; }
+  .hero h1 { margin-top: 16px; font-size: clamp(36px, 10.4vw, 46px); }
+  .claim { margin-top: 12px; font-size: 23px; }
+  .lead { font-size: 17px; margin-top: 22px; }
+  .knoepfe { margin-top: 20px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; max-width: none; }
+  .knoepfe .btn-linie { grid-column: auto; }
+  .knoepfe .btn { flex-direction: column; gap: 4px; min-height: 62px; padding: 8px 6px; font-size: 15px; }
   .btn { padding: 0 16px; }
   .fakten { grid-template-columns: 1fr; margin-top: 36px; }
   .fakten li { padding: 16px 18px; }
@@ -629,7 +636,7 @@ html.fx .phasen.ist-sichtbar .ph-nr { transform: none; opacity: 1; }
   .kontakt-grid { grid-template-columns: 1fr; }
   .weg { padding: 16px; }
 
-  .fuss { padding-bottom: 40px; }
+  .fuss { padding-bottom: 200px; } /* Platz für Aktionsleiste und Vorschau-Leiste, in der Farbe der Fusszeile */
   .fuss-in { grid-template-columns: 1fr 1fr; }
   .fuss-marke { grid-column: 1 / -1; }
 
@@ -649,6 +656,11 @@ html.fx .phasen.ist-sichtbar .ph-nr { transform: none; opacity: 1; }
 }
 
 @media (max-width: 480px) {
+  .hero-bild { aspect-ratio: 16 / 9; }
+  .hero-bild img { object-position: 50% 16%; }
+  .hero-name { left: 10px; top: 10px; padding: 7px 12px; }
+  .hero-name b { font-size: 15px; }
+  .hero-name span { font-size: 13px; }
   .vku-links { padding: 20px 18px; }
   .ablauf { grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); }
   .chip { padding: 0 10px; font-size: 15px; justify-content: center; }
@@ -664,13 +676,16 @@ html.fx .phasen.ist-sichtbar .ph-nr { transform: none; opacity: 1; }
 
 @media (max-width: 380px) {
   .kicker { font-size: 11px; letter-spacing: .05em; gap: 8px; text-wrap: balance; }
+  .hero h1 { margin-top: 12px; }
+  .claim { margin-top: 10px; font-size: 21px; }
+  .knoepfe { margin-top: 16px; }
+  .knoepfe .btn { min-height: 58px; font-size: 14.5px; }
 }
 
 @media (max-width: 360px) {
   .chip { padding: 0 10px; font-size: 14.5px; }
   .chip .i { display: none; }
   .wrap { --gutter: 16px; }
-  .knoepfe { grid-template-columns: 1fr; }
   .leiste { left: 8px; right: 8px; gap: 5px; padding: 5px; }
   .leiste a { flex-direction: column; gap: 3px; min-height: 54px; font-size: 13.5px; }
   .leiste .i { width: 18px; height: 18px; }

@@ -99,7 +99,8 @@
       var r = stage.getBoundingClientRect();
       if (r.bottom > 0 && r.top < window.innerHeight) {
         var p = (window.innerHeight - r.top) / (window.innerHeight + r.height); // 0 bis 1
-        stageImg.style.setProperty('--py', ((p - 0.35) * -26).toFixed(1) + 'px');
+        var amp = Math.min(26, r.height * 0.034); // nie mehr als der Zoom-Rand, sonst blitzt eine Kante auf
+        stageImg.style.setProperty('--py', ((p - 0.35) * -amp).toFixed(1) + 'px');
       }
     }
     ticking = false;

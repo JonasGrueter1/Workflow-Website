@@ -518,6 +518,7 @@ button { font: inherit; color: inherit; }
 .fuss nav a { display: block; padding: 6px 0; text-decoration: none; }
 .fuss a { color: var(--grau); text-decoration: none; transition: color .2s; }
 .fuss a:hover { color: var(--weiss); }
+.fuss .marke { color: var(--weiss); }
 .fuss-raster p { margin: 0; line-height: 1.9; }
 .fuss-unten { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-top: 24px; border-top: 1px solid var(--linie); font-size: .875rem; }
 .fuss-unten p { margin: 0; display: flex; gap: 24px; }

@@ -468,8 +468,8 @@ html.js .ab { transition: transform .45s var(--ease), opacity .3s; }
   .hide-s { display: none; }
   .lead { font-size: 1rem; }
   .stage-wrap { margin-top: 24px; }
-  .stage { aspect-ratio: 4 / 4.2; }
-  .stage img { object-position: 50% 70%; }
+  .stage { aspect-ratio: 5 / 4; }
+  .stage img { object-position: 50% 88%; }
   .stage-cap { left: 12px; bottom: 12px; }
   .sec-head > p:not(.kicker), .sec-head-split > p { font-size: 1.0625rem; }
   .card-body { padding: 22px 20px 18px; }
