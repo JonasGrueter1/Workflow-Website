@@ -587,6 +587,22 @@ h2 { font-size: clamp(30px, 4.2vw, 48px); line-height: 1.08; letter-spacing: -0.
 
 /* Sehr schmale Handys: Knöpfe im Start untereinander */
 @media (max-width: 379px) {
+  .top-in { gap: 10px; }
+  .brand { gap: 8px; }
+  .brand-l { width: 34px; height: 34px; }
+  .brand-txt strong { font-size: 15.5px; }
+  .brand-txt small { font-size: 11.5px; }
+  .top-act { gap: 8px; }
+  .map .lbl { padding: 4px 6px; border-radius: 8px; font-size: 11px; }
+  .map .lbl span { font-size: 10px; }
+  .vku { padding: 20px 18px; }
+  .vku-head { gap: 12px; }
+  .vku-price { font-size: 21px; }
+  .note { padding: 18px 16px; }
+  .note-act .btn { width: 100%; padding: 0 14px; gap: 8px; font-size: 15px; }
+  .cta { grid-template-columns: minmax(0, 1fr); padding: 32px 20px; }
+  .cta-tel { font-size: 28px; gap: 10px; }
+  .cta-btns { grid-template-columns: 1fr; }
   .hero-btns { grid-template-columns: 1fr; }
   .note { flex-direction: column; }
 }

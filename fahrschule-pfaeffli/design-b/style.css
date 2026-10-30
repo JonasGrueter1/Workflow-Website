@@ -314,6 +314,8 @@ strong, b { font-weight: 700; }
 .kap-intro { max-width: 42ch; margin: 6px 0 0; color: var(--grau); }
 @media (min-width: 900px) {
   .kap-kopf { grid-template-columns: minmax(0, 1fr) minmax(0, 400px); grid-template-areas: "nr nr" "titel intro"; align-items: end; column-gap: 48px; }
+  /* Titel wächst mit der Titelspalte, damit «Motorrad.» auf kleinen Laptops nicht abgeschnitten wird */
+  .kap-kopf:not(.kap-kopf-eng) .kap-titel .maske { font-size: min(168px, calc((100vw - 2 * var(--gut) - 448px) / 4.6)); }
   .kap-nr { grid-area: nr; }
   .kap-titel { grid-area: titel; }
   .kap-intro { grid-area: intro; margin: 0 0 1.4em; }
@@ -412,6 +414,14 @@ strong, b { font-weight: 700; }
   .abholung, .wahl .preiszeile { grid-column: 1 / -1; }
   .abholung { grid-template-columns: repeat(3, 1fr); }
   .abholung li { flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px; }
+}
+/* Kleine Laptops: Fotospalte etwas schmaler, damit die zwei Wahlkarten Platz haben */
+@media (min-width: 1024px) and (max-width: 1099px) {
+  .auto-raster { grid-template-columns: minmax(0, 330px) minmax(0, 1fr); }
+  .wahl-karte { gap: 14px; padding: 22px; }
+  .wahl-karte h3 { font-size: 26px; }
+  .wahl-karte .schema { width: 60px; height: 86px; }
+  .wahl-karte .schema-hand { width: 84px; height: 82px; }
 }
 
 /* ---------- Motorrad ---------- */
@@ -696,6 +706,12 @@ strong, b { font-weight: 700; }
   .ausweis-zeilen li { grid-template-columns: 46px minmax(0, 1fr) auto 18px; gap: 8px; }
   .ausweis-zeilen .betrag { font-size: 22px; }
   .haken { width: 18px; height: 18px; }
+  .kap-titel .maske { font-size: clamp(58px, 18vw, 168px); }
+  .kurs-text { padding: 22px 18px 24px; }
+  .kurs-kopf { flex-direction: column; gap: 8px; }
+  .kurs-preis { text-align: left; }
+  .kurs-preis small { display: inline-block; margin: 0 0 0 10px; }
+  .tel-riesig { font-size: clamp(44px, 14.4vw, 210px); }
 }
 @media (max-width: 359px) {
   :root { --gut: 16px; }

@@ -1,4 +1,4 @@
-/* Übersicht und Wunschliste: neutrales Grund-Design für die Präsentation */
+/* Übersicht und Wunschliste: Grund-Design für die Präsentation, Fahrschule Ehrler (Navy und Grün aus dem Logo) */
 
 @font-face {
   font-family: "Manrope";
@@ -14,21 +14,23 @@
 }
 
 :root {
-  --ink: #16161a;
-  --ink-2: #3b3b42;
-  --muted: #6b6b74;
-  --line: #e5e4e8;
-  --bg: #f6f6f8;
+  --ink: #001532;
+  --ink-2: #2b3a50;
+  --muted: #5a6779;
+  --line: #e0e6ee;
+  --bg: #f4f7fa;
   --white: #fff;
-  --soft: #efeff3;
-  --red: #bc2038;
-  --red-dark: #9a1a2e;
-  --red-soft: #fbedef;
+  --soft: #eaf0f5;
+  --red: #2f7d14;
+  --red-dark: #23610e;
+  --red-soft: #eaf5e4;
+  --neon: #11ff00;
+  --neon-hover: #63ff55;
   --green: #1f7a4a;
   --green-soft: #e8f5ee;
   --r-lg: 22px;
   --r: 14px;
-  --shadow: 0 1px 2px rgb(22 22 26 / 5%), 0 10px 30px rgb(22 22 26 / 7%);
+  --shadow: 0 1px 2px rgb(0 21 50 / 5%), 0 10px 30px rgb(0 21 50 / 7%);
   --wrap: 1160px;
   --gut: 24px;
 }
@@ -54,8 +56,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .top { background: var(--white); border-bottom: 1px solid var(--line); }
 .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 72px; flex-wrap: wrap; }
 .top-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); }
-.top-brand img { width: 118px; }
-.top-brand span { padding-left: 14px; border-left: 1px solid var(--line); font-size: .9rem; font-weight: 700; color: var(--muted); }
+.top-brand .top-tag { padding-left: 14px; border-left: 1px solid var(--line); font-size: .9rem; font-weight: 700; color: var(--muted); }
+
+/* Wortmarke wie im Logo: springende Figur, "ehrler" grün und kursiv, "fahrschule", Slogan */
+.wordmark { display: inline-flex; align-items: flex-end; gap: 8px; color: var(--ink); }
+.wm-mark { width: auto; height: 42px; margin-bottom: -3px; }
+.wm-text { display: flex; flex-direction: column; line-height: 1; }
+.wm-text b { font-size: 1.3rem; font-weight: 800; font-style: italic; letter-spacing: -0.02em; white-space: nowrap; }
+.wm-text b i { color: var(--red); }
+.wm-text small { margin-top: 4px; font-size: .75rem; font-weight: 600; font-style: italic; color: var(--muted); white-space: nowrap; }
 .top-links { display: flex; gap: 6px; flex-wrap: wrap; }
 .top-links a { padding: 8px 14px; border-radius: 999px; color: var(--ink-2); font-weight: 600; font-size: .925rem; text-decoration: none; }
 .top-links a:hover { background: var(--soft); color: var(--ink); }
@@ -72,6 +81,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .btn-red:hover { background: var(--red-dark); color: #fff; }
 .btn-dark { background: var(--ink); color: #fff; }
 .btn-dark:hover { background: #000; color: #fff; }
+.btn-neon { background: var(--neon); color: var(--ink); }
+.btn-neon:hover { background: var(--neon-hover); color: var(--ink); }
 .btn-line { border-color: var(--line); background: var(--white); color: var(--ink); }
 .btn-line:hover { border-color: var(--ink); color: var(--ink); }
 .btn-block { width: 100%; }
@@ -88,7 +99,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 640px) {
   :root { --gut: 16px; }
   body { font-size: 1rem; }
-  .top-brand span { display: none; }
+  .top-brand .top-tag { display: none; }
+  .top-inner { padding-top: 14px; padding-bottom: 6px; row-gap: 8px; }
+  .top-links { margin-left: -14px; }
 }
 
 @media print {

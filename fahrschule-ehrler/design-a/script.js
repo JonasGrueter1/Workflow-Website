@@ -23,7 +23,7 @@
   });
 
   /* ---------- Einblenden beim Scrollen ---------- */
-  var ziele = Array.prototype.slice.call(document.querySelectorAll('.rv, .treppe'));
+  var ziele = Array.prototype.slice.call(document.querySelectorAll('.rv, .treppe, .stufe'));
   if (fx && hasIO) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {

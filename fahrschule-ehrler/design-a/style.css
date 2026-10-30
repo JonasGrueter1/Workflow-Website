@@ -142,6 +142,25 @@ b, strong { font-weight: 700; }
   .kopf-tel-lang { display: none; }
   .kopf-tel-kurz { display: inline; }
 }
+/* Schmale Handys: Kopf kompakter, damit Logo und Anruf-Knopf nebeneinander Platz haben */
+@media (max-width: 374px) {
+  .kopf-innen { gap: 12px; }
+  .marke { gap: 8px; }
+  .marke-signet { width: 30px; height: 29px; }
+  .marke-name { font-size: 17px; }
+  .marke-slogan { font-size: 9.5px; }
+  .kopf-tel { padding: 0 14px; gap: 6px; font-size: 14.5px; }
+  .kopf-tel .i { width: 17px; height: 17px; }
+}
+@media (max-width: 374px) {
+  /* Das Namensschild würde hier Andrés Gesicht verdecken; Name und "seit 1999" stehen im Lead */
+  .hero-name { display: none; }
+}
+@media (max-width: 349px) {
+  .kopf-tel { width: 44px; padding: 0; justify-content: center; }
+  .kopf-tel .i { width: 20px; height: 20px; }
+  .kopf-tel-kurz { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
 
 /* ---------- Hero ---------- */
 .hero {
@@ -176,7 +195,7 @@ b, strong { font-weight: 700; }
 
 .hero-titel {
   margin-top: 22px;
-  font-size: clamp(40px, 5.5vw, 80px);
+  font-size: clamp(40px, 5.4vw, 70px);
   line-height: .98; letter-spacing: -0.04em;
 }
 .hero-titel .zeile { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
@@ -190,7 +209,7 @@ b, strong { font-weight: 700; }
   letter-spacing: -0.015em; color: var(--neon);
 }
 
-.hero-lead { margin-top: 30px; max-width: 30em; font-size: clamp(18px, 1.45vw, 21px); line-height: 1.55; color: var(--text-2); }
+.hero-lead { margin-top: 30px; max-width: 27em; font-size: clamp(18px, 1.45vw, 21px); line-height: 1.55; color: var(--text-2); }
 .hero-knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 
 .hero-foto { position: relative; margin-left: auto; max-width: 540px; }
@@ -211,7 +230,7 @@ b, strong { font-weight: 700; }
 .hero-name b { display: block; font-size: 15px; color: var(--weiss); }
 
 .flotte {
-  position: absolute; left: -56px; bottom: 28px; width: 296px;
+  position: absolute; left: -88px; bottom: 28px; width: 280px;
   padding: 10px; border-radius: 20px;
   background: rgb(10 34 71 / 92%);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
@@ -347,11 +366,11 @@ b, strong { font-weight: 700; }
   background: linear-gradient(160deg, rgb(17 255 0 / 5%), transparent 45%), var(--nacht);
 }
 .auto-vers {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
-  padding-bottom: 20px; border-bottom: 1px solid var(--haar);
-  color: var(--text-2);
+  display: flex; flex-direction: column; gap: 6px;
+  padding-bottom: 22px; border-bottom: 1px solid var(--haar);
 }
-.auto-vers strong { font-size: 24px; font-weight: 800; color: var(--weiss); }
+.auto-vers span { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--grau); }
+.auto-vers strong { font-size: 30px; line-height: 1.1; font-weight: 800; color: var(--weiss); letter-spacing: -0.02em; white-space: nowrap; }
 .auto-vorteile-titel { margin-top: 24px; font-size: 18px; letter-spacing: -0.01em; }
 .haken li { display: flex; gap: 12px; margin-top: 14px; color: var(--text-2); font-size: 16px; line-height: 1.5; }
 .haken b { color: var(--weiss); }
@@ -365,16 +384,24 @@ b, strong { font-weight: 700; }
   height: 64vh; min-height: 440px; max-height: 680px;
 }
 .moto-band-bild { position: absolute; left: 0; right: 0; top: -40px; bottom: -40px; will-change: transform; }
-.moto-band-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+.moto-band-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 9%; }
 .moto-band::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(180deg, rgb(0 21 50 / 0%) 35%, rgb(0 21 50 / 78%) 78%, var(--nacht) 100%),
-    linear-gradient(90deg, rgb(0 21 50 / 70%) 0%, rgb(0 21 50 / 0%) 55%);
+    linear-gradient(180deg, rgb(0 21 50 / 0%) 62%, rgb(0 21 50 / 55%) 88%, var(--nacht) 100%),
+    linear-gradient(90deg, var(--nacht) 0%, var(--nacht) 22%, rgb(0 21 50 / 55%) 36%, rgb(0 21 50 / 0%) 52%);
+}
+@media (min-width: 761px) {
+  /* Foto rechts, Titel links daneben: der Fahrer bleibt frei */
+  .moto-band-bild { left: 22%; }
+  .moto-band::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 90px; z-index: 1; pointer-events: none;
+    background: linear-gradient(180deg, var(--nacht), rgb(0 21 50 / 0%));
+  }
 }
 .moto-band-text { position: relative; z-index: 1; padding-bottom: 40px; }
 .moto-band-text .kicker { color: var(--text-2); }
-.moto-band-text h2 { max-width: 14em; text-shadow: 0 2px 30px rgb(0 0 0 / 35%); }
+.moto-band-text h2 { max-width: 10.5em; text-shadow: 0 2px 30px rgb(0 0 0 / 35%); }
 .moto-band-sub { margin-top: 14px; font-size: 18px; color: var(--text-2); }
 
 .moto-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 32px; padding-top: 32px; padding-bottom: 120px; align-items: start; }
@@ -562,6 +589,18 @@ a.adresse-zeile:hover { color: var(--weiss); }
 .fx .treppe.ist-da .stufe-kante { transform: none; }
 .fx .treppe.ist-da .stufe-info { opacity: 1; transform: none; }
 
+/* ---------- Kompakte Fahrzeugkarte (schmaleres Hero-Foto) ---------- */
+@media (max-width: 1180px) {
+  .flotte { left: -40px; bottom: 24px; width: 330px; padding: 10px 10px 8px; display: grid; grid-template-columns: 104px minmax(0, 1fr); column-gap: 14px; align-items: center; }
+  .flotte-bild img { aspect-ratio: 4 / 3; height: auto; object-position: 50% 62%; border-radius: 10px; }
+  .flotte-liste { padding: 0; }
+  .flotte-liste li { justify-content: flex-start; flex-wrap: wrap; column-gap: 8px; row-gap: 0; padding: 6px 0; font-size: 15.5px; line-height: 1.3; }
+  .flotte-liste li:last-child { border-bottom: 0; }
+  .flotte-liste em { font-size: 14px; }
+  .flotte-preis { grid-column: 1 / -1; margin-top: 8px; padding: 10px 4px 2px; border-top: 1px solid var(--haar); }
+  .flotte-preis strong { font-size: 21px; }
+}
+
 /* ---------- Tablet ---------- */
 @media (max-width: 1100px) {
   .wissen-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -577,15 +616,8 @@ a.adresse-zeile:hover { color: var(--weiss); }
   .hero-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "kopf" "bild" "aktion"; min-height: 0; }
   .hero-bild { margin-top: 28px; }
   .hero-foto { max-width: none; }
-  .hero-foto img { aspect-ratio: 4 / 3; min-height: 0; max-height: none; object-position: 50% 40%; }
-  .flotte { position: relative; left: auto; bottom: auto; width: auto; margin: -56px 14px 0; display: grid; grid-template-columns: 108px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 14px; align-items: center; }
-  .flotte-bild { grid-row: 1 / span 2; align-self: stretch; }
-  .flotte-bild img { aspect-ratio: auto; height: 100%; min-height: 96px; object-position: 50% 60%; }
-  .flotte-liste { padding: 0; }
-  .flotte-liste li { padding: 5px 0; font-size: 15px; }
-  .flotte-liste em { font-size: 13.5px; }
-  .flotte-preis { padding: 6px 0 2px; }
-  .flotte-preis strong { font-size: 20px; }
+  .hero-foto img { aspect-ratio: 16 / 10; min-height: 0; max-height: none; object-position: 50% 30%; }
+  .flotte { position: relative; left: auto; bottom: auto; width: auto; max-width: 520px; margin: -52px 12px 0; }
   .hero-aktion { margin-top: 8px; }
   .preise { margin-top: -28px; }
   .preis-kacheln { grid-template-columns: 1fr 1fr; }
@@ -605,9 +637,13 @@ a.adresse-zeile:hover { color: var(--weiss); }
 /* ---------- Handy ---------- */
 @media (max-width: 760px) {
   body { font-size: 17px; }
-  .hero-titel { margin-top: 16px; }
-  .slogan { margin-top: 20px; gap: 12px; }
-  .slogan-signet { width: 58px; height: 57px; }
+  .hero { padding-top: 18px; }
+  .hero-titel { margin-top: 12px; }
+  .hero-bild { margin-top: 22px; }
+  .hero .kicker { font-size: 12px; letter-spacing: .1em; }
+  .hero-foto img { aspect-ratio: 3 / 2; object-position: 50% 12%; }
+  .slogan { margin-top: 16px; gap: 10px; }
+  .slogan-signet { width: 46px; height: 45px; }
   .slogan-text { padding-bottom: 4px; }
   .hero-lead { margin-top: 26px; }
   .hero-knoepfe { display: grid; grid-template-columns: 1fr; margin-top: 26px; }
@@ -636,18 +672,31 @@ a.adresse-zeile:hover { color: var(--weiss); }
   .stufe-auto .stufe-block { background: linear-gradient(90deg, #13366d, var(--nacht-2) 60%); }
   .stufe-kante { top: 0; bottom: 0; right: auto; width: 3px; height: auto; transform-origin: 50% 0; }
   .stufe-nr { display: none; }
-  .fx .stufe-block { transform: translate3d(-24px, 0, 0); }
-  .fx .stufe-kante { transform: scaleY(0); }
+  /* Handy: jede Stufe erscheint einzeln, sobald sie ins Bild kommt */
+  .fx .stufe-block { transform: translate3d(-28px, 0, 0); transition-delay: 0s; }
+  .fx .stufe-kante { transform: scaleY(0); transition-delay: .3s; }
+  .fx .stufe-info { transition-delay: .14s; }
+  .fx .treppe .stufe:not(.ist-da) .stufe-block { transform: translate3d(-28px, 0, 0); opacity: 0; }
+  .fx .treppe .stufe:not(.ist-da) .stufe-kante { transform: scaleY(0); }
+  .fx .treppe .stufe:not(.ist-da) .stufe-info { opacity: 0; transform: translate3d(0, 16px, 0); }
+  .fx .stufe.ist-da .stufe-block, .fx .stufe.ist-da .stufe-info { opacity: 1; transform: none; }
+  .fx .stufe.ist-da .stufe-kante { transform: none; }
   .treppe-notiz { font-size: 15px; }
 
   .auto-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .wagen h3 { font-size: 24px; }
   .auto-info { padding: 24px; }
 
-  .moto-band { height: 46vh; min-height: 320px; }
-  .moto-band-bild { top: 0; bottom: 0; }
-  .moto-band-text { padding-bottom: 28px; }
-  .moto-band::after { background: linear-gradient(180deg, rgb(0 21 50 / 0%) 20%, rgb(0 21 50 / 80%) 70%, var(--nacht) 100%); }
+  /* Handy: Foto oben ganz sichtbar, Titel darunter auf Navy, damit nichts über Warndreieck und Pylonen läuft */
+  .moto-band { display: block; height: auto; min-height: 0; max-height: none; }
+  .moto-band-bild { position: relative; top: auto; bottom: auto; aspect-ratio: 4 / 3; }
+  .moto-band-bild img { object-position: 50% 50%; }
+  .moto-band-bild::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgb(0 21 50 / 0%) 62%, rgb(0 21 50 / 70%) 88%, var(--nacht) 100%);
+  }
+  .moto-band::after { display: none; }
+  .moto-band-text { margin-top: -28px; padding-bottom: 4px; }
   .moto-grid { padding-top: 24px; padding-bottom: 88px; }
   .reiter { display: flex; }
   .reiter-knopf { flex: 1; padding: 0 12px; }

@@ -39,7 +39,7 @@
 .design-view:hover { background: var(--red); color: #fff; }
 
 /* Optionen */
-.opts { display: grid; gap: 10px; }
+.opts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .opt {
   position: relative; display: flex; align-items: center; gap: 14px; cursor: pointer;
   padding: 14px 16px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--white);
@@ -59,7 +59,7 @@
 .opt input[type="radio"]:checked ~ .opt-box { background: var(--red); box-shadow: inset 0 0 0 5px #fff; }
 .opt:has(input:checked) { border-color: var(--red); background: #fff8fb; }
 .opt:has(input:focus-visible) { outline: 3px solid var(--red); outline-offset: 2px; }
-.opt-text { flex: 1; min-width: 0; }
+.opt-text { flex: 1; min-width: 0; -webkit-hyphens: auto; hyphens: auto; overflow-wrap: break-word; }
 .opt-text strong { display: block; font-size: 1rem; }
 .opt-text small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
 .opt .cost { white-space: nowrap; font-weight: 800; font-variant-numeric: tabular-nums; }
@@ -129,7 +129,7 @@
 .mbar { display: none; }
 
 @media (max-width: 960px) {
-  .layout { grid-template-columns: 1fr; }
+  .layout { grid-template-columns: minmax(0, 1fr); }
   .summary { position: static; }
   .mbar {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
@@ -147,7 +147,7 @@
   .intro { padding: 36px 0 24px; }
   .block { padding: 22px 16px; }
   .block-head { gap: 12px; }
-  .designs, .fields { grid-template-columns: 1fr; }
+  .designs, .fields { grid-template-columns: minmax(0, 1fr); }
   .opt { align-items: flex-start; padding: 14px; gap: 12px; }
   .opt .cost { font-size: .925rem; }
   .base li { font-size: .95rem; }
@@ -162,4 +162,11 @@
   .sum-design, .sum-design.is-set { color: var(--ink); }
   .design-view { display: none; }
   .opt:not(:has(input:checked)) { display: none; }
+}
+
+/* Sehr schmale Handys: Preis unter den Text, damit die Beschreibung genug Platz hat */
+@media (max-width: 400px) {
+  .opt { flex-wrap: wrap; row-gap: 6px; }
+  .opt-text { flex: 1 1 calc(100% - 40px); }
+  .opt .cost { margin-left: 34px; }
 }

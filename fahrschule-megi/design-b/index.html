@@ -8,8 +8,11 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#101528">
   <link rel="icon" href="../assets/img/b-favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="preload" href="../assets/fonts/b-kanit-latin-800i.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/b-kanit-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/img/b-hero.webp" as="image" media="(min-width: 761px)">
+  <link rel="preload" href="../assets/img/b-hero-mobil.webp" as="image" media="(max-width: 760px)">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>
@@ -17,7 +20,7 @@
       d.classList.add('js');
       try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('fx'); } catch (e) {}
       /* Sicherheitsnetz: Lädt script.js nicht, wird alles ohne Animation gezeigt */
-      setTimeout(function () { if (!window.megiB) d.classList.remove('fx'); }, 2500);
+      setTimeout(function () { if (!window.megiB) d.classList.remove('fx', 'js'); }, 2500);
     })(document.documentElement);
   </script>
   <script src="script.js" defer></script>
@@ -31,14 +34,7 @@
     "description": "Fahrstunden Kategorie B, Verkehrskunde in Brugg, BPT 121 Taxi und Nothelferkurs in Suhr AG.",
     "telephone": "+41 76 805 25 85",
     "email": "fahrschulemegi@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Suhrestrasse 32",
-      "postalCode": "5034",
-      "addressLocality": "Suhr",
-      "addressRegion": "AG",
-      "addressCountry": "CH"
-    },
+    "address": { "@type": "PostalAddress", "streetAddress": "Suhrestrasse 32", "postalCode": "5034", "addressLocality": "Suhr", "addressRegion": "AG", "addressCountry": "CH" },
     "openingHours": "Mo-Sa 07:00-20:00",
     "employee": { "@type": "Person", "name": "Mërgim Abazi", "jobTitle": "Fahrlehrer mit eidg. Fachausweis" },
     "sameAs": ["https://www.instagram.com/megifahrschule", "https://www.facebook.com/people/MEGI-Fahrschule/100077979473838/"]
@@ -48,7 +44,7 @@
 <body data-vorschau="b">
   <a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
-  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons. Tempostreifen, Herz, Taxischild und Karte: eigene Zeichnung. -->
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons. Tempostreifen, Karte, Herz und Taxischild: eigene Zeichnung. -->
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
     <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></symbol>
@@ -57,11 +53,12 @@
     <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
     <symbol id="i-cal" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></symbol>
     <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6l0 13"/><path d="M12 6l0 13"/><path d="M21 6l0 13"/></symbol>
-    <symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"/><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"/></symbol>
-    <symbol id="i-id" viewBox="0 0 24 24"><path d="M3 4m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M9 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 8l2 0"/><path d="M15 12l2 0"/><path d="M7 16l10 0"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><path d="M7 11a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-id" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 8l2 0"/><path d="M15 12l2 0"/><path d="M7 16l10 0"/></symbol>
     <symbol id="i-pfeil" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
     <symbol id="i-insta" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M16.5 7.5v.01"/></symbol>
     <symbol id="i-fb" viewBox="0 0 24 24"><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
     <symbol id="i-stern" viewBox="0 0 24 24"><path class="voll" d="M12 2.6l2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.1 1.1-6.5L2.6 9.5l6.5-.9z"/></symbol>
   </svg>
 
@@ -69,12 +66,13 @@
   <header class="kopf" id="kopf">
     <div class="wrap kopf-in">
       <a class="marke" href="#top" aria-label="Fahrschule Megi, zum Seitenanfang">
-        <img src="../assets/img/b-logo.webp" width="520" height="136" alt="Fahrschule Megi">
+        <img src="../assets/img/b-logo.webp" width="600" height="157" alt="Fahrschule Megi">
       </a>
       <nav class="kopf-nav" aria-label="Seitenbereiche">
-        <a href="#pruefungsort">Prüfungsort</a>
+        <a href="#pruefungsort">Standort</a>
         <a href="#preise">Preise</a>
         <a href="#vku">VKU</a>
+        <a href="#kurse">Kurse</a>
         <a href="#kontakt">Kontakt</a>
       </nav>
       <div class="kopf-cta">
@@ -93,34 +91,42 @@
     <section class="hero" id="top" aria-labelledby="hero-titel">
       <div class="hero-bild">
         <picture>
-          <source media="(max-width: 600px)" srcset="../assets/img/b-hero-mobil.webp" width="900" height="1000">
+          <source media="(max-width: 760px)" srcset="../assets/img/b-hero-mobil.webp" width="864" height="960">
           <img src="../assets/img/b-hero.webp" width="1920" height="1080" alt="Das graue Fahrschulauto der Fahrschule Megi, ein Mercedes, von vorne" fetchpriority="high">
         </picture>
       </div>
+      <div class="hero-linien" aria-hidden="true"><i></i><i></i><i></i></div>
+
       <div class="wrap hero-in">
         <div class="hero-text">
-          <p class="kicker hero-kicker">
+          <p class="hero-kicker">
             <span class="tempo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
             <span class="hero-kicker-text">Suhr AG · VKU in Brugg</span>
           </p>
           <h1 id="hero-titel">
             <span class="zeile zeile-klein"><span>Fahrschule Megi in Suhr.</span></span>
-            <span class="zeile zeile-gross"><span>Macht dich</span></span>
-            <span class="zeile zeile-gross"><span class="gelb">mobil.</span></span>
+            <span class="zeile zeile-gross z1"><span>Macht</span></span>
+            <span class="zeile zeile-gross z2"><span>dich</span></span>
+            <span class="zeile zeile-gross z3"><span class="gelb">mobil.</span></span>
           </h1>
           <p class="hero-lead">Fahrstunden Kategorie B, Verkehrskunde in Brugg, BPT 121 Taxi und Nothelferkurs.<span class="lead-zusatz"> Bei Mërgim Abazi, Montag bis Samstag 7 bis 20 Uhr.</span></p>
           <div class="hero-knoepfe" id="hero-cta">
-            <a class="knopf knopf-gelb" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener">
-              <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp
+            <a class="knopf knopf-gelb knopf-gross" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener">
+              <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp<span class="lang"> schreiben</span></span>
             </a>
-            <a class="knopf knopf-linie" href="tel:+41768052585">
+            <a class="knopf knopf-linie knopf-gross" href="tel:+41768052585">
               <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen
             </a>
           </div>
-          <a class="hero-sterne" href="#stimmen">
-            <span class="sterne" aria-hidden="true"><svg><use href="#i-stern"/></svg><svg><use href="#i-stern"/></svg><svg><use href="#i-stern"/></svg><svg><use href="#i-stern"/></svg><svg><use href="#i-stern"/></svg></span>
-            <span>Über 100 Fünf-Sterne-Bewertungen</span>
-          </a>
+          <ul class="hero-fakten">
+            <li>
+              <a href="#stimmen" class="hero-sterne">
+                <span class="sterne" aria-hidden="true"><svg><use href="#i-stern"/></svg><svg><use href="#i-stern"/></svg><svg><use href="#i-stern"/></svg><svg><use href="#i-stern"/></svg><svg><use href="#i-stern"/></svg></span>
+                <span>Über 100 Fünf-Sterne-Bewertungen</span>
+              </a>
+            </li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg><span>VKU Samstag und Sonntag in Brugg</span></li>
+          </ul>
         </div>
       </div>
     </section>
@@ -128,126 +134,170 @@
     <!-- ===================== Prüfungsort ===================== -->
     <section class="ort" id="pruefungsort" aria-labelledby="ort-titel">
       <div class="wrap ort-raster">
-        <div class="ort-links">
+        <div class="ort-kopf">
           <p class="kicker rv"><span class="tempo tempo-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Prüfungsgebiet</p>
           <h2 class="rv" id="ort-titel">Wo willst du fahren lernen?</h2>
           <p class="ort-intro rv">Deine Fahrlektionen finden im Prüfungsgebiet statt. Mërgim fährt mit dir in 14 Orten im Aargau und in Solothurn. Tipp deinen Ort an.</p>
+        </div>
 
-          <div class="ort-gruppen rv">
-            <div class="ort-gruppe">
-              <h3 class="ort-kanton">Kanton Aargau</h3>
-              <ul class="chips" aria-label="Prüfungsorte im Kanton Aargau">
-                <li><button type="button" class="chip" data-ort="Aarau" data-kanton="Aargau">Aarau</button></li>
-                <li><button type="button" class="chip" data-ort="Baden" data-kanton="Aargau">Baden</button></li>
-                <li><button type="button" class="chip" data-ort="Bad Zurzach" data-kanton="Aargau">Bad Zurzach</button></li>
-                <li><button type="button" class="chip" data-ort="Bremgarten" data-kanton="Aargau">Bremgarten</button></li>
-                <li><button type="button" class="chip" data-ort="Brugg" data-kanton="Aargau">Brugg</button></li>
-                <li><button type="button" class="chip" data-ort="Buchs" data-kanton="Aargau">Buchs</button></li>
-                <li><button type="button" class="chip" data-ort="Kulm" data-kanton="Aargau">Kulm</button></li>
-                <li><button type="button" class="chip" data-ort="Lenzburg" data-kanton="Aargau">Lenzburg</button></li>
-                <li><button type="button" class="chip" data-ort="Rothrist" data-kanton="Aargau">Rothrist</button></li>
-                <li><button type="button" class="chip" data-ort="Suhr" data-kanton="Aargau">Suhr</button></li>
-                <li><button type="button" class="chip" data-ort="Wohlen" data-kanton="Aargau">Wohlen</button></li>
-                <li><button type="button" class="chip" data-ort="Zofingen" data-kanton="Aargau">Zofingen</button></li>
-              </ul>
-            </div>
-            <div class="ort-gruppe">
-              <h3 class="ort-kanton">Kanton Solothurn</h3>
-              <ul class="chips" aria-label="Prüfungsorte im Kanton Solothurn">
-                <li><button type="button" class="chip" data-ort="Olten" data-kanton="Solothurn">Olten</button></li>
-                <li><button type="button" class="chip" data-ort="Schönenwerd" data-kanton="Solothurn">Schönenwerd</button></li>
-              </ul>
-            </div>
+        <div class="ort-wahl rv">
+          <div class="ort-gruppe">
+            <h3 class="ort-kanton">Kanton Aargau</h3>
+            <ul class="chips" aria-label="Standorte im Kanton Aargau">
+              <li><button type="button" class="chip" data-ort="Aarau" data-kanton="Aargau">Aarau</button></li>
+              <li><button type="button" class="chip" data-ort="Baden" data-kanton="Aargau">Baden</button></li>
+              <li><button type="button" class="chip" data-ort="Bad Zurzach" data-kanton="Aargau">Bad Zurzach</button></li>
+              <li><button type="button" class="chip" data-ort="Bremgarten" data-kanton="Aargau">Bremgarten</button></li>
+              <li><button type="button" class="chip" data-ort="Brugg" data-kanton="Aargau">Brugg</button></li>
+              <li><button type="button" class="chip" data-ort="Buchs" data-kanton="Aargau">Buchs</button></li>
+              <li><button type="button" class="chip" data-ort="Kulm" data-kanton="Aargau">Kulm</button></li>
+              <li><button type="button" class="chip" data-ort="Lenzburg" data-kanton="Aargau">Lenzburg</button></li>
+              <li><button type="button" class="chip" data-ort="Rothrist" data-kanton="Aargau">Rothrist</button></li>
+              <li><button type="button" class="chip" data-ort="Suhr" data-kanton="Aargau">Suhr</button></li>
+              <li><button type="button" class="chip" data-ort="Wohlen" data-kanton="Aargau">Wohlen</button></li>
+              <li><button type="button" class="chip" data-ort="Zofingen" data-kanton="Aargau">Zofingen</button></li>
+            </ul>
+          </div>
+          <div class="ort-gruppe">
+            <h3 class="ort-kanton">Kanton Solothurn</h3>
+            <ul class="chips" aria-label="Standorte im Kanton Solothurn">
+              <li><button type="button" class="chip" data-ort="Olten" data-kanton="Solothurn">Olten</button></li>
+              <li><button type="button" class="chip" data-ort="Schönenwerd" data-kanton="Solothurn">Schönenwerd</button></li>
+            </ul>
           </div>
         </div>
 
-        <div class="ort-karte rv" id="ort-karte">
-          <div class="karte">
-            <svg class="karte-svg" viewBox="-12 0 444 392" aria-hidden="true" focusable="false">
-              <g class="karte-raster">
-                <path d="M-12 98H432M-12 196H432M-12 294H432M99 0V392M210 0V392M321 0V392"/>
-              </g>
-              <polyline class="fluss" pathLength="1" points="-25.8,71.9 62.6,67.5 165.8,61 217.4,35.9 254.2,28.3 292.5,12 320.5,24 337.5,26.1 379.5,46.8 431.1,55.5"/>
-              <polyline class="fluss" pathLength="1" points="-12,352 18.4,349.6 42.7,346.4 45.7,326.8 50.1,307.2 52.3,289.7 70,285.4 95.8,274.5 123.8,266.9 140,256 155.5,242.9 187.9,234.2 210,237.4 239.5,224.4 250.5,210.2 261.6,183 268.9,161.2 276.3,146 285.2,117.6 288.1,79.5 289.6,46.8 292.5,12"/>
-              <text class="fluss-name" x="214" y="219" transform="rotate(-24 214 219)">Aare</text>
-              <text class="fluss-name" x="120" y="56" transform="rotate(-3 120 56)">Rhein</text>
-
-              <g class="vku-tag" transform="translate(229 116)">
-                <rect width="36" height="19" rx="5"/>
-                <text x="18" y="14">VKU</text>
-              </g>
-
-              <g class="punkte">
-                <g class="pkt" data-ort="Aarau" transform="translate(154.1 245.6)"><circle r="4.5"/><text x="-10" y="5" text-anchor="end">Aarau</text></g>
-                <g class="pkt" data-ort="Baden" transform="translate(348.6 157.6)"><circle r="4.5"/><text x="10" y="5">Baden</text></g>
-                <g class="pkt" data-ort="Bad Zurzach" transform="translate(337.8 33)"><circle r="4.5"/><text x="-3" y="24" text-anchor="middle">Bad Zurzach</text></g>
-                <g class="pkt" data-ort="Bremgarten" transform="translate(373.4 290.4)"><circle r="4.5"/><text x="0" y="23" text-anchor="middle">Bremgarten</text></g>
-                <g class="pkt" data-ort="Brugg" transform="translate(275.1 149.2)"><circle r="4.5"/><text x="-10" y="5" text-anchor="end">Brugg</text></g>
-                <g class="pkt" data-ort="Buchs" transform="translate(181.9 244.1)"><circle r="4.5"/><text x="10" y="2">Buchs</text></g>
-                <g class="pkt" data-ort="Kulm" transform="translate(206.5 335.8)"><circle r="4.5"/><text x="10" y="5">Kulm</text></g>
-                <g class="pkt" data-ort="Lenzburg" transform="translate(254.4 249.9)"><circle r="4.5"/><text x="10" y="5">Lenzburg</text></g>
-                <g class="pkt" data-ort="Rothrist" transform="translate(36.5 341.3)"><circle r="4.5"/><text x="0" y="23" text-anchor="middle">Rothrist</text></g>
-                <g class="pkt" data-ort="Suhr" transform="translate(180.1 268.9)"><circle r="4.5"/><text x="10" y="9">Suhr</text></g>
-                <g class="pkt" data-ort="Wohlen" transform="translate(327.1 291)"><circle r="4.5"/><text x="-10" y="5" text-anchor="end">Wohlen</text></g>
-                <g class="pkt" data-ort="Zofingen" transform="translate(81.7 359.8)"><circle r="4.5"/><text x="10" y="5">Zofingen</text></g>
-                <g class="pkt" data-ort="Olten" transform="translate(53.6 292)"><circle r="4.5"/><text x="-10" y="5" text-anchor="end">Olten</text></g>
-                <g class="pkt" data-ort="Schönenwerd" transform="translate(124.3 270.6)"><circle r="4.5"/><text x="0" y="23" text-anchor="middle">Schönenwerd</text></g>
-              </g>
-              <g class="ziel" transform="translate(180.1 268.9)">
-                <circle class="ziel-puls" r="10"/>
-                <circle class="ziel-ring" r="10"/>
-                <circle class="ziel-punkt" r="5.5"/>
-              </g>
-            </svg>
-            <p class="karte-hinweis">Schematische Karte</p>
-          </div>
-
-          <div class="ergebnis" aria-live="polite">
-            <div class="ergebnis-kopf">
-              <p class="ergebnis-ort" id="erg-ort">14 Orte</p>
-              <p class="ergebnis-kanton" id="erg-kanton">Aargau und Solothurn</p>
+        <!-- Die Megi-Karte zeigt den gewählten Ort -->
+        <div class="ort-pass rv">
+          <div class="pass-tilt" id="pass-tilt">
+            <div class="pass" id="pass" role="group" aria-label="Gewählter Standort" aria-live="polite">
+              <svg class="pass-muster" viewBox="0 0 400 252" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <g fill="none" stroke="currentColor" stroke-width=".7">
+                  <path d="M-10 60C40 30 80 90 130 60S220 30 270 60S360 90 410 60"/>
+                  <path d="M-10 72C40 42 80 102 130 72S220 42 270 72S360 102 410 72"/>
+                  <path d="M-10 84C40 54 80 114 130 84S220 54 270 84S360 114 410 84"/>
+                  <path d="M-10 96C40 66 80 126 130 96S220 66 270 96S360 126 410 96"/>
+                  <path d="M-10 108C40 78 80 138 130 108S220 78 270 108S360 138 410 108"/>
+                  <path d="M-10 120C40 90 80 150 130 120S220 90 270 120S360 150 410 120"/>
+                  <path d="M-10 132C40 102 80 162 130 132S220 102 270 132S360 162 410 132"/>
+                  <path d="M-10 144C40 114 80 174 130 144S220 114 270 144S360 174 410 144"/>
+                  <path d="M-10 156C40 126 80 186 130 156S220 126 270 156S360 186 410 156"/>
+                  <path d="M-10 168C40 138 80 198 130 168S220 138 270 168S360 198 410 168"/>
+                  <path d="M-10 180C40 150 80 210 130 180S220 150 270 180S360 210 410 180"/>
+                  <path d="M-10 192C40 162 80 222 130 192S220 162 270 192S360 222 410 192"/>
+                </g>
+              </svg>
+              <span class="pass-streifen" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              <span class="pass-glanz" aria-hidden="true"></span>
+              <div class="pass-kopf">
+                <span class="pass-marke"><span class="tempo tempo-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Fahrschule Megi</span>
+                <span class="pass-l" aria-hidden="true">L</span>
+              </div>
+              <div class="pass-mitte">
+                <span class="pass-label">Dein Standort</span>
+                <strong class="pass-ort" id="pass-ort">14 Orte</strong>
+                <span class="pass-kanton" id="pass-kanton">Kanton Aargau und Solothurn</span>
+              </div>
+              <dl class="pass-fuss">
+                <div><dt>Kategorie</dt><dd>B</dd></div>
+                <div><dt>Fahrstunden</dt><dd>Mo bis Sa, 7 bis 20 Uhr</dd></div>
+                <div><dt>VKU</dt><dd>Sa und So, Brugg</dd></div>
+              </dl>
             </div>
-            <p class="ergebnis-text">Deine Fahrlektionen finden im Prüfungsgebiet statt. Den Treffpunkt wählst du in deiner Nähe.</p>
-            <p class="ergebnis-vku"><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg>Verkehrskunde am Wochenende in Brugg.</p>
-            <a class="knopf knopf-gelb knopf-breit" id="erg-knopf" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20m%C3%B6chte%20Fahrstunden%20nehmen." target="_blank" rel="noopener">
-              <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span id="erg-knopf-text">Fahrstunde per WhatsApp anfragen</span>
-            </a>
           </div>
+          <span class="pass-schatten" aria-hidden="true"></span>
         </div>
+
+        <div class="ort-cta rv">
+          <p class="ort-text">Deine Fahrlektionen finden im Prüfungsgebiet statt. Den Treffpunkt wählst du in deiner Nähe.</p>
+          <p class="ort-vku"><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg>Verkehrskunde am Wochenende in Brugg.</p>
+          <a class="knopf knopf-gelb knopf-breit" id="ort-knopf" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20m%C3%B6chte%20Fahrstunden%20nehmen." target="_blank" rel="noopener">
+            <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span id="ort-knopf-text">Fahrstunde per WhatsApp anfragen</span>
+          </a>
+        </div>
+
+        <figure class="ort-karte rv" aria-label="Schematische Karte der 14 Standorte">
+          <svg class="karte-svg" viewBox="0 0 446 380" aria-hidden="true" focusable="false">
+            <g class="karte-raster"><path d="M0 95H446M0 190H446M0 285H446M111.5 0V380M223 0V380M334.5 0V380"/></g>
+            <g class="fluesse">
+              <polyline class="fluss" pathLength="1" points="0,373 30.4,350 59.5,330 69,313 72.4,283 101.4,275 132.5,264 162.3,243 196.1,235 245.5,217 263.7,185 275.2,152 289.4,130 297.5,95 304.3,60 294.8,29"/>
+              <polyline class="fluss" pathLength="1" points="0,82 67.6,79 121.7,82 177.8,74 229.9,50 263.7,41 294.8,27 317.8,37 338.1,45 385.5,60 446.3,67"/>
+              <polyline class="fluss fluss-klein" pathLength="1" points="405.7,345 378.7,305 366.5,283 338.1,250 319.2,215 297.5,180 285.4,155 282.7,145"/>
+              <polyline class="fluss fluss-klein" pathLength="1" points="446.3,225 405.7,205 365.2,180 344.9,162 311.1,145 294.2,135"/>
+            </g>
+            <text class="fluss-name" x="206" y="218" transform="rotate(-18 206 218)">Aare</text>
+            <text class="fluss-name" x="96" y="72">Rhein</text>
+            <text class="fluss-name fluss-name-klein" x="331" y="234" transform="rotate(52 331 234)">Reuss</text>
+            <text class="fluss-name fluss-name-klein" x="380" y="176" transform="rotate(30 380 176)">Limmat</text>
+            <g class="vku-tag" transform="translate(222 112)"><rect width="40" height="21" rx="6"/><text x="20" y="15">VKU</text></g>
+            <path class="vku-strich" d="M250 133L268 149"/>
+            <g class="punkte">
+              <g class="pkt" data-ort="Bad Zurzach" style="--n:0" transform="translate(333.4 47)"><circle r="5"/><text x="14" y="5">Bad Zurzach</text></g>
+              <g class="pkt" data-ort="Brugg" style="--n:1" transform="translate(275.9 154)"><circle r="5"/><text x="-14" y="5" text-anchor="end">Brugg</text></g>
+              <g class="pkt" data-ort="Baden" style="--n:2" transform="translate(343.5 161.7)"><circle r="5"/><text x="14" y="5">Baden</text></g>
+              <g class="pkt" data-ort="Aarau" style="--n:3" transform="translate(165.3 242.5)"><circle r="5"/><text x="-4" y="-11" text-anchor="middle">Aarau</text></g>
+              <g class="pkt" data-ort="Buchs" style="--n:4" transform="translate(190.7 242)"><circle r="5"/><text x="14" y="-3">Buchs</text></g>
+              <g class="pkt" data-ort="Suhr" style="--n:5" transform="translate(188.7 263)"><circle r="5"/><text x="14" y="9">Suhr</text></g>
+              <g class="pkt" data-ort="Lenzburg" style="--n:6" transform="translate(257 247)"><circle r="5"/><text x="14" y="5">Lenzburg</text></g>
+              <g class="pkt" data-ort="Wohlen" style="--n:7" transform="translate(323.2 284)"><circle r="5"/><text x="-14" y="5" text-anchor="end">Wohlen</text></g>
+              <g class="pkt" data-ort="Bremgarten" style="--n:8" transform="translate(366.3 283.3)"><circle r="5"/><text x="0" y="22" text-anchor="middle">Bremgarten</text></g>
+              <g class="pkt" data-ort="Kulm" style="--n:9" transform="translate(213 325)"><circle r="5"/><text x="14" y="5">Kulm</text></g>
+              <g class="pkt" data-ort="Schönenwerd" style="--n:10" transform="translate(134.6 265)"><circle r="5"/><text x="-8" y="22">Schönenwerd</text></g>
+              <g class="pkt" data-ort="Olten" style="--n:11" transform="translate(69.7 285)"><circle r="5"/><text x="-14" y="5" text-anchor="end">Olten</text></g>
+              <g class="pkt" data-ort="Rothrist" style="--n:12" transform="translate(57.5 330)"><circle r="5"/><text x="-4" y="-12" text-anchor="middle">Rothrist</text></g>
+              <g class="pkt" data-ort="Zofingen" style="--n:13" transform="translate(98.1 347)"><circle r="5"/><text x="14" y="5">Zofingen</text></g>
+            </g>
+            <g class="ziel" id="ziel"><circle class="ziel-puls" r="10"/><circle class="ziel-ring" r="10"/><circle class="ziel-punkt" r="5.5"/></g>
+          </svg>
+          <figcaption>Schematische Karte, Aargau und Solothurn</figcaption>
+        </figure>
       </div>
     </section>
 
     <!-- ===================== Preise ===================== -->
     <section class="preise" id="preise" aria-labelledby="preise-titel">
-      <div class="wrap preise-raster">
+      <div class="wrap">
         <div class="preise-kopf">
-          <p class="kicker rv"><span class="tempo tempo-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Preise</p>
-          <h2 class="rv" id="preise-titel">Transparent und fair.</h2>
-          <p class="rv">Klare Preise in Franken. Mit einem Abo fährst du pro Lektion günstiger.</p>
-          <a class="textlink rv" href="#" data-soon="Preise">Alle Preise<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          <div>
+            <p class="kicker rv"><span class="tempo tempo-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Preise</p>
+            <h2 class="rv" id="preise-titel">Klare Preise.</h2>
+          </div>
+          <div class="preise-intro rv">
+            <p>Transparente und faire Preise sind bei Fahrschule Megi selbstverständlich. Eine Lektion dauert 45 Minuten, mit dem 10er-Abo zahlst du nur 85.– pro Lektion.</p>
+            <a class="textlink" href="#" data-soon="Preise">Alle Preise<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          </div>
         </div>
+
         <ol class="preisliste">
-          <li class="preis rv">
+          <li class="preis" style="--i:0">
             <p class="preis-betrag"><span class="chf">CHF</span>90.–</p>
-            <div class="preis-info"><h3>Einzelfahrstunde</h3><p>45 Minuten</p></div>
+            <div class="preis-was"><h3>Einzelfahrstunde</h3><p>45 Minuten</p></div>
+            <p class="preis-plakette preis-plakette-leer">Pro Lektion 90.–</p>
+            <a class="preis-link" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20m%C3%B6chte%20eine%20Fahrstunde%20buchen." target="_blank" rel="noopener" aria-label="Einzelfahrstunde per WhatsApp anfragen"><span>Anfragen</span><svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </li>
-          <li class="preis rv">
+          <li class="preis" style="--i:1">
             <p class="preis-betrag"><span class="chf">CHF</span>180.–</p>
-            <div class="preis-info"><h3>Doppellektion</h3><p>90 Minuten</p></div>
+            <div class="preis-was"><h3>Doppellektion</h3><p>90 Minuten</p></div>
+            <p class="preis-plakette preis-plakette-leer">Pro Lektion 90.–</p>
+            <a class="preis-link" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20m%C3%B6chte%20eine%20Doppellektion%20buchen." target="_blank" rel="noopener" aria-label="Doppellektion per WhatsApp anfragen"><span>Anfragen</span><svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </li>
-          <li class="preis rv">
+          <li class="preis" style="--i:2">
             <p class="preis-betrag"><span class="chf">CHF</span>440.–</p>
-            <div class="preis-info"><h3>5er-Abo</h3><p>5 x 45 Minuten</p></div>
-            <p class="preis-plakette">88.– pro Lektion</p>
+            <div class="preis-was"><h3>5er-Abo</h3><p>5 x 45 Minuten</p></div>
+            <p class="preis-plakette">Pro Lektion 88.–</p>
+            <a class="preis-link" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20interessiere%20mich%20f%C3%BCr%20das%205er-Abo." target="_blank" rel="noopener" aria-label="5er-Abo per WhatsApp anfragen"><span>Anfragen</span><svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </li>
-          <li class="preis preis-top rv">
+          <li class="preis preis-top" style="--i:3">
             <p class="preis-betrag"><span class="chf">CHF</span>850.–</p>
-            <div class="preis-info"><h3>10er-Abo</h3><p>10 x 45 Minuten</p></div>
-            <p class="preis-plakette">85.– pro Lektion<span>tiefster Lektionspreis</span></p>
+            <div class="preis-was"><h3>10er-Abo <span class="preis-tag">Tiefster Lektionspreis</span></h3><p>10 x 45 Minuten</p></div>
+            <p class="preis-plakette">Pro Lektion 85.–</p>
+            <a class="preis-link" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20interessiere%20mich%20f%C3%BCr%20das%2010er-Abo." target="_blank" rel="noopener" aria-label="10er-Abo per WhatsApp anfragen"><span>Anfragen</span><svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </li>
         </ol>
+
         <div class="preise-fuss rv">
           <p><strong>Einmalig CHF 100.–</strong> für Administrationsgebühr und Haftpflichtversicherung.</p>
+          <p><strong>Kurse:</strong> VKU CHF 190.–, Nothelferkurs CHF 150.–.</p>
           <p>Gebuchte Fahrstunden bitte 24 Stunden vorher absagen, sonst wird die Lektion voll verrechnet.</p>
         </div>
       </div>
@@ -263,30 +313,34 @@
         </div>
 
         <div class="vku-raster">
-          <div class="plan rv" role="group" aria-labelledby="plan-titel">
-            <p class="plan-titel" id="plan-titel">Kurszeiten</p>
-            <div class="plan-skala" aria-hidden="true">
-              <span style="--h:0">6</span><span style="--h:3">9</span><span style="--h:6">12</span><span style="--h:9">15</span><span style="--h:12">18</span><span style="--h:15">21</span><span style="--h:18">24</span>
+          <div class="plan rv">
+            <div class="plan-kopf">
+              <p class="plan-titel">Kurszeiten</p>
+              <p class="plan-preis"><span>CHF</span> 190.–</p>
             </div>
-            <div class="plan-zeile">
-              <p class="plan-tag">Samstag</p>
-              <div class="plan-spur">
-                <span class="plan-balken" style="--von:12; --bis:16"></span>
-                <span class="plan-zeit plan-zeit-links" style="--von:12">18.00 bis 22.00 Uhr</span>
+            <div class="plan-grafik" role="img" aria-label="Kurszeiten: Samstag 18.00 bis 22.00 Uhr und Sonntag 8.00 bis 12.30 Uhr">
+              <div class="plan-skala" aria-hidden="true">
+                <span style="--h:0">6</span><span style="--h:3">9</span><span style="--h:6">12</span><span style="--h:9">15</span><span style="--h:12">18</span><span style="--h:15">21</span><span style="--h:18">24</span>
               </div>
-            </div>
-            <div class="plan-zeile">
-              <p class="plan-tag">Sonntag</p>
-              <div class="plan-spur">
-                <span class="plan-balken" style="--von:2; --bis:6.5"></span>
-                <span class="plan-zeit plan-zeit-rechts" style="--bis:6.5">8.00 bis 12.30 Uhr</span>
+              <div class="plan-zeile">
+                <p class="plan-tag">Samstag</p>
+                <div class="plan-spur">
+                  <span class="plan-balken" style="--von:12; --bis:16"></span>
+                  <span class="plan-zeit plan-zeit-links" style="--von:12">18.00 bis 22.00 Uhr</span>
+                </div>
+              </div>
+              <div class="plan-zeile">
+                <p class="plan-tag">Sonntag</p>
+                <div class="plan-spur">
+                  <span class="plan-balken" style="--von:2; --bis:6.5"></span>
+                  <span class="plan-zeit plan-zeit-rechts" style="--bis:6.5">8.00 bis 12.30 Uhr</span>
+                </div>
               </div>
             </div>
             <ul class="fakten">
               <li><svg class="i" aria-hidden="true"><use href="#i-book"/></svg><span><strong>8 Lektionen in 4 Teilen.</strong> Du beginnst mit dem ersten Teil.</span></li>
               <li><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg><span><strong>CHF 190.– inkl. Kursmaterial.</strong> Bar oder mit Twint am ersten Abend.</span></li>
               <li><svg class="i" aria-hidden="true"><use href="#i-id"/></svg><span><strong>Lernfahrausweis mitbringen.</strong> Ein gültiger Ausweis ist Voraussetzung.</span></li>
-              <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Hauptstrasse 38, 5200 Brugg.</strong> Altstadt, 3 Minuten vom Bahnhof.</span></li>
             </ul>
             <div class="vku-cta">
               <p><strong>Kursdaten auf Anfrage.</strong> Schreib oder ruf Mërgim an, er nennt dir die nächsten Daten.</p>
@@ -301,9 +355,9 @@
           </div>
 
           <figure class="vku-foto rv">
-            <img src="../assets/img/b-vku.webp" width="1000" height="750" alt="Mërgim Abazi unterrichtet einen VKU-Kurs im Theorielokal in Brugg">
-            <figcaption>Im Theorielokal in Brugg</figcaption>
-          </figure>
+              <img src="../assets/img/b-vku.webp" width="1000" height="750" alt="Mërgim Abazi unterrichtet einen VKU-Kurs im Theorielokal in Brugg">
+              <figcaption><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Hauptstrasse 38, 5200 Brugg</figcaption>
+            </figure>
         </div>
       </div>
     </section>
@@ -316,7 +370,7 @@
           <h2 class="rv" id="kurse-titel">Mehr als Fahrstunden.</h2>
         </div>
         <div class="kurse-raster">
-          <article class="kurs rv">
+          <article class="kurs rv" style="--d:0">
             <div class="kurs-bild kurs-foto">
               <img src="../assets/img/b-cockpit.webp" width="1200" height="675" alt="Cockpit des Fahrschulautos">
               <svg class="taxischild" viewBox="0 0 120 52" aria-hidden="true" focusable="false">
@@ -328,11 +382,12 @@
             <div class="kurs-text">
               <h3>BPT 121 Taxi</h3>
               <p>Ausbildung für die Taxi-Prüfung, mit Praxis im Verkehr und Vorbereitung auf den Alltag mit Passagieren.</p>
+              <blockquote class="kurs-zitat">«Die BPT-Prüfung habe ich dank Mergim mit nur wenigen Fahrstunden beim ersten Versuch bestanden.» <cite>Olsi X.</cite></blockquote>
               <a class="textlink" href="#" data-soon="BPT 121 Taxi">Zur Taxi-Ausbildung<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
             </div>
           </article>
 
-          <article class="kurs rv">
+          <article class="kurs rv" style="--d:1">
             <div class="kurs-bild kurs-grafik">
               <svg class="herz" viewBox="0 0 240 150" aria-hidden="true" focusable="false">
                 <path class="herz-form" pathLength="1" d="M120 128C78 98 58 76 58 52C58 34 72 22 88 22C101 22 112 29 120 41C128 29 139 22 152 22C168 22 182 34 182 52C182 76 162 98 120 128Z"/>
@@ -341,29 +396,20 @@
             </div>
             <div class="kurs-text">
               <h3>Nothelferkurs</h3>
-              <p>Lebensrettende Sofortmassnahmen bei Verkehrsunfällen. Für alle, die den Führerausweis machen, obligatorisch.</p>
+              <p>Lebensrettende Sofortmassnahmen bei Verkehrsunfällen, mit Reanimation BLS-AED. Für alle, die den Führerausweis machen, obligatorisch.</p>
               <ul class="kurs-fakten"><li>10 Stunden</li><li>CHF 150.–</li><li>Zertifikat 6 Jahre gültig</li></ul>
               <a class="textlink" href="#" data-soon="Nothelferkurs">Zum Nothelferkurs<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
             </div>
           </article>
 
-          <article class="kurs rv">
-            <div class="kurs-bild kurs-grafik">
-              <svg class="lenkrad" viewBox="0 0 240 150" aria-hidden="true" focusable="false">
-                <g class="lenkrad-dreh">
-                  <circle class="lr-linie" pathLength="1" cx="120" cy="75" r="50"/>
-                  <circle class="lr-linie" pathLength="1" cx="120" cy="75" r="13"/>
-                  <path class="lr-linie" pathLength="1" d="M120 88V125M107 75L72 64M133 75L168 64"/>
-                </g>
-                <g class="lr-haken">
-                  <circle cx="168" cy="112" r="17"/>
-                  <path pathLength="1" d="M160 112L166 118L177 106"/>
-                </g>
-              </svg>
+          <article class="kurs rv" style="--d:2">
+            <div class="kurs-bild kurs-foto">
+              <img src="../assets/img/b-fahren.webp" width="1000" height="560" alt="Mërgim Abazi am Steuer des Fahrschulautos">
             </div>
             <div class="kurs-text">
-              <h3>Kontrollfahrt</h3>
-              <p>Vorbereitung auf die Kontrollfahrt, auf Anfrage. Schreib Mërgim, wann und wo es dir passt.</p>
+              <h3>Kategorie B und Kontrollfahrt</h3>
+              <p>Fahrstunden im Prüfungsgebiet, abgestimmt auf dein Tempo. Kontrollfahrten auf Anfrage.</p>
+              <ul class="kurs-fakten"><li>Ab CHF 85.– pro Lektion</li><li>Mo bis Sa 7 bis 20 Uhr</li></ul>
               <a class="textlink" href="#" data-soon="Fahrunterricht">Zum Fahrunterricht<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
             </div>
           </article>
@@ -376,21 +422,22 @@
       <div class="wrap stimmen-kopf">
         <div>
           <p class="kicker rv"><span class="tempo tempo-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Bewertungen</p>
-          <h2 class="rv" id="stimmen-titel">Über 100 Bewertungen mit fünf Sternen.</h2>
+          <h2 class="rv" id="stimmen-titel">Über 100 <span class="block-gross">Fünf-Sterne-Bewertungen.</span></h2>
         </div>
         <p class="stimmen-quelle rv">Auszug aus den Bewertungen auf der bisherigen Website.</p>
       </div>
       <div class="band" id="band">
         <div class="band-spur">
           <ul class="band-liste">
-            <li class="stimme"><span class="sterne" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Er ist ein wirklich toller Fahrlehrer, der viel Geduld hat, alles verständlich erklärt und einem jederzeit ein gutes Gefühl gibt.»</blockquote><p class="stimme-wer">Henry V. <span>26.10.2026</span></p></li>
-            <li class="stimme"><span class="sterne" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Mega guete Fahrlehrer und au streng, aber es lohnt sich sehr.»</blockquote><p class="stimme-wer">Ledion B. <span>22.10.2026</span></p></li>
-            <li class="stimme"><span class="sterne" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Er ist stets auf dem neusten Stand und weiss, was die Experten sehen wollen. Geduld steht bei ihm an erster Stelle.»</blockquote><p class="stimme-wer">Noori S. <span>28.05.2026</span></p></li>
-            <li class="stimme"><span class="sterne" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«D'Fahrstunde sind seriös und organisiert gsi, aber glichzitig hets au Spass gmacht.»</blockquote><p class="stimme-wer">Suejda R. <span>25.03.2026</span></p></li>
-            <li class="stimme"><span class="sterne" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Super Fahrlehrer! Sehr geduldig, humorvoll und immer auf alle Fragen eingegangen.»</blockquote><p class="stimme-wer">Loresa S. <span>02.06.2026</span></p></li>
-            <li class="stimme"><span class="sterne" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Er ist ehrlich, respektvoll und sagt klar, woran man arbeiten muss.»</blockquote><p class="stimme-wer">Ruben L. <span>02.04.2026</span></p></li>
-            <li class="stimme"><span class="sterne" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Ich kann die Fahrschule Megi wirklich weiterempfehlen! Ich wurde super unterstützt und habe mich während der ganzen Zeit wohlgefühlt.»</blockquote><p class="stimme-wer">Sabina S. <span>26.10.2026</span></p></li>
-            <li class="stimme"><span class="sterne" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Wer eine Fahrschule sucht, bei der man nicht nur das Fahren lernt, sondern auch menschlich gut aufgehoben ist, ist bei der Fahrschule Megi genau richtig!»</blockquote><p class="stimme-wer">Sebastian S. <span>12.08.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Er ist ein wirklich toller Fahrlehrer, der viel Geduld hat, alles verständlich erklärt und einem jederzeit ein gutes Gefühl gibt.»</blockquote><p class="stimme-wer">Henry V. <span>26.10.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Mega guete Fahrlehrer und au streng, aber es lohnt sich sehr.»</blockquote><p class="stimme-wer">Ledion B. <span>22.10.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Als Eltern wünscht man sich für sein Kind eine Fahrschule, der man voll vertrauen kann, und bei der Fahrschule Megi waren wir genau richtig.»</blockquote><p class="stimme-wer">Argjent I. <span>11.10.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Er ist stets auf dem neusten Stand und weiss, was die Experten sehen wollen. Geduld steht bei ihm an erster Stelle.»</blockquote><p class="stimme-wer">Noori S. <span>28.05.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«D'Fahrstunde sind seriös und organisiert gsi, aber glichzitig hets au Spass gmacht.»</blockquote><p class="stimme-wer">Suejda R. <span>25.03.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Super Fahrlehrer! Sehr geduldig, humorvoll und immer auf alle Fragen eingegangen.»</blockquote><p class="stimme-wer">Loresa S. <span>02.06.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Er ist ehrlich, respektvoll und sagt klar, woran man arbeiten muss.»</blockquote><p class="stimme-wer">Ruben L. <span>02.04.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Ich kann die Fahrschule Megi wirklich weiterempfehlen! Ich wurde super unterstützt und habe mich während der ganzen Zeit wohlgefühlt.»</blockquote><p class="stimme-wer">Sabina S. <span>26.10.2026</span></p></li>
+            <li class="stimme"><span class="sterne" role="img" aria-label="5 von 5 Sternen"><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg><svg aria-hidden="true"><use href="#i-stern"/></svg></span><blockquote>«Mergim ist ein sehr sympathischer, geduldiger und hilfsbereiter Mensch. Er erklärt alles sehr ruhig und verständlich.»</blockquote><p class="stimme-wer">Tehseen A. <span>12.10.2026</span></p></li>
           </ul>
         </div>
       </div>
@@ -400,20 +447,20 @@
     <section class="person" id="mergim" aria-labelledby="person-titel">
       <div class="wrap person-raster">
         <figure class="person-foto rv">
-          <img src="../assets/img/b-mergim.webp" width="800" height="1000" alt="Mërgim Abazi lehnt an der offenen Fahrertür des Fahrschulautos">
+          <img src="../assets/img/b-mergim.webp" width="640" height="800" alt="Mërgim Abazi lehnt an der offenen Fahrertür des Fahrschulautos">
           <span class="tempo tempo-foto" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-          <figcaption>Fahrlehrer mit eidg. Fachausweis seit 2023</figcaption>
+          <figcaption class="person-plakette"><span>Seit 2023</span>Fahrlehrer mit eidg. Fachausweis</figcaption>
         </figure>
         <div class="person-text">
           <p class="kicker rv"><span class="tempo tempo-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Dein Fahrlehrer</p>
           <h2 class="rv" id="person-titel">Hallo, ich bin Mërgim.</h2>
           <p class="person-lead rv">Ich freue mich, dich auf deinem Weg bis zum Führerausweis zu begleiten. Du erlebst einen respektvollen Fahrlehrer, der dich ernst nimmt und bis zum Ziel begleitet.</p>
           <p class="rv">Lange habe ich als Produktionsmechaniker und Qualitätsprüfer gearbeitet. 2023 habe ich die Ausbildung zum Fahrlehrer mit eidgenössischem Fachausweis abgeschlossen und in Suhr meine eigene Fahrschule gegründet: die Fahrschule Megi.</p>
-          <ul class="werte">
-            <li class="rv"><span class="werte-nr">01</span><h3>Persönliche Betreuung</h3><p>Jeder lernt anders. Deine Fahrstunden sind auf dich zugeschnitten.</p></li>
-            <li class="rv"><span class="werte-nr">02</span><h3>Fahrspass</h3><p>Mit einer Portion Humor und den neusten Unterrichtsmethoden lernst du Autofahren mit Freude.</p></li>
-            <li class="rv"><span class="werte-nr">03</span><h3>Flexibilität</h3><p>Ob Schüler, Berufstätiger oder Student: Wir finden gemeinsam Termine, die zu deinem Zeitplan passen.</p></li>
-          </ul>
+          <ol class="werte">
+            <li class="rv" style="--d:0"><span class="werte-nr">01</span><div><h3>Persönliche Betreuung</h3><p>Jeder lernt anders. Deine Fahrstunden sind auf dich zugeschnitten.</p></div></li>
+            <li class="rv" style="--d:1"><span class="werte-nr">02</span><div><h3>Fahrspass</h3><p>Mit einer Portion Humor und den neusten Unterrichtsmethoden lernst du Autofahren mit Freude.</p></div></li>
+            <li class="rv" style="--d:2"><span class="werte-nr">03</span><div><h3>Flexibilität</h3><p>Ob Schüler, Berufstätiger oder Student: Wir finden gemeinsam Termine, die zu deinem Zeitplan passen.</p></div></li>
+          </ol>
           <a class="textlink rv" href="#" data-soon="Über uns">Mehr über Mërgim<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
         </div>
       </div>
@@ -421,22 +468,22 @@
 
     <!-- ===================== Kontakt ===================== -->
     <section class="kontakt" id="kontakt" aria-labelledby="kontakt-titel">
-      <span class="tempo tempo-gross" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="kontakt-streifen" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <div class="wrap kontakt-raster">
-        <div class="kontakt-haupt">
+        <div class="kontakt-links">
           <p class="kicker kicker-dunkel rv">Kontakt</p>
           <h2 class="rv" id="kontakt-titel">Starte deine Fahrausbildung.</h2>
           <a class="kontakt-tel rv" href="tel:+41768052585"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>076 805 25 85</a>
           <div class="knopfreihe rv">
-            <a class="knopf knopf-navy" href="https://wa.me/41768052585" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp schreiben</a>
+            <a class="knopf knopf-navy" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp schreiben</a>
             <a class="knopf knopf-linie-dunkel" href="mailto:fahrschulemegi@gmail.com"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
           </div>
         </div>
         <dl class="kontakt-infos rv">
           <div><dt>Fahrschule</dt><dd>Suhrestrasse 32<br>5034 Suhr</dd></div>
           <div><dt>Theorielokal VKU</dt><dd>Hauptstrasse 38<br>5200 Brugg</dd></div>
-          <div class="breit"><dt>Erreichbar</dt><dd>Montag bis Samstag<br>7 bis 20 Uhr, Sonntag frei</dd></div>
-          <div class="breit"><dt>E-Mail und Social Media</dt><dd><a href="mailto:fahrschulemegi@gmail.com">fahrschulemegi@gmail.com</a><br><a href="https://www.instagram.com/megifahrschule" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/people/MEGI-Fahrschule/100077979473838/" target="_blank" rel="noopener">Facebook</a></dd></div>
+          <div><dt>Erreichbar</dt><dd>Montag bis Samstag<br>7 bis 20 Uhr, Sonntag frei</dd></div>
+          <div><dt>E-Mail und Social Media</dt><dd><a href="mailto:fahrschulemegi@gmail.com">fahrschulemegi@gmail.com</a><br><a href="https://www.instagram.com/megifahrschule" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/people/MEGI-Fahrschule/100077979473838/" target="_blank" rel="noopener">Facebook</a></dd></div>
         </dl>
       </div>
     </section>
@@ -446,7 +493,7 @@
   <footer class="fuss">
     <div class="wrap fuss-raster">
       <div class="fuss-marke">
-        <img src="../assets/img/b-logo.webp" width="520" height="136" loading="lazy" alt="Fahrschule Megi">
+        <img src="../assets/img/b-logo.webp" width="600" height="157" alt="Fahrschule Megi">
         <p>Fahrschule Megi macht dich mobil.</p>
       </div>
       <nav class="fuss-nav" aria-label="Unterseiten">
@@ -461,6 +508,10 @@
         <a href="tel:+41768052585">076 805 25 85</a>
         <a href="mailto:fahrschulemegi@gmail.com">fahrschulemegi@gmail.com</a>
         <span>Suhrestrasse 32, 5034 Suhr</span>
+        <span class="fuss-social">
+          <a href="https://www.instagram.com/megifahrschule" target="_blank" rel="noopener" aria-label="Instagram"><svg class="i" aria-hidden="true"><use href="#i-insta"/></svg></a>
+          <a href="https://www.facebook.com/people/MEGI-Fahrschule/100077979473838/" target="_blank" rel="noopener" aria-label="Facebook"><svg class="i" aria-hidden="true"><use href="#i-fb"/></svg></a>
+        </span>
       </div>
     </div>
     <div class="wrap fuss-unten">
@@ -469,9 +520,9 @@
     </div>
   </footer>
 
-  <!-- Aktionsleiste für kleine Bildschirme -->
-  <div class="aktion" id="aktion">
-    <a class="aktion-wa" href="https://wa.me/41768052585" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+  <!-- ===================== Aktionsleiste (mobil) ===================== -->
+  <div class="aktion" id="aktion" aria-label="Schnellkontakt">
+    <a class="aktion-wa" href="https://wa.me/41768052585?text=Hallo%20M%C3%ABrgim%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
     <a class="aktion-tel" href="tel:+41768052585"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
   </div>
 </body>

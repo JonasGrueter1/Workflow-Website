@@ -138,13 +138,13 @@
       'Telefon: ' + (v('telefon') || '-'),
       'E-Mail: ' + (v('email') || '-')
     ]);
-    var subject = 'Wunschliste neue Website Fahrschule Kurmann';
+    var subject = 'Wunschliste neue Website Fahrschule Ehrler';
     var body = lines.join('\n');
 
     var payload = {
       access_key: ACCESS_KEY,
       subject: subject,
-      from_name: 'Wunschliste Fahrschule Kurmann',
+      from_name: 'Wunschliste Fahrschule Ehrler',
       name: v('name'),
       phone: v('telefon'),
       message: body,

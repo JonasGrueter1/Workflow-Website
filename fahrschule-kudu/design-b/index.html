@@ -8,459 +8,438 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#FFFFFF">
   <link rel="icon" href="../assets/img/b-favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="preload" href="../assets/fonts/b-newsreader-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/b-mulish-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/img/b-kurt.webp" as="image" type="image/webp">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>
-    (function (d) {
-      d.classList.add('js');
-      try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('fx'); } catch (e) {}
-      /* Sicherheitsnetz: Lädt script.js nicht, wird alles ohne Animation gezeigt */
-      setTimeout(function () { if (!window.kuduB) d.classList.remove('fx', 'js'); }, 2500);
-    })(document.documentElement);
+    /* Versteckt wird nur mit JavaScript. Lädt script.js nicht, wird nach 2.5 s alles gezeigt. */
+    document.documentElement.classList.add('js');
+    setTimeout(function () { if (!window.kuduBBereit) document.documentElement.classList.remove('js'); }, 2500);
   </script>
   <script src="script.js" defer></script>
   <script src="../assets/shared/vorschau.js" defer></script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "DrivingSchool",
-    "name": "Fahrschule KuDu",
-    "description": "Fahrstunden Kategorie B und BE mit Handschaltung oder Automat, Verkehrskunde und Hilfe bei der Regeltheorie in Spiez und Thun.",
-    "telephone": "+41 76 298 90 52",
-    "email": "fahrschulekudu@gmx.ch",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "General-Guisanstrasse 5",
-      "postalCode": "3700",
-      "addressLocality": "Spiez",
-      "addressRegion": "BE",
-      "addressCountry": "CH"
-    },
-    "areaServed": ["Spiez", "Thun"],
-    "employee": { "@type": "Person", "name": "Kurt Dummermuth", "jobTitle": "Autofahrlehrer" }
-  }
-  </script>
 </head>
 <body data-vorschau="b">
   <a class="skip" href="#inhalt">Direkt zum Inhalt</a>
 
   <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
-  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
     <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
-    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
-    <symbol id="i-uhr" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M3 7l9 6l9 -6"/></symbol>
     <symbol id="i-pfeil" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
     <symbol id="i-extern" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
-    <symbol id="i-info" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
-    <symbol id="i-menue" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
-    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></symbol>
-    <symbol id="i-kalender" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></symbol>
-    <symbol id="i-geld" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M9.5 12a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0"/></symbol>
+    <symbol id="i-uhr" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-geld" viewBox="0 0 24 24"><path d="M7 11a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"/></symbol>
     <symbol id="i-ausweis" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 8l2 0"/><path d="M15 12l2 0"/><path d="M7 16l10 0"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+    <symbol id="i-haus" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></symbol>
+    <symbol id="i-lenkrad" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14l0 7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
+    <symbol id="s-kringel" viewBox="0 0 36 16"><path pathLength="1" d="M1 13H11C16 13 20.5 9 20.4 5C20.3 2.4 18.8 2 17.9 2C16.6 2 15.4 3.2 15.4 5.2C15.4 9 19 13 24.8 13H35"/></symbol>
   </svg>
 
-  <header class="kopf" id="kopf">
-    <div class="wrap kopf-innen">
-      <a class="marke" href="#inhalt" aria-label="Fahrschule KuDu, zum Seitenanfang">
-        <img src="../assets/img/b-logo.webp" width="264" height="120" alt="Fahrschule KuDu">
+  <header class="kopf">
+    <div class="wrap kopf-in">
+      <a class="marke" href="#top" aria-label="Fahrschule KuDu, zum Seitenanfang">
+        <span class="marke-wort" aria-hidden="true">Fahrschule</span>
+        <img src="../assets/img/b-logo.webp" alt="" width="106" height="30">
       </a>
-      <nav class="nav" aria-label="Hauptmenü">
-        <ul>
-          <li><a href="#angebot">Angebot</a></li>
-          <li><a href="#kurse">Kurse</a></li>
-          <li><a href="#ueber-mich">Über mich</a></li>
-          <li><a href="#kontakt">Kontakt</a></li>
+      <nav class="menue" id="menue" aria-label="Hauptmenü">
+        <ul class="menue-liste">
+          <li style="--i:0"><a href="#angebot">Angebot</a></li>
+          <li style="--i:1"><a href="#kurse">Kurse</a></li>
+          <li style="--i:2"><a href="#ueber-mich">Über mich</a></li>
+          <li style="--i:3"><a href="#kontakt">Kontakt</a></li>
         </ul>
+        <div class="menue-fuss">
+          <a class="knopf knopf-pink knopf-voll" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen: 076 298 90 52</a>
+          <a class="knopf knopf-rand knopf-voll" href="mailto:fahrschulekudu@gmx.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>fahrschulekudu@gmx.ch</a>
+          <p class="menue-hinweis">Erstmalige Termine nehme ich nur telefonisch entgegen.</p>
+        </div>
       </nav>
-      <a class="knopf knopf-pink kopf-tel" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>076 298 90 52</a>
-      <a class="rund rund-pink kopf-tel-rund" href="tel:+41762989052" aria-label="Anrufen: 076 298 90 52"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg></a>
-      <button class="rund menue-knopf" type="button" aria-expanded="false" aria-controls="menue" aria-label="Menü öffnen">
-        <svg class="i" aria-hidden="true"><use href="#i-menue"/></svg>
-      </button>
+      <a class="knopf knopf-pink kopf-tel" href="tel:+41762989052" aria-label="Anrufen: 076 298 90 52"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg><span class="kopf-tel-text">076 298 90 52</span></a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menue" aria-label="Menü öffnen"><span></span><span></span></button>
     </div>
   </header>
 
-  <div class="menue" id="menue" role="dialog" aria-modal="true" aria-label="Menü" hidden>
-    <div class="menue-kopf">
-      <img src="../assets/img/b-logo.webp" width="264" height="120" alt="Fahrschule KuDu">
-      <button class="rund menue-zu" type="button" aria-label="Menü schliessen"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
-    </div>
-    <nav aria-label="Hauptmenü mobil">
-      <ul class="menue-liste">
-        <li><a href="#angebot">Angebot</a></li>
-        <li><a href="#kurse">Kurse</a></li>
-        <li><a href="#ueber-mich">Über mich</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
-      </ul>
-    </nav>
-    <div class="menue-fuss">
-      <a class="knopf knopf-pink knopf-breit" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen: 076 298 90 52</a>
-      <a class="knopf knopf-umriss knopf-breit" href="mailto:fahrschulekudu@gmx.ch?subject=Anfrage%20Fahrschule%20KuDu"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
-      <p class="menue-hinweis">Erstmalige Termine nehme ich nur telefonisch entgegen.</p>
-    </div>
-  </div>
+  <div class="seite">
+    <svg class="spur-ebene" aria-hidden="true" focusable="false"><path class="spur-weg"/><path class="spur-tinte"/></svg>
 
-  <main id="inhalt">
-    <!-- Die Schlaufenlinie (ab 1024 px, wird vom Skript aus den Stationen berechnet) -->
-    <div class="linie" aria-hidden="true">
-      <svg class="linie-svg" xmlns="http://www.w3.org/2000/svg"><path class="linie-spur" d=""/><path class="linie-strich" d=""/></svg>
-    </div>
-
-    <!-- 1 Hero -->
-    <section class="hero" aria-labelledby="hero-titel">
-      <div class="wrap hero-raster">
-        <div class="hero-text">
-          <h1 id="hero-titel">
-            <span class="hero-ort" data-hero>Fahrschule KuDu in Spiez</span>
-            <span class="hero-satz" data-hero>Autofahren lernen mit <em>Ruhe und Geduld.</em></span>
-          </h1>
-          <p class="hero-lead" data-hero>Ich bin Kurt Dummermuth. Wenn du etwas länger brauchst oder eine Lernschwäche hast, bist du bei mir genau richtig.</p>
-          <div class="hero-knoepfe" data-hero>
-            <a class="knopf knopf-pink knopf-gross" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen: 076 298 90 52</a>
-            <a class="knopf knopf-umriss knopf-gross" href="mailto:fahrschulekudu@gmx.ch?subject=Anfrage%20Fahrschule%20KuDu"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
+    <main id="inhalt">
+      <!-- 1 Hero -->
+      <section class="held" id="top">
+        <div class="wrap held-raster">
+          <div class="held-text">
+            <h1>
+              <span class="h1-ort"><span class="punkt-lime" aria-hidden="true"></span>Fahrschule KuDu in Spiez<span class="sr">:</span></span>
+              <span class="h1-satz">Autofahren lernen mit <em>Ruhe und Geduld.</em></span>
+            </h1>
+            <p class="lead">Ich bin Kurt Dummermuth, dein Fahrlehrer in Spiez und Thun. Wenn du etwas länger brauchst oder eine Lernschwäche hast, bist du bei mir genau richtig.</p>
+            <div class="knoepfe">
+              <a class="knopf knopf-pink knopf-gross" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen: 076 298 90 52</a>
+              <a class="knopf knopf-rand knopf-gross" href="mailto:fahrschulekudu@gmx.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
+            </div>
+            <p class="hinweis"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg>Erstmalige Termine nehme ich nur telefonisch entgegen.</p>
           </div>
-          <p class="hero-hinweis" data-hero><svg class="i" aria-hidden="true"><use href="#i-info"/></svg>Erstmalige Termine nehme ich nur telefonisch entgegen.</p>
+
+          <figure class="held-bild">
+            <div class="foto-rahmen">
+              <img src="../assets/img/b-kurt.webp" width="880" height="1100" alt="Kurt Dummermuth, Fahrlehrer der Fahrschule KuDu, lächelnd im schwarzen Poloshirt mit KuDu-Logo">
+            </div>
+            <figcaption class="namens-karte">
+              <strong>Kurt Dummermuth</strong>
+              <span>Autofahrlehrer, Fahrschule KuDu</span>
+            </figcaption>
+            <div class="auto-chip">
+              <img src="../assets/img/b-limette-mini.webp" width="240" height="240" alt="Das limettengrüne Fahrschulauto mit Automat">
+              <p><strong>Neu seit Juli 2026</strong><span>Prüfung auch mit Automat</span></p>
+            </div>
+            <span class="knoten knoten-start" data-knot="d" aria-hidden="true"></span>
+            <span class="knoten-leer knoten-ecke" data-knot="d" data-loops="1" data-r="11" data-d="31" data-side="1" aria-hidden="true"></span>
+          </figure>
+          <span class="knoten-leer knoten-held-ende" data-knot="d" aria-hidden="true"></span>
         </div>
-        <figure class="hero-bild">
-          <img class="hero-foto" src="../assets/img/b-kurt.webp" width="960" height="1200" alt="Fahrlehrer Kurt Dummermuth lächelt, er trägt ein schwarzes Polo mit dem Logo der Fahrschule KuDu" fetchpriority="high">
-          <!-- Stück der Linie für kleine Bildschirme: Schlaufe um die Fotoecke -->
-          <svg class="stueck stueck-hero" viewBox="0 0 140 100" aria-hidden="true" focusable="false"><path pathLength="1" d="M140 48L38.8 48C33.6 48 28.4 49.1 23.7 51.2C19 53.3 14.9 56.4 11.8 60C8.6 63.6 6.5 67.8 5.4 72C4.4 76.2 4.5 80.4 5.5 84C6.5 87.6 8.6 90.7 11.1 92.8C13.7 94.9 16.9 96 20 96C23.1 96 26.3 94.9 28.9 92.8C31.4 90.7 33.5 87.6 34.5 84C35.5 80.4 35.6 76.2 34.6 72C33.5 67.8 31.4 63.6 28.2 60C25.1 56.4 21 53.3 16.3 51.2C11.6 49.1 6.4 48 1.2 48L-48 48"/></svg>
-          <figcaption class="hero-name" data-hero><strong>Kurt Dummermuth</strong><span>Autofahrlehrer in Spiez</span></figcaption>
-        </figure>
-      </div>
-    </section>
+      </section>
 
-    <!-- 2 Motto -->
-    <section class="motto" aria-label="Mein Motto">
-      <div class="wrap">
-        <figure class="motto-inhalt">
-          <blockquote><p class="motto-satz" data-woerter>«Probleme sind da, um diese zu lösen.»</p></blockquote>
-          <figcaption data-reveal>Kurt Dummermuth, mein Motto</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- 3 Angebot -->
-    <section class="sek angebot" id="angebot" aria-labelledby="angebot-titel">
-      <div class="wrap">
-        <div class="sek-kopf">
-          <span class="spur-punkt" aria-hidden="true"></span>
-          <p class="kicker" data-reveal>Angebot und Preise</p>
-          <h2 id="angebot-titel" data-reveal>Fahrlektionen, die zu dir passen.</h2>
-          <p class="sek-lead" data-reveal>Alle haben einmal mit dem Lernfahrausweis und der ersten Fahrlektion begonnen. Bei mir lernst du das Autofahren von Grund auf, mit Tipps und Tricks für Manöver und Verkehr.</p>
+      <!-- 2 Motto -->
+      <section class="motto" aria-label="Motto">
+        <div class="wrap">
+          <blockquote class="motto-zitat">
+            <p data-woerter>«Probleme sind da, um diese zu lösen.»</p>
+            <footer>Kurt Dummermuth, mein Motto</footer>
+          </blockquote>
         </div>
+      </section>
 
-        <div class="karten">
-          <article class="karte" data-reveal>
-            <p class="karte-kat">Kategorie B</p>
-            <h3>Auto</h3>
-            <p class="karte-text">Wenn du ein solides Fundament zum Autofahren willst, bist du bei mir richtig.</p>
-            <dl class="preise">
-              <div><dt>Fahrlektion<span>Fahrzeit 50 Min.</span></dt><dd>Fr. 90.–</dd></div>
-              <div><dt>Doppellektion<span>Fahrzeit 110 Min.</span></dt><dd>Fr. 180.–</dd></div>
-            </dl>
-            <p class="getriebe"><span class="getriebe-wahl"><span class="auto-punkt auto-punkt-schwarz" aria-hidden="true"></span>Handschaltung</span><span class="getriebe-oder">oder</span><span class="getriebe-wahl"><span class="auto-punkt auto-punkt-limette" aria-hidden="true"></span>Automat</span></p>
-          </article>
+      <!-- 3 Angebot -->
+      <section class="abschnitt angebot" id="angebot" aria-labelledby="angebot-titel">
+        <div class="wrap">
+          <div class="kopfzeile" data-reveal>
+            <p class="kicker"><span class="knoten" data-knot="d" aria-hidden="true"></span><svg class="kringel" viewBox="0 0 36 16" aria-hidden="true"><use href="#s-kringel"/></svg>Angebot und Preise</p>
+            <h2 id="angebot-titel">Was du bei mir lernst, und was es kostet.</h2>
+            <p class="intro">Alle haben einmal mit dem Lernfahrausweis und der ersten Fahrlektion begonnen. Bei mir lernst du das Autofahren von Grund auf, in Ruhe und in deinem Tempo.</p>
+          </div>
 
-          <article class="karte" data-reveal>
-            <p class="karte-kat">Kategorie BE</p>
-            <h3>Anhänger</h3>
-            <p class="karte-text">Für den Wohnwagen in den Ferien oder den Anhänger bei der Arbeit. Während der Fahrt üben wir einfache Manöver.</p>
-            <dl class="preise">
-              <div><dt>Anhängerlektion<span>Dauer ca. 150 Min.</span></dt><dd>Fr. 216.–</dd></div>
-            </dl>
-            <p class="ablauf-titel">So läuft eine Anhängerlektion ab</p>
-            <ol class="ablauf">
-              <li>Vorbereiten</li>
-              <li>Anhängen</li>
-              <li>Kontrollen</li>
-              <li>Fahren</li>
-              <li>Manöver</li>
-              <li>Fahren</li>
-              <li>Abhängen und Sichern</li>
+          <div class="karten-3">
+            <article class="karte preis-karte" data-reveal style="--d:0">
+              <p class="karte-label">Kategorie B</p>
+              <h3>Auto</h3>
+              <p class="karte-text">Wenn du ein solides Fundament zum Autofahren willst, bist du bei mir richtig. Mit Tipps und Tricks für Manöver bewegst du dein Auto bald sicher im Verkehr.</p>
+              <dl class="preise">
+                <div><dt>Fahrlektion<span>Fahrzeit 50 Min.</span></dt><dd>Fr. 90.–</dd></div>
+                <div><dt>Doppellektion<span>Fahrzeit 110 Min.</span></dt><dd>Fr. 180.–</dd></div>
+              </dl>
+              <p class="karte-fuss"><span class="wahl"><span class="auto-punkt auto-punkt-schwarz" aria-hidden="true"></span>Handschaltung</span><i>oder</i><span class="wahl"><span class="auto-punkt auto-punkt-lime" aria-hidden="true"></span>Automat</span></p>
+            </article>
+
+            <article class="karte preis-karte" data-reveal style="--d:1">
+              <p class="karte-label">Kategorie BE</p>
+              <h3>Auto mit Anhänger</h3>
+              <p class="karte-text">Mit dem Wohnwagen in die Ferien oder mit dem Anhänger zur Arbeit: Ich zeige dir, worauf du vor, während und nach der Fahrt achten musst.</p>
+              <dl class="preise">
+                <div><dt>Anhängerlektion<span>Dauer ca. 150 Min.</span></dt><dd>Fr. 216.–</dd></div>
+              </dl>
+              <p class="ablauf-titel">So läuft eine Anhängerlektion ab</p>
+              <ol class="ablauf">
+                <li>Vorbereiten</li><li>Anhängen</li><li>Kontrollen</li><li>Fahren</li><li>Manöver</li><li>Fahren</li><li>Abhängen und Sichern</li>
+              </ol>
+            </article>
+
+            <article class="karte preis-karte karte-rosa" data-reveal style="--d:2">
+              <p class="karte-label">Theorie</p>
+              <h3>Hilfe bei der Regeltheorie</h3>
+              <p class="karte-text">Hast du Mühe mit der Theorie oder eine Lernschwäche? Kein Problem. Wir schauen das Theorieprogramm zusammen an, machen eine Probeprüfung und besprechen deine Fehler.</p>
+              <dl class="preise">
+                <div><dt>Regeltheorie<span>pro Lektion</span></dt><dd>Fr. 45.–</dd></div>
+              </dl>
+              <p class="karte-zitat">«Habt keine Hemmungen, Scham oder Angst und meldet euch bei mir.»</p>
+            </article>
+          </div>
+
+          <p class="mehr" data-reveal><a class="pfeil-link" href="#" data-soon="Angebot">Alle Angebote ansehen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
+        </div>
+      </section>
+
+      <!-- 4 Dein Weg -->
+      <section class="abschnitt weg" id="weg" aria-labelledby="weg-titel">
+        <div class="wrap">
+          <div class="kopfzeile kopfzeile-mitte" data-reveal>
+            <p class="kicker"><span class="knoten" data-knot="d" aria-hidden="true"></span><svg class="kringel" viewBox="0 0 36 16" aria-hidden="true"><use href="#s-kringel"/></svg>Dein Weg zum Ausweis</p>
+            <h2 id="weg-titel">Schritt für Schritt bis zur Prüfung.</h2>
+            <p class="intro">Jeder darf das Autofahren lernen. Auch wenn es länger dauert: Ich habe Zeit und die nötige Geduld.</p>
+            <span class="knoten-leer knoten-weg-ein" data-knot="d" aria-hidden="true"></span>
+          </div>
+
+          <div class="weg-liste">
+            <svg class="weg-spur" aria-hidden="true" focusable="false"><path class="spur-weg"/><path class="spur-tinte"/></svg>
+            <span class="knoten-leer weg-anfang" data-knot="m" aria-hidden="true"></span>
+            <ol class="stationen">
+              <li class="station rechts" data-reveal>
+                <span class="knoten station-punkt" data-knot="dm" aria-hidden="true"></span>
+                <p class="station-nr">01</p>
+                <h3>Nothelferkurs</h3>
+                <p>Den Kurs machst du gleich hier in Spiez: im Kurslokal der Fahrschule KuDu, in Zusammenarbeit mit Nothelfer am Bahnhof.</p>
+              </li>
+              <li class="station links" data-reveal>
+                <span class="knoten station-punkt" data-knot="dm" aria-hidden="true"></span>
+                <p class="station-nr">02</p>
+                <h3>Regeltheorie</h3>
+                <p>Die Theorieprüfung legst du beim Strassenverkehrsamt ab. Brauchst du Hilfe, üben wir zusammen mit dem Theorieprogramm und einer Probeprüfung.</p>
+              </li>
+              <li class="station rechts" data-reveal>
+                <span class="knoten station-punkt" data-knot="dm" aria-hidden="true"></span>
+                <p class="station-nr">03</p>
+                <h3>Lernfahrausweis</h3>
+                <p>Mit der bestandenen Regeltheorie bekommst du den Lernfahrausweis. Jetzt geht es ans Steuer.</p>
+              </li>
+              <li class="station links" data-reveal>
+                <span class="knoten station-punkt" data-knot="dm" aria-hidden="true"></span>
+                <p class="station-nr">04</p>
+                <h3>Verkehrskunde im Kurslokal</h3>
+                <p>Zwei Teile à vier Stunden an der Oberen Bahnhofstrasse 66 in Spiez. Kursgeld Fr. 240.–, bar oder Twint.</p>
+              </li>
+              <li class="station-schlaufe">
+                <span class="knoten-leer schlaufen-marke" data-knot="dm" data-loops="2" data-r="7" data-d="19" data-r-m="6" data-d-m="13" data-side="1" aria-hidden="true"></span>
+                <p class="schlaufe-satz" data-reveal>Auch wenn es länger dauert: Wir kommen ans Ziel.</p>
+              </li>
+              <li class="station rechts" data-reveal>
+                <span class="knoten station-punkt" data-knot="dm" aria-hidden="true"></span>
+                <p class="station-nr">05</p>
+                <h3>Fahrlektionen</h3>
+                <p>Du lernst mit Handschaltung oder Automat, in Lektionen mit 50 oder Doppellektionen mit 110 Minuten Fahrzeit.</p>
+              </li>
+              <li class="station links station-ziel" data-reveal>
+                <span class="knoten station-punkt" data-knot="dm" aria-hidden="true"></span>
+                <p class="station-nr">06</p>
+                <h3>Prüfung in Thun-Allmendingen</h3>
+                <p>Die praktische Prüfung machst du mit Handschaltung oder, seit Juli 2026, auch mit Automat.</p>
+              </li>
             </ol>
-          </article>
-
-          <article class="karte karte-rosa" data-reveal>
-            <p class="karte-kat">Theorie</p>
-            <h3>Hilfe bei der Regeltheorie</h3>
-            <p class="karte-text">Hast du Mühe mit der Theorie oder eine Lernschwäche? Kein Problem. Wir schauen das Theorieprogramm zusammen an, machen eine Probeprüfung und besprechen deine Fehler.</p>
-            <dl class="preise">
-              <div><dt>Regeltheorie<span>pro Lektion</span></dt><dd>Fr. 45.–</dd></div>
-            </dl>
-            <p class="karte-zitat">«Habt keine Hemmungen, Scham oder Angst und meldet euch bei mir.»</p>
-          </article>
-        </div>
-        <p class="sek-fuss" data-reveal><a class="pfeil-link" href="#" data-soon="Angebot">Alle Angebote ansehen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
-      </div>
-    </section>
-
-    <!-- 4 Dein Weg -->
-    <section class="sek weg" id="weg" aria-labelledby="weg-titel">
-      <div class="wrap">
-        <div class="sek-kopf weg-kopf">
-          <span class="spur-punkt" aria-hidden="true"></span>
-          <p class="kicker" data-reveal>Dein Weg zum Ausweis</p>
-          <h2 id="weg-titel" data-reveal>Schritt für Schritt bis zur Prüfung.</h2>
-          <p class="sek-lead" data-reveal>Jeder darf das Autofahren lernen. Auch wenn es länger dauert: Ich habe Zeit und die nötige Geduld.</p>
-        </div>
-
-        <ol class="stationen">
-          <li class="station station-r" data-reveal>
-            <span class="station-punkt" aria-hidden="true"></span>
-            <div class="station-text">
-              <p class="station-nr">01</p>
-              <h3>Regeltheorie bestehen</h3>
-              <p>Die Theorieprüfung legst du beim Strassenverkehrsamt ab. Brauchst du Hilfe, üben wir zusammen mit Theorieprogramm und Probeprüfung.</p>
-            </div>
-          </li>
-          <li class="station station-l" data-reveal>
-            <span class="station-punkt" aria-hidden="true"></span>
-            <div class="station-text">
-              <p class="station-nr">02</p>
-              <h3>Lernfahrausweis</h3>
-              <p>Mit der bestandenen Regeltheorie bekommst du den Lernfahrausweis. Bring ihn zur Fahrlektion und zum Verkehrskundeunterricht mit.</p>
-            </div>
-          </li>
-          <li class="station station-r" data-reveal>
-            <span class="station-punkt" aria-hidden="true"></span>
-            <div class="station-text">
-              <p class="station-nr">03</p>
-              <h3>Verkehrskunde im Kurslokal Spiez</h3>
-              <p>Zwei Teile à vier Stunden an der Oberen Bahnhofstrasse 66. Kursgeld Fr. 240.–, bar oder Twint.</p>
-            </div>
-          </li>
-          <li class="station station-schlaufe" data-reveal>
-            <svg class="stueck stueck-weg" viewBox="0 0 80 160" aria-hidden="true" focusable="false"><path pathLength="1" d="M20 0L20 24C20 29.4 21.1 34.8 23.2 39.7C25.3 44.5 28.4 48.8 32 52.1C35.6 55.4 39.8 57.8 44 59C48.2 60.2 52.4 60.3 56 59.4C59.6 58.6 62.7 56.7 64.8 54.3C66.9 51.9 68 49 68 46C68 43 66.9 40.1 64.8 37.7C62.7 35.3 59.6 33.4 56 32.5C52.4 31.7 48.2 31.8 44 33C39.8 34.2 35.6 36.6 32 39.9C28.4 43.2 25.3 47.5 23.2 52.3C21.1 57.2 20 62.6 20 68C20 73.4 21.1 78.8 23.2 83.6C25.3 88.5 28.4 92.8 32 96.1C35.6 99.4 39.8 101.8 44 103C48.2 104.2 52.4 104.3 56 103.4C59.6 102.6 62.7 100.7 64.8 98.3C66.9 95.9 68 92.9 68 90C68 87 66.9 84 64.8 81.6C62.7 79.2 59.6 77.4 56 76.5C52.4 75.6 48.2 75.7 44 77C39.8 78.2 35.6 80.5 32 83.8C28.4 87.2 25.3 91.5 23.2 96.3C21.1 101.1 20 106.6 20 112L20 160"/></svg>
-            <span class="schlaufe-marke" aria-hidden="true"></span>
-            <p class="schlaufe-satz">Auch wenn es länger dauert: Wir kommen ans Ziel.</p>
-          </li>
-          <li class="station station-l" data-reveal>
-            <span class="station-punkt" aria-hidden="true"></span>
-            <div class="station-text">
-              <p class="station-nr">04</p>
-              <h3>Fahrlektionen mit Handschaltung oder Automat</h3>
-              <p>Fahrlektion mit 50 oder Doppellektion mit 110 Minuten Fahrzeit. Du entscheidest, ob du mit Handschaltung oder Automat lernst.</p>
-            </div>
-          </li>
-          <li class="station station-r" data-reveal>
-            <span class="station-punkt station-ziel" aria-hidden="true"></span>
-            <div class="station-text">
-              <p class="station-nr">05</p>
-              <h3>Prüfung in Thun-Allmendingen</h3>
-              <p>Ich begleite dich ins Verkehrsprüfzentrum. Vorher fahren wir uns zusammen ein, damit du ruhig in die Prüfung gehst.</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- 5 Kurse -->
-    <section class="sek kurse" id="kurse" aria-labelledby="kurse-titel">
-      <div class="wrap">
-        <div class="sek-kopf">
-          <span class="spur-punkt" aria-hidden="true"></span>
-          <p class="kicker" data-reveal>Kurse</p>
-          <h2 id="kurse-titel" data-reveal>Kurse im eigenen Kurslokal in Spiez.</h2>
-        </div>
-
-        <div class="kurse-raster">
-          <article class="vku" data-reveal>
-            <div class="vku-kopf">
-              <p class="karte-kat">Verkehrskunde (VKU)</p>
-              <h3>Nächster Kurs</h3>
-            </div>
-            <div class="vku-daten" aria-label="Montag, 7. Dezember, und Dienstag, 8. Dezember 2026">
-              <div class="datum"><span class="datum-tag">Mo</span><span class="datum-zahl">7.</span><span class="datum-monat">Dez.</span></div>
-              <span class="datum-und" aria-hidden="true">und</span>
-              <div class="datum"><span class="datum-tag">Di</span><span class="datum-zahl">8.</span><span class="datum-monat">Dez.</span></div>
-              <span class="datum-jahr">2026</span>
-            </div>
-            <ul class="fakten">
-              <li><svg class="i" aria-hidden="true"><use href="#i-uhr"/></svg>Je 17.45 bis 21.45 Uhr</li>
-              <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Kurslokal, Obere Bahnhofstrasse 66, Spiez</li>
-              <li><svg class="i" aria-hidden="true"><use href="#i-geld"/></svg>Fr. 240.–, bar oder Twint</li>
-              <li><svg class="i" aria-hidden="true"><use href="#i-ausweis"/></svg>Lernfahrausweis mitbringen</li>
-              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Bei Anmeldung mit Durchführungsgarantie</li>
-            </ul>
-            <div class="vku-knoepfe">
-              <a class="knopf knopf-pink" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anmelden: 076 298 90 52</a>
-              <a class="pfeil-link" href="#" data-soon="Kurse">Alle Termine 2026 <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
-            </div>
-          </article>
-
-          <div class="kurse-seite">
-            <article class="kurs" data-reveal>
-              <p class="karte-kat">Nothelferkurs</p>
-              <h3>Nothelfer direkt in Spiez</h3>
-              <p>Im Kurslokal der Fahrschule KuDu, in Zusammenarbeit mit Nothelfer am Bahnhof. Die Kurse buchst du beim Partner.</p>
-              <a class="pfeil-link" href="https://www.nothelferambahnhof.ch/" target="_blank" rel="noopener">Kurs beim Partner buchen <svg class="i" aria-hidden="true"><use href="#i-extern"/></svg></a>
-            </article>
-            <article class="kurs" data-reveal>
-              <p class="karte-kat">Weiterbildung</p>
-              <h3>Auch für geübte Lenkerinnen und Lenker</h3>
-              <ul class="themen">
-                <li>Kreisverkehrsplätze</li>
-                <li>Licht und Blinker</li>
-                <li>Angst beim Fahren</li>
-                <li>Kurvenfahren</li>
-                <li>Schneefahren</li>
-                <li>Anhänger und Wohnwagen</li>
-              </ul>
-              <p class="kurs-notiz">Dazu individuelle Kurse für fast jedes Problem. Die Termine werden laufend veröffentlicht.</p>
-            </article>
+            <span class="knoten-leer weg-ende" data-knot="d" aria-hidden="true"></span>
           </div>
         </div>
-        <p class="sek-fuss" data-reveal><a class="pfeil-link" href="#" data-soon="Kurse">Alle Kurse ansehen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
-      </div>
-    </section>
+      </section>
 
-    <!-- 6 Zwei Autos -->
-    <section class="sek autos" aria-labelledby="autos-titel">
-      <div class="wrap">
-        <div class="sek-kopf">
-          <span class="spur-punkt" aria-hidden="true"></span>
-          <p class="kicker" data-reveal>Zwei Fahrschulautos</p>
-          <h2 id="autos-titel" data-reveal>Handschaltung oder Automat: du hast die Wahl.</h2>
-        </div>
-        <div class="autos-raster">
-          <figure class="auto" data-reveal>
-            <div class="auto-bild"><img src="../assets/img/b-schwarz-seite.webp" width="1200" height="800" loading="lazy" alt="Schwarzes Fahrschulauto der Fahrschule KuDu von der Seite, mit pinker Beschriftung und Schlaufen-Grafik"></div>
-            <figcaption><span class="auto-punkt auto-punkt-schwarz" aria-hidden="true"></span><strong>Handschaltung</strong><span>Das schwarze Auto mit pinker Schrift.</span></figcaption>
-          </figure>
-          <figure class="auto" data-reveal>
-            <div class="auto-bild"><img src="../assets/img/b-limette-seite.webp" width="1200" height="800" loading="lazy" alt="Limettengrünes Fahrschulauto der Fahrschule KuDu von der Seite, mit schwarzer Beschriftung"></div>
-            <figcaption><span class="auto-punkt auto-punkt-limette" aria-hidden="true"></span><strong>Automat</strong><span>Seit Juli 2026: Prüfung auch mit Automat möglich.</span></figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
+      <!-- 5 Kurse -->
+      <section class="abschnitt kurse band-rosa" id="kurse" aria-labelledby="kurse-titel">
+        <div class="wrap">
+          <div class="kopfzeile kopfzeile-zwei" data-reveal>
+            <div>
+              <p class="kicker"><span class="knoten" data-knot="d" aria-hidden="true"></span><svg class="kringel" viewBox="0 0 36 16" aria-hidden="true"><use href="#s-kringel"/></svg>Kurse</p>
+              <h2 id="kurse-titel">Kurse im eigenen Kurslokal in Spiez.</h2>
+            </div>
+            <p class="intro">Verkehrskunde und Nothelferkurs finden an der Oberen Bahnhofstrasse 66 in Spiez statt.</p>
+          </div>
 
-    <!-- 7 Bestanden 2026 -->
-    <section class="sek bestanden" aria-labelledby="bestanden-titel">
-      <div class="wrap">
-        <div class="bestanden-raster">
-          <div class="sek-kopf bestanden-kopf">
-            <span class="spur-punkt" aria-hidden="true"></span>
-            <p class="kicker" data-reveal>Bestanden 2026</p>
-            <h2 id="bestanden-titel" data-reveal>Zehn bestandene Prüfungen in diesem Jahr.</h2>
-            <p class="sek-lead" data-reveal>Acht Autoprüfungen und zwei Anhängerprüfungen, Stand Oktober 2026. Herzliche Gratulation an alle!</p>
-            <figure class="dank" data-reveal>
-              <blockquote><p>«Danke, dass ich dich auf deinem Weg zum Autofahrausweis begleiten durfte. Ich wünsche dir eine sichere und unfallfreie Fahrt.»</p></blockquote>
-              <figcaption>Kurt Dummermuth</figcaption>
+          <div class="kurse-raster">
+            <article class="karte vku" data-reveal style="--d:0">
+              <div class="vku-kopf">
+              <p class="karte-label">Verkehrskunde (VKU)</p>
+              <h3>Nächster Kurs</h3>
+              <p class="sr">Montag, 7. Dezember, und Dienstag, 8. Dezember 2026</p>
+              <div class="termin" aria-hidden="true">
+                <div class="datum"><span class="datum-tag">Mo</span><span class="datum-zahl">7.</span><span class="datum-monat">Dez.</span></div>
+                <span class="termin-und">und</span>
+                <div class="datum"><span class="datum-tag">Di</span><span class="datum-zahl">8.</span><span class="datum-monat">Dez.</span></div>
+                <span class="termin-jahr">2026</span>
+              </div>
+              </div>
+              <ul class="fakten">
+                <li><svg class="i" aria-hidden="true"><use href="#i-uhr"/></svg>Je 17.45 bis 21.45 Uhr</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Kurslokal, Obere Bahnhofstrasse 66, Spiez</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-geld"/></svg>Fr. 240.–, bar oder Twint</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-ausweis"/></svg>Lernfahrausweis zwingend mitbringen</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Bei Anmeldung mit Durchführungsgarantie</li>
+              </ul>
+              <div class="karte-knoepfe">
+                <a class="knopf knopf-pink" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anmelden<span class="nr-lang">: 076 298 90 52</span></a>
+                <a class="pfeil-link" href="#" data-soon="Kurse">Alle Termine 2026 <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+              </div>
+            </article>
+
+            <article class="karte nothelfer" data-reveal style="--d:1">
+                <p class="karte-label">Nothelferkurs</p>
+                <h3>Nothelfer direkt in Spiez</h3>
+                <p class="karte-text">Im Kurslokal der Fahrschule KuDu, in Zusammenarbeit mit Nothelfer am Bahnhof. Die Kurse buchst du direkt beim Partner.</p>
+                <p class="karte-link"><a class="pfeil-link" href="https://www.nothelferambahnhof.ch/" target="_blank" rel="noopener">Kurs beim Partner buchen <svg class="i" aria-hidden="true"><use href="#i-extern"/></svg></a></p>
+              </article>
+
+              <article class="karte weiterbildung" data-reveal style="--d:2">
+                <p class="karte-label">Weiterbildung</p>
+                <h3>Auch für geübte Lenkerinnen und Lenker</h3>
+                <p class="karte-text">In meiner Ausbildung zum Fahrlehrer habe ich gemerkt: Auch als routinierter Autofahrer hatte ich Lücken.</p>
+                <ul class="themen">
+                  <li>Kreisverkehrsplätze</li>
+                  <li>Licht und Blinker</li>
+                  <li>Angst beim Fahren</li>
+                  <li>Kurvenfahren</li>
+                  <li>Schneefahren</li>
+                  <li>Anhänger und Wohnwagen</li>
+                  <li>Neues im Strassenverkehr</li>
+                  <li>Individuelle Kurse</li>
+                </ul>
+                <p class="karte-klein">Die Termine werden laufend veröffentlicht.</p>
+              </article>
+          </div>
+          <p class="mehr" data-reveal><a class="pfeil-link" href="#" data-soon="Kurse">Alle Kurse ansehen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
+        </div>
+      </section>
+
+      <!-- 6 Zwei Autos -->
+      <section class="abschnitt autos" aria-labelledby="autos-titel">
+        <div class="wrap">
+          <div class="kopfzeile kopfzeile-zwei" data-reveal>
+            <div>
+              <p class="kicker"><span class="knoten" data-knot="d" aria-hidden="true"></span><svg class="kringel" viewBox="0 0 36 16" aria-hidden="true"><use href="#s-kringel"/></svg>Zwei Fahrschulautos</p>
+              <h2 id="autos-titel">Handschaltung oder Automat: Du hast die Wahl.</h2>
+            </div>
+            <p class="intro">Du lernst im schwarzen Auto mit Handschaltung oder im limettengrünen Auto mit Automat. Seit Juli 2026 kannst du die Prüfung auch mit Automat machen.</p>
+          </div>
+          <div class="autos-raster">
+            <figure class="auto" data-reveal style="--d:0">
+              <div class="auto-bild"><img src="../assets/img/b-schwarz-seite.webp" width="1200" height="800" loading="lazy" alt="Schwarzes Fahrschulauto der Fahrschule KuDu mit pinker Beschriftung, Seitenansicht"></div>
+              <figcaption><span class="auto-punkt auto-punkt-schwarz" aria-hidden="true"></span><strong>Handschaltung</strong><span>Das schwarze Auto mit pinker Schrift.</span></figcaption>
+            </figure>
+            <figure class="auto" data-reveal style="--d:1">
+              <div class="auto-bild"><img src="../assets/img/b-limette-seite.webp" width="1200" height="800" loading="lazy" alt="Limettengrünes Fahrschulauto der Fahrschule KuDu mit Automat und schwarzer Beschriftung, Seitenansicht"></div>
+              <figcaption><span class="auto-punkt auto-punkt-lime" aria-hidden="true"></span><strong>Automat</strong><span>Neu seit Juli 2026: Prüfung auch mit Automat möglich.</span></figcaption>
             </figure>
           </div>
-          <div class="liste-wrap" data-reveal>
-            <ul class="liste">
-              <li><span class="l-monat">Oktober</span><span class="l-name">Fevzi</span><span class="l-art l-anh">Anhängerprüfung</span></li>
-              <li><span class="l-monat">August</span><span class="l-name">Nicolas</span><span class="l-art">Autoprüfung</span></li>
-              <li><span class="l-monat">Juli</span><span class="l-name">Sara</span><span class="l-art l-anh">Anhängerprüfung</span></li>
-              <li><span class="l-monat">Juli</span><span class="l-name">Cedric</span><span class="l-art">Autoprüfung</span></li>
-              <li><span class="l-monat">Juli</span><span class="l-name">Mauro</span><span class="l-art">Autoprüfung, Handschaltung</span></li>
-              <li><span class="l-monat">Juni</span><span class="l-name">Alexander</span><span class="l-art">Autoprüfung</span></li>
-              <li><span class="l-monat">Februar</span><span class="l-name">Luiz</span><span class="l-art">Autoprüfung</span></li>
-              <li><span class="l-monat">Januar</span><span class="l-name">Fabian</span><span class="l-art">Autoprüfung</span></li>
-              <li><span class="l-monat">Januar</span><span class="l-name">Daniel</span><span class="l-art">Autoprüfung</span></li>
+        </div>
+      </section>
+
+      <!-- 7 Bestanden 2026 -->
+      <section class="abschnitt bestanden" aria-labelledby="bestanden-titel">
+        <div class="wrap bestanden-raster">
+          <div class="bestanden-links" data-reveal>
+            <p class="kicker"><span class="knoten" data-knot="d" aria-hidden="true"></span><svg class="kringel" viewBox="0 0 36 16" aria-hidden="true"><use href="#s-kringel"/></svg>Bestanden 2026</p>
+            <h2 id="bestanden-titel"><span class="gross-zahl" data-zaehlen="10">10</span> bestandene Prüfungen in diesem Jahr.</h2>
+            <div class="bilanz">
+              <div class="bilanz-balken" aria-hidden="true"><span class="b-auto"></span><span class="b-anh"></span></div>
+              <p><span><i class="auto-punkt auto-punkt-pink" aria-hidden="true"></i>8 Autoprüfungen</span><span><i class="auto-punkt auto-punkt-lime" aria-hidden="true"></i>2 Anhängerprüfungen</span></p>
+            </div>
+            <blockquote class="danke">
+              <p>«Danke, dass ich dich auf deinem Weg zum Autofahrausweis begleiten durfte. Ich wünsche dir eine sichere und unfallfreie Fahrt.»</p>
+              <footer>Kurt Dummermuth</footer>
+            </blockquote>
+          </div>
+          <div class="bestanden-rechts">
+            <ul class="namen">
+              <li data-reveal style="--d:0"><span class="n-monat">Oktober</span><strong>Fevzi</strong><span class="n-art"><i class="auto-punkt auto-punkt-lime" aria-hidden="true"></i>Anhängerprüfung</span></li>
+              <li data-reveal style="--d:1"><span class="n-monat">August</span><strong>Nicolas</strong><span class="n-art"><i class="auto-punkt auto-punkt-pink" aria-hidden="true"></i>Autoprüfung</span></li>
+              <li data-reveal style="--d:2"><span class="n-monat">Juli</span><strong>Sara</strong><span class="n-art"><i class="auto-punkt auto-punkt-lime" aria-hidden="true"></i>Anhängerprüfung</span></li>
+              <li data-reveal style="--d:3"><span class="n-monat">Juli</span><strong>Cedric</strong><span class="n-art"><i class="auto-punkt auto-punkt-pink" aria-hidden="true"></i>Autoprüfung</span></li>
+              <li data-reveal style="--d:4"><span class="n-monat">Juli</span><strong>Mauro</strong><span class="n-art"><i class="auto-punkt auto-punkt-pink" aria-hidden="true"></i>Autoprüfung</span></li>
+              <li data-reveal style="--d:5"><span class="n-monat">Juni</span><strong>Alexander</strong><span class="n-art"><i class="auto-punkt auto-punkt-pink" aria-hidden="true"></i>Autoprüfung</span></li>
+              <li data-reveal style="--d:6"><span class="n-monat">Februar</span><strong>Luiz</strong><span class="n-art"><i class="auto-punkt auto-punkt-pink" aria-hidden="true"></i>Autoprüfung</span></li>
+              <li data-reveal style="--d:7"><span class="n-monat">Januar</span><strong>Fabian</strong><span class="n-art"><i class="auto-punkt auto-punkt-pink" aria-hidden="true"></i>Autoprüfung</span></li>
+              <li data-reveal style="--d:8"><span class="n-monat">Januar</span><strong>Daniel</strong><span class="n-art"><i class="auto-punkt auto-punkt-pink" aria-hidden="true"></i>Autoprüfung</span></li>
             </ul>
-            <p class="liste-notiz">Dazu eine weitere Autoprüfung im Juli.</p>
+            <p class="namen-fuss" data-reveal>Dazu eine weitere Autoprüfung im Juli. Stand Oktober 2026, aus den News der Fahrschule KuDu. <a class="pfeil-link" href="#" data-soon="News">Alle News <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 8 Über mich -->
-    <section class="sek ueber" id="ueber-mich" aria-labelledby="ueber-titel">
-      <div class="wrap">
-        <div class="sek-kopf ueber-kopf">
-          <span class="spur-punkt" aria-hidden="true"></span>
-          <p class="kicker" data-reveal>Über mich</p>
-          <div class="ueber-titelzeile" data-reveal>
-            <img class="ueber-foto" src="../assets/img/b-kurt.webp" width="960" height="1200" loading="lazy" alt="Porträt von Kurt Dummermuth">
-            <h2 id="ueber-titel">Ich bin Kurt Dummermuth.</h2>
+      <!-- 8 Über mich -->
+      <section class="abschnitt ueber" id="ueber-mich" aria-labelledby="ueber-titel">
+        <div class="wrap">
+          <div class="kopfzeile" data-reveal>
+            <p class="kicker"><span class="knoten" data-knot="d" aria-hidden="true"></span><svg class="kringel" viewBox="0 0 36 16" aria-hidden="true"><use href="#s-kringel"/></svg>Über mich</p>
+            <div class="ueber-kopf">
+              <img class="avatar" src="../assets/img/b-kurt-mini.webp" width="240" height="240" loading="lazy" alt="Porträt von Kurt Dummermuth">
+              <h2 id="ueber-titel">Ich bin Kurt Dummermuth.</h2>
+            </div>
           </div>
+          <div class="ueber-spalten">
+            <article data-reveal style="--d:0">
+              <p class="spalte-nr">Werdegang</p>
+              <h3>Mein Weg zur eigenen Fahrschule</h3>
+              <p>2021 habe ich beschlossen, mein Leben zu ändern. Ich habe die Ausbildung zum Autofahrlehrer gemacht und im Sommer 2023 die Prüfung bestanden. Seither bin ich mit meiner eigenen Fahrschule für dich da. Ich bringe die nötige Ruhe und Gelassenheit mit: Es gibt für jedes Problem eine Lösung.</p>
+            </article>
+            <article data-reveal style="--d:1">
+              <p class="spalte-nr">Meine Werte</p>
+              <h3>Gutes Handwerk am Steuer</h3>
+              <p>Ich lege grossen Wert auf eine gute und professionelle Ausbildung. Durch die starke Zunahme des Verkehrs ist gutes Handwerk heute wichtiger als früher. Hab den Mut und versuche es: Es braucht nur den ersten Schritt, einen Anruf oder ein Mail.</p>
+            </article>
+            <article data-reveal style="--d:2">
+              <p class="spalte-nr">Meine Vision</p>
+              <h3>Jeder darf Autofahren lernen</h3>
+              <p>Autofahren bedeutet Freiheit und Selbstständigkeit. Auch wenn es länger dauert, ich habe Zeit und die nötige Geduld, bei jedem Problem zu helfen. Bist du noch nicht überzeugt? Dann erzähle ich dir in einem persönlichen Gespräch mehr.</p>
+            </article>
+          </div>
+          <p class="mehr" data-reveal><a class="pfeil-link" href="#" data-soon="Über mich">Mehr über mich <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
         </div>
-        <div class="spalten">
-          <article class="spalte" data-reveal>
-            <h3>Über mich</h3>
-            <p>2021 habe ich beschlossen, mein Leben zu ändern. Ich habe die Ausbildung zum Autofahrlehrer gemacht und im Sommer 2023 die Prüfung bestanden. Seither bin ich mit meiner eigenen Fahrschule für dich da. Ich bringe die nötige Ruhe und Gelassenheit mit: Es gibt für jedes Problem eine Lösung.</p>
-          </article>
-          <article class="spalte" data-reveal>
-            <h3>Meine Werte</h3>
-            <p>Ich lege grossen Wert auf eine gute und professionelle Ausbildung. Durch die starke Zunahme des Verkehrs ist gutes Handwerk heute wichtiger als früher. Hab den Mut und versuche es: Es braucht nur den ersten Schritt, einen Anruf oder ein Mail.</p>
-          </article>
-          <article class="spalte" data-reveal>
-            <h3>Meine Vision</h3>
-            <p>Jeder darf das Autofahren lernen. Es bedeutet Freiheit und Selbstständigkeit. Auch wenn es länger dauert, ich habe Zeit und die nötige Geduld, bei jedem Problem zu helfen. Gerne erzähle ich dir mehr in einem persönlichen Gespräch.</p>
-          </article>
-        </div>
-        <p class="sek-fuss" data-reveal><a class="pfeil-link" href="#" data-soon="Über mich">Mehr über mich <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
-      </div>
-    </section>
+      </section>
 
-    <!-- 9 Kontakt -->
-    <section class="sek kontakt" id="kontakt" aria-labelledby="kontakt-titel">
-      <div class="wrap">
-        <div class="kontakt-raster">
-          <div class="sek-kopf kontakt-kopf">
-            <span class="spur-punkt spur-ziel" aria-hidden="true"></span>
-            <svg class="stueck stueck-ziel" viewBox="0 0 190 64" aria-hidden="true" focusable="false"><path pathLength="1" d="M0 54L58 54C63.4 54 68.8 52.9 73.7 50.8C78.5 48.7 82.8 45.6 86.1 42C89.4 38.4 91.8 34.2 93 30C94.2 25.8 94.3 21.6 93.4 18C92.6 14.4 90.7 11.3 88.3 9.2C85.9 7.1 83 6 80 6C77 6 74.1 7.1 71.7 9.2C69.3 11.3 67.4 14.4 66.5 18C65.7 21.6 65.8 25.8 67 30C68.2 34.2 70.6 38.4 73.9 42C77.2 45.6 81.5 48.7 86.3 50.8C91.2 52.9 96.6 54 102 54L172 54"/><circle class="stueck-zielpunkt" cx="176" cy="54" r="7"/></svg>
-            <p class="kicker" data-reveal>Kontakt</p>
-            <h2 id="kontakt-titel" data-reveal>Der erste Schritt ist ein Anruf.</h2>
-            <p class="sek-lead" data-reveal>Erstmalige Termine nehme ich nur telefonisch entgegen. Ruf mich an, ich nehme mir Zeit für deine Fragen.</p>
-            <a class="tel-gross" href="tel:+41762989052" data-reveal><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>076 298 90 52</a>
+      <!-- 9 Kontakt -->
+      <section class="abschnitt kontakt band-rosa" id="kontakt" aria-labelledby="kontakt-titel">
+        <div class="wrap kontakt-raster">
+          <div class="kontakt-links" data-reveal>
+            <p class="kicker"><span class="knoten knoten-ziel" data-knot="d" aria-hidden="true"></span><svg class="kringel" viewBox="0 0 36 16" aria-hidden="true"><use href="#s-kringel"/></svg>Kontakt</p>
+            <h2 id="kontakt-titel">Der erste Schritt ist ein Anruf.</h2>
+            <p class="intro">Erstmalige Termine nehme ich nur telefonisch entgegen. Ruf mich an, ich nehme mir Zeit für deine Fragen.</p>
+            <a class="tel-gross" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>076 298 90 52</a>
           </div>
-          <div class="kontakt-infos">
-            <div class="info" data-reveal>
-              <h3><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</h3>
-              <p><a href="mailto:fahrschulekudu@gmx.ch?subject=Anfrage%20Fahrschule%20KuDu">fahrschulekudu@gmx.ch</a></p>
+          <div class="kontakt-rechts">
+            <div class="info" data-reveal style="--d:0">
+              <p class="info-label"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</p>
+              <p><a class="info-link" href="mailto:fahrschulekudu@gmx.ch">fahrschulekudu@gmx.ch</a></p>
               <p class="info-klein">Bitte Vorname, Name, Kontaktmöglichkeit und Anliegen angeben.</p>
             </div>
-            <div class="info" data-reveal>
-              <h3><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Geschäftsadresse</h3>
+            <div class="info" data-reveal style="--d:1">
+              <p class="info-label"><svg class="i" aria-hidden="true"><use href="#i-haus"/></svg>Geschäftsadresse</p>
               <p>General-Guisanstrasse 5<br>3700 Spiez</p>
             </div>
-            <div class="info" data-reveal>
-              <h3><svg class="i" aria-hidden="true"><use href="#i-kalender"/></svg>Kurslokal</h3>
+            <div class="info" data-reveal style="--d:2">
+              <p class="info-label"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Kurslokal</p>
               <p>Obere Bahnhofstrasse 66<br>3700 Spiez</p>
               <p class="info-klein">Verkehrskunde und Nothelferkurs</p>
             </div>
-            <div class="info" data-reveal>
-              <h3><svg class="i" aria-hidden="true"><use href="#i-ausweis"/></svg>Fahrunterricht</h3>
+            <div class="info" data-reveal style="--d:3">
+              <p class="info-label"><svg class="i" aria-hidden="true"><use href="#i-lenkrad"/></svg>Fahrunterricht</p>
               <p>In Spiez und Thun</p>
-              <p class="info-klein"><a href="#" data-soon="Kontakt">Zum Kontaktformular</a></p>
+              <p class="info-klein">Prüfungen in Thun-Allmendingen</p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
+  </div>
 
   <footer class="fuss">
     <div class="wrap fuss-raster">
       <div class="fuss-marke">
-        <img src="../assets/img/b-logo.webp" width="264" height="120" alt="Fahrschule KuDu" loading="lazy">
-        <p>Fahrschule KuDu, Kurt Dummermuth<br>General-Guisanstrasse 5, 3700 Spiez<br><a href="tel:+41762989052">076 298 90 52</a> · <a href="mailto:fahrschulekudu@gmx.ch">fahrschulekudu@gmx.ch</a></p>
+        <a class="marke" href="#top" aria-label="Fahrschule KuDu, zum Seitenanfang">
+          <span class="marke-wort" aria-hidden="true">Fahrschule</span>
+          <img src="../assets/img/b-logo.webp" alt="" width="106" height="30" loading="lazy">
+        </a>
+        <p>Fahrschule KuDu, Kurt Dummermuth<br>General-Guisanstrasse 5, 3700 Spiez</p>
+        <p><a href="tel:+41762989052">076 298 90 52</a><br><a href="mailto:fahrschulekudu@gmx.ch">fahrschulekudu@gmx.ch</a></p>
       </div>
       <nav class="fuss-nav" aria-label="Seiten">
         <ul>
           <li><a href="#" data-soon="Angebot">Angebot</a></li>
           <li><a href="#" data-soon="Kurse">Kurse</a></li>
           <li><a href="#" data-soon="Über mich">Über mich</a></li>
-          <li><a href="#kontakt">Kontakt</a></li>
+          <li><a href="#" data-soon="News">News</a></li>
+          <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
         </ul>
       </nav>
-      <p class="fuss-recht"><span>© 2026 Fahrschule KuDu</span><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
+    </div>
+    <div class="wrap fuss-recht">
+      <span>© 2026 Fahrschule KuDu</span>
+      <a href="#" data-soon="Impressum">Impressum</a>
+      <a href="#" data-soon="Datenschutz">Datenschutz</a>
     </div>
   </footer>
 
-  <div class="aktion" id="aktion">
+  <nav class="aktion" aria-label="Schnellkontakt">
     <a class="knopf knopf-pink" href="tel:+41762989052"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen</a>
-    <a class="knopf knopf-umriss" href="mailto:fahrschulekudu@gmx.ch?subject=Anfrage%20Fahrschule%20KuDu"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
-  </div>
+    <a class="knopf knopf-rand" href="mailto:fahrschulekudu@gmx.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
+  </nav>
 </body>
 </html>

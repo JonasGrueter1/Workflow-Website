@@ -153,6 +153,17 @@
   .base li { font-size: .95rem; }
 }
 
+/* Sehr schmale Handys (320 px): Preis unter den Text, damit nichts seitlich hinausragt */
+@media (max-width: 400px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .opt { flex-wrap: wrap; row-gap: 4px; }
+  .opt-text { flex: 1 1 calc(100% - 36px); }
+  .opt .cost { margin-left: 36px; }
+  .mbar span, .mbar .btn { white-space: nowrap; }
+  .mbar strong { font-size: 1.05rem; margin-left: 4px; }
+  .mbar .btn { padding: .7em .95em; }
+}
+
 @media print {
   .layout { display: block; }
   .block, .summary { break-inside: avoid; box-shadow: none; }

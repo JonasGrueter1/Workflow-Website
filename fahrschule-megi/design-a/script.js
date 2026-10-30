@@ -95,6 +95,45 @@
     rvs.forEach(function (el) { io.observe(el); });
   }
 
+  /* Navigation: aktuellen Abschnitt markieren */
+  var navLinks = [].slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  if (hasIO && navLinks.length) {
+    var byId = {};
+    navLinks.forEach(function (l) { byId[l.getAttribute('href').slice(1)] = l; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var l = byId[en.target.id];
+        if (!l) return;
+        if (en.isIntersecting) {
+          navLinks.forEach(function (x) { x.classList.toggle('is-active', x === l); });
+        } else if (l.classList.contains('is-active')) {
+          l.classList.remove('is-active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Object.keys(byId).forEach(function (id) { var sec = document.getElementById(id); if (sec) spy.observe(sec); });
+  }
+
+  /* Bewertungen am Handy: Punkte zeigen, welche Karte im Wischbereich steht */
+  var bwList = document.querySelector('.bw-list');
+  var bwDots = document.querySelectorAll('.bw-dots i');
+  if (bwList && bwDots.length) {
+    var bwTick = false;
+    bwList.addEventListener('scroll', function () {
+      if (bwTick) return;
+      bwTick = true;
+      requestAnimationFrame(function () {
+        bwTick = false;
+        var card = bwList.querySelector('.bw-card');
+        if (!card) return;
+        var step = card.getBoundingClientRect().width + 14;
+        var max = bwList.scrollWidth - bwList.clientWidth;
+        var i = bwList.scrollLeft >= max - 4 ? bwDots.length - 1 : Math.round(bwList.scrollLeft / step);
+        [].forEach.call(bwDots, function (d, k) { d.classList.toggle('on', k === i); });
+      });
+    }, { passive: true });
+  }
+
   /* Zitatwechsel im Hero: alle 6 s, nur sichtbar, stoppt nach 3 Wechseln */
   var rq = document.querySelector('.rq');
   if (rq) {

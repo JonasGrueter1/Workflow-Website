@@ -1,7 +1,8 @@
-/* Fahrschule KuDu, Design A: Menü, Einblenden, Zählwerke, Aktionsleiste.
+/* Fahrschule KuDu, Design A: Menü, Einblenden, Zählwerke, Ausweis-Karte, Aktionsleiste.
    Ohne JavaScript bleibt alles sichtbar (versteckt wird nur unter html.js). */
 (function () {
   'use strict';
+  window.kuduBereit = true;
 
   var root = document.documentElement;
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -12,23 +13,24 @@
   var fuss = document.querySelector('.fuss');
   var aktion = document.querySelector('.aktion');
 
-  /* Menü am Handy: Überlagerung mit Fokusfalle und Escape */
+  /* ---------- Menü am Handy: Überlagerung mit Fokusfalle und Escape ---------- */
   var handy = window.matchMedia('(max-width: 899px)');
   function fokusierbar() {
     return [].slice.call(kopf.querySelectorAll('a[href], button')).filter(function (el) {
       return el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
     });
   }
+  function sperren(an) {
+    [main, fuss, aktion].forEach(function (el) { if (el) el.inert = an; });
+  }
   function oeffnen() {
     menue.classList.add('ist-offen');
     root.classList.add('menue-offen');
     burger.setAttribute('aria-expanded', 'true');
     burger.setAttribute('aria-label', 'Menü schliessen');
-    if (main) main.inert = true;
-    if (fuss) fuss.inert = true;
-    if (aktion) aktion.inert = true;
+    sperren(true);
     var erster = menue.querySelector('a');
-    if (erster) setTimeout(function () { erster.focus(); }, 60);
+    if (erster) setTimeout(function () { erster.focus(); }, 80);
   }
   function schliessen(zurueck) {
     if (!menue.classList.contains('ist-offen')) return;
@@ -36,9 +38,7 @@
     root.classList.remove('menue-offen');
     burger.setAttribute('aria-expanded', 'false');
     burger.setAttribute('aria-label', 'Menü öffnen');
-    if (main) main.inert = false;
-    if (fuss) fuss.inert = false;
-    if (aktion) aktion.inert = false;
+    sperren(false);
     if (zurueck) burger.focus();
   }
   if (burger && menue) {
@@ -46,14 +46,14 @@
       if (menue.classList.contains('ist-offen')) schliessen(true); else oeffnen();
     });
     menue.addEventListener('click', function (e) {
-      var link = e.target.closest('a');
-      if (link && handy.matches) schliessen(false);
+      if (e.target.closest('a') && handy.matches) schliessen(false);
     });
     document.addEventListener('keydown', function (e) {
       if (!menue.classList.contains('ist-offen')) return;
       if (e.key === 'Escape') { e.preventDefault(); schliessen(true); return; }
       if (e.key === 'Tab') {
         var f = fokusierbar();
+        if (!f.length) return;
         var erster = f[0], letzter = f[f.length - 1];
         if (e.shiftKey && document.activeElement === erster) { e.preventDefault(); letzter.focus(); }
         else if (!e.shiftKey && document.activeElement === letzter) { e.preventDefault(); erster.focus(); }
@@ -63,12 +63,12 @@
     if (handy.addEventListener) handy.addEventListener('change', wechsel); else handy.addListener(wechsel);
   }
 
-  /* Zählwerke: Beträge zählen schnell hoch */
+  /* ---------- Zählwerke: Beträge zählen schnell hoch ---------- */
   function zaehlen(el, dauer) {
     var ziel = parseInt(el.getAttribute('data-zaehle'), 10);
-    if (!ziel || ruhig || el.dataset.gezaehlt) return;
-    el.dataset.gezaehlt = '1';
-    el.style.width = el.getBoundingClientRect().width + 'px';
+    if (!ziel || ruhig || el.getAttribute('data-gezaehlt')) return;
+    el.setAttribute('data-gezaehlt', '1');
+    el.style.minWidth = el.getBoundingClientRect().width + 'px';
     var start = null;
     function schritt(t) {
       if (start === null) start = t;
@@ -76,34 +76,34 @@
       var e = 1 - Math.pow(1 - p, 3);
       el.textContent = String(Math.round(ziel * e));
       if (p < 1) requestAnimationFrame(schritt);
-      else { el.textContent = String(ziel); el.style.width = ''; }
+      else { el.textContent = String(ziel); el.style.minWidth = ''; }
     }
     el.textContent = '0';
     requestAnimationFrame(schritt);
   }
 
-  /* Einblenden: alles, was den unteren Rand des Bildschirms erreicht hat oder darüber liegt.
-     So bleibt auch nach schnellem Springen (Anker, Ende-Taste) nichts versteckt. */
-  var offen = [].slice.call(document.querySelectorAll('[data-reveal], .pruef-raster'));
+  /* ---------- Einblenden: alles, was den unteren Bildschirmrand erreicht hat oder darüber liegt.
+     So bleibt auch nach schnellem Springen (Anker, Ende-Taste) nichts versteckt. ---------- */
+  var offen = [].slice.call(document.querySelectorAll('[data-reveal]'));
   function zeigen(el) {
     el.classList.add('ist-sichtbar');
     [].forEach.call(el.querySelectorAll('[data-zaehle]'), function (z) {
-      zaehlen(z, z.classList.contains('riesig') ? 600 : 700);
+      zaehlen(z, z.classList.contains('riesig') ? 650 : 750);
     });
   }
   function pruefen() {
-    var grenze = window.innerHeight * 0.92;
+    var grenze = window.innerHeight * 0.9;
     offen = offen.filter(function (el) {
       if (el.getBoundingClientRect().top < grenze) { zeigen(el); return false; }
       return true;
     });
   }
 
-  /* Aktionsleiste am Handy erst zeigen, wenn die Hero-Knöpfe aus dem Bild sind */
+  /* ---------- Aktionsleiste am Handy erst, wenn die Hero-Knöpfe aus dem Bild sind ---------- */
   var heroKnoepfe = document.getElementById('hero-knoepfe');
   function leiste() {
     if (!aktion || !heroKnoepfe) return;
-    aktion.classList.toggle('ist-da', heroKnoepfe.getBoundingClientRect().bottom <= 0);
+    aktion.classList.toggle('ist-da', heroKnoepfe.getBoundingClientRect().bottom < 0);
   }
 
   var tick = false;
@@ -119,24 +119,24 @@
   window.addEventListener('load', anstossen);
   scrollen();
 
-  /* Kategorienkarte: neigt sich am Computer leicht zur Maus */
-  var box = document.querySelector('.ausweis-box');
-  var tilt = box && box.querySelector('.ausweis-tilt');
-  if (tilt && !ruhig && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    box.addEventListener('pointermove', function (e) {
-      var r = box.getBoundingClientRect();
+  /* ---------- Führerausweis-Karte: neigt sich am Computer leicht zur Maus ---------- */
+  var buehne = document.querySelector('.ausweis-buehne');
+  var neigen = buehne && buehne.querySelector('.ausweis-neigen');
+  if (neigen && !ruhig && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    buehne.addEventListener('pointermove', function (e) {
+      var r = buehne.getBoundingClientRect();
       var x = (e.clientX - r.left) / r.width - 0.5;
       var y = (e.clientY - r.top) / r.height - 0.5;
-      tilt.style.setProperty('--tx', (x * 18).toFixed(2) + 'deg');
-      tilt.style.setProperty('--ty', (-y * 14).toFixed(2) + 'deg');
+      neigen.style.setProperty('--tx', (x * 16).toFixed(2) + 'deg');
+      neigen.style.setProperty('--ty', (-y * 12).toFixed(2) + 'deg');
     });
-    box.addEventListener('pointerleave', function () {
-      tilt.style.setProperty('--tx', '0deg');
-      tilt.style.setProperty('--ty', '0deg');
+    buehne.addEventListener('pointerleave', function () {
+      neigen.style.setProperty('--tx', '0deg');
+      neigen.style.setProperty('--ty', '0deg');
     });
   }
 
-  /* Sanftes Scrollen nur für Klicks auf Anker (nicht global, damit Scrollen per Skript sofort springt) */
+  /* ---------- Sanftes Scrollen nur für Klicks auf Anker ---------- */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');
     if (!a || a.hasAttribute('data-soon')) return;
