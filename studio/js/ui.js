@@ -338,11 +338,18 @@ export class UI {
     const links = $$('.nav a[href^="#"]:not(.nav__cta)');
     const map = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
     if (!('IntersectionObserver' in window) || !map.size) return;
+    // Nur ein Link ist aktiv (der letzte sichtbare Abschnitt in Dokument-Reihenfolge), mit aria-current
+    const seen = new Set();
+    const ids = [...map.keys()];
+    let current = null;
     const io = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        const a = map.get(e.target.id);
-        if (a) a.classList.toggle('is-current', e.isIntersecting);
-      }
+      for (const e of entries) { if (e.isIntersecting) seen.add(e.target.id); else seen.delete(e.target.id); }
+      let next = null;
+      for (const id of ids) if (seen.has(id)) next = id;
+      if (next === current) return;
+      if (current) { const a = map.get(current); a.classList.remove('is-current'); a.removeAttribute('aria-current'); }
+      if (next) { const a = map.get(next); a.classList.add('is-current'); a.setAttribute('aria-current', 'true'); }
+      current = next;
     }, { rootMargin: '-45% 0px -50% 0px' });
     map.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
   }

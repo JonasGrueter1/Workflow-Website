@@ -222,3 +222,81 @@ float openField(vec3 p) {
   return o;
 }
 `;
+
+/* ------------------------------------------------------------------ JS-Fassung (CPU) */
+// Gleiche Formeln wie openField/deepOpen oben, fuer Entscheidungen beim Aufbau (z. B. Muskel-Gel nur dort erzeugen,
+// wo die Schale offen ist). Gibt den Wert von openField(p) zurueck (< 0: offen). arm = Oberarm-Gewicht (aArm).
+const jsClamp = (x, a, b) => (x < a ? a : x > b ? b : x);
+const jSmax = (a, b, k) => { const h = jsClamp(0.5 - 0.5 * (b - a) / k, 0, 1); return b + (a - b) * h + k * h * (1 - h); };
+const jSmin = (a, b, k) => -jSmax(-a, -b, k);
+const jRoundBox = (px, py, bx, by, r) => {
+  const qx = Math.abs(px) - bx + r; const qy = Math.abs(py) - by + r;
+  return Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - r;
+};
+const JS = LAYOUT.shoulder; const JAD = LAYOUT.armDir; const JDL = LAYOUT.deltoid;
+const jJaw = (x, y, z) => -(y + 0.62 + 0.63 * (z - 0.05)) / 1.183;
+const jHeadSdf = (x, y, z) => Math.min(jJaw(x, y, z), Math.max(-(y + 0.64 - 0.06 * z), z - 0.05));
+const jNeckBand = (x, y, z) => {
+  const zn = -0.21 - 0.12 * jsClamp(-1 - y, -0.4, 0.6);
+  const rn = Math.max(Math.hypot(x, z - zn), 0.2);
+  const th = Math.atan2(x, z - zn);
+  const t = jsClamp((th - 0.55) / (1.6 - 0.55), 0, 1);
+  const bot = -1.6 + 0.13 * t * t * (3 - 2 * t);
+  return Math.max(Math.max(bot - y, -jHeadSdf(x, y, z)), rn - 0.52);
+};
+const jSkullWin = (x, y, z) => {
+  const u = (Math.PI - Math.atan2(x, z)) * Math.hypot(x, z);
+  return (Math.hypot(u / SK.a, (y - SK.yc) / SK.b) - 1) * Math.min(SK.a, SK.b);
+};
+const jSs = (a, b, x) => { const t = jsClamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+const jBackSlot = (x, y, z) => {
+  const hw = 0.31 - 0.07 * jSs(-1.46, -2.2, y);
+  return Math.max(jRoundBox(x, y + 1.83, hw, 0.37, 0.12), z + 0.3);
+};
+export function deepOpenJS(px, y, z) {
+  const x = Math.abs(px);
+  return Math.min(Math.min(jNeckBand(x, y, z), jSkullWin(x, y, z)), jBackSlot(x, y, z));
+}
+const jClavY = (x) => -1.66 - 0.16 * (x - 0.12) + 0.035 * Math.sin((x - 0.12) * 2.8);
+const jDeltSdf = (x, y, z) => {
+  let rx = x - JDL[0]; let ry = y - JDL[1]; let rz = z - JDL[2];
+  const t = rx * JAD[0] + ry * JAD[1] + rz * JAD[2];
+  const k = t * (1 - 1 / 1.3);
+  rx -= JAD[0] * k; ry -= JAD[1] * k; rz -= JAD[2] * k;
+  return Math.hypot(rx, ry, rz) - LAYOUT.deltoidR * 0.93;
+};
+const jPecLow = (x, y) => Math.hypot(x - LAYOUT.pecC[0], y - LAYOUT.pecC[1]) - LAYOUT.pecR;
+const jArmSdf = (arm) => (0.45 - arm) * 0.35;
+function jPlates(x, y, z, side, arm) {
+  const cy = jClavY(x);
+  const clav = jSmax(Math.abs(y - cy) - 0.05, jSmax(0.13 - x, x - 1.26, 0.05), 0.04);
+  const dd = jDeltSdf(x, y, z);
+  let pec = 1e3;
+  if (side < 0) {
+    const inside = jSmax(jSmax(0.012 - x, y - (cy - 0.085), 0.05), jSmax(jPecLow(x, y), jSmax(0.05 - dd, x - 1.12, 0.1), 0.08), 0.06);
+    let slit = 1e3;
+    for (let k = 0; k < 4; k++) {
+      const yk = -2.1 - 0.082 * k - 0.11 * (x - 0.72);
+      const s = jSmax(Math.abs(y - yk) - 0.0135, Math.max(0.5 + 0.035 * k - x, x - (0.99 - 0.03 * k)), 0.016);
+      slit = Math.min(slit, Math.max(s, jPecLow(x, y) + 0.07));
+    }
+    pec = Math.max(inside, -slit);
+  }
+  const rx = x - JS[0]; const ry = y - JS[1]; const rz = z - JS[2];
+  const ta = rx * JAD[0] + ry * JAD[1] + rz * JAD[2];
+  let sleeve = jSmax(LAYOUT.ringAt + LAYOUT.ringHalf - ta, jArmSdf(arm), 0.03);
+  const upper = jSmax(ta - (LAYOUT.ringAt - LAYOUT.ringHalf), jArmSdf(arm), 0.03);
+  sleeve = Math.min(sleeve, upper);
+  return Math.min(Math.min(clav, pec), Math.min(dd, sleeve));
+}
+export function openFieldJS(px, y, z, arm) {
+  const side = px < 0 ? -1 : 1;
+  const x = Math.abs(px);
+  let o = deepOpenJS(px, y, z);
+  const front = jSmax(y + 1.38, -(z + 0.22 - 0.06 * x), 0.05);
+  o = Math.min(o, Math.max(front, -jPlates(x, y, z, side, arm)));
+  const rx = x - JS[0]; const ry = y - JS[1]; const rz = z - JS[2];
+  const ta = rx * JAD[0] + ry * JAD[1] + rz * JAD[2];
+  o = Math.min(o, Math.max(Math.abs(ta - LAYOUT.ringAt) - LAYOUT.ringHalf, jArmSdf(arm)));
+  return o;
+}

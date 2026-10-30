@@ -94,6 +94,9 @@ export class Engine {
     rim.position.set(5.0, 2.4, -4.2);
     const amb = new THREE.HemisphereLight(0x8fb8d8, 0x05070a, BASE_LOOK.amb);
     this.lights = { key, rim, amb };
+    // Kantenlicht-Farbe: Cyan, im Ausklang warmes Gold (look.rimWarm), ohne Allokation pro Bild
+    this._rimCool = PALETTE.signal.clone();
+    this._rimWarm = PALETTE.ember.clone().lerp(new THREE.Color(0xffffff), 0.25);
     this.scene.add(key, rim, amb);
 
     /* Umgebung fuer Spiegelungen (prozedural, kein Download) */
@@ -193,7 +196,7 @@ export class Engine {
     if (rt1.samples !== samples) { rt1.samples = samples; rt1.dispose(); }
     if (rt2.samples !== 0) { rt2.samples = 0; rt2.dispose(); }
     // Ohne MSAA und bei kleiner Aufloesung (Handy, nach Adaption): FXAA im letzten Pass gegen Treppen an Kanten
-    this.fx.uniforms.uFxaa.value = samples === 0 && dpr < 1.6 ? 1 : 0;
+    this.fx.uniforms.uFxaa.value = samples === 0 && dpr < 1.76 ? 1 : 0;
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(w, h, false);
     this.composer.setPixelRatio(dpr);
@@ -243,6 +246,7 @@ export class Engine {
     this.scene.environmentIntensity = look.env;
     this.lights.key.intensity = look.key;
     this.lights.rim.intensity = look.rim;
+    this.lights.rim.color.copy(this._rimCool).lerp(this._rimWarm, look.rimWarm || 0);
     this.lights.amb.intensity = look.amb;
   }
 
@@ -252,7 +256,16 @@ export class Engine {
       // compileAsync nur mit KHR_parallel_shader_compile, sonst warnt three.js (z. B. SwiftShader)
       const parallel = this.renderer.extensions.has('KHR_parallel_shader_compile');
       if (parallel && this.renderer.compileAsync) await this.renderer.compileAsync(this.scene, this.camera);
-      else this.renderer.compile(this.scene, this.camera);
+      else {
+        // Ohne parallele Kompilierung: Szene fuer Szene, mit einem Bild Pause dazwischen. So bleibt der Preloader
+        // fluessig (sonst ein einziger langer Block von mehreren Sekunden).
+        const nextFrame = () => new Promise((r) => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
+        for (const child of this.scene.children.slice()) {
+          if (child.isLight || child.isCamera) continue;
+          this.renderer.compile(child, this.camera, this.scene);
+          await nextFrame();
+        }
+      }
     } catch (e) {
       console.warn('Shader-Vorkompilierung uebersprungen:', e && e.message);
     }
@@ -287,6 +300,14 @@ export class Engine {
       const q1 = sorted[Math.floor(sorted.length * 0.2)];
       const q3 = sorted[Math.floor(sorted.length * 0.8)];
       a.base = med > 0.028 && med < 0.04 && q3 - q1 < 0.004 ? 1 / 30 : 1 / 60;
+      // Schwaches Geraet ohne navigator.deviceMemory (iOS landet sonst immer auf medium): ist schon der ruhige
+      // Anfang deutlich zu langsam (Median ueber 45 ms, nicht gedrosselt), sofort wie Stufe low rendern
+      if (this.quality !== 'low' && a.base < 1 / 40 && med > 0.045) {
+        this.slowStart = true;
+        this._msaa = 0;
+        this.dprScale = Math.min(this.dprScale, 0.62);
+        this.resize(true);
+      }
       a.probed = true;
       a.probe.length = 0;
       a.acc = 0;

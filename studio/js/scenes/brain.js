@@ -195,6 +195,7 @@ export function create(ctx) {
   };
   // Integration: im Hochformat (Handy) liegt der Text ueber dem dichten Netz, darum etwas weniger Glow
   if (ctx.isMobile) { look.bloom = 0.72; look.exposure = 0.94; }
+  const baseBloom = look.bloom; const baseExposure = look.exposure;
 
   const api = {
     group,
@@ -214,7 +215,12 @@ export function create(ctx) {
       // Von aussen: Netz ruhiger, damit die Windungen lesbar bleiben. Innen: Netz voll
       const camDist = ctx.camera.position.distanceTo(center);
       const outside = smoothstep(0.85, 1.7, camDist);
-      U.uNetBase.value = 1 - 0.65 * outside;
+      // Eintauchen (brain@0.35 bis 0.95): Netz und Bloom deutlich ruhiger, nur wenige Wellen hell (sonst brennt das Bild aus)
+      const dive = smoothstep(0.35, 0.5, br.p) * (1 - smoothstep(0.85, 0.97, br.p));
+      U.uNetBase.value = (1 - 0.65 * outside) * (1 - 0.45 * dive);
+      look.bloom = baseBloom * (1 - 0.5 * dive);
+      look.bloomThreshold = 0.72 + 0.4 * dive;
+      look.exposure = baseExposure * (1 - 0.08 * dive);
       U.uInside.value = 1 - outside;
       U.uFog.value = ctx.scene.fog ? ctx.scene.fog.density : 0.03;
       U.uAspect.value = ctx.size.width / Math.max(1, ctx.size.height);
@@ -228,7 +234,7 @@ export function create(ctx) {
         const t = time + phase[k];
         const cyc = Math.floor(t / period[k]);
         clocks[k] = t - cyc * period[k];
-        amps[k] = (0.45 + 0.55 * hash(cyc * 13.1 + k * 7.7)) * act;
+        amps[k] = (0.45 + 0.55 * hash(cyc * 13.1 + k * 7.7)) * act * (k < 3 ? 1 : 1 - 0.75 * dive);
       }
       // Markanter Moment beim Flug durch das Gehirn: aus dem Kern (Thalamus, letzter Ausloeser) laeuft eine starke
       // Welle durch das ganze Netz, an den Scroll gekoppelt. Danach fliessen die Faserbahnen zum Kabelaustritt.
@@ -236,7 +242,7 @@ export function create(ctx) {
       const wv = smoothstep(0.5, 0.86, br.p);
       if (wv > 0 && wv < 1) {
         clocks[kw] = wv * (data.cascades.reach[kw] + 0.5);
-        amps[kw] = 1.7 * act;
+        amps[kw] = 1.05 * act;
       }
       U.uClock0.value.set(clocks[0], clocks[1], clocks[2], clocks[3]);
       U.uClock1.value.set(clocks[4], clocks[5], clocks[6], clocks[7]);

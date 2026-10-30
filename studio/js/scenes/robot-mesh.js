@@ -63,17 +63,55 @@ export function applyExpression(mesh, amt = 1) {
   }
   return mesh;
 }
+/* Glaettung im Web Worker (robot-mesh-worker.js), damit der Hauptthread frei bleibt. Faellt der Worker aus (alter
+   Browser ohne Modul-Worker, Fehler, 9 s ohne Antwort), rechnet der Hauptthread dasselbe selbst. */
+function runWorker(msg, transfer = []) {
+  return new Promise((resolve, reject) => {
+    if (typeof Worker === 'undefined') { reject(new Error('kein Worker')); return; }
+    let w;
+    try { w = new Worker(new URL('./robot-mesh-worker.js', import.meta.url), { type: 'module' }); } catch (e) { reject(e); return; }
+    let to = 0;
+    const done = (fn, v) => { clearTimeout(to); w.terminate(); fn(v); };
+    to = setTimeout(() => done(reject, new Error('Worker antwortet nicht')), 9000);
+    w.onmessage = (ev) => (ev.data && ev.data.error ? done(reject, new Error(ev.data.error)) : done(resolve, ev.data));
+    w.onerror = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); done(reject, new Error('Worker-Fehler')); };
+    w.postMessage(msg, transfer);
+  });
+}
+const onMain = (m) => { const s = catmullClark(m); computeNormals(s); return s; };
+
 /** Eine Stufe Catmull-Clark mit Normalen (einmal gerechnet, nur lesen) */
 export function bustLevel1() {
-  if (!l1P) l1P = bustRaw().then((m) => { const s = catmullClark(m); computeNormals(s); return s; });
+  // Die Datei holt der Hauptthread (Preload aus index.html), die Rechnung macht der Worker
+  if (!l1P) {
+    l1P = fetchBust(BUST_URL).then((buf) => runWorker({ op: 'l1', buf: buf.slice(0) }, [])
+      .catch(() => onMain(applyExpression(parseBust(buf)))));
+  }
   return l1P;
+}
+
+let l2P = null;
+/** Zweite Stufe (nur Qualitaet high), aus Stufe 1, ebenfalls im Worker. Eigenes Netz, nur lesen. */
+export function bustLevel2(l1) {
+  if (!l2P) {
+    const c = { pos: l1.pos.slice(), head: l1.head.slice(), arm: l1.arm.slice(), ao: l1.ao.slice(), quads: l1.quads.slice(), nV: l1.nV, lm: l1.lm };
+    l2P = runWorker({ op: 'cc', mesh: c }, [c.pos.buffer, c.head.buffer, c.arm.buffer, c.ao.buffer, c.quads.buffer]).catch(() => onMain(l1));
+  }
+  return l2P;
 }
 
 /** Laedt die Bueste. Gibt { pos: Float32Array, head: Float32Array, quads: Uint32Array, nV, lm } zurueck. */
 export async function loadBust(url) {
+  return parseBust(await fetchBust(url));
+}
+/** Datei holen (im Hauptthread: nutzt den Preload aus index.html) */
+export async function fetchBust(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`robot: ${url} fehlt (${res.status})`);
-  const buf = await res.arrayBuffer();
+  return res.arrayBuffer();
+}
+/** Datei lesen */
+export function parseBust(buf) {
   const dv = new DataView(buf);
   const magic = String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3));
   if (magic !== 'AB01') throw new Error('robot: falsches Dateiformat');
@@ -114,16 +152,16 @@ export function catmullClark(mesh) {
   return { pos: r.pos, head: r.attrs[0], arm: r.attrs[1], ao: r.attrs[2], quads: r.quads, nV: r.nV, lm: mesh.lm };
 }
 
-/** Teilnetz: nur Vierecke, deren Mitte keep(x, y, z) erfuellt (fuer Innenschale und Glas). */
+/** Teilnetz: nur Vierecke, deren Mitte keep(x, y, z, arm) erfuellt (Innenschale, Glas, Muskel-Gel). */
 export function subMesh(mesh, keep) {
   const { pos, quads } = mesh;
   const map = new Int32Array(mesh.nV).fill(-1);
   const q = [];
   let n = 0;
   for (let f = 0; f < quads.length; f += 4) {
-    let x = 0; let y = 0; let z = 0;
-    for (let k = 0; k < 4; k++) { const v = quads[f + k]; x += pos[v * 3]; y += pos[v * 3 + 1]; z += pos[v * 3 + 2]; }
-    if (!keep(x / 4, y / 4, z / 4)) continue;
+    let x = 0; let y = 0; let z = 0; let arm = 0;
+    for (let k = 0; k < 4; k++) { const v = quads[f + k]; x += pos[v * 3]; y += pos[v * 3 + 1]; z += pos[v * 3 + 2]; arm += mesh.arm[v]; }
+    if (!keep(x / 4, y / 4, z / 4, arm / 4)) continue;
     for (let k = 0; k < 4; k++) {
       const v = quads[f + k];
       if (map[v] < 0) map[v] = n++;

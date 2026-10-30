@@ -123,11 +123,11 @@ export const BACKDROPS = Object.freeze({
   // Morgenlicht: goldenes Horizontgluehen hinter den Schultern rechts (nie hinter dem Kontakt-Text links), Strahlen
   // von rechts oben, Goldstaub, oben kuehl
   outro: {
-    base: 0x0a0908, mid: 0x21170f, hi: 0xe0a05a, accent: 0x1d3550, fogColor: 0x110c08,
+    base: 0x07080a, mid: 0x151210, hi: 0xe0a05a, accent: 0x1d3550, fogColor: 0x0b0a09,
     rayColor: 0xffd29a, starColor: 0xffd7a0,
-    glowAt: [0.4, -1.3, -0.6], glowShift: [0.3, -0.05], rayAt: [9, 6, -10], accentAt: [-6, 30, -4],
-    horizon: -0.12, horizonGlow: 0.8, glow: 0.42, glowSize: 1.5,
-    fog: 0.35, fogScale: 0.9, fogSpeed: 0.003, rays: 0.4, rayFreq: 5, dust: 0.3,
+    glowAt: [0.4, -1.3, -0.6], glowShift: [0.34, -0.05], rayAt: [9, 6, -10], accentAt: [-6, 30, -4],
+    horizon: -0.12, horizonGlow: 0.42, glow: 0.4, glowSize: 1.15,
+    fog: 0.3, fogScale: 0.9, fogSpeed: 0.003, rays: 0.22, rayFreq: 5, dust: 0.14,
   },
   // Inhaltsbereich: ruhig, nur Verlauf und ein Rest Waerme
   inhalt: {
@@ -145,8 +145,10 @@ export const BEATS = Object.freeze([
   { name: 'intro', len: 120, label: 'Start', text: [0, 0, 0.28, 0.5], scrim: 0.32 },
   { name: 'robot', len: 180, label: 'Partner', scrim: 0.42 },
   { name: 'zoom', len: 170, label: 'Einblick', scrim: 0.45 },
-  { name: 'brain', len: 150, label: 'Intelligenz', scrim: 0.62 },
-  { name: 'cables', len: 190, label: 'Verbindung', text: [0.14, 0.24, 0.46, 0.6], scrim: 0.5 },
+  // brain: Text weg, bevor die Kamera eintaucht und die Helligkeit steigt (vorher stand er bei brain@0.5 noch halb da)
+  // textM: Fenster im Hochformat (Strecke dort 28 % kuerzer, Text steht laenger, Bild oben bleibt frei)
+  { name: 'brain', len: 150, label: 'Intelligenz', text: [0.02, 0.12, 0.22, 0.36], textM: [0.02, 0.12, 0.3, 0.42], scrim: 0.62 },
+  { name: 'cables', len: 190, label: 'Verbindung', text: [0.14, 0.24, 0.46, 0.6], textM: [0.1, 0.2, 0.8, 0.94], scrim: 0.5 },
   { name: 'dna', len: 210, label: 'Code', text: [0.02, 0.12, 0.4, 0.54], scrim: 0.62 },
   { name: 'outro', len: 160, label: 'Kontakt', scrim: 0.45 },
 ]);
@@ -199,11 +201,11 @@ export const CAMERA_KEYS = Object.freeze([
   // Hardware (Seitenansicht, nie frontal), am Ende Dreiviertelansicht von vorne rechts oben
   {
     at: 'zoom@0.6', pos: [4.3, 0.95, 0.6], look: [-0.07, -0.16, 0.33], fov: 34,
-    posM: [4.4, 1.0, 0.6], lookM: [0.25, -1.11, -0.06],
+    posM: [3.9, 0.95, 0.55], lookM: [0.22, -0.92, -0.06],
   },
   {
     at: 'zoom@0.8', pos: [3.2, 1.15, 1.7], look: [-0.2, 0.04, 0.26], fov: 37,
-    posM: [3.6, 1.25, 2.0], lookM: [0.25, -0.94, 0.04],
+    posM: [3.3, 1.2, 1.85], lookM: [0.22, -0.8, 0.04],
   },
   {
     at: 'zoom@1', pos: [2.3, 1.35, 2.55], look: [-0.44, 0.14, 0.26], fov: 40,
@@ -246,10 +248,10 @@ export const CAMERA_KEYS = Object.freeze([
   { at: 'dna@1', pos: [0, 0.42, -29.45], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -29.05], lookM: [0, -0.5, -36] },
   // Ausklang: Schnitt auf das Gesicht (die Augen erwachen im Lichtblitz), dann zieht die Kamera langsam zurueck in eine
   // ruhige Dreiviertelansicht leicht von unten: die Bueste rechts, der Blick zum Kontakt links (Hochformat: Bueste oben)
-  { at: 'outro@0', cut: true, pos: [0.5, 0.05, 4.5], look: [-0.22, -0.27, 0.03], fov: 34, posM: [0.4, 0.2, 6.0], lookM: [0.01, -1.95, 0.09] },
+  { at: 'outro@0', cut: true, pos: [0.5, 0.05, 4.5], look: [-0.22, -0.27, 0.03], fov: 34, posM: [0.5, 0.2, 6.6], lookM: [0.01, -1.95, 0.09] },
   {
     at: 'outro@1', pos: [3.7, -0.3, 7.9], look: [-1.19, -0.75, 0.56], fov: 31,
-    posM: [3.4, 0.1, 8.4], lookM: [0.06, -2.83, 0.15],
+    posM: [3.9, 0.2, 9.6], lookM: [0.06, -2.95, 0.15],
   },
 ]);
 export const CUT_FADE = 0.008; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 9 vh)
@@ -274,6 +276,7 @@ export const BASE_LOOK = Object.freeze({
   key: 1.3,             // warmes Hauptlicht
   rim: 2.0,             // kuehles Kantenlicht
   amb: 0.12,            // Hemisphaere
+  rimWarm: 0,           // Farbe des Kantenlichts: 0 Signal-Cyan, 1 warmes Gold (Ausklang im Morgenlicht)
   parallax: 0.22,       // Kamera folgt der Maus (Einheiten)
   drift: 0.025,         // ruhiges Schweben der Kamera
   flash: 0,             // additiver Lichtblitz in Signal-Farbe 0..1

@@ -60,7 +60,7 @@ export function buildMechanics(THREE, o) {
   };
 
   /* ------------------------------------------------------ Geometrie-Sammler */
-  const kits = { chrome: [], graphite: [], rubber: [], cable: [], gel: [], housing: [], ceramic: [], grille: [], led: [], hose: [], chromeS: [], graphiteS: [] };
+  const kits = { chrome: [], graphite: [], rubber: [], cable: [], gel: [], housing: [], ceramic: [], grille: [], led: [], hose: [], chromeS: [], graphiteS: [], lattice: [], board: [] };
   // three-Geometrie vorbereiten: nicht indiziert, aUv2 aus uv, aHead (Zahl oder Funktion von y)
   const prep = (g, w, m4 = null) => {
     if (m4) g.applyMatrix4(m4);
@@ -355,12 +355,19 @@ diffuseColor.a = ca;
       else ctrl.push(p);
     }
     const pts = smooth(ctrl, S(48, 28));
-    kits.gel.push(tube(pts, (t) => 0.034 + 0.05 * Math.pow(Math.sin(Math.PI * clamp(t * 1.05, 0, 1)), 0.7), S(24, 14), wAt));
+    // Muskelbauch in der Mitte, an den Enden schmale Sehnen mit Chrom-Ansatz (Kiefer/Schaedel oben, Brustbein unten)
+    kits.gel.push(tube(pts, (t) => 0.017 + 0.068 * Math.pow(Math.sin(Math.PI * clamp(t * 1.04, 0, 1)), 1.1), S(24, 14), wAt));
     // Schluesselbein-Kopf
     const a = pts[Math.floor(pts.length * 0.5)];
     const mid = underSkin(a.clone().lerp(Nc, 0.5), 0.07);
     const pts2 = smooth([a, mid, Nc], S(24, 14));
-    kits.gel.push(tube(pts2, (t) => 0.034 - 0.012 * t, S(16, 10), wAt));
+    kits.gel.push(tube(pts2, (t) => 0.03 - 0.016 * t, S(16, 10), wAt));
+    // Sehnenansaetze: kurze Chrom-Huelsen an den Enden, die Sehne steckt darin
+    for (const [p0, p1] of [[pts[0], pts[3]], [pts[pts.length - 1], pts[pts.length - 4]], [pts2[pts2.length - 1], pts2[pts2.length - 3]]]) {
+      const d = p1.clone().sub(p0).normalize();
+      const c = p0.clone().addScaledVector(d, 0.012);
+      kits.chrome.push(prep(new THREE.CylinderGeometry(0.024, 0.03, 0.045, S(18, 10), 1, false), wAt(c.y), place(c, d)));
+    }
   }
 
   /* --------------------------------------------------------------- Hals: Kabel */
@@ -504,7 +511,8 @@ diffuseColor.a = ca;
         const s0 = surfAt(th, y);
         pts.push(s0.p.clone().addScaledVector(s0.n, -(0.062 + 0.02 * t * t)));
       }
-      kits.graphite.push(tube(smooth(pts, S(44, 22)), (t) => 0.012 + 0.006 * t, S(10, 6), 1));
+      // Gitterstab mit Lochreihe und Chrom-Manschetten (Material 'lattice')
+      kits.lattice.push(tube(smooth(pts, S(44, 22)), (t) => 0.013 + 0.006 * t, S(12, 6), 1));
     }
     // Querrippen dahinter
     for (const y of [0.2, -0.04, -0.27]) {
@@ -516,7 +524,19 @@ diffuseColor.a = ca;
         const s0 = surfAt(th, y);
         pts.push(s0.p.clone().addScaledVector(s0.n, -0.095));
       }
-      kits.graphite.push(tube(smooth(pts, S(60, 30)), () => 0.016, S(12, 8), 1));
+      kits.chrome.push(tube(smooth(pts, S(60, 30)), () => 0.0105, S(12, 8), 1));
+    }
+    // kleine Platinen zwischen Gitter und Innenschale (Leiterbahnen, Chip, Status-Punkt)
+    for (const [du, y, w, h] of [[-0.19, 0.1, 0.17, 0.11], [0.2, -0.02, 0.15, 0.12], [-0.02, -0.21, 0.2, 0.08]]) {
+      const th = Math.PI + du / Math.max(0.3, rBack(y));
+      const s0 = surfAt(th, y);
+      const n = V(s0.n.x, 0, s0.n.z).normalize();
+      const t = V(n.z, 0, -n.x);
+      const c = s0.p.clone().addScaledVector(s0.n, -0.105);
+      const m = new THREE.Matrix4().makeBasis(t, V(0, 1, 0), n).setPosition(c);
+      kits.board.push(prep(new THREE.BoxGeometry(w, h, 0.008), 1, m));
+      kits.chrome.push(prep(new THREE.CylinderGeometry(0.006, 0.006, 0.03, 8).rotateX(Math.PI / 2), 1, m.clone().multiply(new THREE.Matrix4().makeTranslation(w * 0.42, h * 0.36, -0.015))));
+      kits.chrome.push(prep(new THREE.CylinderGeometry(0.006, 0.006, 0.03, 8).rotateX(Math.PI / 2), 1, m.clone().multiply(new THREE.Matrix4().makeTranslation(-w * 0.42, -h * 0.36, -0.015))));
     }
     // zwei Chrom-Streben senkrecht neben der Mitte
     for (const sx of [-1, 1]) {
@@ -541,109 +561,165 @@ diffuseColor.a = ca;
     kits.chrome.push(tube(cs.map((p) => V(p.x, p.y + 0.026, p.z)), () => 0.006, 6, 1));
   }
 
-  /* -------------------------------------- Hinterkopf und Nacken: Kabelbuendel (Referenz 1) */
-  // 40 bis 90 duenne Kabel und Schlaeuche: aus dem Schaedelinneren (hinter dem Gitter) zum Kamm, dort hinaus und
-  // locker ueber den Nacken in den Schlitz zwischen den Schulterblaettern. Sieben lose Straenge statt Zoepfe: kaum
-  // verdrillt, einzelne Kabel wandern leicht, Luecken zwischen den Straengen, nur drei Schellen. Die Straenge haengen
-  // im Nacken etwas vom Hals weg (Schwerkraft) und laufen erst kurz vor dem Schlitz zusammen.
-  // Schwarzes Gummi, graue Schlaeuche, die dicken mit Rillen und Chrom-Huelsen, ~10 % mit Licht.
+  /* --------------------------------- Hinterkopf und Nacken: Kabelfaecher aus Steckerleisten (Referenz 1) */
+  // Die Kabel kommen aus dem Schaedelinneren (hinter dem Gitter), laufen durch vier Steckerleisten am Kamm der
+  // Schaedelbasis und faechern von dort nach hinten und unten auf: jedes Kabel mit eigener Lage, eigenem Durchhang
+  // (in der Mitte weiter vom Nacken weg) und eigenem Durchmesser. Erst kurz vor dem Schlitz zwischen den
+  // Schulterblaettern laufen sie wieder zusammen. Zwei Schellen fassen je eine Gruppe, Chromstecker an den Leisten.
   {
-    const NC = hi ? 112 : 44;
-    // u: seitliche Lage (Bogenlaenge am Hinterkopf), d: Abstand vom Nacken, R: Radius des Strangs
-    const bundles = [
-      { u: -0.33, d: 0.04, R: 0.036 }, { u: -0.215, d: 0.12, R: 0.04 }, { u: -0.1, d: 0.06, R: 0.042 }, { u: 0.0, d: 0.15, R: 0.045 },
-      { u: 0.105, d: 0.07, R: 0.042 }, { u: 0.22, d: 0.13, R: 0.04 }, { u: 0.33, d: 0.045, R: 0.036 },
-    ];
-    const NB = bundles.length;
-    // nur drei Schellen (Straenge 1, 3, 5) auf verschiedenen Hoehen
-    bundles.forEach((B, i) => { B.c0 = i === 3 ? 2 : i === 1 ? 3 : i === 5 ? 4 : -1; });
-    const ys = [-0.56, -0.76, -0.98, -1.22, -1.45, -1.67, -1.9, -2.17];
-    const at = (x, y, off) => { const b = backAt(x, y); b.z -= off; return b; };
-    // Mitte eines Strangs auf Hoehe y (Index k in ys): breit gefaechert, erst unten im Schlitz zusammen
-    // Mitten werden je Strang und Hoehe nur einmal gesucht (backAt laeuft ueber alle Ecken des Netzes)
-    const centerCache = new Map();
-    const center = (B, k) => {
-      const key = `${B.u}:${k}`;
-      let c = centerCache.get(key);
-      if (!c) { c = centerRaw(B, k); centerCache.set(key, c); }
-      return c.clone();
-    };
-    const centerRaw = (B, k) => {
-      const y = ys[k];
-      const spread = [1.4, 1.36, 1.3, 1.22, 1.12, 0.98, 0.78, 0.66][k];
-      const bulge = [0.07, 0.12, 0.13, 0.11, 0.08, 0.045, -0.02, -0.15][k];
-      const out = 1 + 0.3 * Math.abs(B.u) / 0.33; // aeussere Straenge haengen weiter vom Hals weg
-      return at(B.u * spread, y, (B.d * (k < 6 ? 1 : 0.4) + bulge) * (k < 6 ? out : 1));
-    };
-    for (let i = 0; i < NC; i++) {
-      const bi = i % NB; const B = bundles[bi];
-      const core = i < NB && (bi % 2 === 1 || bi === 3);
-      const k0 = rnd();
-      const r = core ? 0.016 + 0.004 * rnd() : k0 < 0.7 ? 0.0032 + 0.0026 * rnd() : k0 < 0.93 ? 0.0075 + 0.0035 * rnd() : 0.012 + 0.003 * rnd();
-      const lit = !core && i % 10 === 4;
-      const rho = core ? 0 : B.R * (0.25 + 0.75 * Math.sqrt(rnd()));
-      const ph0 = rnd() * 6.283; const tw = (rnd() < 0.5 ? 1 : -1) * (0.06 + 0.1 * rnd());
-      // eigenes leichtes Wandern (seitlich und in der Tiefe), damit die Kabel nicht exakt parallel laufen
-      const wa = 0.008 + 0.014 * rnd(); const wf = 0.6 + 0.9 * rnd(); const wp = rnd() * 6.283;
-      // Austritt im Schaedel: verteilt ueber das Gitter, unten dichter
-      const pu = (rnd() - 0.5) * 2;
-      const py = -0.4 + 0.62 * Math.pow(rnd(), 1.6);
-      const pth = Math.PI + pu * winTh(Math.min(py, 0.25)) * 0.85;
-      const s0 = surfAt(pth, py);
-      const ctrl = [s0.p.clone().addScaledVector(s0.n, -(0.11 + 0.03 * rnd()))];
-      const sm = surfAt(Math.PI + pu * 0.35, (py - 0.48) * 0.5);
-      ctrl.push(sm.p.clone().addScaledVector(sm.n, -0.12 + 0.02 * rnd()));
-      const ex = surfAt(Math.PI + (B.u * 2.3 + Math.cos(ph0) * rho) / Math.max(0.3, rBack(-0.46)), -0.46 - 0.04 * rnd());
-      ctrl.push(ex.p.clone().addScaledVector(ex.n, -0.035 + 0.03 * rnd()));
-      ys.forEach((y, k) => {
-        const c = center(B, k);
-        const a = ph0 + tw * k;
-        const pinch = (k === B.c0) ? 0.55 : 1;
-        // unten (Schlitz) enger zusammen
-        const tight = k >= 6 ? 0.6 : 1;
-        const wob = k > 0 && k < 6 ? Math.sin(k * wf + wp) * wa : 0;
-        c.x += Math.cos(a) * rho * pinch * tight + wob;
-        c.z -= Math.sin(a) * rho * 0.8 * pinch * tight + wob * 0.6;
-        ctrl.push(c);
-      });
-      const curve = new THREE.CatmullRomCurve3(ctrl, false, 'centripetal');
-      if (core) {
-        // Rillenschlauch: Radius moduliert entlang der Laenge
-        const n = hi ? 420 : 90;
-        const pts = curve.getSpacedPoints(n);
-        const L = curve.getLength();
-        const ribs = hi ? (t) => r * (1 + 0.16 * Math.pow(0.5 + 0.5 * Math.cos((t * L / 0.026) * 6.283), 2)) : () => r;
-        kits.hose.push(tube(pts, ribs, S(14, 8), (y) => headW(y)));
-        for (const t of [0.34, 0.97]) {
-          const p = curve.getPointAt(t); const d = curve.getTangentAt(t);
-          const g = new THREE.CylinderGeometry(r * 1.45, r * 1.45, 0.05, S(16, 8), 1, false);
-          kits.chrome.push(prep(g, headW(p.y), place(p, d)));
+    // Rueckenflaeche als Raster (ein Durchgang ueber alle Ecken): z der Haut hinten, schnell abfragbar
+    const GX0 = -0.72; const GY0 = -2.4; const GS = 0.03; const GW = 49; const GH = 72;
+    const grid = new Float32Array(GW * GH).fill(9);
+    for (let i = 0; i < mesh.nV; i++) {
+      const z = mesh.pos[i * 3 + 2];
+      if (z > -0.05) continue;
+      const gx = Math.round((mesh.pos[i * 3] - GX0) / GS); const gy = Math.round((mesh.pos[i * 3 + 1] - GY0) / GS);
+      if (gx < 0 || gx >= GW || gy < 0 || gy >= GH) continue;
+      const k = gy * GW + gx;
+      if (z < grid[k]) grid[k] = z;
+    }
+    for (let pass = 0; pass < 8; pass++) {
+      for (let k = 0; k < grid.length; k++) {
+        if (grid[k] < 8) continue;
+        const gx = k % GW; const gy = (k / GW) | 0; let sum = 0; let n = 0;
+        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const x = gx + dx; const y = gy + dy;
+          if (x < 0 || x >= GW || y < 0 || y >= GH) continue;
+          const v = grid[y * GW + x]; if (v < 8) { sum += v; n++; }
         }
-      } else {
-        const pts = curve.getPoints(S(64, 34));
-        // Mischung wie Referenz 1: viele helle, silbergraue Leitungen, dazwischen schwarze
-        const kit = lit ? 'cable' : (i % 5 < 3 || r > 0.0075) ? 'hose' : 'rubber';
-        kits[kit].push(tube(pts, () => r, r > 0.008 ? S(10, 7) : S(7, 5), (y) => headW(y)));
+        if (n) grid[k] = sum / n;
       }
     }
-    // Schellen (Graphit mit Chrom-Kante), nur an drei Straengen
-    for (const B of bundles) {
-      if (B.c0 < 0) continue;
-      const k = B.c0;
-      const c = center(B, k);
-      const n0 = center(B, k + 1).sub(center(B, k - 1)).normalize();
-      const Rc = B.R * 0.55 + 0.022;
-      const g = new THREE.CylinderGeometry(Rc, Rc, 0.03, S(24, 14), 1, true);
-      g.scale(1, 1, 0.8);
-      kits.graphite.push(prep(g, headW(c.y), place(c, n0)));
-      const t2 = new THREE.TorusGeometry(Rc + 0.001, 0.0045, 6, S(24, 14)).rotateX(Math.PI / 2).scale(1, 1, 0.8);
-      kits.chrome.push(prep(t2.translate(0, 0.015, 0), headW(c.y), place(c, n0)));
+    const backZ = (x, y) => {
+      const fx = clamp((x - GX0) / GS, 0, GW - 1.001); const fy = clamp((y - GY0) / GS, 0, GH - 1.001);
+      const ix = Math.floor(fx); const iy = Math.floor(fy); const tx = fx - ix; const ty = fy - iy;
+      const g = (a, b) => { const v = grid[b * GW + a]; return v < 8 ? v : -0.5; };
+      return (g(ix, iy) * (1 - tx) + g(ix + 1, iy) * tx) * (1 - ty) + (g(ix, iy + 1) * (1 - tx) + g(ix + 1, iy + 1) * tx) * ty;
+    };
+    const slotHalf = (y) => 0.31 - 0.07 * smoothstep(-1.46, -2.2, y);
+
+    // Vier Steckerleisten am Kamm (Bogenlaenge ab hinten), je eine Gruppe Kabel
+    const NC = hi ? 112 : 44;
+    const CU = [-0.27, -0.09, 0.09, 0.27];
+    const YC = -0.47;
+    const conns = CU.map((u, g) => {
+      const th = Math.PI + u / Math.max(0.3, rBack(YC));
+      const s0 = surfAt(th, YC);
+      const n = V(s0.n.x, 0, s0.n.z).normalize();
+      const t = V(n.z, 0, -n.x); // waagrecht entlang der Schale
+      const c = s0.p.clone().addScaledVector(n, -0.015);
+      return { g, u, th, c, n, t, x: c.x };
+    });
+    const UPV = V(0, 1, 0);
+    const basis = (c, t, n, sx = 1, sy = 1, sz = 1) => new THREE.Matrix4().makeBasis(t, UPV, n).scale(V(sx, sy, sz)).setPosition(c);
+    for (const C of conns) {
+      // Gehaeuse (Graphit), Chromrahmen, Leiste mit Steckplaetzen unten
+      kits.graphite.push(prep(new THREE.BoxGeometry(0.16, 0.06, 0.075, 1, 1, 1), 1, basis(C.c, C.t, C.n)));
+      kits.chrome.push(prep(new THREE.BoxGeometry(0.168, 0.012, 0.082, 1, 1, 1), 1, basis(C.c.clone().addScaledVector(UPV, -0.034), C.t, C.n)));
+      kits.graphite.push(prep(new THREE.BoxGeometry(0.168, 0.008, 0.082, 1, 1, 1), 1, basis(C.c.clone().addScaledVector(UPV, 0.032), C.t, C.n)));
+      const led = new THREE.SphereGeometry(0.0055, 10, 6);
+      kits.led.push(prep(led, 1, new THREE.Matrix4().makeTranslation(C.c.x + C.t.x * 0.06 + C.n.x * 0.039, C.c.y + 0.012, C.c.z + C.t.z * 0.06 + C.n.z * 0.039)));
+    }
+
+    const per = Math.ceil(NC / conns.length);
+    const groupSag = [0.17, 0.3, 0.32, 0.19];
+    const clampY = -1.3;
+    const pinchG = [1, 2];
+    const ys = [-0.62, -0.8, -1.02, -1.25, -1.48, -1.7, -1.86, -2.02, -2.2];
+    const grpMean = conns.map(() => ({ x: 0, z: 0, n: 0, r: 0 }));
+    const plans = [];
+    for (let i = 0; i < NC; i++) {
+      const g = i % conns.length; const j = Math.floor(i / conns.length);
+      const C = conns[g];
+      const k0 = rnd();
+      const core = j === 0;
+      const r = core ? 0.0155 + 0.004 * rnd() : k0 < 0.62 ? 0.0032 + 0.0024 * rnd() : k0 < 0.9 ? 0.0065 + 0.003 * rnd() : 0.0105 + 0.003 * rnd();
+      const lit = !core && i % 12 === 5;
+      // Lage in der Leiste (zwei Reihen), Faecher-Position, Durchhang
+      const f = ((j + 0.5) / per) * 2 - 1 + (rnd() - 0.5) * 0.25;
+      const ex = C.c.clone().addScaledVector(C.t, f * 0.065).addScaledVector(C.n, (j % 2 ? 0.014 : -0.012)).addScaledVector(UPV, -0.036);
+      const xFan = C.x * 1.75 + f * (0.06 + 0.05 * Math.abs(C.u) / 0.27) + (rnd() - 0.5) * 0.03;
+      const sag = groupSag[g] * (0.4 + 0.85 * rnd()) * (core ? 0.7 : 1) * (r > 0.009 ? 0.85 : 1);
+      plans.push({ i, g, j, r, lit, core, f, ex, xFan, sag, ph: rnd() * 6.283, wa: 0.006 + 0.01 * rnd() });
+      grpMean[g].x += xFan; grpMean[g].z += sag; grpMean[g].n += 1;
+    }
+    grpMean.forEach((m) => { m.x /= m.n; m.z /= m.n; });
+    const pathAt = (P, y, pinch) => {
+      // t: 0 an der Leiste .. 1 im Schlitz
+      const t = clamp((y - ys[0]) / (ys[6] - ys[0]), 0, 1);
+      const xs = clamp(P.xFan * 0.5, -(slotHalf(y) - 0.05), slotHalf(y) - 0.05);
+      let x = y > ys[0] ? P.ex.x : P.xFan + (P.ex.x - P.xFan) * Math.pow(1 - smoothstep(0, 0.42, t), 1.6);
+      x = x + (xs - x) * smoothstep(0.45, 1, t);
+      // Durchhang frueh (Kabel fallen erst nach hinten, dann zum Ruecken): Buckel bei t ~ 0.38
+      let sag = P.sag * Math.pow(Math.sin(Math.PI * Math.pow(Math.min(1, t * 1.06), 0.72)), 0.9);
+      if (pinch > 0) { const m = grpMean[P.g]; x += (m.x - x) * pinch * 0.62; sag += (m.z * 0.9 - sag) * pinch * 0.7; }
+      x += Math.sin(t * 5.0 + P.ph) * P.wa * Math.sin(Math.PI * t);
+      const skin = backZ(x, y);
+      // Austritt: die Leiste sitzt am Hinterhaupt, das weiter hinten liegt als der Nacken darunter
+      const z0 = P.ex.z;
+      let z = z0 + (skin - 0.012 - P.r - z0) * smoothstep(0.3, 0.95, t) - sag;
+      z = Math.min(z, skin - 0.01 - P.r);
+      return V(x, y, z);
+    };
+    for (const P of plans) {
+      // im Schaedel: verteilt ueber das Gitter, unten dichter
+      const pu = (rnd() - 0.5) * 2;
+      const py = -0.36 + 0.42 * Math.pow(rnd(), 1.6);
+      const pth = Math.PI + pu * winTh(Math.min(py, 0.25)) * 0.85;
+      const s0 = surfAt(pth, py);
+      // Anfang hinter der Innenschale (0.13 tief): keine offenen Kabelenden zwischen den Gitterstaeben
+      const ctrl = [s0.p.clone().addScaledVector(s0.n, -(0.165 + 0.03 * rnd()))];
+      const C = conns[P.g];
+      ctrl.push(C.c.clone().addScaledVector(C.n, -0.11 + 0.02 * rnd()).addScaledVector(UPV, 0.1).addScaledVector(C.t, P.f * 0.05));
+      ctrl.push(P.ex.clone().addScaledVector(UPV, 0.07));
+      ctrl.push(P.ex.clone());
+      for (const y of ys) {
+        const pinch = pinchG.includes(P.g) ? Math.exp(-Math.pow((y - clampY) / 0.2, 2)) : 0;
+        const q = pathAt(P, y, pinch);
+        if (y <= ys[7]) q.z += (y <= ys[8] ? 0.07 : 0.025); // in den Schlitz hinein
+        ctrl.push(q);
+      }
+      const curve = new THREE.CatmullRomCurve3(ctrl, false, 'centripetal');
+      if (P.core) {
+        // Rillenschlauch: Radius moduliert entlang der Laenge
+        const n = hi ? 420 : 110;
+        const pts = curve.getSpacedPoints(n);
+        const L = curve.getLength();
+        const ribs = hi ? (t) => P.r * (1 + 0.16 * Math.pow(0.5 + 0.5 * Math.cos((t * L / 0.026) * 6.283), 2)) : () => P.r;
+        kits.hose.push(tube(pts, ribs, S(14, 8), (y) => headW(y)));
+        const p = curve.getPointAt(0.55); const d = curve.getTangentAt(0.55);
+        kits.chrome.push(prep(new THREE.CylinderGeometry(P.r * 1.45, P.r * 1.45, 0.05, S(16, 8), 1, false), headW(p.y), place(p, d)));
+      } else {
+        const pts = curve.getPoints(S(72, 38));
+        const kit = P.lit ? 'cable' : (P.i % 7 < 2 ? 'rubber' : 'hose');
+        kits[kit].push(tube(pts, () => P.r, P.r > 0.008 ? S(10, 7) : S(7, 5), (y) => headW(y)));
+      }
+      // Chromstecker an der Leiste (Huelse um den Austritt)
+      if (P.r > 0.0045 || hi) {
+        const L = Math.max(curve.getLength(), 1e-4);
+        const u = clamp((ctrl[0].distanceTo(ctrl[1]) + ctrl[1].distanceTo(ctrl[2]) + ctrl[2].distanceTo(ctrl[3])) / L, 0, 1);
+        const d = curve.getTangentAt(u);
+        kits.chrome.push(prep(new THREE.CylinderGeometry(P.r * 1.7 + 0.002, P.r * 1.7 + 0.002, 0.03, S(12, 8), 1, false), 1, place(P.ex.clone().addScaledVector(d, 0.006), d)));
+      }
+    }
+    // Schellen um die Gruppen 2 und 3 (Graphit mit Chrom-Kante)
+    for (const g of pinchG) {
+      const ps = plans.filter((P) => P.g === g).map((P) => pathAt(P, clampY, 1));
+      const c = ps.reduce((a, b) => a.add(b), V(0, 0, 0)).multiplyScalar(1 / ps.length);
+      let R = 0;
+      for (const p of ps) R = Math.max(R, Math.hypot(p.x - c.x, p.z - c.z));
+      const P0 = plans.find((P) => P.g === g);
+      const n0 = pathAt(P0, clampY - 0.05, 1).sub(pathAt(P0, clampY + 0.05, 1)).normalize();
+      const Rc = R + 0.016;
+      const gC = new THREE.CylinderGeometry(Rc, Rc, 0.032, S(28, 14), 1, true);
+      kits.graphite.push(prep(gC, headW(c.y), place(c, n0)));
+      const t2 = new THREE.TorusGeometry(Rc + 0.001, 0.0045, 6, S(28, 14)).rotateX(Math.PI / 2);
+      kits.chrome.push(prep(t2.translate(0, 0.016, 0), headW(c.y), place(c, n0)));
     }
     // Rahmen im Rueckenschlitz
     // gleiche Form wie lBackSlot (robot-layout.js): abgerundetes Rechteck, oben breiter
     const slot = [];
     const NS = 72;
-    const slotHalf = (y) => 0.31 - 0.07 * smoothstep(-1.46, -2.2, y);
     for (let j = 0; j < NS; j++) {
       const a = (j / NS) * Math.PI * 2;
       const cx = Math.cos(a); const sy = Math.sin(a);
@@ -667,8 +743,10 @@ diffuseColor.a = ca;
     const prof = [
       [0.052, 0.02], [0.058, 0.026], [0.066, 0.027], [R * 0.62, 0.027], [R * 0.62 + 0.006, 0.022], [R * 0.62 + 0.012, 0.021],
       [R - 0.03, 0.021], [R - 0.012, 0.015], [R - 0.002, 0.002], [R, -0.02], [R - 0.004, -0.06],
-    ].map(([x, y]) => new THREE.Vector2(x, y));
-    kits.ceramic.push(prep(new THREE.LatheGeometry(prof, S(72, 40)), 1, M));
+    ].map(([x, y]) => new THREE.Vector2(x, y)).reverse();
+    // Reihenfolge von aussen nach innen: so zeigen Normalen und Vorderseiten nach aussen (vorher wurde die Scheibe
+    // weggeschnitten und man sah durch das Loch der Ohrmuschel ins dunkle Kopfinnere: "schwarzer Aufkleber")
+    kits.ceramic.push(prep(new THREE.LatheGeometry(prof, S(128, 64)), 1, M));
     const gr = new THREE.CircleGeometry(0.054, S(40, 24)).rotateX(-Math.PI / 2).translate(0, 0.016, 0);
     kits.grille.push(prep(gr, 1, M));
     const ring = new THREE.TorusGeometry(0.056, 0.0055, 10, S(56, 28)).rotateX(Math.PI / 2).translate(0, 0.022, 0);
@@ -695,13 +773,15 @@ diffuseColor.a = ca;
   const mats = {
     chrome: makeMechMaterial(THREE, U, { color: chromeCol, metalness: 1, roughness: 0.2, envMap: env, envMapIntensity: 2.0 }, 'metal', 'chrome'),
     graphite: makeMechMaterial(THREE, U, { color: palette.steel.clone().multiplyScalar(0.55), metalness: 0.75, roughness: 0.36, envMap: env, envMapIntensity: 0.9, clearcoat: 0.4, clearcoatRoughness: 0.2 }, 'metal', 'graphite'),
+    lattice: makeMechMaterial(THREE, U, { color: palette.steel.clone().lerp(palette.mist, 0.25).multiplyScalar(0.75), metalness: 0.85, roughness: 0.3, envMap: env, envMapIntensity: 1.2, clearcoat: 0.3, clearcoatRoughness: 0.2 }, 'lattice', 'lattice'),
+    board: makeMechMaterial(THREE, U, { color: palette.ink.clone().lerp(palette.steel, 0.35).multiplyScalar(1.3), metalness: 0.35, roughness: 0.45, envMap: env, envMapIntensity: 0.8 }, 'board', 'board'),
     graphiteS: makeMechMaterial(THREE, U, { color: palette.steel.clone().multiplyScalar(0.55), metalness: 0.75, roughness: 0.36, envMap: env, envMapIntensity: 0.9 }, 'metal', 'graphite-scan'),
     housing: makeMechMaterial(THREE, U, { color: palette.steel.clone().multiplyScalar(0.7), metalness: 0.6, roughness: 0.42, envMap: env, envMapIntensity: 1.0 }, 'housing', 'housing'),
     rubber: makeMechMaterial(THREE, U, { color: palette.void.clone().multiplyScalar(2.6), metalness: 0, roughness: 0.38, envMap: env, envMapIntensity: 0.9, clearcoat: 0.7, clearcoatRoughness: 0.25 }, 'metal', 'rubber'),
     cable: makeMechMaterial(THREE, U, { color: palette.ink.clone().multiplyScalar(1.4), metalness: 0, roughness: 0.3, envMap: env, envMapIntensity: 0.8, clearcoat: 0.6, clearcoatRoughness: 0.2 }, 'cable'),
     gel: makeMechMaterial(THREE, U, { color: palette.signal.clone().multiplyScalar(0.2), metalness: 0, roughness: 0.2, envMap: env, envMapIntensity: 1.0, clearcoat: 0.6, clearcoatRoughness: 0.15 }, 'gel'),
     ceramic: makeMechMaterial(THREE, U, { color: o.shellCol, metalness: 0, roughness: 0.3, envMap: env, envMapIntensity: 1.0, clearcoat: 0.4, clearcoatRoughness: 0.2 }, 'metal', 'ceramic-scan'),
-    grille: makeMechMaterial(THREE, U, { color: palette.mist.clone().multiplyScalar(0.55), metalness: 0.8, roughness: 0.35, envMap: env, envMapIntensity: 0.9 }, 'grille', 'grille-scan'),
+    grille: makeMechMaterial(THREE, U, { color: palette.mist.clone().lerp(palette.white, 0.4).multiplyScalar(0.8), metalness: 0.9, roughness: 0.3, envMap: env, envMapIntensity: 1.3 }, 'grille', 'grille-scan'),
     chromeS: makeMechMaterial(THREE, U, { color: chromeCol, metalness: 1, roughness: 0.2, envMap: env, envMapIntensity: 2.0 }, 'metal', 'chrome-scan'),
     hose: makeMechMaterial(THREE, U, { color: palette.mist.clone().lerp(palette.white, 0.25).multiplyScalar(0.62), metalness: 0.45, roughness: 0.26, envMap: env, envMapIntensity: 1.25, clearcoat: 0.8, clearcoatRoughness: 0.16 }, 'metal', 'hose'),
     led: makeMechMaterial(THREE, U, { color: palette.void.clone(), metalness: 0, roughness: 0.3, envMap: env, envMapIntensity: 0.5 }, 'led', 'led-scan'),
@@ -778,7 +858,7 @@ diffuseColor.a = ca;
       // Blickrichtung (Ruhelage des Kopfs): Kamera vor dem Gesicht -> Augen folgen ihr, sonst geradeaus
       if (s.camPos) {
         _inv.copy(headMat).invert();
-        _cam.copy(s.camPos).applyMatrix4(_inv);
+        _cam.copy(s.gazeAt || s.camPos).applyMatrix4(_inv);
         const kk = 1 - Math.exp(-dt * 6);
         for (const E of eyes) {
           _gd.copy(_cam).sub(E.m.position).normalize();

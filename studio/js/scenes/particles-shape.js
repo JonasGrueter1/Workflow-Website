@@ -6,7 +6,8 @@
 import { bustLevel1 } from './robot-mesh.js';
 import { LAYOUT } from './robot-layout.js';
 
-export const KIND = Object.freeze({ surface: 0, line: 1, eye: 2, dust: 3, far: 4 });
+// cable (1.25) zaehlt im Shader als Linie, fliesst im Hero aber langsam nach hinten weg (Kabel aus dem Hinterkopf)
+export const KIND = Object.freeze({ surface: 0, line: 1, cable: 1.25, eye: 2, dust: 3, far: 4 });
 
 export function mulberry32(seed) {
   let a = seed >>> 0;
@@ -161,7 +162,7 @@ export function sampleRobot(THREE, A, count, rnd) {
     || (y > -0.66 && z < 0.1 && skullWin(Math.abs(x), y, z) < 0);
   const headS = makeSurface(BUST, (x, y, z) => y > -1.1 && !neckOpen(x, y, z));
   const torsoS = makeSurface(BUST, (x, y, z) => y <= -1.1 && !neckOpen(x, y, z));
-  const counts = { head: 0.27, headLines: 0.07, eyes: 0.012, ears: 0.016, neck: 0.07, torso: 0.46, torsoLines: 0.045, cables: 0.03 };
+  const counts = { head: 0.25, headLines: 0.095, eyes: 0.004, ears: 0.016, neck: 0.065, torso: 0.42, torsoLines: 0.066, cables: 0.06 };
   const N = {};
   let sum = 0;
   for (const [k, v] of Object.entries(counts)) { N[k] = Math.floor(count * v); sum += N[k]; }
@@ -178,11 +179,11 @@ export function sampleRobot(THREE, A, count, rnd) {
   for (let i = 0; i < N.eyes; i++) {
     const e = i % 2 ? lm.eyeL : lm.eyeR;
     const a = rnd() * Math.PI * 2;
-    // Iris-Ring als feine Linie, nur die Pupille leuchtet (sonst drei grelle Flecken mit dem Funken im Kopf)
-    const ringPt = rnd() < 0.8;
-    const r = ringPt ? 0.056 + (rnd() - 0.5) * 0.006 : Math.sqrt(rnd()) * 0.016;
+    // Iris nur als feine Flaeche (keine helle Ringlinie: sonst wirken die Augen wie eine Taucherbrille), Pupille ruhig
+    const ringPt = rnd() < 0.6;
+    const r = ringPt ? 0.02 + Math.sqrt(rnd()) * 0.04 : Math.sqrt(rnd()) * 0.014;
     const z = Math.sqrt(Math.max(0, 0.128 * 0.128 - r * r));
-    put([e[0] + Math.cos(a) * r, e[1] - 0.01 + Math.sin(a) * r, e[2] - 0.004 + z], [0, 0, 1], ringPt ? KIND.line : KIND.eye, 1);
+    put([e[0] + Math.cos(a) * r, e[1] - 0.01 + Math.sin(a) * r, e[2] - 0.004 + z], [0, 0, 1], ringPt ? KIND.surface : KIND.eye, 1);
   }
   // Sensormodule an den Ohren: Chrom-Ring und Rand
   const ears = lm.ears || [];
@@ -221,13 +222,22 @@ export function sampleRobot(THREE, A, count, rnd) {
     if (torsoLine(o.p[0], o.p[1], o.p[2]) > 0.008) continue;
     put(o.p, o.n, KIND.line, o.h); i++;
   }
-  // Kabelbuendel: aus dem Hinterkopf ueber den Nacken in den Ruecken
+  // Kabelfaecher wie in robot-mech.js: vier Steckerleisten am Hinterhaupt (y -0.47), von dort nach hinten und unten
+  // aufgefaechert (Durchhang), unten im Schlitz zwischen den Schulterblaettern wieder zusammen
+  const CX = [-0.27, -0.09, 0.09, 0.27];
+  const SAG = [0.17, 0.3, 0.32, 0.19];
+  const neckBack = (y) => -0.92 + 0.3 * smoothstep(-0.3, -0.8, y) - 0.05 * smoothstep(-1.2, -1.8, y);
   for (let i = 0; i < N.cables; i++) {
-    const u = rnd() * 2 - 1; const t = rnd();
-    const y = -0.3 - 1.5 * t;
-    const back = -0.92 + 0.3 * smoothstep(-0.3, -0.8, y) - 0.05 * smoothstep(-1.2, -1.8, y);
-    const p = [u * (0.3 - 0.18 * t), y, back - 0.06 * Math.sin(Math.PI * t) * (0.5 + 0.5 * rnd())];
-    put(p, [0, 0, -1], KIND.line, y > -0.62 ? 1 : neckW(y));
+    const g = i % 4; const f = rnd() * 2 - 1; const t = Math.pow(rnd(), 0.85);
+    const y = -0.47 + (-1.95 + 0.47) * t;
+    const xFan = CX[g] * 1.75 + f * (0.06 + 0.05 * Math.abs(CX[g]) / 0.27);
+    let x = CX[g] + f * 0.06 + (xFan - CX[g] - f * 0.06) * smoothstep(0, 0.42, t);
+    x += (Math.max(-0.22, Math.min(0.22, xFan * 0.5)) - x) * smoothstep(0.45, 1, t);
+    const sag = SAG[g] * (0.4 + 0.85 * rnd());
+    const z0 = -0.84;
+    const skin = neckBack(y);
+    const z = Math.min(z0 + (skin - 0.02 - z0) * smoothstep(0.3, 0.95, t) - sag * Math.pow(Math.sin(Math.PI * Math.pow(Math.min(1, t * 1.06), 0.72)), 0.9), skin - 0.02);
+    put([x, y, z], [Math.sign(x) * 0.3, 0.2, -1], KIND.cable, y > -0.62 ? 1 : neckW(y));
   }
   while (n < count) { headS(rnd, o); put(o.p, o.n, KIND.surface, o.h); }
   return out;

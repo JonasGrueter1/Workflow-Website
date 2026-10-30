@@ -90,7 +90,7 @@
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#content">Direkt zu den Inhalten</a>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
 
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader__meta">
@@ -135,13 +135,14 @@
   </header>
 
   <div class="story-bar" aria-hidden="true"><i></i></div>
+  <a class="story-skip" href="#leistungen">Animation überspringen</a>
   <aside class="hud" aria-hidden="true">
     <span class="hud__index"><span id="hud-index">00</span><small>/06</small></span>
     <span class="hud__track"><i></i><span class="hud__ticks"></span></span>
     <span class="hud__label" id="hud-label">Start</span>
   </aside>
 
-  <main id="inhalt">
+  <main id="inhalt" tabindex="-1">
     <!-- Immersive Strecke: je Abschnitt ein Beat der 3D-Geschichte (Hoehe kommt aus js/config.js) -->
     <div class="story" id="story">
       <section class="chapter chapter--intro" data-scene="intro" id="top" aria-labelledby="t-intro">
@@ -167,7 +168,7 @@
           <div class="chapter__text">
             <p class="kicker" data-anim><span>01</span> Partner</p>
             <h2 class="headline" id="t-robot" data-split>Modern gebaut. Persönlich betreut.</h2>
-            <p data-anim>Sie arbeiten direkt mit mir, ohne Umwege über eine grosse Agentur. Schnell, persönlich und mit den neusten KI-Werkzeugen.</p>
+            <p data-anim>Sie arbeiten direkt mit mir, ohne Umwege über eine grosse Agentur. Unkompliziert, persönlich und mit den neusten KI-Werkzeugen.</p>
             <p class="story-tags" data-anim>Direkter Kontakt · Fixpreis · Kostenloser Entwurf</p>
           </div>
         </div>
@@ -233,8 +234,8 @@
         <div class="chapter__panel">
           <div class="chapter__text">
             <p class="kicker" data-anim><span>06</span> Kontakt</p>
-            <h2 class="headline headline--xl" id="t-outro" data-split>Bereit, wenn Sie es sind.</h2>
-            <p data-anim>Erzählen Sie mir von Ihrem Betrieb. Den ersten Entwurf Ihrer neuen Website erhalten Sie kostenlos und unverbindlich.</p>
+            <h2 class="headline headline--xl" id="t-outro" data-split>Erzählen Sie mir von Ihrem Betrieb.</h2>
+            <p data-anim>Den ersten Entwurf Ihrer neuen Website erhalten Sie kostenlos und unverbindlich. Ich melde mich persönlich bei Ihnen.</p>
             <div class="actions" data-anim>
               <a class="btn" href="#kontakt">Projekt besprechen <span class="btn__arrow" aria-hidden="true"></span></a>
               <a class="btn btn--ghost" href="#leistungen">Leistungen ansehen</a>
@@ -492,13 +493,13 @@
                 <li><span class="pipeline__no mono">06</span><span>Überwacht jeden Abend automatisch die Antworten.</span></li>
               </ol>
             </div>
-            <aside class="case__result" data-reveal aria-label="Ergebnis">
+            <div class="case__result" data-reveal>
               <p class="case__label mono">Ergebnis</p>
               <p class="case__big">Die erste positive Antwort eines Betriebs kam weniger als drei Stunden nach dem Versand.</p>
               <p class="case__close">In die Mails kommt nur, was belegt ist, und verschickt wird erst nach meiner Freigabe.</p>
               <p class="case__close">Solche Abläufe baue ich auch für Ihren Betrieb, abgestimmt auf Ihre Arbeit und Ihre Programme.</p>
               <a class="btn btn--ghost" href="#kontakt" data-thema="KI für meinen Betrieb">Projekt besprechen</a>
-            </aside>
+            </div>
           </div>
         </div>
       </section>
@@ -567,7 +568,7 @@
           <div class="prose panel" data-reveal>
             <p>Ich bin Jonas Grüter, 16 Jahre alt, und wohne in der Region Sempach. Ich mache eine KV-Lehre bei einer grossen Versicherung und baue daneben Websites und KI-Lösungen für Unternehmen.</p>
             <p>In der Lehre sehe ich jeden Tag, wie ein Unternehmen arbeitet: Abläufe, Kunden, Zahlen. Dieses Verständnis bringe ich in jedes Projekt mit.</p>
-            <p>Ich arbeite mit den modernsten KI-Werkzeugen, für mich sind sie das normale Handwerkszeug. Darum bin ich schnell, und Sie haben trotzdem immer direkt mit mir zu tun.</p>
+            <p>Ich arbeite mit den modernsten KI-Werkzeugen, für mich sind sie das normale Handwerkszeug. Den ersten Entwurf sehen Sie darum rasch. Für die fertige Website plane ich realistisch neben der Lehre, und Sie haben immer direkt mit mir zu tun.</p>
             <p>Ehrlich gesagt: Ich bin jung. Dafür bringe ich einen frischen Blick, viel Einsatz und Werkzeuge mit, die es vor wenigen Jahren noch nicht gab.</p>
           </div>
         </div>
@@ -669,7 +670,7 @@
                 <p class="field__error" id="e-name" hidden></p>
               </div>
               <div class="field">
-                <label for="f-firma">Firma</label>
+                <label for="f-firma">Firma (freiwillig)</label>
                 <input id="f-firma" name="firma" type="text" autocomplete="organization" placeholder="Name Ihres Betriebs">
               </div>
             </div>
@@ -681,7 +682,8 @@
               </div>
               <div class="field">
                 <label for="f-tel">Telefon (freiwillig)</label>
-                <input id="f-tel" name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder="Für einen kurzen Rückruf">
+                <input id="f-tel" name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder="Für einen kurzen Rückruf" aria-describedby="h-tel">
+                <p class="field__hint" id="h-tel">Lieber telefonieren? Hinterlassen Sie Ihre Nummer, ich rufe Sie zurück.</p>
               </div>
             </div>
             <div class="field">
@@ -703,7 +705,7 @@
             <input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
             <button class="btn btn--wide" type="submit">Anfrage senden <span class="btn__arrow" aria-hidden="true"></span></button>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            <p class="form__privacy">Ihre Angaben verwende ich nur, um Ihre Anfrage zu beantworten. Das Formular wird über den Dienst Web3Forms an mich weitergeleitet.</p>
+            <p class="form__privacy">Ihre Angaben verwende ich nur, um Ihre Anfrage zu beantworten. Das Formular wird über den Dienst Web3Forms an mich weitergeleitet. Mehr dazu in der <a class="link" href="datenschutz.html">Datenschutzerklärung</a>.</p>
           </form>
         </div>
       </section>
@@ -718,7 +720,8 @@
       </div>
       <div class="footer__col footer__col--end">
         <p class="mono footer__meta">© <span id="year">2026</span> Jonas Grüter · Version 3, Vorschau</p>
-        <p class="footer__small">Gebaut aus eigenem Code. Kein Tracking, keine Cookies.</p>
+        <p class="footer__small">Gebaut aus eigenem Code. Keine Cookies, keine Tracking-Dienste.</p>
+        <p class="footer__legal"><a class="link" href="impressum.html">Impressum</a><a class="link" href="datenschutz.html">Datenschutz</a></p>
         <a class="footer__top link" href="#top">Nach oben</a>
       </div>
     </div>

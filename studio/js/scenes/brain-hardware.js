@@ -522,9 +522,10 @@ export function buildHardware(o) {
       const surf = probe.hitAlong(top.x, top.y, top.z, d.x, d.y, d.z, 0.25, false);
       const len = Math.min(0.11, surf > 0 ? surf + (w === 2 ? 0.03 : 0.004) : 0.05);
       const bottom = top.clone().addScaledVector(d, Math.max(0.02, len));
-      tube([top, top.clone().lerp(bottom, 0.5), bottom], 0.0036, mat(cAu.clone().multiplyScalar(0.75), 1, 0.3), { seg: 5 });
+      // Elektroden-Stifte in Chrom (vorher Gold: wirkten im Bloom wie orange Stecknadeln)
+      tube([top, top.clone().lerp(bottom, 0.5), bottom], 0.0036, mat(cAl.clone(), 1, 0.22), { seg: 5 });
       cyl(top.clone().addScaledVector(d, 0.01), d, 0.007, 0.007, 0.01, RB, 10);
-      B.geo(new THREE.IcosahedronGeometry(0.0072, 1), m4(bottom, new THREE.Quaternion()), AU);
+      B.geo(new THREE.IcosahedronGeometry(0.0062, 1), m4(bottom, new THREE.Quaternion()), mat(cAl.clone(), 1, 0.18));
       glow(bottom.clone().addScaledVector(N, 0.006), 0.045, ice, 1.0, 1, 12 + w);
       info.wires.push(bottom.clone());
     });
@@ -832,8 +833,7 @@ export function buildHardware(o) {
         B.geo(new THREE.LatheGeometry(ring, S(48, 24)), m4(fc, qAlign(Y, Nb)), TIP);
         const FAN = mat(cGr.clone().lerp(cTi, 0.15), 0, 0.45, KIND.FAN);
         cyl(fc.clone().addScaledVector(Nb, 0.012), Nb, 0.022, 0.022, 0.016, FAN, 24);
-        cyl(fc.clone().addScaledVector(Nb, 0.0205), Nb, 0.006, 0.006, 0.0012, mat(ember.clone(), 0, 0.4, KIND.EMBER), 16);
-        glow(fc.clone().addScaledVector(Nb, 0.024), 0.03, ember, 1.0, 6, 0);
+        cyl(fc.clone().addScaledVector(Nb, 0.0205), Nb, 0.006, 0.006, 0.0012, AL, 16);
         const blade = new THREE.Shape();
         const r0 = 0.023; const r1 = 0.063;
         blade.moveTo(r0, 0);
@@ -982,7 +982,7 @@ export function buildHardware(o) {
     const d = V(dd[0] * R.x, dd[1] * R.y, dd[2] * R.z).normalize();
     const { p, n } = nrmAt(d);
     const ec = p.clone().addScaledVector(n, 0.004);
-    cyl(ec, n, 0.021, 0.021, 0.006, (g) => (g === 1 ? mat(cAu, 1, 0.3, KIND.ELEC, i) : AU), 24, discUV);
+    cyl(ec, n, 0.021, 0.021, 0.006, (g) => (g === 1 ? mat(cAl, 1, 0.25, KIND.ELEC, i) : AL), 24, discUV);
     glow(ec.clone().addScaledVector(n, 0.008), 0.065, sig, 1.25, 1, i);
     info.elec.push(p.clone());
     // Kabel: vom Anker in weichem Bogen zur Hirnoberflaeche und darauf entlang bis zur Elektrode
@@ -1230,6 +1230,9 @@ export function createHardware(ctx, data, o) {
       // Kapitel Kabel (ohne Kopf): leichte Kontur, damit der KI-Kern vor dem dunklen Raum lesbar bleibt
       U.uRimK.value = 0.45 * smoothstep(0.0, 0.2, cb.p);
       U.uHwAlpha.value = st.weight;
+      // Beim Eintauchen blendet nahe Hardware frueher aus (weich statt Modellbausatz direkt vor der Linse)
+      const dive = smoothstep(0.35, 0.5, br.p) * (1 - smoothstep(0.85, 0.97, br.p));
+      U.uHwNear.value.set(0.07 + 0.13 * dive, 0.26 + 0.42 * dive);
       U.uPcbOn.value = 0.25 + 0.75 * smoothstep(0.45, 0.95, zm.p);
       U.uSock.value = inCables ? 1 : smoothstep(0.55, 0.85, br.p);
       U.uRun.value = 0.4 + 0.6 * smoothstep(0.5, 1, zm.p);

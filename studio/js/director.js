@@ -402,7 +402,9 @@ export class Director {
       if (!el) continue;
       const s = this.beats[b.name];
       const p = s.tp;
-      const t = b.text;
+      // Hochformat: Panels stehen fix unten (style.css). Eigene Fenster (BEATS[].textM), sonst bleibt der Text stehen,
+      // bis kurz vor dem naechsten Panel (kaum Bilder ohne Satz auf dem Handy)
+      const t = this.portrait && b.textM ? b.textM : b.text;
       let fin;
       let fout;
       if (t) {
@@ -411,7 +413,7 @@ export class Director {
       } else {
         fin = i === 0 ? 1 : smoothstep(0.02, 0.12, p);
         // Ausblenden erst, waehrend das Panel nach oben wegscrollt (rund 40 vh): kurze Strecken ohne Text
-        fout = i === last ? 1 : 1 - smoothstep(s.pinOut - 0.06, s.pinOut + 40 / b.len, p);
+        fout = i === last ? 1 : this.portrait ? 1 - smoothstep(0.84, 0.97, p) : 1 - smoothstep(s.pinOut - 0.06, s.pinOut + 40 / b.len, p);
       }
       const o = Math.round(fin * fout * 1000) / 1000;
       shiftT += (this._clear[b.name] || 0) * o;
@@ -441,7 +443,8 @@ export class Director {
     for (let i = 0; i < BEATS.length; i++) if (BEATS[i].name === name) def = BEATS[i];
     if (!r || !def || o <= 0.001) { sc.a = 0; return; }
     const s = this.beats[name];
-    const up = Math.max(0, p - s.pinOut) * r.sec;
+    // Hochformat: Panels stehen fix (ausser Ausklang), die Zone wandert nicht mit
+    const up = this.portrait && name !== 'outro' ? 0 : Math.max(0, p - s.pinOut) * r.sec;
     const padX = r.w * 0.08;
     const padY = r.h * 0.12;
     sc.x = (r.x + r.w / 2) / r.W;

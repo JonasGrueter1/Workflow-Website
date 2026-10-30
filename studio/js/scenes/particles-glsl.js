@@ -191,13 +191,17 @@ void main() {
     tgt += nrm * (0.005 * sin(t * 1.7 + aRand.y * 40.0));
     // Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Kopf und Augen dichter, Schultern lockerer),
     // atmet mit dem Rumpf und folgt mit dem Kopf der Maus. Beim Scrollen verdichtet sie sich zum Hologramm.
-    float share = kind > 1.5 ? 0.92 : (aHw > 0.5 ? 0.72 : 0.62 * smoothstep(-3.3, -2.7, aTarget.y));
+    // Linien (Fugen, Plattenkanten, Kabel) sind im Hero alle da: sie machen die Android-Form lesbar
+    float share = kind > 1.5 ? 0.92 : (kind > 0.5 ? 1.0 : (aHw > 0.5 ? 0.72 : 0.62 * smoothstep(-3.3, -2.7, aTarget.y)));
     pre = step(aInfo.z, share) * uHint;
     if (pre > 0.0) {
       vec3 jd = normalize(vec3(sin(aRand.y * 91.7), cos(aRand.y * 37.3 + aRand.x * 5.0), sin(aRand.x * 53.1) + 0.01));
       float rad = (0.012 + 0.1 * aRand.x * aRand.x * aRand.x) * (kind > 1.5 ? 0.3 : 1.0);
       vec3 dr = vec3(sin(t * 0.31 + aRand.y * TAU), sin(t * 0.23 + aRand.x * 9.0), cos(t * 0.27 + aRand.y * 5.0)) * 0.035;
-      p = mix(p, tgt + jd * rad + nrm * (0.015 + 0.045 * aRand.w) + dr, pre);
+      // Kabel: Lichtpunkte fliessen langsam vom Hinterkopf nach hinten unten weg (wie die Kabel in Referenz 1)
+      vec3 flow = vec3(0.0);
+      if (abs(kind - 1.25) < 0.1) { float ph = fract(t * 0.06 + aRand.y); flow = vec3(sign(tgt.x) * 0.08, -0.32, -0.62) * ph * ph; }
+      p = mix(p, tgt + flow + jd * rad * (abs(kind - 1.25) < 0.1 ? 0.35 : 1.0) + nrm * (0.015 + 0.045 * aRand.w) + dr, pre);
     }
   }
   vec3 pos = p;
@@ -249,14 +253,23 @@ void main() {
     float rimP = 1.0 - abs(ndp);
     float backP = ndp < 0.0 ? 0.35 : 1.0;
     float twP = 0.75 + 0.25 * sin(t * (0.7 + aRand.x) + aRand.y * 20.0);
-    float bp = (0.34 + 2.6 * rimP * rimP * rimP) * backP * twP * (aHw > 0.5 ? 1.0 : 1.3);
-    vec3 pc = mix(uColA, uColB, 0.35 + 0.4 * rimP);
+    // Kantenlicht von rechts hinten: zeichnet Schaedel, Wange und Schulter als helle Kontur
+    float rl = max(dot(nrm, normalize(vec3(0.75, 0.35, -0.55))), 0.0);
+    float bp = (0.24 + 2.4 * rimP * rimP * rimP) * backP * twP * (aHw > 0.5 ? 1.0 : 1.25) * (1.0 + 1.6 * rl * rl);
+    vec3 pc = mix(mix(uColA, uColB, 0.35 + 0.4 * rimP), uColW, 0.3 * rl);
     float ps = uSize * (0.5 + 0.35 * aRand.x);
     if (kind > 0.5 && kind < 1.5) {
-      // Fugen der Gesichtsplatten, Augenringe, Plattenkanten am Rumpf: zeichnen schon im Hero die Bueste B nach
-      bp = (0.5 + 0.8 * rimP) * backP * twP;
-      pc = mix(uColB, uColW, 0.2);
-      ps = uSize * 0.42;
+      // Fugen der Gesichtsplatten, Plattenkanten am Rumpf, Rand der Hinterkopf-Oeffnung: zeichnen schon im Hero die
+      // Bueste B nach (heller als die Flaechen, damit die Android-Form im ersten Bild lesbar ist)
+      bp = (1.35 + 1.1 * rimP) * backP * twP * (1.0 + 0.8 * rl);
+      pc = mix(uColB, uColW, 0.35);
+      ps = uSize * 0.48;
+      if (abs(kind - 1.25) < 0.1) {
+        float ph = fract(t * 0.06 + aRand.y);
+        bp = (0.7 + 0.6 * aRand.w) * sin(PI * ph) * twP;
+        pc = mix(uColB, uColW, 0.15);
+        ps = uSize * 0.4;
+      }
     }
     if (kind > 1.5) {
       // Pupillen (Augen der Android-Bueste bei x +-0.30, y -0.01)
@@ -289,7 +302,7 @@ void main() {
       float eyes = exp(-pow((ex - 0.3) / 0.11, 2.0)) * exp(-pow((tgt.y + 0.01) / 0.07, 2.0));
       float on = smoothstep(0.82, 0.97, uForm);
       float breathe = 0.85 + 0.15 * sin(t * 1.6);
-      fb = mix(0.35, (0.85 + 0.67 * eyes) * breathe, on) * back;
+      fb = mix(0.3, (0.5 + 0.4 * eyes) * breathe, on) * back;
       fc = mix(uColA, uColB, eyes * 0.34);
       fsize = uSize * (0.5 + 0.12 * eyes);
     }

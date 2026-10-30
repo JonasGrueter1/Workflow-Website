@@ -1,6 +1,6 @@
 // Szene "robot": eigene Studio-Umgebung fuer die Spiegelungen (nur Materialien dieser Szene).
-// Weiche Leuchtflaechen wie im Fotostudio: grosse Decke (Scheitel-Glanz), Fuehrungsflaeche vorne links,
-// Aufheller vorne rechts, zwei schmale Streifen hinten (Kantenlicht in Klarlack und Chrom), dunkler Boden.
+// Weiche Leuchtflaechen wie im Fotostudio: grosse Decke (Scheitel-Glanz), Fuehrungsflaeche vorne rechts (Seite der
+// Kamera), Aufheller vorne links, zwei schmale, harte Streifen (lange Glanzlinien im Klarlack), Kantenlicht hinten.
 // Farben nur aus der Palette (white, ice, signal, ember), Helligkeit ueber multiplyScalar.
 export function buildStudioEnv(THREE, renderer, palette) {
   const scene = new THREE.Scene();
@@ -62,18 +62,21 @@ export function buildStudioEnv(THREE, renderer, palette) {
   const white = palette.white.clone();
   const cool = palette.white.clone().lerp(palette.ice, 0.3);
   const coolDeep = palette.white.clone().lerp(palette.signal, 0.22);
-  // Fuehrungslicht: grosse Softbox vorne links oben (neutral, kein Ember auf dem Weiss)
-  panel(8, 11, white.clone().multiplyScalar(5.4), [-9.5, 4.5, 4.0], 0.45);
-  // Aufheller vorne rechts, schwach und gross
-  panel(9, 10, white.clone().multiplyScalar(0.22), [8.5, 0.5, 6.5], 0.6);
-  // Oberlicht, klein (Scheitel-Glanz)
-  panel(11, 11, white.clone().multiplyScalar(0.8), [0, 12, 1], 0.7);
-  // Kantenlicht: zwei hohe Streifen hinten links und rechts, dazu ein Balken hinten oben
+  // Die Kamera der Seite steht fast immer rechts vorne (+x): dort sitzt die Fuehrungsflaeche, damit die Schale im Bild
+  // weiss und hell wirkt (frueher lag die Fuehrung links, die Seite zur Kamera blieb grau). Links vorne ein Aufheller.
+  panel(8, 10, white.clone().multiplyScalar(4.3), [8.5, 4.2, 7.5], 0.4);
+  panel(8, 11, white.clone().multiplyScalar(3.4), [-9.5, 4.5, 4.0], 0.45);
+  // Oberlicht (Scheitel-Glanz)
+  panel(11, 11, white.clone().multiplyScalar(0.85), [0, 12, 1], 0.7);
+  // Lange Glanzlinien: zwei schmale, scharfkantige Streifen (oben links und hinten rechts). Sie zeichnen im Klarlack
+  // klare Linien ueber Schaedel, Wangenknochen und Schulter.
+  panel(1.1, 17, white.clone().multiplyScalar(14.0), [-6.5, 6.5, 3.5], 0.08);
+  panel(1.2, 16, coolDeep.clone().multiplyScalar(11.0), [8.0, 3.0, -6.0], 0.08);
+  // Kantenlicht hinten links und Balken hinten oben
   panel(2.4, 14, cool.clone().multiplyScalar(4.4), [-8.5, 3, -6.5], 0.3);
-  panel(2.4, 14, coolDeep.clone().multiplyScalar(4.0), [8.5, 3, -6.5], 0.3);
   panel(14, 2.6, cool.clone().multiplyScalar(3.0), [0, 8.5, -7.5], 0.4);
   // Glanzlinie oben vorne (Stirn, Chrom)
-  panel(10, 1.8, white.clone().multiplyScalar(1.0), [1.5, 7.5, 9], 0.6);
+  panel(10, 1.4, white.clone().multiplyScalar(2.2), [1.5, 7.5, 9], 0.2);
   // Boden: fast schwarz, leicht kuehl
   panel(24, 24, palette.steel.clone().multiplyScalar(0.12), [0, -12, 0], 0.7);
 
