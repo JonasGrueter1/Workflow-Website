@@ -751,13 +751,15 @@ diffuseColor.a = ca;
   const eyelets = mkInst(eyeletGeo, mats.chrome, pistons.length * 2);
   const _t = V(0, 0, 0); const _d = V(0, 0, 0); const _s = V(1, 1, 1); const _m = new THREE.Matrix4();
 
+  const pistonMeshes = [cyl, caps, rods, eyelets]; // einmal, nicht pro Frame
   return {
     group,
     update(time, dt, s) {
       head.matrix.copy(headMat);
       head.matrixWorldNeedsUpdate = true;
       EU.uIris.value = s.weight * (s.irisBoost ?? 1);
-      pistons.forEach((P, i) => {
+      for (let i = 0; i < pistons.length; i++) {
+        const P = pistons[i];
         _t.copy(P.top).applyMatrix4(headMat);
         _d.copy(_t).sub(P.bot).normalize();
         qt.setFromUnitVectors(up, _d);
@@ -770,8 +772,8 @@ diffuseColor.a = ca;
         eyelets.setMatrixAt(i * 2 + 1, _m);
         _m.compose(_d.copy(P.bot).addScaledVector(_t.sub(P.bot).normalize(), 0.44), qt.setFromUnitVectors(up, _t), _s);
         caps.setMatrixAt(i * 2 + 1, _m);
-      });
-      for (const im of [cyl, caps, rods, eyelets]) im.instanceMatrix.needsUpdate = true;
+      }
+      for (let i = 0; i < pistonMeshes.length; i++) pistonMeshes[i].instanceMatrix.needsUpdate = true;
       const vis = s.scan.dissolve < 0.999 && s.buildLine > -0.6;
       // Blickrichtung (Ruhelage des Kopfs): Kamera vor dem Gesicht -> Augen folgen ihr, sonst geradeaus
       if (s.camPos) {

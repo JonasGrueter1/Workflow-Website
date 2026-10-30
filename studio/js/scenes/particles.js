@@ -8,16 +8,15 @@
 //   Die Zielpunkte liegen auf der Android-Bueste der Szene robot (particles-shape.js, Netz aus robot-mesh.js).
 // - Uebergabe an die Szene "robot": erscheint ihr Hologramm, treten die fertigen Partikel zurueck (nur Funkeln);
 //   an ihrer Abtastebene leuchten die Partikel auf und gehen darunter in die Schale ueber.
-// - Dahinter ein ruhiger Hintergrund: Verlaufs-Nebel (vorab gerechnete Textur) und ferne, unscharfe Lichter.
+// - Dahinter ferne, unscharfe Lichter. Den Raum selbst (Nebel, Licht) zeichnet backdrop.js (Farbwelt intro).
 //
 // Alles ist eine reine Funktion von (Zeit, Scroll): rueckwaerts scrollen setzt den Roboter wieder in Partikel um.
 // Pro Frame werden nur Uniforms gesetzt (keine Schleifen ueber Partikel, keine Allokationen).
-// Hilfsdateien: particles-shape.js (Zielpunkte), particles-glsl.js (Shader), particles-nebula.js (Nebel-Textur).
-// Qualitaet: Mengen x tier.particles, Stufe low mit einfacherem Curl-Rauschen und kleinerer Nebel-Textur.
+// Hilfsdateien: particles-shape.js (Zielpunkte), particles-glsl.js (Shader).
+// Qualitaet: Mengen x tier.particles, Stufe low mit einfacherem Curl-Rauschen.
 
 import { sampleRobot, mulberry32, KIND, HEAD_PIVOT } from './particles-shape.js';
-import { makeNebulaTexture } from './particles-nebula.js';
-import { POINTS_VERT, POINTS_FRAG, BG_VERT, BG_FRAG, BEAM_VERT, BEAM_FRAG } from './particles-glsl.js';
+import { POINTS_VERT, POINTS_FRAG, BEAM_VERT, BEAM_FRAG } from './particles-glsl.js';
 
 // Mengen bei Stufe high (werden mit tier.particles multipliziert)
 // Drei Ebenen: wenige grosse unscharfe Punkte vorne (fore), scharfe Mitte (form), feiner Staub (dust) und ferne
@@ -153,33 +152,6 @@ export async function create(ctx) {
   points.renderOrder = 2;
   group.add(points);
 
-  /* ---------------------------------------------------- Hintergrund-Nebel */
-  const segs = quality === 'high' ? [48, 24] : quality === 'medium' ? [32, 16] : [24, 12];
-  const bgGeo = new THREE.SphereGeometry(140, segs[0], segs[1]);
-  const nebula = quality === 'high' ? makeNebulaTexture(THREE, 320, 160) : makeNebulaTexture(THREE, 224, 112);
-  const bgUniforms = {
-    uNeb: { value: nebula },
-    uAlpha: { value: 0 },
-    uVoid: { value: palette.void.clone() },
-    uDeep: { value: palette.deep.clone().multiplyScalar(3.6) },
-    uGlow: { value: palette.signal.clone().multiplyScalar(0.06) },
-    uWarm: { value: palette.emberDeep.clone().multiplyScalar(0.028) },
-    uGlowDir: { value: new THREE.Vector3(0.12, 0.02, -1).normalize() },
-    uWarmDir: { value: new THREE.Vector3(0.9, -0.35, -0.55).normalize() },
-  };
-  const bgMat = new THREE.ShaderMaterial({
-    uniforms: bgUniforms,
-    vertexShader: BG_VERT,
-    fragmentShader: BG_FRAG,
-    side: THREE.BackSide,
-    depthWrite: false,
-    depthTest: false,
-  });
-  const bg = new THREE.Mesh(bgGeo, bgMat);
-  bg.frustumCulled = false;
-  bg.renderOrder = -100;
-  group.add(bg);
-
   /* ------------------------------------------------------------ Lichtkegel */
   const beamGeo = new THREE.CylinderGeometry(BEAM.r0, BEAM.r0 + BEAM.slope * BEAM.length, BEAM.length,
     quality === 'low' ? 32 : 64, 1, true);
@@ -213,7 +185,7 @@ export async function create(ctx) {
     uI: { value: 0 },
     uSize: { value: 1.0 },
     uFog: { value: 0.035 },
-    uCore: { value: palette.ice.clone().multiplyScalar(3.0) },
+    uCore: { value: palette.ice.clone().multiplyScalar(2.4) }, // ruhiger Kern, kein Stern auf der Stirn
     uHalo: { value: palette.signal.clone().multiplyScalar(0.6) },
     uWarm: { value: palette.ember.clone().multiplyScalar(1.3) },
   };
@@ -313,7 +285,7 @@ export async function create(ctx) {
       u.uForm.value = form;
       u.uGather.value = gather;
       u.uBuildY.value = buildY;
-      u.uTitle.value = 1 - smoothstep(0.45, 0.7, intro.p); // solange der Hero-Text steht (BEATS intro.text)
+      u.uTitle.value = 1 - smoothstep(0.28, 0.5, intro.p); // solange der Hero-Text steht (BEATS intro.text)
       // Ist der feste Roboter geladen und sichtbar, uebernimmt sein Hologramm (sonst bleibt der Partikel-Roboter hell)
       if (!robotGroup && time >= robotLookup) {
         robotLookup = time + 1;
@@ -324,7 +296,7 @@ export async function create(ctx) {
       u.uHolo.value = robotOn ? smoothstep(0.05, 0.22, rb.p) : 0;
       u.uIgnite.value = ignite;
       u.uHint.value = ignite;
-      coreUniforms.uI.value = ignite * weight * (1 - smoothstep(0.04, 0.3, rb.p)) * (0.85 + 0.15 * (1 - gather));
+      coreUniforms.uI.value = ignite * weight * (1 - smoothstep(0.0, 0.22, rb.p)) * (0.35 + 0.65 * (1 - gather));
       coreUniforms.uFog.value = scene.fog ? scene.fog.density : 0.035;
       core.visible = coreUniforms.uI.value > 0.002;
       u.uAlpha.value = weight;
@@ -353,8 +325,6 @@ export async function create(ctx) {
       u.uBeam.value = ignite * (0.65 + 0.35 * gather) * (1 - build);
       beamUniforms.uIntensity.value = 0.075 * ignite * weight * (0.7 + 0.3 * gather) * (1 - 0.8 * build);
       beamUniforms.uFog.value = u.uFog.value;
-      bgUniforms.uAlpha.value = weight * (0.25 + 0.75 * ignite);
-      bg.rotation.y = time * 0.004; // Nebel zieht kaum merklich weiter
 
       // Bildwirkung: bei der Ankunft etwas mehr Glanz
       const arrive = smoothstep(0.55, 0.95, form) * (1 - build);
@@ -368,9 +338,6 @@ export async function create(ctx) {
       offResize();
       geometry.dispose();
       material.dispose();
-      bgGeo.dispose();
-      bgMat.dispose();
-      nebula.dispose();
       beamGeo.dispose();
       beamMat.dispose();
       coreGeo.dispose();

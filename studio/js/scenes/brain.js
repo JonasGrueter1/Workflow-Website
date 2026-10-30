@@ -1,5 +1,6 @@
-// Szene "brain": neuronales Gehirn im Kopf des Roboters.
-// Fenster: zoom@0.3 bis cables@1. Die Kamera taucht durch das Visier ein, fliegt durch das Gehirn und hinten hinaus,
+// Szene "brain": neuronales Gehirn im Kopf der Android-Bueste.
+// Fenster: zoom@0.3 bis cables@1. Die Kamera taucht von vorne oben durch die Roentgen-Schale ein, fliegt durch das
+// Gehirn und hinten hinaus,
 // danach sieht man es von der Seite, waehrend die Kabel gezogen werden.
 //
 // Aufbau (alles prozedural, Daten aus brain-build.js, Shader aus brain-shaders.js):

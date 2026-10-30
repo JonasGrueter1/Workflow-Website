@@ -7,7 +7,7 @@
 //   robot-layout.js     Fugen und Oeffnungen der Schale als Felder (GLSL), Masse der Platten
 //   robot-materials.js  Schale, Muskel-Gel, Innenschale, Glas, Hologramm, Mechanik-Materialien
 //   robot-mech.js       Augen, Hals-Mechanik, Schaedelgitter, Kabelbuendel, Ohr-Sensormodul, Schulterringe, Kolben
-//   robot-env.js        eigene Studio-Umgebung (Spiegelungen) und eigener Hintergrund (abschaltbar, siehe unten)
+//   robot-env.js        eigene Studio-Umgebung (nur Spiegelungen; den Raum dahinter zeichnet backdrop.js)
 //   robot-geometry.js   Kopfform fuer andere Szenen (brain.js: Gehirn-Hardware sitzt an der Innenseite der Schale)
 // Aufbau:
 //   Schale    weisse Klarlack-Platten mit feinen Spaltmassen (Fase, Schatten, kein schwarzer Strich)
@@ -20,13 +20,12 @@
 //   zoom    0.30-0.84 Roentgen-Scan von oben nach unten (uScanY): darueber Hologramm, das Gehirn (brain.js) erscheint
 //   brain   Hologramm leise um das Gehirn, bis die Kamera eintaucht
 //   outro   Bueste wieder ganz, Augen leuchten im Lichtblitz auf
-// Hintergrund: ROBOT.ownBackdrop in config.js (true/false), zum Testen ?robotbg=0 oder ?robotbg=1 in der URL.
+// Hintergrund: keiner in dieser Szene. Das Studio-Gegenlicht hinter der Bueste kommt aus backdrop.js (Farbwelt robot).
 // Diagnose nur in dev.html: ?ab=mech (ohne Schale), ab=debug (Fugen rot), ab=nobloom, ab=nokey, ab=noenv.
 import { bustLevel1, catmullClark, computeNormals, toGeometry, subMesh } from './robot-mesh.js';
 import { makeShellMaterial, makeMuscleMaterial, makeHoloMaterial, makeCoreMaterial, makeGlassMaterial } from './robot-materials.js';
-import { buildStudioEnv, buildBackdrop } from './robot-env.js';
+import { buildStudioEnv } from './robot-env.js';
 import { buildMechanics } from './robot-mech.js';
-import { ROBOT } from '../config.js';
 
 const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
 const smoothstep = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
@@ -91,6 +90,7 @@ export async function create(ctx) {
     uDim: { value: 0 },
     uMechDim: { value: 0 },
     uMechCut: { value: 9 },
+    uMechFade: { value: 0 },
     uWall: { value: palette.white.clone().multiplyScalar(0.8) },
     uHolo: { value: 0 },
     uHoloCol: { value: palette.signal.clone().multiplyScalar(0.55) },
@@ -120,14 +120,6 @@ export async function create(ctx) {
   for (const m of [shellMesh, muscleMesh, holoMesh, coreMesh, glassMesh]) m.frustumCulled = false;
   body.add(coreMesh, muscleMesh, shellMesh, glassMesh, holoMesh);
 
-  /* ---------------------------------------------------- Hintergrund-Licht */
-  // Abschaltbar (ROBOT.ownBackdrop in config.js, URL ?robotbg=0|1), sobald ein globales Hintergrund-Modul kommt
-  const bgParam = new URLSearchParams(window.location.search).get('robotbg');
-  const ownBackdrop = bgParam === null ? ROBOT.ownBackdrop !== false : bgParam !== '0';
-  const backdrop = ownBackdrop ? buildBackdrop(THREE, palette) : null;
-  if (backdrop) group.add(backdrop.mesh);
-  const _bq = new THREE.Vector3();
-
   /* ---------------------------------------------------------- Mechanik */
   const mech = buildMechanics(THREE, { lm, mesh, U, palette, env: env.texture, quality, headMat, shellCol });
   body.add(mech.group);
@@ -138,6 +130,8 @@ export async function create(ctx) {
   const _v = new THREE.Vector3();
   const st = { yaw: 0, pitch: 0, eye: 0, wall: 0 };
   const scan = {};
+  // Zustand fuer die Mechanik, einmal angelegt und pro Frame nur ueberschrieben (keine Allokation pro Frame)
+  const ms = { follow: 1, scan, weight: 1, leak: 0, inOutro: false, out: null, irisBoost: 0, buildLine: 9, camPos: ctx.camera.position, gaze: 1 };
   const look = {
     exposure: 1.0, bloom: 0.55, bloomRadius: 0.5, bloomThreshold: 1.15, key: 1.35, rim: 1.0, amb: 0.1,
     parallax: 0.26, drift: 0.025, aberration: 0.0012, flash: 0, vignette: 0.74, env: 0.35,
@@ -194,6 +188,9 @@ export async function create(ctx) {
 
       U.uScanY.value = Math.min(scan.scanY, buildLine);
       U.uMechCut.value = buildLine;
+      // Mechanik (Schaedelgitter, Kabel, Hals) loest sich auf, waehrend die Kamera ins Gehirn taucht: so verschwindet
+      // sie nicht hart am Ende des Fensters (brain@0.6 plus Rampe), wenn sie von innen gross im Bild steht
+      U.uMechFade.value = inOutro ? 0 : smoothstep(0.4, 0.58, br.p);
       // Augen: kurzes Flackern beim Einschalten, im Ausklang hell im Lichtblitz
       const flick = power > 0 && power < 1 ? 0.55 + 0.45 * Math.sin(time * 47) * Math.sin(time * 13) : 1;
       const irisBoost = power * flick * (inOutro ? 1 + 1.4 * Math.exp(-Math.pow(out.p / 0.12, 2)) : 1);
@@ -203,7 +200,9 @@ export async function create(ctx) {
       U.uMechDim.value = 0.4 * scan.xray;
       U.uPulse.value.y = (0.9 + 1.2 * leak) * weight;
 
-      mech.update(time, dt, { follow, scan, weight, leak, inOutro, out, irisBoost, buildLine, camPos: ctx.camera.position, gaze: follow });
+      ms.follow = follow; ms.scan = scan; ms.weight = weight; ms.leak = leak; ms.inOutro = inOutro; ms.out = out;
+      ms.irisBoost = irisBoost; ms.buildLine = buildLine; ms.gaze = follow;
+      mech.update(time, dt, ms);
 
       shellMesh.visible = scan.dissolve < 0.999 && buildLine > -3.55 && !noShell;
       muscleMesh.visible = scan.dissolve < 0.999 && buildLine > -3.55;
@@ -226,19 +225,6 @@ export async function create(ctx) {
       if (noBloom) look.bloom = 0;
       if (dbgFlags.includes('nokey')) { look.key = 0; look.rim = 0; }
       if (dbgFlags.includes('noenv')) { mats.shell.envMapIntensity = 0; }
-      // Hintergrund-Licht hinter dem Kopf: zur Kamera gedreht, im Roentgen-Zoom ausgeblendet
-      if (backdrop) {
-        const cam = ctx.camera;
-        _bq.set(0, -0.35, 0).sub(cam.position).normalize();
-        backdrop.mesh.position.set(0, -0.35, 0).addScaledVector(_bq, 3.4);
-        backdrop.mesh.quaternion.copy(cam.quaternion);
-        _bq.copy(cam.position).sub(backdrop.mesh.position);
-        const sc = 2 * _bq.length() * Math.tan((cam.fov * Math.PI) / 360) * 1.25;
-        backdrop.mesh.scale.set(sc * cam.aspect, sc, 1);
-        backdrop.uniforms.uAsp.value = cam.aspect;
-        backdrop.uniforms.uAmt.value = weight * (1 - smoothstep(0.2, 0.5, inOutro ? 0 : zm.p)) * (inOutro ? smoothstep(0.0, 0.3, out.p) : 1);
-        backdrop.mesh.visible = backdrop.uniforms.uAmt.value > 0.002;
-      }
       look.parallax = (inOutro ? 0.28 : 0.26) * follow + 0.02;
       look.drift = 0.025 * (1 - smoothstep(0.4, 0.9, zm.p)) + 0.004;
       look.flash = inOutro ? 0 : 0.06 * Math.exp(-Math.pow((br.p - 0.46) / 0.05, 2));
@@ -249,7 +235,6 @@ export async function create(ctx) {
       Object.values(mats).forEach((m) => m.dispose());
       mech.dispose();
       env.dispose();
-      if (backdrop) backdrop.dispose();
       group.clear();
     },
   };

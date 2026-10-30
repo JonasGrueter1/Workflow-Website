@@ -1,4 +1,4 @@
-// Szene "particles": GLSL-Shader (Partikel, Hintergrund-Nebel, Lichtkegel).
+// Szene "particles": GLSL-Shader (Partikel, Lichtkegel). Den Raum dahinter zeichnet backdrop.js.
 // Alles laeuft auf der GPU: Position = f(Startwert, Zeit, Formung). Kein Zustand, darum auch rueckwaerts scrollbar.
 
 /* --------------------------------------------------------------- Rauschen */
@@ -189,7 +189,7 @@ void main() {
     tgt.y += uBodyY;
     nrm = normalize(mix(normal, mat3(uHeadMat) * normal, aHw));
     tgt += nrm * (0.005 * sin(t * 1.7 + aRand.y * 40.0));
-    // Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Kopf und Visier dichter, Schultern lockerer),
+    // Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Kopf und Augen dichter, Schultern lockerer),
     // atmet mit dem Rumpf und folgt mit dem Kopf der Maus. Beim Scrollen verdichtet sie sich zum Hologramm.
     float share = kind > 1.5 ? 0.92 : (aHw > 0.5 ? 0.72 : 0.62 * smoothstep(-3.3, -2.7, aTarget.y));
     pre = step(aInfo.z, share) * uHint;
@@ -243,7 +243,7 @@ void main() {
   }
 
   if (pre > 0.0) {
-    // Bueste aus Licht im Hero: Silhouette hell, Flaechen fein, Rueckseite gedaempft, Visier als leuchtende Linie
+    // Bueste aus Licht im Hero: Silhouette hell, Flaechen fein, Rueckseite gedaempft, Pupillen als ruhige Lichtpunkte
     vec3 Vp = normalize(cameraPosition - tgt);
     float ndp = dot(nrm, Vp);
     float rimP = 1.0 - abs(ndp);
@@ -252,14 +252,20 @@ void main() {
     float bp = (0.34 + 2.6 * rimP * rimP * rimP) * backP * twP * (aHw > 0.5 ? 1.0 : 1.3);
     vec3 pc = mix(uColA, uColB, 0.35 + 0.4 * rimP);
     float ps = uSize * (0.5 + 0.35 * aRand.x);
+    if (kind > 0.5 && kind < 1.5) {
+      // Fugen der Gesichtsplatten, Augenringe, Plattenkanten am Rumpf: zeichnen schon im Hero die Bueste B nach
+      bp = (0.5 + 0.8 * rimP) * backP * twP;
+      pc = mix(uColB, uColW, 0.2);
+      ps = uSize * 0.42;
+    }
     if (kind > 1.5) {
-      float vy = aTarget.y - 0.05;
-      float line = exp(-vy * vy / 0.0012) * (1.0 - smoothstep(0.5, 0.72, abs(aTarget.x)));
-      float eyes = exp(-pow((abs(aTarget.x) - 0.29) / 0.1, 2.0)) * exp(-vy * vy / 0.003);
+      // Pupillen (Augen der Android-Bueste bei x +-0.30, y -0.01)
+      float vy = aTarget.y + 0.01;
+      float eyes = exp(-pow((abs(aTarget.x) - 0.3) / 0.1, 2.0)) * exp(-vy * vy / 0.003);
       float breathe = 0.85 + 0.15 * sin(t * 1.6);
-      bp = (0.22 + 1.5 * line + 1.9 * eyes) * breathe * backP;
-      pc = mix(uColA, uColB, 0.3 + 0.6 * eyes);
-      ps = uSize * (0.45 + 0.3 * eyes + 0.15 * line);
+      bp = (0.22 + 0.65 * eyes) * breathe * backP;
+      pc = mix(uColA, uColB, 0.3 + 0.3 * eyes);
+      ps = uSize * (0.45 + 0.09 * eyes);
     }
     bright = mix(bright, bp, pre);
     col = mix(col, pc, pre);
@@ -278,17 +284,15 @@ void main() {
       fb = (0.42 + 0.45 * rim) * back * aInfo.w;
       fc = mix(uColB, uColW, 0.25);
       fsize = uSize * 0.4;
-    } else if (kind > 1.5) {        // Visier mit zwei Augen
+    } else if (kind > 1.5) {        // Pupillen
       float ex = abs(tgt.x);
-      float eyes = exp(-pow((ex - 0.29) / 0.11, 2.0)) * exp(-pow((tgt.y - 0.05) / 0.07, 2.0));
+      float eyes = exp(-pow((ex - 0.3) / 0.11, 2.0)) * exp(-pow((tgt.y + 0.01) / 0.07, 2.0));
       float on = smoothstep(0.82, 0.97, uForm);
       float breathe = 0.85 + 0.15 * sin(t * 1.6);
-      fb = mix(0.35, (0.85 + 1.4 * eyes) * breathe, on) * back;
-      fc = mix(uColA, uColB, eyes * 0.7);
-      fsize = uSize * (0.5 + 0.25 * eyes);
+      fb = mix(0.35, (0.85 + 0.67 * eyes) * breathe, on) * back;
+      fc = mix(uColA, uColB, eyes * 0.34);
+      fsize = uSize * (0.5 + 0.12 * eyes);
     }
-    // Visier-Enden nicht ueberstrahlen (dort liegen die Punkte im flachen Winkel dicht)
-    if (kind > 1.5) fb *= 1.0 - 0.6 * smoothstep(0.5, 0.78, abs(aTarget.x));
     // Uebergabe an das Hologramm des Roboters: nur noch feines Funkeln
     fb *= 1.0 - uHolo * (0.72 - 0.3 * step(0.93, aRand.w));
     // im Flug: Spur leuchtet etwas heller, bei Ankunft ein kurzes Aufblitzen
@@ -397,49 +401,6 @@ void main() {
   float disc = (1.0 - smoothstep(0.74, 1.0, r)) * (0.62 + 0.38 * smoothstep(0.3, 0.92, r)) * 0.42;
   float a = mix(sharp, disc, vBlur);
   gl_FragColor = vec4(vColor * a, 1.0);
-}
-`;
-
-/* ------------------------------------------------------ Hintergrund-Nebel */
-// Nebel kommt aus einer kleinen, vorab gerechneten Textur (particles-nebula.js), pro Bildpunkt nur Verlauf und Glanz.
-export const BG_VERT = /* glsl */ `
-varying vec3 vWorld;
-varying vec2 vUv;
-void main() {
-  vec4 w = modelMatrix * vec4(position, 1.0);
-  vWorld = w.xyz;
-  vUv = uv;
-  gl_Position = projectionMatrix * viewMatrix * w;
-}
-`;
-
-export const BG_FRAG = /* glsl */ `
-uniform sampler2D uNeb;
-uniform float uAlpha;
-uniform vec3 uVoid;
-uniform vec3 uDeep;
-uniform vec3 uGlow;
-uniform vec3 uWarm;
-uniform vec3 uGlowDir;
-uniform vec3 uWarmDir;
-varying vec3 vWorld;
-varying vec2 vUv;
-
-void main() {
-  vec3 d = normalize(vWorld - cameraPosition);
-  float g = max(dot(d, uGlowDir), 0.0);
-  float glow = pow(g, 9.0) * 0.75 + pow(g, 2.5) * 0.25;
-  vec2 nn = texture2D(uNeb, vUv).rg;
-  float neb = smoothstep(0.35, 0.85, nn.g * 0.6 + nn.r * 0.55);
-  float w = pow(max(dot(d, uWarmDir), 0.0), 5.0);
-  // Horizont leicht aufgehellt, oben, unten und seitlich dunkler
-  float hor = 1.0 - smoothstep(0.0, 0.7, abs(d.y + 0.05));
-  float side = smoothstep(0.2, 0.95, g);
-  vec3 col = uDeep * (0.3 + 0.7 * hor) * (0.45 + 0.55 * side);
-  col += uGlow * glow * (0.5 + 1.0 * neb);
-  col += uGlow * 0.2 * neb * hor * side;
-  col += uWarm * w * (0.4 + 0.9 * neb);
-  gl_FragColor = vec4(mix(uVoid, col, uAlpha), 1.0);
 }
 `;
 

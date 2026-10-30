@@ -38,7 +38,6 @@ export const QUALITY = Object.freeze({
 // Der Kopf des Roboters steht im Ursprung, das Gesicht zeigt nach +Z (zur Startkamera).
 export const ANCHORS = Object.freeze({
   head: Object.freeze({ center: v(0, 0, 0), radii: v(0.82, 1.0, 0.92) }),
-  visor: Object.freeze({ center: v(0, 0.05, 0.86), width: 1.3, height: 0.26 }),
   neck: Object.freeze({ top: v(0, -0.85, -0.05), bottom: v(0, -1.55, -0.1), radius: 0.32 }),
   bust: Object.freeze({ center: v(0, -2.4, -0.15), shoulderWidth: 4.2, bottomY: -3.4 }),
   brain: Object.freeze({ center: v(0, 0.24, -0.06), radii: v(0.6, 0.48, 0.7) }),
@@ -54,13 +53,6 @@ export const ANCHORS = Object.freeze({
   dna: Object.freeze({ start: v(0, 0.5, -10.4), end: v(0, 0.5, -32), radius: 1.1, turnLength: 4.2 }),
   wireframe: Object.freeze({ center: v(0, 0.5, -36), width: 5.6, height: 3.4 }),
 });
-
-/* ------------------------------------------------------------ Szene robot */
-// ownBackdrop: eigener Hintergrund der Android-Bueste (weicher Lichtkegel und Nebel hinter dem Kopf,
-// js/scenes/robot-env.js buildBackdrop). Seit dem globalen Hintergrund-Modul (js/scenes/backdrop.js) aus: dessen
-// Farbwelt "robot" uebernimmt das Studio-Gegenlicht hinter der Bueste. Ohne Code-Aenderung vergleichen: index.html
-// oder dev.html mit ?robotbg=1 (alter Hintergrund zusaetzlich an) bzw. ?robotbg=0.
-export const ROBOT = Object.freeze({ ownBackdrop: false });
 
 /* ------------------------------------------------------- Hintergrund */
 // Farbwelten des Hintergrund-Moduls (js/scenes/backdrop.js), eine pro Beat plus "inhalt" (Inhaltsbereich).
@@ -87,15 +79,15 @@ export const BACKDROPS = Object.freeze({
   // Kuehles Fotostudio passend zur Android-Bueste: weiches Gegenlicht hinter dem Kopf, leiser Dunst, breite
   // schraege Lichtbahnen von oben rechts (Seite des Kantenlichts), fast statisch
   robot: {
-    base: 0x060c14, mid: 0x0f1d2c, hi: 0x3d6e93, accent: 0x14100c, fogColor: 0x070d15,
-    rayColor: 0x6f9fc0, starColor: 0xbdf6ff,
+    base: 0x080c12, mid: 0x121b26, hi: 0x4d6b85, accent: 0x14100c, fogColor: 0x080d14,
+    rayColor: 0x7f9fb8, starColor: 0xbdf6ff,
     glowAt: [0, -0.35, 0], glowShift: [0.0, 0.06], rayAt: [6, 9, -7], accentAt: [-12, -4, 8],
-    horizon: -0.12, horizonGlow: 0.12, glow: 0.95, glowSize: 1.7,
+    horizon: -0.12, horizonGlow: 0.12, glow: 0.9, glowSize: 1.7,
     fog: 0.35, fogScale: 0.8, fogSpeed: 0.002, rays: 0.28, rayFreq: 3, dust: 0.12,
   },
   // Scan-Labor: wie das Studio, dazu Messraster, Scanlinie und Messkreis (steigen mit dem Roentgen-Scan)
   zoom: {
-    base: 0x04101a, mid: 0x0a2532, hi: 0x2a8fa8, accent: 0x0f4a5a, fogColor: 0x05141c,
+    base: 0x060f17, mid: 0x0d212c, hi: 0x3a87a0, accent: 0x0f4a5a, fogColor: 0x05141c,
     rayColor: 0x6fbfd0, gridColor: 0x2aa6bf, starColor: 0xbdf6ff,
     glowAt: [0, -0.2, 0], glowShift: [0.0, 0.04], rayAt: [6, 9, -7], accentAt: [0, -10, -10],
     horizon: -0.08, horizonGlow: 0.15, glow: 0.8, glowSize: 1.5,
@@ -104,10 +96,10 @@ export const BACKDROPS = Object.freeze({
   // Biolumineszenz: violetter Nebel, dessen Schwaden selbst leuchten (magenta, Raender tuerkis), Sporen; das Gehirn
   // bleibt Cyan davor. Gegenlicht hinter dem Hinterkopf (die Kamera taucht spaeter genau dorthin)
   brain: {
-    base: 0x090518, mid: 0x1b0c33, hi: 0x7434a8, accent: 0x102a30, fogColor: 0x0b0716,
+    base: 0x090518, mid: 0x1b0c33, hi: 0x7c36b0, accent: 0x102a30, fogColor: 0x0b0716,
     auroraA: 0x6a2fd8, auroraB: 0xb8338a, auroraEdge: 0x2fb7b0, starColor: 0x8fe8e0, bokehColor: 0xb8338a,
-    glowAt: [0, 0.35, -1.6], glowShift: [0.04, 0.04], rayAt: [0, 10, -10], accentAt: [-6, -8, -14],
-    horizon: -0.05, horizonGlow: 0.1, glow: 0.75, glowSize: 1.5,
+    glowAt: [0, 0.35, -1.6], glowShift: [0.2, 0.1], rayAt: [0, 10, -10], accentAt: [-6, -8, -14],
+    horizon: -0.05, horizonGlow: 0.06, glow: 0.9, glowSize: 1.6,
     fog: 0.75, fogScale: 1.2, fogSpeed: 0.006, aurora: 1.0, dust: 0.35, bokeh: 0.18,
   },
   // Glasfaser-Blau: tiefe Ebene weit unten mit Lichtpaketen auf feinen Bahnen, Bokeh, Sterne; Licht hinter dem
@@ -150,7 +142,7 @@ export const BACKDROPS = Object.freeze({
 // len = Hoehe des Abschnitts in vh. Daraus misst der Director die Zeitfenster (global 0..1).
 export const BEATS = Object.freeze([
   // text = [ein0, ein1, aus0, aus1] (p im Beat), scrim = Abdunkeln des Bildes hinter dem Text (FxPass, 0..1)
-  { name: 'intro', len: 120, label: 'Start', text: [0, 0, 0.45, 0.7], scrim: 0.32 },
+  { name: 'intro', len: 120, label: 'Start', text: [0, 0, 0.28, 0.5], scrim: 0.32 },
   { name: 'robot', len: 180, label: 'Partner', scrim: 0.42 },
   { name: 'zoom', len: 170, label: 'Einblick', scrim: 0.45 },
   { name: 'brain', len: 150, label: 'Intelligenz', scrim: 0.62 },
@@ -263,7 +255,9 @@ export const CAMERA_KEYS = Object.freeze([
 export const CUT_FADE = 0.008; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 9 vh)
 
 // Hochformat: vertikales FOV wird erweitert, damit horizontal genug Bild bleibt.
-export const PORTRAIT = Object.freeze({ refAspect: 1.6, exponent: 0.7, maxFactor: 2.4, below: 0.85 });
+// minPortrait: im Hochformat mindestens dieser Faktor (= Wert bei Seitenverhaeltnis 0.59), damit Tablets im Hochformat
+// gleich gerahmt sind wie die Handys, fuer die posM/lookM abgestimmt sind (nur mit mehr Rand links und rechts).
+export const PORTRAIT = Object.freeze({ refAspect: 1.6, exponent: 0.7, maxFactor: 2.4, below: 0.85, minPortrait: 2.0 });
 
 /* ------------------------------------------------------------------ Look */
 // Bildwirkung pro Frame. Module setzen Teilwerte in `module.look`, main mischt nach Gewicht.

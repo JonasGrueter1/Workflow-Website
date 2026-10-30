@@ -1,4 +1,4 @@
-# Studio: Architektur und Schnittstellen (Version 1)
+# Studio: Architektur und Schnittstellen (Version 3)
 
 Immersive Website von Jonas Grüter. Diese Datei ist der Vertrag zwischen Fundament und Szenen-Entwicklern.
 Wer eine Szene baut, ändert nur seine Datei `js/scenes/<name>.js`. Alles andere läuft über die Schnittstellen unten.
@@ -18,7 +18,8 @@ studio/
   js/ui.js              Ohne three.js: Preloader, Cursor, Navigation, HUD, Einblendungen, Kontaktformular
   js/dev.js             Logik von dev.html
   js/fx/FxPass.js       Eigener Bild-Pass: chromatische Aberration, Vignette, Filmkorn, Blitz, Abblende, Abdunkeln
-  js/scenes/*.js        particles, robot, brain, cables, dna (je ein Szenen-Modul, Hilfsdateien <name>-*.js)
+  js/scenes/*.js        backdrop, particles, robot, brain, cables, dna (je ein Szenen-Modul, Hilfsdateien <name>-*.js)
+  js/scenes/backdrop*.js Hintergrund hinter allem (Kapitel 12): backdrop.js Einstieg, -glsl (Shader), -noise (Rausch-Volumen)
   js/scenes/robot*.js   Android-Bueste (Kapitel 11): robot.js Einstieg, robot-mesh/-layout/-materials/-mech/-env/-geometry
   assets/robot/         bust.bin: Netz der Android-Bueste (MakeHuman CC0, offline aufbereitet, 76 KB)
   assets/fonts/         Geist (variabel 300..700) und Geist Mono (variabel 400..600), latin, woff2, OFL
@@ -28,7 +29,8 @@ studio/
 Ablauf pro Frame (js/main.js):
 
 1. `engine.updatePointer` (Maus geglättet)
-2. `director.pullScroll()` und `director.update(dt)`: global, Beats, Modul-Zustände, Kamerapose
+2. `director.content` (Inhaltsbereich 0..1, gedämpft), `director.pullScroll()` und `director.update(dt)`: global, Beats,
+   Modul-Zustände, Kamerapose
 3. `director.applyCamera(camera, pointer, look)`: Pfad + Maus-Parallax + ruhiges Schweben
 4. `runner.step(time, dt)`: Module aktivieren, `update(...)` aufrufen, `look` mischen
 5. `engine.applyLook(look)` und `engine.render()`: RenderPass -> UnrealBloom -> OutputPass (ACES + sRGB) -> FxPass
@@ -76,7 +78,7 @@ Wirft `update` einen Fehler, blendet der Runner die Szene aus und meldet es einm
 | `pointer` | `{ x, y }` roh und `{ sx, sy }` geglättet, je -1..1 (y oben), `vx, vy` Geschwindigkeit. Auf Touch: sanftes Eigenleben |
 | `palette` | `THREE.Color` (linear) aus `HEX`. Nie verändern, für Glow `.clone().multiplyScalar(2..5)` |
 | `anchors` | Masse und Positionen (Kapitel 3). Vektoren sind eingefroren: immer `.clone()` |
-| `director` | `director.beat('zoom')` -> `{ start, end, p, w }`, `director.module('robot')`, `director.global`, `director.cutFade` |
+| `director` | `director.beat('zoom')` -> `{ start, end, p, w }`, `director.module('robot')`, `director.global`, `director.cutFade`, `director.cuts`, `director.content` (Inhaltsbereich 0..1) |
 | `shared` | gemeinsame Uniforms: `uTime`, `uResolution` (Pixel inkl. DPR), `uPixelRatio`. Objekt direkt in eigene Uniforms hängen |
 | `envMap` | PMREM-Umgebung (prozedural), ist schon `scene.environment` |
 | `lights` | `{ key, rim, amb }`: feste Lichter. Intensität nur über `look.key/rim/amb` steuern |
@@ -97,7 +99,7 @@ Wirft `update` einen Fehler, blendet der Runner die Szene aus und meldet es einm
 | --- | --- | --- |
 | `head.center` | (0, 0, 0) | Kopfmitte |
 | `head.radii` | (0.82, 1.0, 0.92) | Halbachsen des Kopf-Ellipsoids (Breite 1.64, Höhe 2.0, Tiefe 1.84) |
-| `visor.center` | (0, 0.05, 0.86) | Rest vom Helm-Roboter (Visier), von keiner Szene mehr genutzt. Augen: `bust.bin`-Landmarken `eyeL`/`eyeR` (±0.30, 0, 0.60) |
+| Augen | (±0.30, 0, 0.60) | Landmarken `eyeL`/`eyeR` aus `bust.bin` (kein eigener Anker, `robot-mesh.js` liefert `lm`) |
 | `neck.top` / `neck.bottom` | (0, -0.85, -0.05) / (0, -1.55, -0.1) | Hals, Radius 0.32 |
 | `bust.center` | (0, -2.4, -0.15) | Schulterpartie, Schulterbreite 4.2, Unterkante y = -3.4 |
 | `brain.center` | (0, 0.24, -0.06) | Gehirn im Kopf, Halbachsen (0.6, 0.48, 0.7), liegt ganz im Kopf |
@@ -116,7 +118,7 @@ Seitenansicht (Y nach oben, Z nach rechts = zur Startkamera):
   y
   2 |                       email/kalender (y 1.8..2.2, z -6.2..-6.6)
   1 |   wireframe   helix (r 1.1)          website    .-head-.
-  0 |   [z -36]  ~~~~~~~~~~~~~~~~~~~~~~~~~~  (z -10)  ( brain )|visor  ....... Kamera Start (0, 0.35, 15.5)
+  0 |   [z -36]  ~~~~~~~~~~~~~~~~~~~~~~~~~~  (z -10)  ( brain )|Gesicht ..... Kamera Start (0, 0.35, 15.5)
  -1 |                                                 '-neck-'
  -2 |                       dokumente/kunden (y -2..-1.6)   bust
     +---------------------------------------------------------------------------------> z
@@ -155,6 +157,7 @@ In `MODULES` als `'beat@p'` definiert (p = Punkt im Beat). Nominal:
 
 | Modul | Hauptfenster (local 0..1) | weitere Fenster | global nominal |
 | --- | --- | --- | --- |
+| backdrop | intro@0 bis outro@1 | | 0 bis 1 (immer aktiv, Gewicht 1, Kapitel 12) |
 | particles | intro@0 bis robot@0.7 | | 0.0000 bis 0.2278 |
 | robot | robot@0 bis brain@0.6 | outro@0 bis outro@1 | 0.1111 bis 0.5185, 0.9444 bis 1 |
 | brain | zoom@0.3 bis cables@1 | | 0.3250 bis 0.7500 |
@@ -175,8 +178,10 @@ In `MODULES` als `'beat@p'` definiert (p = Punkt im Beat). Nominal:
 - `cut: true` startet einen neuen Shot (harter Schnitt). Der Director liefert dafür `cutFade` (0..1, `CUT_FADE` 0.008 je Seite, etwa 9 vh).
   Der Runner macht daraus einen kurzen Lichtblitz (`flash`, Belichtung, Bloom), keine Abblende zu Schwarz.
   Zurzeit gibt es einen Schnitt: Ende DNA -> Ausklang beim Roboter.
-- `posM` / `lookM`: eigene Werte fürs Hochformat (Seitenverhältnis unter 0.85). Zusätzlich wird im Hochformat das FOV
-  erweitert (`PORTRAIT`), damit horizontal genug Bild bleibt.
+- `posM` / `lookM`: eigene Werte fürs Hochformat (Seitenverhältnis unter 0.85), abgestimmt für Handys (0.46 bis 0.59).
+  Zusätzlich wird im Hochformat das FOV erweitert (`PORTRAIT`), damit horizontal genug Bild bleibt. Im Hochformat gilt
+  mindestens der Faktor von 0.59 (`PORTRAIT.minPortrait` 2.0): Tablets im Hochformat (z. B. 768 x 1024) sind dadurch
+  gleich gerahmt wie Handys, nur mit mehr Rand links und rechts (vorher stiess der Kopf dort oben an die Kopfzeile).
 - Danach kommen Maus-Parallax (`look.parallax`, Einheiten) und ruhiges Schweben (`look.drift`).
 - Dämpfung: `global` folgt dem Scroll mit `lambda` 4.2 (bei grossen Sprüngen schneller). Die Szenen bekommen immer den gedämpften Wert.
 
@@ -229,7 +234,7 @@ der Wert `zTrack` (die Werte müssen über die Keys fallen). `roll` (Grad) neigt
 Ein Panel klebt im Abschnitt, bis dieser `len - 100` vh gescrollt ist (`pinOut`), danach scrollt es weg. Standard: Einblenden
 bei p 0.02 bis 0.12, Ausblenden von `pinOut - 0.06` bis 40 vh nach `pinOut` (der Text scrollt sichtbar nach oben weg, so gibt
 es kaum Strecken ohne Text). Eigene Fenster über `BEATS[].text = [ein0, ein1, aus0, aus1]` (p im Beat): `intro`
-([0, 0, 0.45, 0.7]: Hero-Text bis etwa intro@0.5), `cables` ([0.14, 0.24, 0.46, 0.6]: Text erst, wenn die Übersicht steht),
+([0, 0, 0.28, 0.5]: Hero-Text bis etwa intro@0.42, weg, bevor er unter die Kopfzeile scrollt), `cables` ([0.14, 0.24, 0.46, 0.6]: Text erst, wenn die Übersicht steht),
 `dna` ([0.02, 0.12, 0.4, 0.54]: weg, bevor das Gerüst entsteht). Das letzte Panel (outro) bleibt stehen und scrollt mit dem
 Inhalt weg. In unsichtbaren Panels haben Links und Buttons `tabindex="-1"` (kein Tab-Fokus), das setzt `ui.panel()`.
 Kein `inert`: Überschriften und Texte bleiben im Accessibility-Baum, Screenreader lesen alle Kapitel.
@@ -272,7 +277,7 @@ Bild-Pipeline: Szene rendert linear in HalfFloat (HDR) -> UnrealBloom -> OutputP
 | `aberration` | 0.006 | chromatische Aberration zum Rand hin (nur Stufe high) |
 | `vignette` | 0.75 | Randabdunkelung 0..1 |
 | `grain` | 0.045 | Filmkorn (24 Bilder/s), verhindert auch Banding |
-| `fogDensity` | 0.035 | `FogExp2` in Hintergrundfarbe |
+| `fogDensity` | 0.035 | `FogExp2`, Farbe = Nebelfarbe der aktuellen Farbwelt (`fogColor`, setzt backdrop.js) |
 | `env` | 0.35 | Stärke der Spiegelungen (`scene.environmentIntensity`) |
 | `key`, `rim`, `amb` | 1.3, 2.0, 0.12 | warmes Führungslicht in Ember (links vorne), Cyan-Kantenlicht (rechts hinten), Hemisphäre. Nur der Roboter nutzt Lichter (Android-Büste: key nur 0.14 bis 0.45, rim 1.4 bis 1.8; der Glanz kommt aus ihrer eigenen Studio-Umgebung) |
 | `parallax`, `drift` | 0.22, 0.025 | Maus-Parallax und Schweben der Kamera (im Kopf/Gehirn klein halten) |
@@ -287,7 +292,7 @@ Mischregel: Für jeden Schlüssel zählen nur Module, die ihn setzen, gewichtet 
 
 | Name | Hex | Einsatz |
 | --- | --- | --- |
-| `void` | #04060a | Hintergrund, Nebel, Abblende |
+| `void` | #04060a | Clear-Farbe (vom Hintergrund-Modul überdeckt), Abblende |
 | `deep` | #070b12 | tiefe Flächen |
 | `ink` | #0d141d | Schale des Roboters, Paneele |
 | `steel` | #2a3644 | Kanten, Linien im Schatten |
@@ -330,6 +335,24 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
   `?nogl` erzwingt den statischen Fallback.
 - Budget pro Szene (Stufe high, Richtwerte): höchstens 40 Draw Calls, 600k Dreiecke, 60k Punkte/Instanzen. Mengen immer mit
   `tier.particles` multiplizieren.
+- Hintergrund (backdrop, immer aktiv): 1 Draw Call, 1 Dreieck, pro Bildpunkt höchstens 5 Zugriffe auf das 32³-Rausch-Volumen
+  (high), 4 (medium), 2 (low). Details Kapitel 12.
+- Gemessen auf der ganzen Seite (Version 3, 30.10.2026, `renderer.info` pro Bild inklusive Bloom und Post-Passes):
+
+  | Stelle | high (Desktop 1440 x 900) | medium (iPhone 13) |
+  | --- | --- | --- |
+  | Hero (intro) | 20 Draw Calls, 2k Dreiecke, 37k Punkte | 19 Calls, 19k Punkte |
+  | Übergang Partikel zu Büste (robot@0.3) | 34 Calls, 635k Dreiecke, 37k Punkte | 32 bis 41 Calls, 91k bis 167k |
+  | Büste fest (robot@0.75) | 45 Calls, 528k | 42 Calls, 136k |
+  | Röntgen (zoom@0.45 bis 0.75) | 48 bis 51 Calls, 766k bis 773k, 59k Punkte | 48 bis 50 Calls, 229k, 30k Punkte |
+  | Im Gehirn (brain@0.75) | 29 Calls, 143k, 61k Punkte | |
+  | Ausklang | 42 Calls, 526k | 42 Calls, 136k |
+
+  Das Röntgen ist die teuerste Stelle (Büste, Gehirn und Gehirn-Hardware gleichzeitig). Pro Frame keine Allokationen
+  (Director, Runner, Szenen und Mechanik verwenden ihre Objekte wieder).
+- Seitengewicht beim ersten Laden (mit 3D, ungezippt): rund 1.7 MB inklusive `bust.bin` (76 KB), davon three.js 690 KB,
+  GSAP 115 KB, Schriften 52 KB. GitHub Pages liefert gzip: rund 0.57 MB über die Leitung. Poster und `og.jpg` lädt nur der
+  Fallback bzw. ein Link-Vorschau-Dienst.
 - Rendern pausiert bei verstecktem Tab. Im Inhaltsbereich (3D nur abgedunkelter Hintergrund, `contentDim` über 0.98) wird ein
   letztes Bild gerendert und dann angehalten, bis man wieder in die Story scrollt. Karten und Formular verzichten dort auf
   `backdrop-filter`.
@@ -345,6 +368,10 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
 - **Shader**: inline als Template-String mit `/* glsl */`. Gemeinsame Uniforms aus `ctx.shared` einhängen (nicht kopieren).
   Punktgrösse perspektivisch korrekt: `gl_PointSize = worldSize * projectionMatrix[1][1] * uResolution.y * 0.5 / -mvPosition.z`
   und mit `min(..., 64.0)` begrenzen. Nebel in eigenen Shadern selbst lösen (Tiefe ausblenden) oder `fog: true` mit Fog-Chunks.
+- **Hintergrund**: kein eigener Hintergrund in Szenen (keine Kugeln, Flächen oder `scene.background`). Den Raum hinter
+  dem Motiv zeichnet nur `backdrop.js` (Kapitel 12). Braucht eine Szene eine andere Stimmung, wird ihre Farbwelt in
+  `BACKDROPS` (config.js) angepasst. Seit Version 3 gibt es keine Ausnahme mehr (Nebelkugel der Partikel und eigener
+  Lichtkegel der Büste sind entfernt).
 - **Keine neuen Lichter** in Szenen (wechselnde Lichtanzahl kompiliert alle Shader neu und ruckelt). Licht über `look.key/rim/amb`
   oder Emission/Glow im Material.
 - **Transparenz**: `transparent` einmal beim Erzeugen festlegen und danach nur `opacity` ändern (Umschalten kompiliert neu).
@@ -379,7 +406,22 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
   Posterbild (`.chapter__poster`, `assets/img/poster-<beat>.webp`, im Hochformat `poster-<beat>-m.webp`) mit Verlauf für
   die Lesbarkeit. Die Poster sind echte Renderings der Szenen (ohne UI und ohne Korn) und werden nur im Fallback geladen.
   Neu erzeugen: `S/tools/make_posters.sh`, danach als WebP nach `assets/img/` (siehe Kapitel 10).
-- Texte in index.html stammen aus `studio-texte.md` (Version 1). `assets/img/og.jpg` ist das Vorschaubild für Links (1200 x 630).
+- Texte in index.html stammen aus `studio-texte.md` (Version 1) und `studio-texte-v2.md` (Version 2, wo nötig geschärft).
+  `assets/img/og.jpg` ist das Vorschaubild für Links (1200 x 630).
+- Inhaltsbereich (`.content`, Version 2): Leistungen `#leistungen`, KI im Betrieb `#ki-beispiele` (vier Branchen-Karten),
+  Warum ich `#warum`, Ablauf `#ablauf` (Schritte als `<dl>`), Fallbeispiel `#fallbeispiel` (Zähler `data-count`, zählen
+  einmal in 1.2 s hoch, `initCounters`), Werkzeuge `#werkzeuge`, Über mich `#ueber-mich`, Fragen `#fragen`, Kontakt
+  `#kontakt`. Knöpfe mit `data-thema` wählen im Formular das Thema vor (`initTopicLinks`).
+- Fragen: Akkordeon nach WAI-ARIA-Muster (`initFaq`): Knopf mit `aria-expanded`/`aria-controls`, Enter/Leertaste,
+  Pfeiltasten, Pos1/Ende; geschlossene Antworten `visibility: hidden`. Ohne JS sind alle offen. Ein Link auf `#faq-...`
+  öffnet die Frage.
+- Blende der Story-Panels: `--oo = clamp(0, (--o - 0.2) / 0.6, 1)` macht sie steil (Text ist voll da oder weg, nie lange
+  halb transparent über dem Bild). Im Ausklang liegt die Deckkraft auf `.chapter__text` statt auf dem Panel: ein Vorfahre
+  mit opacity unter 1 würde zur "Backdrop Root" und der Blur der Karte sähe das 3D-Bild nicht mehr.
+- Inhaltsbereich mit 3D: `.stage::after` (bei `html.is-content`) legt einen dunklen Schleier über die Szene, zusätzlich zu
+  `look.dim` (main.js, bis 0.62). `.content` deckt ab 22 vh zu 92 %, ab 40 vh ganz. Karten und Formular sind feste Flächen
+  ohne Blur. Farb-Tokens für Text: #eef4f8 (Text), #c4d0da (Fliesstext, mindestens 11.7:1), #9aa9b6 (Nebentext, 7.6:1),
+  #d3dee6 (Story-Text).
 - Kontaktformular: Web3Forms (`js/ui.js`), Betreff "Anfrage über jonasgrueter Website", bei Fehler oder nach 15 s ohne
   Antwort (AbortController) mailto-Link. Die Status-Region (`role=status`) bleibt immer im DOM, nur der Text wechselt.
   Ohne JS sendet das Formular direkt an Web3Forms (`action`, `method=POST`, versteckte Felder `access_key`, `subject`).
@@ -413,15 +455,22 @@ FPS-Wächter. Echte Besucher mit Software-Rendering bekommen den Fallback; das p
 
 `story_shots.js` springt direkt an `beat@p` (ohne Daempfung) und macht je ein Bild, ideal fuer Kamera-Feinarbeit.
 
+SwiftShader-Eigenheiten (keine Fehler der Seite, mit Version 3 geprüft): Nach einem grossen Sprung (z. B. von brain direkt
+nach outro@0.1) zeigt das nächste Standbild manchmal noch ein älteres Bild aus der GPU-Warteschlange (Code-Gerüst statt
+Büste); direkt geladen oder mit längerer Wartezeit stimmt es. Ebenso bleiben `[data-reveal]`-Blöcke nach einem Sprung in
+den Inhaltsbereich ein paar Sekunden unsichtbar, weil ein Screenshot in SwiftShader rund 30 s dauert und die Zeitachse der
+CSS-Übergänge solange steht. `studio_capture.js` wartet darum bis 240 s auf jedes Bild.
+
 (`S` = Scratchpad-Ordner der Session.) `?q=high` verhindert, dass die adaptive Auflösung im langsamen SwiftShader die DPR senkt.
 
 dev.html:
 
-- `?scene=particles|robot|brain|cables|dna|all` oder mehrere mit Komma (`scene=robot,brain` für den Röntgen-Zoom: die erste
+- `?scene=backdrop|particles|robot|brain|cables|dna|all` oder mehrere mit Komma (`scene=robot,brain` für den Röntgen-Zoom: die erste
   Szene bestimmt `local` und bleibt aktiv, die weiteren laufen in ihren Fenstern), `&local=0.4` (Startwert), `&at=zoom@0.4`
   (fester Punkt der Story), `&cam=orbit` (ziehen, Mausrad) oder `&cam=fix&pos=x,y,z&tgt=x,y,z&fov=30`, `&q=high`,
-  `&post=0` (ohne Postprocessing), `&play` (läuft selbst), `&scroll=0` (nur Regler). Szene robot zusätzlich:
-  `&robotbg=0|1` (eigener Hintergrund), `&ab=mech|debug|glass|nobloom|nokey|noenv` (Diagnose).
+  `&post=0` (ohne Postprocessing), `&play` (läuft selbst), `&scroll=0` (nur Regler). Der Hintergrund (`backdrop`) läuft
+  wie auf der Seite immer mit, `&bg=0` schaltet ihn ab. `?scene=backdrop` allein fährt mit dem Regler durch alle Farbwelten
+  (Kamerapfad der Seite). Szene robot zusätzlich: `&ab=mech|debug|glass|nobloom|nokey|noenv` (Diagnose).
 - Scrollen auf der Testseite fährt `local` von 0 bis 1. Darum tastet `studio_capture.js` mit `--steps=N` das ganze Fenster ab.
 - In dev.html laufen Director, Runner und Looks exakt wie auf der Seite (nur ohne Dämpfung, wenn "Daempfung" aus ist).
 - Konsole: `window.__dev` (dev.html) und `window.__studio` (index.html) mit `engine`, `director`, `runner`, `ctx`.
@@ -443,21 +492,30 @@ Hinterkopf mit Schädelgitter und Kabelbündeln. Der frühere Helm-Roboter und V
 | `robot-layout.js` | Fugen und Öffnungen als Felder (GLSL): Gesichtsplatten, Lidfuge, Hinterkopf-Fenster, Glaskappe, Brustplatte |
 | `robot-materials.js` | Schale (Klarlack, Spaltmass als feine Rinne mit Fase), Muskel-Gel, Innenschale, Glas, Hologramm, Mechanik |
 | `robot-mech.js` | Augen (Blick folgt dezent der Kamera, Hornhaut mit Glanzlicht), Hals, Schädelgitter, Kabel, Ohrmodul |
-| `robot-env.js` | eigene Studio-Umgebung für die Spiegelungen, eigener Hintergrund (`buildBackdrop`) |
+| `robot-env.js` | eigene Studio-Umgebung, nur für die Spiegelungen (PMREM). Den Raum dahinter zeichnet backdrop.js |
 | `robot-geometry.js` | `makeHeadShape`: Kopfform für brain.js (Gehirn-Hardware sitzt an der Innenseite der Schale) |
 | `particles-shape.js` | Zielpunkte der Partikel-Büste (gleiches Netz, gleicher Drehpunkt `HEAD_PIVOT` wie robot.js) |
 
-- **Hintergrund abschalten:** `ROBOT.ownBackdrop` in `js/config.js` (true/false). Ohne Code-Änderung: URL `?robotbg=0`
-  (aus) oder `?robotbg=1` (an). Ein globales Hintergrund-Modul setzt den Schalter auf false.
+- **Hintergrund:** keiner in der Szene. Das Studio-Gegenlicht hinter der Büste kommt aus der Farbwelt `robot` von
+  backdrop.js (Kapitel 12). Der frühere eigene Lichtkegel (`buildBackdrop`, `ROBOT.ownBackdrop`, `?robotbg`) ist in
+  Version 3 entfernt.
 - Ablauf: Aufbau im Beat robot (Hologramm robot@0.08 bis 0.26, dann von unten fest bis robot@0.64, Augen schalten bei
   robot@0.64 bis 0.74 ein), Röntgen-Scan im Beat zoom (`robotScan`, gleiche Formel wie brain-hardware.js), Ausklang im
   Beat outro (Augen leuchten im Lichtblitz).
 - Spaltmasse: keine verworfenen Pixel mehr (früher schwarzer Strich). Die Fuge ist eine Rinne (Halbbreite 0.0021 Einheiten)
   mit Fase und weichem Schatten; ist sie schmaler als ein Bildpunkt (Handy), wird sie heller statt breiter. Die Lidfuge ist
   nur eine halb so tiefe Falte (`lSeamK`).
-- Poster (Fallback) und OG-Bild am 30.10.2026 mit der Android-Büste neu gerendert (Kapitel 10, `make_posters.sh`).
+- Poster (Fallback) und OG-Bild am 30.10.2026 mit der Android-Büste neu gerendert (Kapitel 10, `make_posters.sh`), für
+  Version 3 nach den letzten Änderungen (Hero-Linien, Kern, Flachbandkabel) noch einmal.
 - Budget der Szene allein (gemessen in dev.html): high 41 Draw Calls, rund 525k Dreiecke; medium und low 41 Draw Calls,
   rund 136k Dreiecke (eine Glättungsstufe, 44 statt 112 Kabel).
+- Eintauchen ins Gehirn: Die Mechanik (Schädelgitter, Kabel, Hals, alle Materialien aus `makeMechMaterial`) löst sich von
+  brain@0.4 bis 0.58 mit Rauschen und feiner Leuchtkante auf (`uMechFade`). Ohne das standen Gitter und Kabel von innen
+  gross im Bild und verschwanden am Ende des Fensters (brain@0.6 plus Rampe, rund brain@0.71) schlagartig.
+- Übergang Partikel zu Büste: gleiche Form (`particles-shape.js` tastet dieselbe Büste ab), gleicher Drehpunkt und dieselbe
+  Kopfbewegung. Partikel treten zurück, sobald das Hologramm erscheint (robot@0.05 bis 0.22), und gehen an der Abtastebene
+  (robot@0.26 bis 0.64) in die feste Schale über. Im Hero zeichnen hellere Linien-Partikel Fugen, Augenringe und
+  Plattenkanten nach, die Pupillen leuchten ruhig; der Kern im Kopf ist bei fertiger Form auf ein Drittel gedimmt.
 - Kabel im Nacken: 112 (high) bzw. 44 lose Leitungen in sieben Strängen, kaum verdrillt, drei Schellen, silbergraue
   Schläuche und schwarze Kabel gemischt; sie tauchen in einen oben breiten Schlitz zwischen den Schulterblättern.
 
@@ -475,3 +533,71 @@ Hinterkopf mit Schädelgitter und Kabelbündeln. Der frühere Helm-Roboter und V
 - three.js r170 (MIT), schon unter `vendor/`. Keine weiteren Bibliotheken, keine weiteren Downloads.
 - Alles andere ist eigener Code (prozedural): Platten, Fugen, Muskeln, Mechanik, Kabel, Augen, Licht, Hintergrund.
 - Nicht verwendet: Kopf-Scan Lee Perry-Smith (CC BY 3.0).
+
+## 12. Hintergrund (backdrop)
+
+Rückmeldung Version 2: "alles in dem klassischen schwarzen Hintergrund". Seit dem 30.10.2026 zeichnet ein einziges Modul den
+Raum hinter allen Szenen, mit einer eigenen Farbwelt pro Kapitel und weichen Übergängen. Keine Szene hat mehr einen eigenen
+Hintergrund (Kapitel 8).
+
+| Datei | Inhalt |
+| --- | --- |
+| `backdrop.js` | Einstieg (create), Farbwelten mischen, Dynamik pro Beat, Licht-Richtungen aus der Kamera, Uniforms |
+| `backdrop-glsl.js` | Vertex- und Fragment-Shader, Stufen über `#define BD_Q` (2 high, 1 medium, 0 low) |
+| `backdrop-noise.js` | Rausch-Volumen 32 x 32 x 32 RGBA (128 KB, Seed fest), geglättet gelesen: ein Zugriff = vier Rauschwerte |
+
+**Aufbau.** Ein Vollbild-Dreieck (`ShaderMaterial`, deckend, ohne Tiefentest und Tiefenschreiben, `renderOrder` -50,
+`frustumCulled` false). Pro Bildpunkt rechnet der Shader die Welt-Blickrichtung aus `camera.projectionMatrixInverse` (mit
+Lens-Shift) und `camera.matrixWorld` (beide direkt als Uniform referenziert). Der Hintergrund dreht sich also mit jeder
+Kamerafahrt, liegt aber unendlich weit weg; nur Boden und Code-Tunnel haben echte Parallaxe. Er geht wie alles andere durch
+Bloom, Tonemapping und den FxPass. Sonst zeichnet keine Szene einen Hintergrund (die Nebelkugel von particles.js ist seit
+Version 3 entfernt, das spart im Intro einen Vollbild-Pass).
+
+**Farbwelten** (`BACKDROPS` in config.js, Farben sRGB-Hex, Mengen 0..1):
+
+| Farbwelt | Stimmung | base / mid / hi | Bausteine | Dynamik (backdrop.js) |
+| --- | --- | --- | --- | --- |
+| intro | Tiefsee-Petrol | #03121a / #072a35 / #1f6f7c | Nebel, Lichtstrahlen von oben (Richtung Lichtkegel der Partikel), Staub, Sterne, warmer Dunst unten rechts | Strahlen schimmern |
+| robot | kühles Fotostudio passend zur Büste (gedämpftes Schieferblau wie in ihren Renderings) | #080c12 / #121b26 / #4d6b85 | weiches Gegenlicht hinter dem Kopf, leiser Dunst, breite Lichtbahnen von oben rechts | Lichtbahnen atmen mit der Büste (5.2 s) |
+| zoom | Scan-Labor | #060f17 / #0d212c / #3a87a0 | wie Studio, dazu Messraster, Messkreis um den Kopf, Scanlinie | Raster ab zoom@0.4, Scanlinie läuft auf Höhe des Röntgen-Scans (gleiche Formel wie `robotScan`) |
+| brain | Biolumineszenz | #090518 / #1b0c33 / #7c36b0 | violetter Nebel, dessen Schwaden selbst leuchten (#6a2fd8 bis #b8338a, Ränder #2fb7b0), Sporen, Bokeh | leiser, solange die Kamera im Gehirn ist (brain@0.45 bis 0.98) |
+| cables | Glasfaser-Blau | #030916 / #0a1a33 / #2a63b8 | tiefe Ebene weit unten (y -9) mit Punktraster und Lichtpaketen, Bokeh, Sterne, Licht hinter dem Website-Knoten | |
+| dna | Code-Raum Grün-Türkis | #02100e / #05302a / #17a888 | leiser Code-Regen auf der Tunnelwand (Zylinder r 5.5 um die Helix-Achse), Lichtkern beim Gerüst (-z) | Lichtkern und Code steigen mit dem Gerüst (dna@0.45 bis 0.75) |
+| outro | Morgenlicht | #0a0908 / #21170f / #e0a05a | goldenes Horizontglühen und Gegenlicht hinter den Schultern rechts, Strahlen von rechts oben, Goldstaub, oben kühl | Sonnenaufgang über outro@0 bis 0.8 (Horizont 0.4 -> 1) |
+| inhalt | Ruhe | #05080d / #0a0f16 / #2a1c12 | nur Verlauf und ein Rest Wärme, Muster auf 10 % (`detail` 0.1) | |
+
+**Licht-Anker** (Weltpunkte, linear gemischt, pro Frame zur Richtung von der Kamera aus umgerechnet): `glowAt` + `glowShift`
+(Gegenlicht-Halo hinter dem Motiv, Verschiebung im Bild als Anteil, x rechts, y oben), `rayAt` (Quelle der Lichtstrahlen,
+meist ausserhalb des Bildes), `accentAt` (Akzent-Dunst). Weil der Halo an einem Punkt beim Motiv hängt, bleibt das Licht
+hinter der Büste, wenn die Kamera kreist. Kompositionsregel: helle Teile nur auf der Seite des Motivs, nie hinter der Textspalte.
+
+**Mischung** (ohne Allokationen pro Frame): Gewicht pro Beat mit weicher Kante `BACKDROP_FADE` = 0.035 global (rund 38 vh)
+um jede Beat-Grenze, als Partition der Eins. Am Schnitt (`director.cuts`, Ende dna -> outro) wechselt die Farbwelt hart,
+versteckt im Lichtblitz des Runners. Im Inhaltsbereich mischt `director.content` (setzt main.js, gedämpft) zur Farbwelt
+`inhalt`; danach friert main.js das Bild ohnehin ein. Farben werden linear gemischt, Zahlen und Punkte ebenso; die Dynamik pro
+Beat wirkt als Faktor auf die Werte der jeweiligen Farbwelt.
+
+**Was das Modul ausserhalb setzt:** nur `scene.fog.color` (Nebelfarbe der Farbwelt, entfernte Objekte mit `fog: true` laufen
+in den Hintergrund statt gegen Schwarz). Lichtfarben, Looks und Belichtung der anderen Szenen bleiben unberührt (das Modul hat
+keinen `look`). Eigene Looks pro Beat (BEAT_LOOKS aus dem Konzept Version 2) waren nicht nötig: Belichtung, Bloom und
+Vignette der Szenen passen zu den Farbwelten, die Android-Büste bleibt so, wie Jonas sie freigegeben hat.
+
+**Lesbarkeit.** Der Shader liest `director.scrim` und macht Muster (Nebel, Strahlen, Punkte, Raster) in der Textzone bis
+75 % leiser; der FxPass dunkelt dort zusätzlich ab. Helligkeit linear vor dem Tonemapping: Flächen bis etwa 0.06, nur
+Halo-Kern, Lichtpakete, Sterne und Bokeh werden heller. Gemessen am 30.10.2026 (Desktop 1440 x 900, Panels ausgeblendet,
+Scrim aktiv, relative Leuchtdichte im Textblock, Kontrast für Fliesstext #d3dee6 gegen den 95-%-Wert): robot 12.7:1,
+zoom 12.6:1, brain 11.6:1, cables 14.2:1, dna 12.0:1; Weiss gegen das Mittel überall mindestens 14:1. Im Hero liegt der
+Titel teilweise über der Partikel-Büste (Vordergrund), der Kontakt im Ausklang steht in seinem eigenen Panel.
+
+**Qualität.** high: alle Bausteine, Nebel 3 Rauschzugriffe, Strahlen 2. medium (Handy): Nebel 2, Strahlen 2, ohne die
+dritte Nebelschicht. low: Verlauf, 1 Nebelschicht, Strahlen einfach, ohne Staub, ohne Lichtpakete und ohne Code-Zeichen
+(nur gemittelte Deckung). Immer 1 Draw Call. Falls ein Handy das nicht schafft: Hintergrund in halber Auflösung in ein eigenes
+RenderTarget rechnen und hochskalieren (weich genug, noch nicht nötig).
+
+**Ändern.** Stimmung einer Szene: nur `BACKDROPS` in config.js. Neue Bausteine: Uniform in `backdrop-glsl.js`, Schlüssel in
+`BASE`, `NUMS` oder `COLORS` von backdrop.js, Wert in den Farbwelten. Testen: `dev.html?scene=backdrop` (alle Farbwelten
+über den Regler), `dev.html?scene=all&at=brain@0.3`, Vergleich ohne Hintergrund `&bg=0`.
+
+**Poster:** Fallback-Poster (`assets/img/poster-*.webp`, Desktop und Hochformat) und OG-Bild am 30.10.2026 mit den neuen
+Farbwelten neu gerendert (`S/tools/make_posters.sh`, Kapitel 10). Nebeneinander sind die sieben Kapitel klar unterscheidbar.
+Für Version 3 (Integration) nochmals neu gerendert, zusammen mit dem OG-Bild.

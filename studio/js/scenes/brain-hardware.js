@@ -10,7 +10,7 @@
 //   Rundstecker  am Kabelaustritt (ANCHORS.cableRoot): Raendelring, 5 Buchsen, aus denen die Kabel kommen
 //   Platinen     2 Schlaefenplatinen, 1 Rueckplatine (Leiterbahnen, Chips, Kuehlrippen, Heatpipes, Luefter, LEDs)
 //   Kabel        12 Elektroden-Kabel in die Rinde (Lichtpaket vom Gehirn zur Platine), 3 geflochtene Stamm-Buendel,
-//                Flachbandkabel vom Visier zum Ring
+//                Flachbandkabel von der Optik-Platine zwischen den Augen zum Ring
 // Ein Draw Call fuer alle festen Teile (brain-hw-shaders.js), einer fuer die Leuchtpunkte.
 import { makeBrainProbe, ARR_SCALE, CASCADES } from './brain-build.js';
 import { KIND, makeHardwareMaterial, makeGlowMaterial } from './brain-hw-shaders.js';
@@ -925,12 +925,13 @@ export function buildHardware(o) {
     }
   }
 
-  /* ================================================================== 8. Flachbandkabel vom Visier zum Ring */
+  /* ================================================================== 8. Flachbandkabel von der Optik zum Ring */
   {
     const front = ringAt(0);
-    // Start an der Rueckseite der LED-Platine (0.022 hinter der Huelle in der Visiermitte, robot-geometry VISOR.boardOff)
-    const p0 = V(0, -0.19, 0.902);
-    const pts = smoothPath(THREE, [p0, V(0, -0.15, 0.8), V(0, -0.165, 0.68), front.clone().add(V(0, 0.013, -0.004))], S(40, 20));
+    // Start an der Optik-Platine zwischen den Augen der Android-Bueste (Welt etwa 0, 0, 0.74: hinter der Nasenwurzel,
+    // innerhalb der Schale, Augen bei x +-0.30)
+    const p0 = V(0, -0.235, 0.8);
+    const pts = smoothPath(THREE, [p0, V(0, -0.205, 0.72), V(0, -0.19, 0.64), front.clone().add(V(0, 0.013, -0.004))], S(40, 20));
     const F = planarFrames(THREE, pts, V(1, 0, 0), V(0, -0.6, 0.5));
     B.sweep(pts, F, rrect(0.003, 0.12, 0.0012, 1), mat(cGr.clone().multiplyScalar(0.9), 0, 0.5, KIND.FLEX), {
       uvy: (qq) => 0.5 + qq.y / 0.12,

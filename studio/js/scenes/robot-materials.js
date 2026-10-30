@@ -502,7 +502,7 @@ void main() {
 export function makeMechMaterial(THREE, U, params, kind = 'metal', key = '') {
   const m = new THREE.MeshPhysicalMaterial(params);
   m.onBeforeCompile = (sh) => {
-    for (const k of ['uHeadMat', 'uBreath', 'uScanY', 'uFall', 'uTime', 'uGelHi', 'uPulse', 'uMechDim', 'uMechCut']) sh.uniforms[k] = U[k];
+    for (const k of ['uHeadMat', 'uBreath', 'uScanY', 'uFall', 'uTime', 'uGelHi', 'uPulse', 'uMechDim', 'uMechCut', 'uMechFade']) sh.uniforms[k] = U[k];
     sh.vertexShader = sh.vertexShader
       .replace('#include <common>', `#include <common>
 ${DEFORM_PARS}
@@ -514,10 +514,27 @@ vRest = position; vU = aUv2;`);
     sh.fragmentShader = sh.fragmentShader
       .replace('#include <common>', `#include <common>
 uniform float uScanY; uniform vec2 uFall; uniform float uTime; uniform vec3 uGelHi; uniform vec4 uPulse; uniform float uMechDim;
-uniform float uMechCut;
-varying vec3 vRest; varying vec2 vU;`)
+uniform float uMechCut; uniform float uMechFade;
+varying vec3 vRest; varying vec2 vU;
+// Werterauschen fuer das Aufloesen der Mechanik (Kamera taucht ins Gehirn), ohne Textur
+float abFadeN(vec3 p) {
+  vec3 i = floor(p); vec3 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+  float n = dot(i, vec3(1.0, 57.0, 113.0));
+  vec4 a = fract(sin(vec4(n, n + 1.0, n + 57.0, n + 58.0)) * 43758.5453);
+  vec4 b = fract(sin(vec4(n + 113.0, n + 114.0, n + 170.0, n + 171.0)) * 43758.5453);
+  vec4 m = mix(a, b, f.z);
+  vec2 q = mix(m.xy, m.zw, f.y);
+  return mix(q.x, q.y, f.x);
+}`)
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
 if (vRest.y < uFall.x || vRest.y > uMechCut) discard;
+if (uMechFade > 0.0) {
+  // Aufloesen mit feiner Leuchtkante statt hartem Verschwinden am Ende des Fensters
+  float dn = abFadeN(vRest * 11.0) * 0.7 + abFadeN(vRest * 37.0) * 0.3;
+  float th = uMechFade * 1.2 - 0.1;
+  if (dn < th) discard;
+  totalEmissiveRadiance += uGelHi * 3.0 * (1.0 - smoothstep(0.0, 0.035, dn - th)) * step(0.001, uMechFade);
+}
 ${key.endsWith('-scan') ? 'if (vRest.y > uScanY) discard;' : ''}
 ${kind === 'gel' ? `{
   // Fasern entlang des Strangs, zwei Lagen, Impulse laufen nach unten

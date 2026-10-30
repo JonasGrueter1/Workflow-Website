@@ -1,12 +1,12 @@
 // Szene "particles": Zielpunkte der Partikel-Bueste (Hero) und des Partikel-Aufbaus im Beat robot.
 // Form der Android-Bueste der Szene "robot": Punkte auf der Bueste (assets/robot/bust.bin), Linien entlang der
-// Gesichtsplatten, Lidfalten und Plattenkanten, helle Punkte in den Augen (Art "visor", leuchtet am staerksten),
+// Gesichtsplatten, Lidfalten und Plattenkanten, helle Punkte in den Pupillen (Art "eye", leuchtet am staerksten),
 // Sensormodule, Hals-Mechanik und das Kabelbuendel im Nacken.
 // Die Bueste kommt aus robot-mesh.js (einmal geladen und geglaettet, top-level await), sampleRobot bleibt synchron.
 import { bustLevel1 } from './robot-mesh.js';
 import { LAYOUT } from './robot-layout.js';
 
-export const KIND = Object.freeze({ surface: 0, line: 1, visor: 2, dust: 3, far: 4 });
+export const KIND = Object.freeze({ surface: 0, line: 1, eye: 2, dust: 3, far: 4 });
 
 export function mulberry32(seed) {
   let a = seed >>> 0;
@@ -182,7 +182,7 @@ export function sampleRobot(THREE, A, count, rnd) {
     const ringPt = rnd() < 0.8;
     const r = ringPt ? 0.056 + (rnd() - 0.5) * 0.006 : Math.sqrt(rnd()) * 0.016;
     const z = Math.sqrt(Math.max(0, 0.128 * 0.128 - r * r));
-    put([e[0] + Math.cos(a) * r, e[1] - 0.01 + Math.sin(a) * r, e[2] - 0.004 + z], [0, 0, 1], ringPt ? KIND.line : KIND.visor, 1);
+    put([e[0] + Math.cos(a) * r, e[1] - 0.01 + Math.sin(a) * r, e[2] - 0.004 + z], [0, 0, 1], ringPt ? KIND.line : KIND.eye, 1);
   }
   // Sensormodule an den Ohren: Chrom-Ring und Rand
   const ears = lm.ears || [];
