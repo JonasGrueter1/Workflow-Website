@@ -1,4 +1,4 @@
-# Studio: Architektur und Schnittstellen (Version 4)
+# Studio: Architektur und Schnittstellen (Version 3.2)
 
 Immersive Website von Jonas Grüter. Diese Datei ist der Vertrag zwischen Fundament und Szenen-Entwicklern.
 Wer eine Szene baut, ändert nur seine Datei `js/scenes/<name>.js`. Alles andere läuft über die Schnittstellen unten.
@@ -142,7 +142,7 @@ Der Director misst die Abschnitte und rechnet Start/Ende in `global` um. Nominal
 
 | Beat | len (vh) | start | end | Inhalt |
 | --- | --- | --- | --- | --- |
-| intro | 120 | 0.0000 | 0.1111 | Hero: Partikel-Büste (Android-Form, Augen und Plattenlinien, atmet, folgt der Maus), Titel, Buttons |
+| intro | 120 | 0.0000 | 0.1111 | Hero: Partikel-Büste, im ersten Bild fertig geformt (Kopf, Fugen, Augenpartie, Rand der Hinterkopf-Öffnung scharf; Kabel fliessen weg, atmet, folgt der Maus), Titel, Buttons |
 | robot | 180 | 0.1111 | 0.2778 | Partikel formen die Android-Büste (Hologramm, dann fest), Dreiviertelansicht, Maus-Reaktion |
 | zoom | 170 | 0.2778 | 0.4352 | Profil mit offenem Hinterkopf und Kabeln, Röntgen-Scan, Gehirn in der Hardware, Kamera kreist nach vorne rechts oben |
 | brain | 150 | 0.4352 | 0.5741 | Dreiviertelansicht des Gehirns in der Röntgen-Schale, Eintauchen, Flug hinten hinaus |
@@ -220,7 +220,7 @@ der Mitte (Blickziel nach links versetzt); im Hochformat steht der Text unten, d
 | dna@0.74 | (0, 0.44, -29.25) | (0, 0.3, -36) | 41 | pos (0, 0.5, -28.85), look (0, -0.5, -36) | Gerüst fertig oben im Bild, darunter die Angebotszeile |
 | dna@1 | (0, 0.42, -29.45) | (0, 0.3, -36) | 41 | pos (0, 0.5, -29.05), look (0, -0.5, -36) | |
 | outro@0 (Schnitt) | (0.5, 0.05, 4.5) | (-0.22, -0.27, 0.03) | 34 | pos (0.5, 0.2, 6.6), look (0.01, -1.95, 0.09) | Gesicht nah, die Augen erwachen im Lichtblitz |
-| outro@1 | (3.7, -0.3, 7.9) | (-1.19, -0.75, 0.56) | 31 | pos (3.9, 0.2, 9.6), look (0.06, -2.95, 0.15) | ruhige Dreiviertelansicht leicht von unten, Büste rechts, Blick wandert zum Kontakt; Hochformat: Kopf kleiner gerahmt, oben |
+| outro@1 | (3.7, -0.3, 7.9) | (-1.19, -0.75, 0.56) | 31 | pos (3.9, 0.2, 9.6), look (0.06, -3.2, 0.15) | ruhige Dreiviertelansicht leicht von unten, Büste rechts, Blick wandert zum Kontakt; Hochformat: Kopf kleiner gerahmt, oben |
 
 **Lens-Shift für andere Seitenverhältnisse:** Die Keys sind für 1440 x 900 komponiert (Text links endet bei ~41 % der Breite,
 rechts beginnt er bei ~59 %). Der Director misst bei jedem Refresh, wie weit die Text-Panels tatsächlich reichen
@@ -242,11 +242,17 @@ es kaum Strecken ohne Text). Eigene Fenster über `BEATS[].text = [ein0, ein1, a
 ganz weg, bevor die Kamera eintaucht), `cables` ([0.14, 0.24, 0.46, 0.6]: Text erst, wenn die Übersicht steht),
 `dna` ([0.02, 0.12, 0.4, 0.54]: weg, bevor das Gerüst entsteht).
 
-**Hochformat (Version 4):** Die Strecke ist dort rund 28 % kürzer (CSS `.gl .chapter { height: calc(var(--len) * 0.72vh) }`,
-der Director misst die echten Höhen). Panels ohne eigenes Fenster blenden erst bei p 0.84 bis 0.97 aus: der Text bleibt
-stehen, bis er mit dem Abschnitt nach oben wegscrollt und das nächste Panel kommt (kaum Bilder ohne Satz). Eigene
-Hochformat-Fenster über `BEATS[].textM` (brain [0.02, 0.12, 0.3, 0.42], cables [0.1, 0.2, 0.8, 0.94]). Oben rechts unter
-der Kopfzeile steht während der Story der Link `.story-skip` "Animation überspringen" (auf #leistungen). Das letzte Panel (outro) bleibt stehen und scrollt mit dem
+**Hochformat (Version 3.1):** Die Strecke ist dort rund 28 % kürzer (CSS `.gl .chapter { height: calc(var(--len) * 0.72vh) }`,
+der Director misst die echten Höhen). Die Panels (ausser Ausklang) stehen dort **fix unten** statt zu kleben
+(`position: fixed`), ohne eigenes Fenster blenden sie erst bei p 0.84 bis 0.97 aus: der Text bleibt stehen, bis das
+nächste Panel kommt, und scrollt nie über das Motiv oben (kaum Bilder ohne Satz). Der Scrim wandert dort nicht mit.
+Eigene Hochformat-Fenster über `BEATS[].textM` (brain [0.02, 0.12, 0.3, 0.42], cables [0.1, 0.2, 0.8, 0.94]). Oben rechts
+steht während der Story unten rechts unter dem Text-Panel der Link `.story-skip` "Animation überspringen" (auf
+#leistungen). Seit Version 3.2 nicht mehr oben rechts (dort lag er auf dem Kopf des Androiden) und nur zwischen Hero und
+Ausklang: im Hero führt "Direkt zu den Leistungen" an der Strecke vorbei, im Ausklang ist die Animation vorbei, neben der
+Angebotszeile (`html.offer-on`) ist er ebenfalls aus. main.js setzt dafür `html[data-beat]` (aktueller Beat).
+
+Das letzte Panel (outro) bleibt stehen und scrollt mit dem
 Inhalt weg. In unsichtbaren Panels haben Links und Buttons `tabindex="-1"` (kein Tab-Fokus), das setzt `ui.panel()`.
 Kein `inert`: Überschriften und Texte bleiben im Accessibility-Baum, Screenreader lesen alle Kapitel.
 
@@ -256,7 +262,9 @@ Fixpreis-Offerte." mit Button "Kostenlosen Entwurf anfragen". Die Kamera-Keys dn
 
 **Abdunkeln hinter dem Text (Scrim):** Der Director misst die Lage jedes `.chapter__text` im klebenden Panel und liefert
 `director.scrim` (Mitte und halbe Grösse in UV, Stärke = `--o` x `BEATS[].scrim`). Der FxPass dunkelt dort das Bild weich ab
-(Neuronen, Code-Zeichen hinter dem Text). Dazu der CSS-Verlauf `.chapter__text::before` (0.78) und im Hochformat ein
+(Neuronen, Code-Zeichen hinter dem Text). Hero nur 0.1 (Version 3.2: der stärkere Scrim reichte bis über den Kopf der
+Partikel-Büste und machte ihn grau). Im Hochformat halb so stark, im Ausklang dort gar nicht: die Texte stehen auf einer
+eigenen, fast deckenden Fläche, der volle Scrim lag sonst über dem Gesicht oben im Bild. Dazu der CSS-Verlauf `.chapter__text::before` (0.78) und im Hochformat ein
 linearer Verlauf vom unteren Rand (`.chapter__panel::before`). Die Kabel-Labels weichen derselben Zone aus. Die Wörter steigen per GSAP aus einer Maske auf (`js/ui.js`, `panel()`); `gsap.ticker.lagSmoothing(0)`
 sorgt dafür, dass das in echter Zeit läuft, auch wenn ein 3D-Frame länger dauert.
 
@@ -278,6 +286,11 @@ Bild-Pipeline: Szene rendert linear in HalfFloat (HDR) -> UnrealBloom -> OutputP
   Faustregel: 1.5 = sanfter Schein, 3 = deutlicher Glow, 5 = sehr hell (Funken, Impulse). Flächen unter ~0.7 leuchten nicht.
 - Additive Partikel (`AdditiveBlending`, `depthWrite: false`) summieren sich: bei vielen Punkten die Farbe eher tief halten.
 - Pro Szene über `look`: `bloom` (Stärke), `bloomRadius`, `bloomThreshold`.
+- **Nie NaN oder Unendlich ins Bild:** Ein einziger solcher Bildpunkt wird im Bloom zu grossen schwarzen Rechtecken
+  (Abnahme Version 3: `exp(-abEdge / 0.0045)` in der Schale lief an Öffnungen mit negativem Abstand gegen Unendlich, mal 0
+  auf der Innenseite gab NaN, sichtbar bei zoom@0.24 bis 0.31). Argumente von `exp()` begrenzen (`max(x, 0.0)`), keine
+  Division durch Werte, die 0 werden können, und `pow()` nur mit Basis ab 0. Prüfen: `S/fuer-jonas-tools/nanprobe.js beat@p,...`
+  rendert die Szene in ein Float-Ziel und nennt die Objekte mit NaN/Inf.
 
 **Look-Werte** (`BASE_LOOK` in config.js). Eine Szene setzt in `api.look` nur, was sie ändern will, und darf die Werte pro Frame anpassen.
 
@@ -322,8 +335,8 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
 
 | Stufe | Wann | DPR | MSAA | Partikel-Faktor | Aberration | Roboter |
 | --- | --- | --- | --- | --- | --- | --- |
-| high | Desktop (Maus, Fenster ab 760 px, auch 1280 x 800) | bis 2, Budget 3.5 MP | 4x, nur wenn DPR unter 1.5 | 1 | ja | Büste 2 x Catmull-Clark (~69k Ecken), 112 Kabel, Klarlack 1.0 (Rauheit 0.06), Muskel-Innenstruktur, Hologramm auf Stufe 1 |
-| medium | Touch (`pointer: coarse`) oder Fenster unter 760 px | bis 1.5 | nein, dafür FXAA | 0.5 | nein | 1 x Catmull-Clark, 44 Kabel, ohne Klarlack (Grundschicht glatter, 0.2), ohne Rillen und Innenstruktur (`AB_CHEAP`), Fresnel und Fasern im Gel bleiben |
+| high | Desktop (Maus, Fenster ab 760 px, auch 1280 x 800) | bis 2, Budget 3.5 MP | 4x, nur wenn DPR unter 1.5 | 1 | ja | Büste 2 x Catmull-Clark (~69k Ecken), 76 Kabel (Version 3.2, vorher 112), Klarlack 1.0 (Rauheit 0.06), Muskel-Innenstruktur, Hologramm auf Stufe 1 |
+| medium | Touch (`pointer: coarse`) oder Fenster unter 760 px | bis 1.5 | nein, dafür FXAA | 0.5 | nein | 1 x Catmull-Clark, 36 Kabel, ohne Klarlack (im Ausklang glatter, Rauheit 0.11, mehr Spiegelung) (Grundschicht glatter, 0.2), ohne Rillen und Innenstruktur (`AB_CHEAP`), Fresnel und Fasern im Gel bleiben |
 | low | 2 GB RAM oder 2 Kerne | 1 | nein, FXAA | 0.25 | nein | wie medium |
 
 - Bloom läuft immer in halber Auflösung (UnrealBloom intern), Stufe low noch etwas kleiner.
@@ -335,13 +348,17 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
   über 1.2 x Basis (40 ms) senken und unter 1.05 x Basis wieder anheben. Sonst würde die Auflösung ohne Grund aufs Minimum fallen.
 - MSAA nur auf `composer.renderTarget1` (dort rendert die Szene), `renderTarget2` bekommt nur fertige Vollbild-Passes (0 Samples).
   FXAA läuft ohne MSAA bis DPR 1.75 (z. B. MacBook 1440 x 900 bei DPR 1.64, dort ist MSAA aus).
-- Langsamer Start (Version 4): iOS liefert kein `navigator.deviceMemory`, jedes iPhone landet auf medium. Liegt der Median
+- Langsamer Start (Version 3.1): iOS liefert kein `navigator.deviceMemory`, jedes iPhone landet auf medium. Liegt der Median
   der ersten 45 Bilder (nicht gedrosselt) über 45 ms, rendert die Engine sofort wie Stufe low (`engine.slowStart`: MSAA aus,
   DPR-Skala 0.62). Die Szenen bleiben auf ihrer Stufe (ein Umbau zur Laufzeit wäre teurer als der Gewinn).
-- Ladezeit (Version 4): Catmull-Clark der Büste läuft im Web Worker (`robot-mesh-worker.js`, Ergebnisse als Transferables),
+- Ladezeit (Version 3.1): Catmull-Clark der Büste läuft im Web Worker (`robot-mesh-worker.js`, Ergebnisse als Transferables),
   Stufe 1 für alle, Stufe 2 nur auf high. Fällt der Worker aus (kein Modul-Worker, Fehler, 9 s ohne Antwort), rechnet der
   Hauptthread. Ohne `KHR_parallel_shader_compile` kompiliert `engine.warmup()` Szene für Szene mit einem Bild Pause
   dazwischen (kein langer Block). Die Mechanik-Materialien teilen Programme (Schlüssel nur aus kind und '-scan').
+- Shader-Vorkompilierung (Version 3.2): `engine.warmup()` kompiliert mit dem Render-Target des Composers. Vorher ohne Ziel
+  (Bildschirm): three.js baute dann jedes Programm mit ACES und sRGB-Ausgabe, die Szene rendert aber linear in den
+  Composer. Ergebnis war jedes Programm doppelt (94), die richtigen entstanden erst beim ersten Bild. Jetzt 53 Programme
+  auf high und medium, nach einem Durchlauf durch alle Beats kommt keines dazu (`renderer.info.programs.length`).
 - Sicherheitsnetze in `main.js`, alle führen in denselben statischen Fallback (`toFallback`: Loop und ScrollTrigger weg,
   Director und Szenen entsorgt, Overlay geleert, GSAP-Stile entfernt, Panels bedienbar):
   Start über 15 s, WebGL-Kontext verloren, FPS-Wächter (trotz kleinster Auflösung 3 s lang unter 20 fps).
@@ -368,9 +385,25 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
   | Im Gehirn (brain@0.75) | 29 Calls, 143k, 61k Punkte | |
   | Ausklang | 42 Calls, 526k | 42 Calls, 136k |
 
-  Das Röntgen ist die teuerste Stelle (Büste, Gehirn und Gehirn-Hardware gleichzeitig). Pro Frame keine Allokationen
-  (Director, Runner, Szenen und Mechanik verwenden ihre Objekte wieder).
-- `vendor/three/addons` enthält seit Version 4 nur noch die 12 genutzten Dateien (vorher rund 890 KB Ballast).
+  Version 3.1 (dev.html mit Hintergrund, high): Büste fest 44 Calls, 441k Dreiecke (vorher 528k); Röntgen zoom@0.6 50 Calls,
+  579k (vorher 773k, jetzt unter dem Budget von 600k). Grund: Muskel-Gel nur in den Öffnungen, Hologramm auf Stufe 1.
+  Das Röntgen ist die teuerste Stelle (Büste, Gehirn und Gehirn-Hardware gleichzeitig). Director, Runner, Szenen und
+  Mechanik legen pro Bild keine Objekte an (Vektoren, Matrizen, Farben werden wiederverwendet). Ganz ohne Garbage ist ein
+  Bild trotzdem nicht: three.js selbst (Render-Listen, Matrizen, Uniform-Upload) und Zahlenwerte in JS-Objekten erzeugen
+  pro Bild kurzlebige Daten. Gemessen in Runde 2 (medium, 960 x 600, `S/review-tech-scripts/garbage2.js`): vorher 102 KB
+  (robot@0.75), 90 KB (zoom@0.6), 70 KB (cables@0.4); nach Version 3.2 rund 74, 75 und 71 KB. Hauptgrund für die
+  Verbesserung: kein Material wird mehr von verschiedenen Programmen geteilt (siehe unten), `getParameters` läuft nicht
+  mehr pro Bild.
+- **Ein Programm pro Material (Version 3.2):** three.js wechselt das Programm eines Materials, sobald es an Objekten mit
+  anderen Parametern hängt (InstancedMesh und Mesh, DoubleSide transparent in zwei Durchgängen). Darum haben die Kolben
+  (InstancedMesh) eigene Chrom- und Graphit-Materialien, Schale und Glaskappe sind je zwei Meshes mit einer Seite pro
+  Material (aussen `FrontSide`, innen `BackSide`, Innenseite zuerst bzw. Schale aussen zuerst). Prüfen:
+  `renderer.properties.get(material).programs.size` muss für jedes Material 1 sein.
+- **Schale in zwei Draws (Version 3.2):** erst die Aussenseite (renderOrder 2), dann die Innenseite (3). Verdeckte
+  Innenflächen verwirft der Tiefentest, die teure Beleuchtung läuft nur noch dort, wo man durch eine Öffnung hineinsieht
+  (vorher DoubleSide in einem Durchgang: jede Rückseite wurde voll schattiert). Die Innenhaut blendet bei ganz streifendem
+  Blick aus (keine zwei hellen Lagen als Spitzen an dünnen Kanten).
+- `vendor/three/addons` enthält seit Version 3.1 nur noch die 12 genutzten Dateien (vorher rund 890 KB Ballast).
 - Seitengewicht beim ersten Laden (mit 3D, ungezippt): rund 1.7 MB inklusive `bust.bin` (76 KB), davon three.js 690 KB,
   GSAP 115 KB, Schriften 52 KB. GitHub Pages liefert gzip: rund 0.57 MB über die Leitung. Poster und `og.jpg` lädt nur der
   Fallback bzw. ein Link-Vorschau-Dienst.
@@ -378,7 +411,9 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
   letztes Bild gerendert und dann angehalten, bis man wieder in die Story scrollt. Karten und Formular verzichten dort auf
   `backdrop-filter`.
 - Ladekette: Der Kopf von index.html legt mit 3D `modulepreload`-Links für three.js, Engine, Addons und alle Szenen an
-  (alles parallel statt als Kette). Im Fallback wird nichts davon geladen.
+  (alles parallel statt als Kette). Im Fallback wird nichts davon geladen. Die Import-Map steht **vor** diesem Skript:
+  sonst kann ein vorgeladenes Modul `three` auflösen, bevor die Map bekannt ist (selten, unter Last beobachtet: Fehler
+  "Failed to resolve module specifier three", Start im Fallback).
 
 ## 8. Konventionen
 
@@ -423,7 +458,7 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
 - Überschriften mit `data-split`: ganzer Satz als `aria-label`, die Wort-Spans sind `aria-hidden` (VoiceOver liest sonst Wort für Wort).
 - Über mich: Platz für ein Porträt ist vorbereitet (auskommentierter `<figure class="portrait">` in index.html, CSS steht).
   Foto `assets/img/jonas.webp` (4:5) muss Jonas liefern. Arbeitsproben echter Entwürfe nur mit Freigabe des Betriebs.
-- Version 4: Skip-Link "Zum Inhalt springen" auf `main#inhalt` (H1 und Hero-Buttons zuerst). Navigation: genau ein aktiver
+- Version 3.1: Skip-Link "Zum Inhalt springen" auf `main#inhalt` (H1 und Hero-Buttons zuerst). Navigation: genau ein aktiver
   Link (letzter sichtbarer Abschnitt) mit `aria-current="true"`. Ergebnis im Fallbeispiel ist ein `div` (kein `aside` in
   `main`). Formular: "Firma (freiwillig)", unter dem Telefon der Hinweis auf den Rückruf, unter dem Formular und im Footer
   Links auf `impressum.html` und `datenschutz.html`. Farb-Echos der Abschnitte blenden oben weich ein (`mask-image`).
@@ -456,6 +491,11 @@ Für Code-Zeichen in Texturen (DNA): `document.fonts.load('500 64px "Geist Mono"
 - Hero: Hauptbutton "Kostenlosen Entwurf anfragen" (#kontakt), zweiter Button "Direkt zu den Leistungen" (#leistungen,
   Sprung an der 3D-Strecke vorbei), darunter die Mono-Zeile "Kostenloser Entwurf vorab · Fixpreis · Persönlich betreut".
 - Eigener Cursor: nur ein dekorativer Ring, der Systemzeiger bleibt sichtbar.
+- Hero (Version 3.2): der dunkle Verlauf hinter dem Hero-Text (`.chapter--intro .chapter__text::before`) reicht rechts
+  nur noch 3 % über den Titel hinaus. Vorher lag er bis über die Partikel-Büste und machte sie grau (Kopf Mittel 62, jetzt
+  177 auf dem Desktop, 162 im Hochformat).
+- Ausklang (Version 3.2): ab `html[data-beat="outro"]` zeigt die Kopfzeile ihre feste Leiste (`::after`), die
+  Angebotszeile ist dort aus.
 
 ## 10. Testen
 
@@ -470,8 +510,9 @@ python3 S/lead/convert_posters.py && node S/studio/og/render.js   # PNG -> WebP-
 node S/lead/techcheck.js S/lead/tech   # Tab-Reihenfolge, Kontextverlust, Handy-Menue, Formular-Timeout, ?glcheck
 ```
 
-Poster (Reihenfolge in make_posters.sh = intro, robot, zoom, brain, cables, dna, outro): intro@0.45, robot@0.95, zoom@0.85,
-brain@0.3, cables@0.4, dna@0.4, outro@0.7, OG-Hintergrund intro@0.45 (Partikel-Büste, 1200 x 630).
+Poster (Reihenfolge in make_posters.sh = intro, robot, zoom, brain, cables, dna, outro): intro@0.06, robot@0.95, zoom@0.85,
+brain@0.3, cables@0.4, dna@0.4, outro@0.7, OG-Hintergrund intro@0.06 (Partikel-Büste im Ruhezustand des Hero, 1200 x 630;
+seit Version 3.2 ist das erste Bild selbst das stärkste, vorher intro@0.45).
 
 Design-Abnahmen immer mit fester Stufe aufnehmen (`studio/?q=high` Desktop, `studio/?q=medium` Handy): sonst senkt die
 adaptive Auflösung in SwiftShader die DPR auf 0.6 bis 0.75 und die Bilder sind weicher als auf echten Geräten.
@@ -533,18 +574,18 @@ Hinterkopf mit Schädelgitter und Kabelbündeln. Der frühere Helm-Roboter und V
   nur eine halb so tiefe Falte (`lSeamK`).
 - Poster (Fallback) und OG-Bild am 30.10.2026 mit der Android-Büste neu gerendert (Kapitel 10, `make_posters.sh`), für
   Version 3 nach den letzten Änderungen (Hero-Linien, Kern, Flachbandkabel) noch einmal.
-- Budget der Szene allein (gemessen in dev.html, Version 4): high 44 Draw Calls, rund 441k Dreiecke (vorher 526k, Gel nur in
+- Budget der Szene allein (gemessen in dev.html, Version 3.1): high 44 Draw Calls, rund 441k Dreiecke (vorher 526k, Gel nur in
   den Öffnungen); im Röntgen mit Gehirn rund 579k (vorher 796k).
 - Eintauchen ins Gehirn: Die Mechanik (Schädelgitter, Kabel, Hals, alle Materialien aus `makeMechMaterial`) löst sich von
-  brain@0.4 bis 0.58 mit Rauschen und feiner Leuchtkante auf (`uMechFade`). Ohne das standen Gitter und Kabel von innen
+  brain@0.3 bis 0.45 (Version 3.2, vorher 0.4 bis 0.58) mit feinem Korn und leiser Kante auf (`uMechFade`). Ohne das standen Gitter und Kabel von innen
   gross im Bild und verschwanden am Ende des Fensters (brain@0.6 plus Rampe, rund brain@0.71) schlagartig.
 - Übergang Partikel zu Büste: gleiche Form (`particles-shape.js` tastet dieselbe Büste ab), gleicher Drehpunkt und dieselbe
   Kopfbewegung. Partikel treten zurück, sobald das Hologramm erscheint (robot@0.05 bis 0.22), und gehen an der Abtastebene
   (robot@0.26 bis 0.64) in die feste Schale über. Im Hero zeichnen hellere Linien-Partikel Fugen, Augenringe und
   Plattenkanten nach, die Pupillen leuchten ruhig; der Kern im Kopf ist bei fertiger Form auf ein Drittel gedimmt.
-- Kabel im Nacken: siehe Version 4 unten (Fächer aus vier Steckerleisten statt sieben Strängen).
+- Kabel im Nacken: siehe Version 3.1 unten (Fächer aus vier Steckerleisten statt sieben Strängen).
 
-### Version 4 (Runde 1 der Prüfer, 30.10.2026)
+### Version 3.1 (Runde 1 der Prüfer, 30.10.2026)
 
 - **Schale:** weisse Glanzschale (Albedo um 0.85, kaum Blaustich), Klarlack 1.0 mit Rauheit 0.06 (nur high; medium ohne
   Klarlack, Grundschicht 0.2). Helligkeit auf der Seite gemessen: Stirn rund 207, Wange 191 (vorher 113 und 88, Ziel
@@ -562,7 +603,7 @@ Hinterkopf mit Schädelgitter und Kabelbündeln. Der frühere Helm-Roboter und V
 - **Muskel-Gel:** dunkler Kern, helle Fresnel-Kanten (0.5), zweite Faserlage tiefer im Gel (Parallaxe), feinere Glanzlichter
   (Rauheit 0.12). Halsmuskeln mit schmalen Sehnen und Chrom-Hülsen an Schädel und Brustbein. Das Gel-Netz entsteht nur dort,
   wo die Schale offen ist (`openFieldJS`/`deepOpenJS` in robot-layout.js, gleiche Formeln wie GLSL, plus Rand 0.075).
-- **Hinterkopf:** vier Steckerleisten am Kamm (Graphit, Chromrahmen, Status-Punkt), daraus fächern 112 (medium 44) Kabel nach
+- **Hinterkopf:** (Kabel in Version 3.2 neu, siehe unten) vier Steckerleisten am Kamm (Graphit, Chromrahmen, Status-Punkt), daraus fächern 112 (medium 44) Kabel nach
   hinten und unten auf: eigene Lage, eigener Durchhang (Buckel früh, bis rund 0.38), 4 Rillenschläuche, Chromstecker, zwei
   Schellen um die mittleren Gruppen, unten im Rückenschlitz zusammen. Kabel beginnen hinter der Innenschale (keine offenen
   Enden zwischen den Stäben). Gitterstäbe mit Lochreihe und Chrom-Manschetten (`lattice`), Querstreben in Chrom, drei kleine
@@ -570,18 +611,56 @@ Hinterkopf mit Schädelgitter und Kabelbündeln. Der frühere Helm-Roboter und V
   Vertex-Shader um etwa einen halben Bildpunkt aufgeweitet (`uRes`): kein Moiré und kein Flimmern in der Ferne.
 - **Hologramm:** Rückseiten zeichnen keine Linien mehr (vorher schienen die Schulterblatt-Fugen als zwei Kreise durch die
   Brust), Lidfuge fast unsichtbar (keine "Taucherbrille"). Netz auf Stufe 1 (spart auf high rund 100k Dreiecke).
-- **Partikel-Hero:** kein leuchtender Kern mehr. Linien (Gesichtsplatten, Plattenkanten, Rand der Hinterkopf-Öffnung) doppelt
-  so hell wie die Flächen, Kantenlicht von rechts hinten, Kabel als Linienpunkte im Fächer, die langsam nach hinten unten
-  wegfliessen (`KIND.cable` 1.25). Augen ohne Ringlinie.
+- **Partikel-Hero:** (in Version 3.2 geschärft, siehe unten) kein leuchtender Kern mehr. Alle Linienpunkte (Gesichtsplatten, Plattenkanten, Rand der
+  Hinterkopf-Öffnung) sind im Hero da, gross und hell (Rumpf-Linien halb so hell, sonst Flecken am Schulterring), Flächen
+  leiser, Kantenlicht von rechts hinten. Der Kopf steht im Hero um 0.55 rad zum Text gedreht (Dreiviertelansicht) und dreht
+  bis intro@0.95 in die Ruhelage zurück (Übergabe an das Hologramm deckungsgleich). Kabel als Linienpunkte im Fächer, die
+  langsam nach hinten unten wegfliessen (`KIND.cable` 1.25). Augen ohne Ringlinie.
 - **Ausklang:** Kantenlicht gold (`look.rimWarm` 0.85), Farbwelt outro neutraler (base #07080a, mid #151210, Gold nur als
   Horizont und Gegenlicht rechts). Blick erst zur Kamera, ab outro@0.32 langsam zum Kontakt (links neben der Kamera, im
   Hochformat darunter), der Kopf dreht leicht mit (`ms.gazeAt`). Handy: heller (Belichtung 1.2, key 0.36).
-- **Röntgen im Hochformat:** der Rumpf blendet im Röntgen nach unten aus (`uFall` bis y -1.75), nur Kopf und Hals.
+- **Röntgen im Hochformat:** der Rumpf blendet im Röntgen nach unten aus (`uFall` bis y -1.75, auch das Hologramm), nur
+  Kopf und Hals.
 - **Gehirn (brain.js, brain-hardware.js):** Eintauchen brain@0.35 bis 0.95 mit halbem Bloom, Schwelle 1.12, Netz 45 %
   dunkler, nur drei Erregungswellen voll (die Welle aus dem Kern 1.05 statt 1.7). Elektroden-Stifte, -Köpfe und -Scheiben in
   Chrom (vorher Gold), Lüfterkappe ohne Ember. Nahe Hardware blendet beim Eintauchen früher aus (`uHwNear` bis 0.2 / 0.68).
 - Testwerkzeug: `S/studio-v4/tools/pres.js <out> name=beat@p[|pos|tgt|fov]` rendert dev.html mit fester Kamera oder dem
   Kamerapfad (`name=robot@0.9` ohne Kamera = Pfad), `S/studio-v4/tools/lum.py` misst Helligkeit in einem Kasten.
+
+### Version 3.2 (Runde 2 der Prüfer, 30.10.2026)
+
+- **Hero, erstes Bild:** Die Partikel-Büste steht ohne Scrollen fertig geformt da. Linien (Fugen, Augenpartie, Ohrmodul,
+  Rand der Hinterkopf-Öffnung) liegen praktisch auf der Fuge (Streuung x 0.08), Kopfflächen eng (x 0.35), der Rumpf bleibt
+  lockerer. Weiches Führungslicht von links oben modelliert Stirn, Wangen und Kinn (vorher hohle Augen), Kantenlicht von
+  rechts hinten stärker. Neu `uPreGain` (x Helligkeit, y Punktgrösse; Querformat 2.4 / 1.3, Hochformat 1.6 / 1.0) und
+  `uPreSurf` (Anteil der Kopfflächen-Partikel: high 0.45, medium 0.9, gleich viele Punkte pro Bildpunkt). Im Hero wenig,
+  enger Bloom (Stärke 0.38, Schwelle 1.0), sonst lag ein Nebelschleier über den feinen Linien; die eigene Helligkeit geht
+  beim Formen zurück, der Bloom wieder auf den alten Wert. Der Titel dämpft den fertigen Kopf nicht mehr, Scrim im Hero 0.1.
+  Dazu reicht der Verlauf hinter dem Hero-Text rechts nicht mehr über den Kopf (Kapitel 9). Gemessen (Desktop
+  1440 x 900, Kopf): Mittel 62 -> 177. Hochformat 121 -> 162.
+- **Gehirn-Eintauchen:** Die Gehirn-Hardware blendet von brain@0.34 bis 0.46 ganz aus und kommt erst in der
+  Kabel-Übersicht zurück (cables@0.02 bis 0.18). Im Gehirn bleiben nur Neuronen, Impulse und Licht. Unsichtbare Hardware
+  verwirft ihre Fragmente (schreibt keine Tiefe). Die Platinen haben keinen Lüfter, keine Kühlrippen, keine Heatpipes und
+  keine lesbare Schrift mehr (flache Graphitmodule, nur Pin-1-Punkt und Rahmen); Klammer-Polster sind flache Chromscheiben
+  mit hellem Chromring (vorher dicke schwarze Gummiköpfe mit Goldring, im Bloom orange).
+- **Kabelfächer:** 76 Kabel (medium 36), dafür kräftiger. Jede der vier Gruppen hat eigene Dicke, eigenen Bogen und eigene
+  Länge (Eintritt in den Rückenschlitz zwischen y -1.5 und -2.1), jedes Kabel eine Lage L: innen dicht am Nacken, aussen
+  mit grossem Bogen nach hinten (bis rund 0.75 hinter dem Nacken, Scheitel früh bei t 0.25). Die Kabel laufen auf den
+  Eintrittspunkt zu statt der Haut entlang (keine Wellen über den Schulterblättern), die Schellen sind weg. Dünne Kabel hell
+  metallisch, mittlere und dicke dunkel, zwei der vier Rillenschläuche dunkel. Im Profil öffnet sich ein Fächer vom
+  Hinterkopf statt eines Zopfs. Die Partikel-Kabel (`particles-shape.js`) folgen derselben Form.
+- **Halsmuskel (Kopfwender):** kürzer (Ansatz bei y -0.6 statt -0.48) und flacher (Bauch 0.059 statt 0.085).
+- **Hologramm, Augen:** In der Augenhöhle liegen Lid und Augapfel hintereinander, additiv ergab das helle, umrandete
+  Ovale. Dort wird jede Lage halbiert und der Fresnel-Ring am Rand der Höhle unterdrückt.
+- **Ausklang Handy:** Kein Scrim mehr über dem Kopf (der volle Scrim des Text-Panels machte das Gesicht grau, Mittel 106),
+  der Blick senkt sich nur leicht (vorher kippte das Gesicht aus dem Führungslicht), Kopf etwas höher gerahmt
+  (outro@1 lookM y -3.2), auf medium im Ausklang Rauheit 0.11 statt 0.2 und Spiegelung 1.65: schmale Glanzlinien. Der
+  Verlauf hinter dem Kontakt-Text beginnt erst 22 px über dem Text (vorher 56 px, dunkler Balken über Mund und Kinn).
+  Gemessen outro@0.7 (Gesicht): Mittel 106 -> 190.
+- **Ausklang Desktop:** Ab Beat outro steht die feste Kopfzeilen-Leiste (`.site-header::after`), das Kontakt-Panel scrollt
+  nicht mehr sichtbar hinter das Logo. Die Angebotszeile ist im Ausklang aus (das Panel hat dieselben Knöpfe).
+- **Technik:** siehe Kapitel 7 (Vorkompilierung mit Render-Target, ein Programm pro Material, Schale in zwei Draws).
+  Offen: echte Messung auf einem iPhone 11/12 und einem Mittelklasse-Android (Zeit bis `is-ready`, Bildzeit mit `?debug`).
 
 ### Quellen und Lizenzen (CREDITS)
 
@@ -662,6 +741,12 @@ RenderTarget rechnen und hochskalieren (weich genug, noch nicht nötig).
 `BASE`, `NUMS` oder `COLORS` von backdrop.js, Wert in den Farbwelten. Testen: `dev.html?scene=backdrop` (alle Farbwelten
 über den Regler), `dev.html?scene=all&at=brain@0.3`, Vergleich ohne Hintergrund `&bg=0`.
 
-**Poster:** Fallback-Poster (`assets/img/poster-*.webp`, Desktop und Hochformat) und OG-Bild am 30.10.2026 mit den neuen
+**Poster (Version 3.2):** nach Runde 2 alle 14 Poster und das OG-Bild neu gerendert (Hero im Ruhezustand, Kabelfächer,
+Gehirn-Hardware ohne Lüfter und Schrift, Ausklang heller).
+
+**Poster (Version 3.1):** nach Runde 1 der Prüfer alle 14 Poster und das OG-Bild neu gerendert (weisse Glanzschale,
+Kabelfächer, Ausklang in Gold). `story_shots.js --clean` blendet auch `.story-skip` aus.
+
+**Poster (Version 3):** Fallback-Poster (`assets/img/poster-*.webp`, Desktop und Hochformat) und OG-Bild am 30.10.2026 mit den neuen
 Farbwelten neu gerendert (`S/tools/make_posters.sh`, Kapitel 10). Nebeneinander sind die sieben Kapitel klar unterscheidbar.
 Für Version 3 (Integration) nochmals neu gerendert, zusammen mit dem OG-Bild.

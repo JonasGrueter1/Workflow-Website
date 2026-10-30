@@ -344,24 +344,25 @@ diffuseColor.a = ca;
   /* ------------------------------------------------ Hals: Kopfwender-Muskeln (Gel) */
   const underSkin = (p, depth) => { const s = skinAt(p); return s.p.addScaledVector(s.n, -depth); };
   for (const sx of [-1, 1]) {
-    const M = V(sx * 0.46, -0.48, -0.2);
+    // Runde 2: kuerzer (Ansatz tiefer am Schaedel) und flacher, damit er im Profil nicht wie ein zweiter Zopf wirkt
+    const M = V(sx * 0.42, -0.6, -0.16);
     const Ns = V(sx * 0.08, -1.66, -0.04);
     const Nc = V(sx * 0.3, -1.72, -0.03);
     const ctrl = [];
     for (let k = 0; k <= 6; k++) {
       const t = k / 6;
       const p = M.clone().lerp(Ns, t);
-      if (k > 0 && k < 6) ctrl.push(underSkin(p, 0.05 + 0.075 * Math.sin(Math.PI * t)));
+      if (k > 0 && k < 6) ctrl.push(underSkin(p, 0.045 + 0.055 * Math.sin(Math.PI * t)));
       else ctrl.push(p);
     }
     const pts = smooth(ctrl, S(48, 28));
     // Muskelbauch in der Mitte, an den Enden schmale Sehnen mit Chrom-Ansatz (Kiefer/Schaedel oben, Brustbein unten)
-    kits.gel.push(tube(pts, (t) => 0.017 + 0.068 * Math.pow(Math.sin(Math.PI * clamp(t * 1.04, 0, 1)), 1.1), S(24, 14), wAt));
+    kits.gel.push(tube(pts, (t) => 0.015 + 0.044 * Math.pow(Math.sin(Math.PI * clamp(t * 1.04, 0, 1)), 1.1), S(24, 14), wAt));
     // Schluesselbein-Kopf
     const a = pts[Math.floor(pts.length * 0.5)];
     const mid = underSkin(a.clone().lerp(Nc, 0.5), 0.07);
     const pts2 = smooth([a, mid, Nc], S(24, 14));
-    kits.gel.push(tube(pts2, (t) => 0.03 - 0.016 * t, S(16, 10), wAt));
+    kits.gel.push(tube(pts2, (t) => 0.024 - 0.012 * t, S(16, 10), wAt));
     // Sehnenansaetze: kurze Chrom-Huelsen an den Enden, die Sehne steckt darin
     for (const [p0, p1] of [[pts[0], pts[3]], [pts[pts.length - 1], pts[pts.length - 4]], [pts2[pts2.length - 1], pts2[pts2.length - 3]]]) {
       const d = p1.clone().sub(p0).normalize();
@@ -563,9 +564,9 @@ diffuseColor.a = ca;
 
   /* --------------------------------- Hinterkopf und Nacken: Kabelfaecher aus Steckerleisten (Referenz 1) */
   // Die Kabel kommen aus dem Schaedelinneren (hinter dem Gitter), laufen durch vier Steckerleisten am Kamm der
-  // Schaedelbasis und faechern von dort nach hinten und unten auf: jedes Kabel mit eigener Lage, eigenem Durchhang
-  // (in der Mitte weiter vom Nacken weg) und eigenem Durchmesser. Erst kurz vor dem Schlitz zwischen den
-  // Schulterblaettern laufen sie wieder zusammen. Zwei Schellen fassen je eine Gruppe, Chromstecker an den Leisten.
+  // Schaedelbasis und faechern von dort nach hinten und unten auf: jedes Kabel mit eigener Lage, eigenem Bogen und
+  // eigenem Durchmesser; die Gruppen treten gestaffelt in den Schlitz zwischen den Schulterblaettern ein.
+  // Chromstecker an den Leisten.
   {
     // Rueckenflaeche als Raster (ein Durchgang ueber alle Ecken): z der Haut hinten, schnell abfragbar
     const GX0 = -0.72; const GY0 = -2.4; const GS = 0.03; const GW = 49; const GH = 72;
@@ -599,7 +600,8 @@ diffuseColor.a = ca;
     const slotHalf = (y) => 0.31 - 0.07 * smoothstep(-1.46, -2.2, y);
 
     // Vier Steckerleisten am Kamm (Bogenlaenge ab hinten), je eine Gruppe Kabel
-    const NC = hi ? 112 : 44;
+    // Runde 2: weniger, dafuer kraeftigere Kabel (viele duenne wirkten im Profil wie Haare)
+    const NC = hi ? 76 : 36;
     const CU = [-0.27, -0.09, 0.09, 0.27];
     const YC = -0.47;
     const conns = CU.map((u, g) => {
@@ -622,45 +624,52 @@ diffuseColor.a = ca;
     }
 
     const per = Math.ceil(NC / conns.length);
-    const groupSag = [0.17, 0.3, 0.32, 0.19];
-    const clampY = -1.3;
-    const pinchG = [1, 2];
-    const ys = [-0.62, -0.8, -1.02, -1.25, -1.48, -1.7, -1.86, -2.02, -2.2];
-    const grpMean = conns.map(() => ({ x: 0, z: 0, n: 0, r: 0 }));
+    // Runde 2: Faecher statt Zopf. Jede Gruppe hat eigene Dicke, eigenen Bogen und eigene Laenge (sie laeuft in
+    // anderer Hoehe in den Rueckenschlitz). Innerhalb der Gruppe liegt jedes Kabel in einer eigenen Lage L: innen dicht
+    // am Nacken, aussen mit grossem Bogen nach hinten (-z) und tiefer eintretend. Im Profil oeffnen sich die Lagen vom
+    // Hinterkopf weg wie ein Faecher (Referenz 1). Keine Schellen mehr (wirkten wie ein Haargummi).
+    const GRP = [
+      { th: 0.8, end: -1.7, bow: 0.95 },  // aussen links: duenn, mittellang
+      { th: 1.35, end: -1.52, bow: 0.7 }, // innen links: dick, kurz
+      { th: 1.0, end: -1.9, bow: 1.15 },  // innen rechts: weiter Bogen, lang
+      { th: 0.75, end: -1.62, bow: 1.0 }, // aussen rechts: duenn, kurz
+    ];
+    const Y0 = -0.62;
     const plans = [];
     for (let i = 0; i < NC; i++) {
       const g = i % conns.length; const j = Math.floor(i / conns.length);
-      const C = conns[g];
+      const C = conns[g]; const G = GRP[g];
       const k0 = rnd();
-      const core = j === 0;
-      const r = core ? 0.0155 + 0.004 * rnd() : k0 < 0.62 ? 0.0032 + 0.0024 * rnd() : k0 < 0.9 ? 0.0065 + 0.003 * rnd() : 0.0105 + 0.003 * rnd();
+      const core = j === 0 || (hi && j === 1 && g % 2 === 0);
+      const r = (core ? 0.0155 + 0.004 * rnd() : k0 < 0.45 ? 0.004 + 0.002 * rnd() : k0 < 0.8 ? 0.007 + 0.003 * rnd() : 0.011 + 0.003 * rnd()) * G.th;
       const lit = !core && i % 12 === 5;
-      // Lage in der Leiste (zwei Reihen), Faecher-Position, Durchhang
+      // Lage in der Leiste (zwei Reihen), Lage im Faecher, Bogen und Eintritt in den Ruecken
       const f = ((j + 0.5) / per) * 2 - 1 + (rnd() - 0.5) * 0.25;
       const ex = C.c.clone().addScaledVector(C.t, f * 0.065).addScaledVector(C.n, (j % 2 ? 0.014 : -0.012)).addScaledVector(UPV, -0.036);
-      const xFan = C.x * 1.75 + f * (0.06 + 0.05 * Math.abs(C.u) / 0.27) + (rnd() - 0.5) * 0.03;
-      const sag = groupSag[g] * (0.4 + 0.85 * rnd()) * (core ? 0.7 : 1) * (r > 0.009 ? 0.85 : 1);
-      plans.push({ i, g, j, r, lit, core, f, ex, xFan, sag, ph: rnd() * 6.283, wa: 0.006 + 0.01 * rnd() });
-      grpMean[g].x += xFan; grpMean[g].z += sag; grpMean[g].n += 1;
+      const L = core ? 0.35 + 0.2 * rnd() : rnd();
+      const bow = (0.04 + 0.72 * Math.pow(L, 1.3)) * G.bow;
+      const yEnd = clamp(G.end - 0.3 * L + (rnd() - 0.5) * 0.08, -2.12, -1.5);
+      const xFan = C.x * (1.45 + 0.55 * L) + f * (0.05 + 0.05 * Math.abs(C.u) / 0.27) + (rnd() - 0.5) * 0.03;
+      plans.push({ i, g, j, r, lit, core, f, ex, xFan, bow, yEnd, L, ph: rnd() * 6.283, wa: 0.002 + 0.004 * rnd() });
     }
-    grpMean.forEach((m) => { m.x /= m.n; m.z /= m.n; });
-    const pathAt = (P, y, pinch) => {
-      // t: 0 an der Leiste .. 1 im Schlitz
-      const t = clamp((y - ys[0]) / (ys[6] - ys[0]), 0, 1);
+    const pathAt = (P, y) => {
+      // t: 0 an der Leiste .. 1 am Eintritt in den Ruecken
+      const t = clamp((y - Y0) / (P.yEnd - Y0), 0, 1);
       const xs = clamp(P.xFan * 0.5, -(slotHalf(y) - 0.05), slotHalf(y) - 0.05);
-      let x = y > ys[0] ? P.ex.x : P.xFan + (P.ex.x - P.xFan) * Math.pow(1 - smoothstep(0, 0.42, t), 1.6);
-      x = x + (xs - x) * smoothstep(0.45, 1, t);
-      // Durchhang frueh (Kabel fallen erst nach hinten, dann zum Ruecken): Buckel bei t ~ 0.38
-      let sag = P.sag * Math.pow(Math.sin(Math.PI * Math.pow(Math.min(1, t * 1.06), 0.72)), 0.9);
-      if (pinch > 0) { const m = grpMean[P.g]; x += (m.x - x) * pinch * 0.62; sag += (m.z * 0.9 - sag) * pinch * 0.7; }
-      x += Math.sin(t * 5.0 + P.ph) * P.wa * Math.sin(Math.PI * t);
+      let x = y > Y0 ? P.ex.x : P.xFan + (P.ex.x - P.xFan) * Math.pow(1 - smoothstep(0, 0.36, t), 1.6);
+      x = x + (xs - x) * smoothstep(0.55, 1, t);
+      // Bogen frueh: die Kabel gehen zuerst nach hinten vom Schaedel weg, dann im Bogen zum Ruecken (Scheitel t ~ 0.3)
+      const bowT = Math.pow(Math.sin(Math.PI * Math.pow(t, 0.52)), 0.8);
+      x += Math.sin(t * 3.0 + P.ph) * P.wa * Math.sin(Math.PI * t);
       const skin = backZ(x, y);
-      // Austritt: die Leiste sitzt am Hinterhaupt, das weiter hinten liegt als der Nacken darunter
+      // Austritt: die Leiste sitzt am Hinterhaupt, das weiter hinten liegt als der Nacken darunter. Ziel ist der
+      // Eintritt in den Ruecken (nicht die Haut entlang: sonst folgen die Kabel jeder Woelbung und wirken gewellt)
       const z0 = P.ex.z;
-      let z = z0 + (skin - 0.012 - P.r - z0) * smoothstep(0.3, 0.95, t) - sag;
+      let z = z0 + (P.zEnd - z0) * smoothstep(0.2, 1, t) - P.bow * bowT;
       z = Math.min(z, skin - 0.01 - P.r);
       return V(x, y, z);
     };
+    for (const P of plans) P.zEnd = backZ(clamp(P.xFan * 0.5, -0.26, 0.26), P.yEnd) - 0.012 - P.r;
     for (const P of plans) {
       // im Schaedel: verteilt ueber das Gitter, unten dichter
       const pu = (rnd() - 0.5) * 2;
@@ -673,25 +682,28 @@ diffuseColor.a = ca;
       ctrl.push(C.c.clone().addScaledVector(C.n, -0.11 + 0.02 * rnd()).addScaledVector(UPV, 0.1).addScaledVector(C.t, P.f * 0.05));
       ctrl.push(P.ex.clone().addScaledVector(UPV, 0.07));
       ctrl.push(P.ex.clone());
-      for (const y of ys) {
-        const pinch = pinchG.includes(P.g) ? Math.exp(-Math.pow((y - clampY) / 0.2, 2)) : 0;
-        const q = pathAt(P, y, pinch);
-        if (y <= ys[7]) q.z += (y <= ys[8] ? 0.07 : 0.025); // in den Schlitz hinein
+      for (let k = 0; k <= 8; k++) {
+        const y = k < 8 ? Y0 + (P.yEnd - Y0) * (k / 7) : P.yEnd - 0.05;
+        const q = pathAt(P, Math.max(y, P.yEnd));
+        if (k === 7) q.z += 0.025; // in den Schlitz hinein
+        if (k === 8) { q.y = y; q.z += 0.075; }
         ctrl.push(q);
       }
       const curve = new THREE.CatmullRomCurve3(ctrl, false, 'centripetal');
       if (P.core) {
-        // Rillenschlauch: Radius moduliert entlang der Laenge
+        // Rillenschlauch: Radius moduliert entlang der Laenge (zwei hell, zwei dunkel)
         const n = hi ? 420 : 110;
         const pts = curve.getSpacedPoints(n);
         const L = curve.getLength();
         const ribs = hi ? (t) => P.r * (1 + 0.16 * Math.pow(0.5 + 0.5 * Math.cos((t * L / 0.026) * 6.283), 2)) : () => P.r;
-        kits.hose.push(tube(pts, ribs, S(14, 8), (y) => headW(y)));
+        kits[P.g % 2 ? 'rubber' : 'hose'].push(tube(pts, ribs, S(14, 8), (y) => headW(y)));
         const p = curve.getPointAt(0.55); const d = curve.getTangentAt(0.55);
         kits.chrome.push(prep(new THREE.CylinderGeometry(P.r * 1.45, P.r * 1.45, 0.05, S(16, 8), 1, false), headW(p.y), place(p, d)));
       } else {
         const pts = curve.getPoints(S(72, 38));
-        const kit = P.lit ? 'cable' : (P.i % 7 < 2 ? 'rubber' : 'hose');
+        // mehr dunkle Schlaeuche zwischen den hellen (dicke immer dunkel)
+        // duenne hell (Metallic), mittlere und dicke dunkel: klare Abstufung statt gleichfoermiger Straehnen
+        const kit = P.lit ? 'cable' : (P.r > 0.0062 ? 'rubber' : 'hose');
         kits[kit].push(tube(pts, () => P.r, P.r > 0.008 ? S(10, 7) : S(7, 5), (y) => headW(y)));
       }
       // Chromstecker an der Leiste (Huelse um den Austritt)
@@ -701,20 +713,6 @@ diffuseColor.a = ca;
         const d = curve.getTangentAt(u);
         kits.chrome.push(prep(new THREE.CylinderGeometry(P.r * 1.7 + 0.002, P.r * 1.7 + 0.002, 0.03, S(12, 8), 1, false), 1, place(P.ex.clone().addScaledVector(d, 0.006), d)));
       }
-    }
-    // Schellen um die Gruppen 2 und 3 (Graphit mit Chrom-Kante)
-    for (const g of pinchG) {
-      const ps = plans.filter((P) => P.g === g).map((P) => pathAt(P, clampY, 1));
-      const c = ps.reduce((a, b) => a.add(b), V(0, 0, 0)).multiplyScalar(1 / ps.length);
-      let R = 0;
-      for (const p of ps) R = Math.max(R, Math.hypot(p.x - c.x, p.z - c.z));
-      const P0 = plans.find((P) => P.g === g);
-      const n0 = pathAt(P0, clampY - 0.05, 1).sub(pathAt(P0, clampY + 0.05, 1)).normalize();
-      const Rc = R + 0.016;
-      const gC = new THREE.CylinderGeometry(Rc, Rc, 0.032, S(28, 14), 1, true);
-      kits.graphite.push(prep(gC, headW(c.y), place(c, n0)));
-      const t2 = new THREE.TorusGeometry(Rc + 0.001, 0.0045, 6, S(28, 14)).rotateX(Math.PI / 2);
-      kits.chrome.push(prep(t2.translate(0, 0.016, 0), headW(c.y), place(c, n0)));
     }
     // Rahmen im Rueckenschlitz
     // gleiche Form wie lBackSlot (robot-layout.js): abgerundetes Rechteck, oben breiter
@@ -825,10 +823,16 @@ diffuseColor.a = ca;
     group.add(im);
     return im;
   };
-  const cyl = mkInst(cylGeo, mats.graphite, pistons.length);
-  const caps = mkInst(capGeo, mats.chrome, pistons.length * 2);
-  const rods = mkInst(rodGeo, mats.chrome, pistons.length);
-  const eyelets = mkInst(eyeletGeo, mats.chrome, pistons.length * 2);
+  // Eigene Materialien fuer die Instanzen (gleiche Werte und Uniforms): teilen sich ein normales Mesh und ein
+  // InstancedMesh ein Material, wechselt three.js bei jedem Draw das Programm und baut Parameter und Cache-Schluessel
+  // neu (rund 19 KB Garbage pro Bild, gemessen in Runde 2)
+  const chromeI = makeMechMaterial(THREE, U, { color: chromeCol, metalness: 1, roughness: 0.2, envMap: env, envMapIntensity: 2.0 }, 'metal', 'chrome');
+  const graphiteI = makeMechMaterial(THREE, U, { color: palette.steel.clone().multiplyScalar(0.55), metalness: 0.75, roughness: 0.36, envMap: env, envMapIntensity: 0.9, clearcoat: 0.4, clearcoatRoughness: 0.2 }, 'metal', 'graphite');
+  disposables.push(chromeI, graphiteI);
+  const cyl = mkInst(cylGeo, graphiteI, pistons.length);
+  const caps = mkInst(capGeo, chromeI, pistons.length * 2);
+  const rods = mkInst(rodGeo, chromeI, pistons.length);
+  const eyelets = mkInst(eyeletGeo, chromeI, pistons.length * 2);
   const _t = V(0, 0, 0); const _d = V(0, 0, 0); const _s = V(1, 1, 1); const _m = new THREE.Matrix4();
 
   const pistonMeshes = [cyl, caps, rods, eyelets]; // einmal, nicht pro Frame

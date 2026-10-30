@@ -277,6 +277,7 @@ export class UI {
     const el = this._offer || (this._offer = $('#offer'));
     if (!el) return;
     el.classList.toggle('is-on', on);
+    this.root.classList.toggle('offer-on', on);
     const a = el.querySelector('a');
     if (a) { if (on) a.removeAttribute('tabindex'); else a.setAttribute('tabindex', '-1'); }
   }

@@ -255,14 +255,20 @@ export class Engine {
     try {
       // compileAsync nur mit KHR_parallel_shader_compile, sonst warnt three.js (z. B. SwiftShader)
       const parallel = this.renderer.extensions.has('KHR_parallel_shader_compile');
-      if (parallel && this.renderer.compileAsync) await this.renderer.compileAsync(this.scene, this.camera);
+      // Wichtig (Runde 2): mit dem Render-Target der Szene kompilieren. Ohne Ziel (Bildschirm) baut three.js die
+      // Programme mit ACES und sRGB-Ausgabe; die Szene rendert aber linear in den Composer. Dann war jedes Programm
+      // doppelt da (94 statt rund 50) und die richtigen entstanden erst beim ersten Bild (Ruckler, langer Start).
+      const r = this.renderer;
+      const target = this.composer.readBuffer;
+      const withTarget = (fn) => { const prev = r.getRenderTarget(); r.setRenderTarget(target); try { return fn(); } finally { r.setRenderTarget(prev); } };
+      if (parallel && r.compileAsync) await withTarget(() => r.compileAsync(this.scene, this.camera));
       else {
         // Ohne parallele Kompilierung: Szene fuer Szene, mit einem Bild Pause dazwischen. So bleibt der Preloader
         // fluessig (sonst ein einziger langer Block von mehreren Sekunden).
-        const nextFrame = () => new Promise((r) => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
+        const nextFrame = () => new Promise((res) => { requestAnimationFrame(() => res()); setTimeout(res, 60); });
         for (const child of this.scene.children.slice()) {
           if (child.isLight || child.isCamera) continue;
-          this.renderer.compile(child, this.camera, this.scene);
+          withTarget(() => r.compile(child, this.camera, this.scene));
           await nextFrame();
         }
       }

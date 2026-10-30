@@ -113,14 +113,19 @@ export async function create(ctx) {
   // Weisse Glanzschale (Albedo um 0.85, kaum Blaustich), Klarlack voll, glatt. Auf medium/low ohne Klarlack (Leistung)
   const shellCol = palette.white.clone().lerp(new THREE.Color(1, 1, 1), 0.35).multiplyScalar(0.9);
   const mats = {
-    shell: makeShellMaterial(THREE, U, { color: shellCol, envMap: env.texture, envIntensity: hi ? 1.15 : 1.45, roughness: hi ? 0.34 : 0.2, clearcoat: hi ? 1.0 : 0, clearcoatRoughness: 0.06, cheap: !hi }),
+    shell: makeShellMaterial(THREE, U, { color: shellCol, envMap: env.texture, envIntensity: hi ? 1.15 : 1.45, roughness: hi ? 0.34 : 0.2, clearcoat: hi ? 1.0 : 0, clearcoatRoughness: 0.06, cheap: !hi, side: THREE.FrontSide }),
+    // Innenseite der Schale (nur durch die Oeffnungen sichtbar), ohne Klarlack
+    shellIn: makeShellMaterial(THREE, U, { color: shellCol, envMap: env.texture, envIntensity: hi ? 1.15 : 1.45, roughness: 0.5, clearcoat: 0, cheap: !hi, side: THREE.BackSide }),
     muscle: makeMuscleMaterial(THREE, U, { color: palette.signal.clone().multiplyScalar(0.16), envMap: env.texture, envIntensity: 1.1, cheap: !hi }),
     holo: makeHoloMaterial(THREE, U),
     core: makeCoreMaterial(THREE, U, { color: palette.mist.clone().multiplyScalar(0.36), envMap: env.texture }),
-    glass: makeGlassMaterial(THREE, U, { color: palette.white.clone(), envMap: env.texture }),
+    glass: makeGlassMaterial(THREE, U, { color: palette.white.clone(), envMap: env.texture, side: THREE.FrontSide }),
+    glassIn: makeGlassMaterial(THREE, U, { color: palette.white.clone(), envMap: env.texture, side: THREE.BackSide }),
   };
-  if (dbgFlags.includes('glass')) mats.glass.defines = { AB_DBG_GLASS: '' };
+  if (dbgFlags.includes('glass')) { mats.glass.defines = { AB_DBG_GLASS: '' }; mats.glassIn.defines = { AB_DBG_GLASS: '' }; }
   const shellMesh = new THREE.Mesh(geo.shell, mats.shell);
+  const shellInMesh = new THREE.Mesh(geo.shell, mats.shellIn);
+  shellInMesh.renderOrder = 3; // nach der Aussenseite: verdeckte Innenflaechen verwirft der Tiefentest
   const muscleMesh = new THREE.Mesh(geo.muscle, mats.muscle);
   const holoMesh = new THREE.Mesh(geo.holo, mats.holo);
   holoMesh.renderOrder = 20;
@@ -129,8 +134,10 @@ export async function create(ctx) {
   const coreMesh = new THREE.Mesh(geo.core, mats.core);
   const glassMesh = new THREE.Mesh(geo.glass, mats.glass);
   glassMesh.renderOrder = 8;
-  for (const m of [shellMesh, muscleMesh, holoMesh, coreMesh, glassMesh]) m.frustumCulled = false;
-  body.add(coreMesh, muscleMesh, shellMesh, glassMesh, holoMesh);
+  const glassInMesh = new THREE.Mesh(geo.glass, mats.glassIn);
+  glassInMesh.renderOrder = 7; // Rueckseite zuerst, wie three.js es bei DoubleSide in zwei Durchgaengen macht
+  for (const m of [shellMesh, shellInMesh, muscleMesh, holoMesh, coreMesh, glassMesh, glassInMesh]) m.frustumCulled = false;
+  body.add(coreMesh, muscleMesh, shellMesh, shellInMesh, glassInMesh, glassMesh, holoMesh);
 
   /* ---------------------------------------------------------- Mechanik */
   const mech = buildMechanics(THREE, { lm, mesh, U, palette, env: env.texture, quality, headMat, shellCol });
@@ -201,7 +208,8 @@ export async function create(ctx) {
         const portrait = ctx.size.width / Math.max(1, ctx.size.height) < 0.85;
         gazeMix = smoothstep(0.32, 0.85, out.p);
         // Ziel: Kamera, dann eine Stelle links neben der Kamera (Kontakt-Panel), leicht unter Augenhoehe
-        gazePt.copy(cam.position).addScaledVector(_cr, -(portrait ? 1.4 : 2.6) * gazeMix).addScaledVector(_cu, -(portrait ? 0.9 : 0.45) * gazeMix);
+        // Hochformat: der Blick senkt sich nur leicht (vorher -0.9: das Gesicht kippte aus dem Fuehrungslicht und wurde grau)
+        gazePt.copy(cam.position).addScaledVector(_cr, -(portrait ? 1.4 : 2.6) * gazeMix).addScaledVector(_cu, -(portrait ? 0.3 : 0.45) * gazeMix);
         ms.gazeAt = gazePt;
         const ty = clamp01((Math.atan2(gazePt.x - pivot.x, gazePt.z - pivot.z) + 0.6) / 1.2) * 1.2 - 0.6;
         outroYaw += (ty * 0.32 - outroYaw) * (1 - Math.exp(-dt * 1.2));
@@ -224,7 +232,8 @@ export async function create(ctx) {
       U.uMechCut.value = buildLine;
       // Mechanik (Schaedelgitter, Kabel, Hals) loest sich auf, waehrend die Kamera ins Gehirn taucht: so verschwindet
       // sie nicht hart am Ende des Fensters (brain@0.6 plus Rampe), wenn sie von innen gross im Bild steht
-      U.uMechFade.value = inOutro ? 0 : smoothstep(0.4, 0.58, br.p);
+      // Runde 2: frueher (brain@0.3 bis 0.45), damit beim Eintauchen keine Kabel und Stangen mehr vor der Linse stehen
+      U.uMechFade.value = inOutro ? 0 : smoothstep(0.3, 0.45, br.p);
       // Augen: kurzes Flackern beim Einschalten, im Ausklang hell im Lichtblitz
       const flick = power > 0 && power < 1 ? 0.55 + 0.45 * Math.sin(time * 47) * Math.sin(time * 13) : 1;
       const irisBoost = power * flick * (inOutro ? 1 + 1.4 * Math.exp(-Math.pow(out.p / 0.12, 2)) : 1);
@@ -239,22 +248,32 @@ export async function create(ctx) {
       mech.update(time, dt, ms);
 
       shellMesh.visible = scan.dissolve < 0.999 && buildLine > -3.55 && !noShell;
+      shellInMesh.visible = shellMesh.visible;
       muscleMesh.visible = scan.dissolve < 0.999 && buildLine > -3.55;
       coreMesh.visible = scan.dissolve < 0.999 && buildLine > -0.9;
       glassMesh.visible = scan.dissolve < 0.5 && buildLine > -0.3 && !noShell;
+      glassInMesh.visible = glassMesh.visible;
       holoMesh.visible = holoAmt > 0.002;
 
       /* Bildwirkung */
       bw.r = rb.w; bw.z = zm.w; bw.b = br.w; bw.o = out.w;
       bw.s = Math.max(1e-3, bw.r + bw.z + bw.b + bw.o);
       // Licht: kuehles Kantenlicht hinten deutlich, warmes Fuehrungslicht fast weg (Weiss bleibt neutral), Fuellung leise
+      // Ausklang auf dem Handy (Runde 2): heller und mit Glanz, sonst wirkt die Schale ohne Klarlack grau und matt
       look.key = mix4(0.14, 0.16, 0.45, ctx.isMobile ? 0.36 : 0.16);
       look.rim = mix4(1.8, 1.6, 1.4, 1.7);
       look.amb = mix4(0.06, 0.06, 0.1, ctx.isMobile ? 0.1 : 0.06);
       // Ausklang im Morgenlicht: Kantenlicht warm (Gold) statt Cyan, sonst wirkt die Bueste hineinkopiert
       look.rimWarm = mix4(0, 0, 0, 0.85);
       look.aberration = mix4(0.0012, 0.0015, 0.004, 0.001);
-      look.exposure = mix4(1.13, 1.08, 0.98, ctx.isMobile ? 1.2 : 1.12);
+      look.exposure = mix4(1.13, 1.08, 0.98, ctx.isMobile ? 1.12 : 1.12);
+      if (!hi) {
+        // medium/low ohne Klarlack: im Ausklang glatter und mehr Spiegelung (schmale Glanzlinien der Studio-Streifen)
+        const ow = bw.o / bw.s;
+        mats.shell.roughness = 0.2 - 0.09 * ow;
+        mats.shell.envMapIntensity = 1.45 + 0.2 * ow;
+        mats.shellIn.envMapIntensity = mats.shell.envMapIntensity;
+      }
       const xr = smoothstep(0.45, 0.75, zm.p);
       look.bloom = (mix4(0.55, 0.6, 0.6, 0.6) + 0.3 * xr * (1 - smoothstep(0.3, 0.5, br.p))) * (ctx.isMobile ? 0.86 : 1);
       look.bloomThreshold = mix4(1.5, 1.4, 1.05, 1.5) - 0.35 * xr;

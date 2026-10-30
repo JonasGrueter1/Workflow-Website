@@ -119,6 +119,10 @@ export async function create(ctx) {
     uSize: { value: 0.03 },
     uBokeh: { value: 1.6 },
     uHint: { value: 0 },
+    uPreGain: { value: new THREE.Vector2(1, 1) },
+    // Kopfflaechen im Hero: gleich viele Partikel pro Bildpunkt auf jeder Stufe (high hat doppelt so viele Partikel,
+    // dort sonst ein Nebelschleier statt einzelner Lichtpunkte)
+    uPreSurf: { value: new THREE.Vector2(Math.min(0.9, 0.45 / k), k > 0.75 ? 1.5 : 1.0) },
     uBoxC: { value: new THREE.Vector3(0, 0.3, -2.5) },
     uBoxH: { value: new THREE.Vector3(12.5, 6.8, 8.5) },
     uTextArea: { value: new THREE.Vector4(-0.45, -0.3, 0.8, 0.62) },
@@ -181,12 +185,16 @@ export async function create(ctx) {
   // Kein leuchtender Kern mehr im Kopf (wirkte wie ein Lampenfleck auf der Stirn, auf dem Handy wie eine Stirnlampe).
 
   /* ----------------------------------------------- Groesse, Seitenverhaeltnis */
+  let preGain = 1;
   const setAspect = (w, h) => {
     const a = w / Math.max(1, h);
     const t = smoothstep(0.6, 1.3, a);
     uniforms.uBoxH.value.set(lerp(6.6, 12.5, t), lerp(10.5, 6.8, t), 8.5);
     // Hochformat: das FOV wird breiter, Partikel sonst zu klein
     uniforms.uSize.value = 0.03 * lerp(1.4, 1, t);
+    // Hero-Bueste: im Querformat kleiner im Bild (weniger Partikel pro Bildpunkt), darum heller
+    preGain = lerp(1.6, 2.4, t);
+    uniforms.uPreGain.value.set(preGain, lerp(1, 1.3, t));
     // Titel: im Querformat links unten, im Hochformat unten ueber die ganze Breite
     if (a < 0.85) uniforms.uTextArea.value.set(0, -0.42, 1.4, 0.55);
     else uniforms.uTextArea.value.set(-0.45, -0.3, 0.8, 0.62);
@@ -259,7 +267,7 @@ export async function create(ctx) {
       const idlePitch = Math.sin(time * 0.15 + 1.0) * 0.018;
       // Hero: Kopf leicht zum Text gedreht (Dreiviertelansicht, der offene Hinterkopf mit den Kabeln wird sichtbar);
       // bis zum Beat robot zurueck in die Ruhelage, damit die Uebergabe an das Hologramm deckungsgleich bleibt
-      const heroYaw = -0.42 * (1 - smoothstep(0.25, 0.95, intro.p));
+      const heroYaw = -0.55 * (1 - smoothstep(0.25, 0.95, intro.p));
       yaw += (pointer.sx * 0.26 + idleYaw + heroYaw - yaw) * kk;
       pitch += (-pointer.sy * 0.1 + idlePitch - pitch) * kk;
       euler.set(pitch, yaw, Math.sin(time * 0.11) * 0.01 - yaw * 0.06);
@@ -275,7 +283,16 @@ export async function create(ctx) {
 
       // Bildwirkung: bei der Ankunft etwas mehr Glanz
       const arrive = smoothstep(0.55, 0.95, form) * (1 - build);
-      api.look.bloom = 0.95 + 0.08 * arrive;
+      // Hero: Bloom enger, damit die fertige Bueste scharf bleibt (kein Nebelschleier), beim Formen wieder weiter
+      // Schwelle hoch: nur die hellen Kerne der Linien leuchten, die vielen Flaechenpunkte nicht (sonst Nebelschleier)
+      // Hero: wenig, enger Bloom (sonst legt sich ein Nebelschleier ueber die feinen Linien der Bueste); die Helligkeit
+      // kommt aus den Partikeln selbst (uPreGain). Beim Formen wieder der volle Schein.
+      const fw = smoothstep(0.0, 0.5, form);
+      api.look.bloom = 0.38 + 0.42 * fw + 0.08 * arrive;
+      api.look.bloomRadius = 0.5 + 0.16 * fw;
+      api.look.bloomThreshold = 1.0 - 0.28 * fw;
+      // die eigene Helligkeit der Hero-Bueste geht mit dem Bloom zurueck (kein heller Nebelball beim Formen)
+      u.uPreGain.value.x = lerp(preGain, 1, fw);
       api.look.parallax = 0.32 - 0.08 * form;
     },
 

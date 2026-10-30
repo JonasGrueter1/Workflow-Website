@@ -349,6 +349,9 @@ strong { font-weight: 550; color: var(--c-text); }
 }
 .is-content .site-header::after, :is(.no-gl, .no-js) .site-header.is-scrolled::after { opacity: 1; }
 .is-content .site-header::before { opacity: 0; }
+/* Ausklang (Runde 2): die feste Leiste schon hier, das Kontakt-Panel scrollt sonst sichtbar hinter das Logo */
+.gl[data-beat="outro"] .site-header::after { opacity: 1; }
+.gl[data-beat="outro"] .site-header::before { opacity: 0; }
 .gl:not(.is-ready) .site-header, .gl:not(.is-ready) .hud { opacity: 0; }
 .site-header, .hud { transition: opacity 0.8s var(--ease-out); }
 .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 550; letter-spacing: -0.02em; margin-right: auto; font-size: 1.02rem; }
@@ -441,6 +444,9 @@ main { position: relative; z-index: 1; }
   background: radial-gradient(closest-side, rgba(4, 6, 10, 0.85), rgba(4, 6, 10, 0.5) 55%, rgba(4, 6, 10, 0));
   pointer-events: none;
 }
+/* Hero (Runde 2): Verlauf reicht rechts kaum ueber den Titel hinaus, sonst lag er grau ueber der Partikel-Bueste.
+   Der Titel steht auf dunklem Grund, die Partikel dahinter daempft der Shader selbst. */
+.chapter--intro .chapter__text::before { inset: -20% -3% -20% -24%; background: radial-gradient(closest-side, rgba(4, 6, 10, 0.78), rgba(4, 6, 10, 0.4) 55%, rgba(4, 6, 10, 0)); }
 /* Schatten als Filter auf dem ganzen Titel: text-shadow wuerde an den Wort-Masken (.w, overflow hidden) abgeschnitten */
 .chapter .headline { font-size: var(--fs-story); line-height: 1.04; letter-spacing: -0.038em; margin-bottom: var(--sp-5); color: var(--c-text); filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.55)); }
 .chapter .headline--xl { font-size: clamp(2.4rem, 1.2rem + 3.6vw, 5rem); line-height: 1; }
@@ -558,7 +564,7 @@ main { position: relative; z-index: 1; }
   transform: translate3d(-50%, 0, 0);
   transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out), visibility 0s;
 }
-.gl.is-content .chapter__offer { opacity: 0; visibility: hidden; }
+.gl.is-content .chapter__offer, .gl[data-beat="outro"] .chapter__offer { opacity: 0; visibility: hidden; }
 .chapter__offer p { margin: 0; color: var(--c-text); font-size: 0.98rem; line-height: 1.4; }
 .chapter__offer .btn { --h: 44px; flex: none; }
 .gl [data-split]:not(.is-split) { opacity: 0; }
@@ -1266,11 +1272,14 @@ html.js:not(.ui-on) [data-reveal] { animation: reveal-safety 0.6s ease 3s forwar
      kommt, und scrollt nie ueber das Motiv in der oberen Bildhaelfte. */
   .gl .chapter { height: calc(var(--len, 180) * 0.72vh); }
   .gl .chapter:not(.chapter--outro) .chapter__panel { position: fixed; left: 0; right: 0; top: 0; }
+  /* Runde 2: unten rechts unter dem Text-Panel statt oben rechts (dort lag die Pill auf dem Kopf des Androiden).
+     Nur zwischen Hero (dort fuehrt "Direkt zu den Leistungen" an der Strecke vorbei) und Ausklang, nicht neben der
+     Angebotszeile im Kapitel Code. */
   .gl .story-skip {
     display: inline-flex;
     align-items: center;
     position: fixed;
-    top: calc(var(--header-h) + 6px);
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     right: var(--gutter);
     z-index: 55;
     min-height: 32px;
@@ -1278,13 +1287,14 @@ html.js:not(.ui-on) [data-reveal] { animation: reveal-safety 0.6s ease 3s forwar
     border: 1px solid var(--c-line);
     border-radius: 999px;
     background: rgba(5, 8, 13, 0.62);
-    font: 500 11px/1 var(--f-mono);
+    font: 500 10.5px/1 var(--f-mono);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--c-soft);
     transition: opacity 0.5s, visibility 0.5s;
   }
-  .gl.is-content .story-skip, .gl:not(.is-ready) .story-skip { opacity: 0; visibility: hidden; }
+  .gl.is-content .story-skip, .gl:not(.is-ready) .story-skip, .gl.offer-on .story-skip,
+  .gl[data-beat="intro"] .story-skip, .gl[data-beat="outro"] .story-skip { opacity: 0; visibility: hidden; }
   .story-bar i { position: absolute; inset: 0; background: var(--c-signal); box-shadow: 0 0 8px var(--c-signal); transform-origin: left; transform: scaleX(var(--story, 0)); }
   .chapter--right .chapter__panel { justify-content: flex-start; }
   .chapter:not(.chapter--intro) .chapter__text { max-width: 36rem; }
@@ -1383,10 +1393,11 @@ html.js:not(.ui-on) [data-reveal] { animation: reveal-safety 0.6s ease 3s forwar
   /* Ausklang auf dem Handy: kompakter Textblock, damit oben der Kopf sichtbar bleibt (Mail steht gleich danach im Kontakt) */
   .gl .chapter--outro .outro-mail { display: none; }
   .gl .chapter--outro .chapter__text::before {
-    top: -56px;
+    /* Runde 2: Verlauf beginnt knapp ueber dem Text (vorher 56 px darueber: dunkler Balken ueber Mund und Kinn) */
+    top: -22px;
     /* Unterkante laeuft ueber rund 140 px weich aus (keine harte Kante beim Wegscrollen ueber dem Gesicht) */
     bottom: calc(-1 * max(8vh, 48px) - 140px);
-    background: linear-gradient(to bottom, rgba(5, 8, 13, 0) 0, rgba(5, 8, 13, 0.88) 48px, rgba(5, 8, 13, 0.94) calc(100% - 180px), rgba(5, 8, 13, 0) 100%);
+    background: linear-gradient(to bottom, rgba(5, 8, 13, 0) 0, rgba(5, 8, 13, 0.88) 30px, rgba(5, 8, 13, 0.94) calc(100% - 180px), rgba(5, 8, 13, 0) 100%);
   }
 }
 @media (max-width: 420px) {

@@ -170,6 +170,7 @@ async function boot() {
   const chapter = (name) => {
     const i = BEATS.findIndex((b) => b.name === name);
     ui.setChapter(i, BEATS[i].label);
+    root.dataset.beat = name; // CSS: z. B. "Animation ueberspringen" nur zwischen Hero und Ausklang
   };
   chapter(director.current);
   director.onChange((name) => chapter(name));

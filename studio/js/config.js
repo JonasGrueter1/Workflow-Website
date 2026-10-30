@@ -142,7 +142,9 @@ export const BACKDROPS = Object.freeze({
 // len = Hoehe des Abschnitts in vh. Daraus misst der Director die Zeitfenster (global 0..1).
 export const BEATS = Object.freeze([
   // text = [ein0, ein1, aus0, aus1] (p im Beat), scrim = Abdunkeln des Bildes hinter dem Text (FxPass, 0..1)
-  { name: 'intro', len: 120, label: 'Start', text: [0, 0, 0.28, 0.5], scrim: 0.32 },
+  // intro: Scrim leise (Runde 2): der grosse Titel steht auf dunklem Grund, die Partikel hinter ihm daempft der Shader
+  // selbst; ein starker Scrim reichte bis ueber den Kopf der Partikel-Bueste und machte ihn grau
+  { name: 'intro', len: 120, label: 'Start', text: [0, 0, 0.28, 0.5], scrim: 0.1 },
   { name: 'robot', len: 180, label: 'Partner', scrim: 0.42 },
   { name: 'zoom', len: 170, label: 'Einblick', scrim: 0.45 },
   // brain: Text weg, bevor die Kamera eintaucht und die Helligkeit steigt (vorher stand er bei brain@0.5 noch halb da)
@@ -251,7 +253,7 @@ export const CAMERA_KEYS = Object.freeze([
   { at: 'outro@0', cut: true, pos: [0.5, 0.05, 4.5], look: [-0.22, -0.27, 0.03], fov: 34, posM: [0.5, 0.2, 6.6], lookM: [0.01, -1.95, 0.09] },
   {
     at: 'outro@1', pos: [3.7, -0.3, 7.9], look: [-1.19, -0.75, 0.56], fov: 31,
-    posM: [3.9, 0.2, 9.6], lookM: [0.06, -2.95, 0.15],
+    posM: [3.9, 0.2, 9.6], lookM: [0.06, -3.2, 0.15],
   },
 ]);
 export const CUT_FADE = 0.008; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 9 vh)

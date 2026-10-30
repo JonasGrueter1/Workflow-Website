@@ -452,5 +452,8 @@ export class Director {
     sc.rx = (r.w / 2 + padX) / r.W;
     sc.ry = (r.h / 2 + padY) / r.H;
     sc.a = o * (def.scrim ?? 0.45);
+    // Hochformat: der Text steht dort auf einer eigenen, fast deckenden Flaeche. Ein voller Scrim reichte bis ueber
+    // den Kopf oben im Bild (Ausklang: graues, flaues Gesicht), darum halb, im Ausklang gar nicht (Runde 2)
+    if (this.portrait) sc.a *= name === 'outro' ? 0 : 0.5;
   }
 }

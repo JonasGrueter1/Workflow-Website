@@ -32,7 +32,10 @@ export function makeShellMaterial(THREE, U, opts) {
     clearcoatRoughness: opts.clearcoatRoughness ?? 0.06,
     envMap: opts.envMap,
     envMapIntensity: opts.envIntensity ?? 1,
-    side: THREE.DoubleSide,
+    // Runde 2: Aussen- und Innenseite als zwei Draws (erst aussen, dann innen). Die Innenseite wird so nur dort
+    // schattiert, wo sie durch eine Oeffnung sichtbar ist (sonst verwirft der Tiefentest sie); vorher DoubleSide in
+    // einem Durchgang: jede Rueckseite lief durch die ganze PBR-Beleuchtung
+    side: opts.side ?? THREE.DoubleSide,
     transparent: true,
     depthWrite: true,
   });
@@ -60,6 +63,7 @@ uniform vec3 uRidge; uniform vec3 uShellIn; uniform vec3 uWall;
 varying vec3 vRest; varying vec3 vT1; varying vec3 vT2; varying vec3 vT1v; varying vec3 vT2v; varying float vArm; varying float vAO;
 float abRidge = 0.0;
 float abGap = 0.0;
+float abInA = 1.0;
 ${LAYOUT_GLSL}`)
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
 vec3 rp = vRest;
@@ -126,6 +130,8 @@ if (gl_FrontFacing) {
   // der Wand: hell und glatter, so wirkt die Schale wie ein Formteil mit Materialstaerke statt wie Papier.
   float abWallIn = 1.0 - smoothstep(0.012, 0.024, dO);
   diffuseColor.rgb = mix(uShellIn, uWall, abWallIn);
+  // ganz streifend gesehen ausblenden: sonst stehen Aussen- und Innenhaut an duennen Kanten als zwei helle Spitzen da
+  abInA = smoothstep(0.03, 0.14, abs(dot(normal, normalize(vViewPosition))));
   roughnessFactor = mix(0.7, 0.38, abWallIn);
   // Innenseite im Hals: leises Leuchten (Licht der Mechanik), sonst kaum
   float neckIn = smoothstep(-1.55, -1.3, rp.y) * smoothstep(-0.5, -0.75, rp.y);
@@ -167,14 +173,17 @@ reflectedLight.directDiffuse *= 0.22 + 0.78 * pow(1.0 - clamp(dot(normal, normal
 outgoingLight *= 1.0 - 0.8 * abGap;
 if (gl_FrontFacing) outgoingLight += uRidge * abRidge * (0.35 + 0.65 * pow(1.0 - abs(dot(normal, normalize(vViewPosition))), 2.0)) * mix(0.4, 1.0, vAO);
 outgoingLight *= 0.35 + 0.65 * abFall;
-diffuseColor.a = abFall * abOpenA;
+diffuseColor.a = abFall * abOpenA * abInA;
 // Obergrenze knapp ueber der Bloom-Schwelle der Bueste: Glanzlinien bleiben scharf, kein Lichthof um die Silhouette
 outgoingLight = min(outgoingLight, vec3(1.45));
 // Fugen leuchten nie dauerhaft: nur ein kurzer Lichtimpuls laeuft vor dem Scan von oben nach unten durch (uEdgeY)
-if (uEdgeGlow > 0.0) outgoingLight += uEdgeCol * uEdgeGlow * exp(-abEdge / 0.0045) * exp(-pow((rp.y - uEdgeY) / 0.28, 2.0)) * (gl_FrontFacing ? 1.0 : 0.0);
+// abEdge kann an Oeffnungen leicht negativ sein (weiche Kante, bei streifendem Blick bis zu einem halben Bildpunkt, also
+// gross): ohne max() wuchs exp() bis Unendlich, auf der Innenseite wurde daraus mal 0 ein NaN, und der Bloom zog
+// daraus schwarze Rechtecke ueber das halbe Bild (zoom@0.24 bis 0.31)
+if (uEdgeGlow > 0.0 && gl_FrontFacing) { float abEy = (rp.y - uEdgeY) / 0.28; outgoingLight += uEdgeCol * uEdgeGlow * exp(-max(abEdge, 0.0) / 0.0045) * exp(-abEy * abEy); }
 #include <opaque_fragment>`);
   };
-  m.customProgramCacheKey = () => `ab-shell-${opts.key || ''}${opts.cheap ? '-cheap' : ''}`;
+  m.customProgramCacheKey = () => `ab-shell-${opts.key || ''}${opts.cheap ? '-cheap' : ''}-${m.side}`;
   return m;
 }
 
@@ -427,7 +436,9 @@ reflectedLight.indirectDiffuse += diffuseColor.rgb * uGelHi * 0.22 * (1.0 - uMec
 export function makeGlassMaterial(THREE, U, opts) {
   const m = new THREE.MeshPhysicalMaterial({
     color: opts.color, metalness: 0, roughness: 0.06, envMap: opts.envMap, envMapIntensity: 1.6,
-    transparent: true, depthWrite: false, side: THREE.DoubleSide, clearcoat: 1, clearcoatRoughness: 0.04,
+    // Runde 2: eine Seite pro Material (robot.js zeichnet zwei Meshes: erst innen, dann aussen). DoubleSide ohne
+    // forceSinglePass schaltete three.js pro Bild zweimal das Programm um (Parameter neu, rund 6 KB Garbage pro Bild)
+    transparent: true, depthWrite: false, side: opts.side ?? THREE.FrontSide, clearcoat: 1, clearcoatRoughness: 0.04,
   });
   m.onBeforeCompile = (sh) => {
     for (const k of ['uHeadMat', 'uBreath', 'uScanY', 'uRidge']) sh.uniforms[k] = U[k];
@@ -461,14 +472,14 @@ outgoingLight = gl_FrontFacing ? vec3(1.0, 0.0, 0.0) : vec3(0.0, 1.0, 0.0); diff
 #endif
 #include <opaque_fragment>`);
   };
-  m.customProgramCacheKey = () => 'ab-glass2';
+  m.customProgramCacheKey = () => `ab-glass2-${m.side}`;
   return m;
 }
 
 /* -------------------------------------------------------------- Hologramm */
 export function makeHoloMaterial(THREE, U) {
   return new THREE.ShaderMaterial({
-    uniforms: { uHeadMat: U.uHeadMat, uBreath: U.uBreath, uScanY: U.uScanY, uHolo: U.uHolo, uHoloCol: U.uHoloCol, uHoloHi: U.uHoloHi, uTime: U.uTime },
+    uniforms: { uHeadMat: U.uHeadMat, uBreath: U.uBreath, uScanY: U.uScanY, uHolo: U.uHolo, uHoloCol: U.uHoloCol, uHoloHi: U.uHoloHi, uTime: U.uTime, uFall: U.uFall },
     transparent: true,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
@@ -493,11 +504,11 @@ void main() {
   gl_Position = projectionMatrix * mv;
 }`,
     fragmentShader: /* glsl */ `
-uniform float uScanY; uniform float uHolo; uniform vec3 uHoloCol; uniform vec3 uHoloHi; uniform float uTime;
+uniform float uScanY; uniform float uHolo; uniform vec3 uHoloCol; uniform vec3 uHoloHi; uniform float uTime; uniform vec2 uFall;
 varying vec3 vRest; varying vec3 vN; varying vec3 vV; varying float vArm;
 ${LAYOUT_GLSL}
 void main() {
-  if (vRest.y < uScanY - 0.002 || uHolo < 0.002) discard;
+  if (vRest.y < uScanY - 0.002 || uHolo < 0.002 || vRest.y < uFall.x) discard;
   lArm = vArm;
   vec3 n = normalize(vN); vec3 v = normalize(vV);
   float fres = pow(1.0 - abs(dot(n, v)), 2.2);
@@ -510,14 +521,21 @@ void main() {
   float scan = exp(-pow((vRest.y - uScanY) / 0.03, 2.0));
   float stripes = 0.5 + 0.5 * sin(vRest.y * 220.0 - uTime * 2.0);
   vec3 c;
+  // Augenpartie (Runde 2): In der Augenhoehle liegen Lid und Augapfel hintereinander, additiv ergab das helle,
+  // umrandete Ovale (Taucherbrille). Dort jede Lage gedaempft, damit die Summe etwa der Flaeche daneben entspricht.
+  float eyeE = length(vec2((abs(vRest.x) - 0.304) / 0.168, (vRest.y + 0.005) / 0.145));
+  float eyeF = smoothstep(0.3, 0.42, vRest.z);
+  float eyeZ = (1.0 - smoothstep(0.85, 1.0, eyeE)) * eyeF;   // Lagen in der Hoehle
+  float eyeR = (1.0 - smoothstep(1.02, 1.3, eyeE)) * eyeF;   // Rand der Hoehle: kein Fresnel-Ring
   if (gl_FrontFacing) {
-    c = uHoloCol * (fres * 0.9 + 0.06 + 0.05 * stripes) + uHoloHi * (line * 0.55 + edge * 0.4) + uHoloHi * scan * 2.0;
+    c = uHoloCol * (fres * mix(0.9, 0.12, eyeR) + 0.06 + 0.05 * stripes) + uHoloHi * (line * 0.55 + edge * 0.4) + uHoloHi * scan * 2.0;
     if (o < 0.0) c *= 0.15;
+    c *= mix(1.0, 0.5, eyeZ);
   } else {
     // Rueckseite: nur ein leiser Fresnel-Schein, keine Linien (sonst scheinen die Schulterblatt-Fugen durch die Brust)
     c = uHoloCol * fres * 0.18;
   }
-  gl_FragColor = vec4(c * uHolo, 1.0);
+  gl_FragColor = vec4(c * uHolo * smoothstep(uFall.x, uFall.y, vRest.y), 1.0);
 }`,
   });
 }
@@ -561,11 +579,12 @@ float abFadeN(vec3 p) {
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
 if (vRest.y < uFall.x || vRest.y > uMechCut) discard;
 if (uMechFade > 0.0) {
-  // Aufloesen mit feiner Leuchtkante statt hartem Verschwinden am Ende des Fensters
-  float dn = abFadeN(vRest * 11.0) * 0.7 + abFadeN(vRest * 37.0) * 0.3;
+  // Aufloesen mit feinem Korn und leiser Kante statt hartem Verschwinden am Ende des Fensters (Runde 2: Rauschen
+  // rund dreimal feiner, Kante schmaler und dunkler; vorher grosse, kantige Fetzen mit Leuchtrand, vor allem am Handy)
+  float dn = abFadeN(vRest * 34.0) * 0.6 + abFadeN(vRest * 97.0) * 0.4;
   float th = uMechFade * 1.2 - 0.1;
   if (dn < th) discard;
-  totalEmissiveRadiance += uGelHi * 3.0 * (1.0 - smoothstep(0.0, 0.035, dn - th)) * step(0.001, uMechFade);
+  totalEmissiveRadiance += uGelHi * 1.1 * (1.0 - smoothstep(0.0, 0.02, dn - th)) * step(0.001, uMechFade);
 }
 ${key.endsWith('-scan') ? 'if (vRest.y > uScanY) discard;' : ''}
 ${kind === 'gel' ? `{

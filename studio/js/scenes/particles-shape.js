@@ -225,18 +225,23 @@ export function sampleRobot(THREE, A, count, rnd) {
   // Kabelfaecher wie in robot-mech.js: vier Steckerleisten am Hinterhaupt (y -0.47), von dort nach hinten und unten
   // aufgefaechert (Durchhang), unten im Schlitz zwischen den Schulterblaettern wieder zusammen
   const CX = [-0.27, -0.09, 0.09, 0.27];
-  const SAG = [0.17, 0.3, 0.32, 0.19];
+  // wie robot-mech.js (Runde 2): Faecher mit Lagen, aussen grosser Bogen nach hinten, Gruppen verschieden lang
+  const BOW = [0.95, 0.7, 1.15, 1.0];
+  const END = [-1.7, -1.52, -1.9, -1.62];
   const neckBack = (y) => -0.92 + 0.3 * smoothstep(-0.3, -0.8, y) - 0.05 * smoothstep(-1.2, -1.8, y);
   for (let i = 0; i < N.cables; i++) {
     const g = i % 4; const f = rnd() * 2 - 1; const t = Math.pow(rnd(), 0.85);
-    const y = -0.47 + (-1.95 + 0.47) * t;
+    const L = rnd();
+    const yEnd = Math.max(-2.12, END[g] - 0.3 * L);
+    const y = -0.47 + (yEnd + 0.47) * t;
     const xFan = CX[g] * 1.75 + f * (0.06 + 0.05 * Math.abs(CX[g]) / 0.27);
     let x = CX[g] + f * 0.06 + (xFan - CX[g] - f * 0.06) * smoothstep(0, 0.42, t);
     x += (Math.max(-0.22, Math.min(0.22, xFan * 0.5)) - x) * smoothstep(0.45, 1, t);
-    const sag = SAG[g] * (0.4 + 0.85 * rnd());
+    const bow = (0.04 + 0.72 * Math.pow(L, 1.3)) * BOW[g];
     const z0 = -0.84;
     const skin = neckBack(y);
-    const z = Math.min(z0 + (skin - 0.02 - z0) * smoothstep(0.3, 0.95, t) - sag * Math.pow(Math.sin(Math.PI * Math.pow(Math.min(1, t * 1.06), 0.72)), 0.9), skin - 0.02);
+    const zEnd = neckBack(yEnd) - 0.02;
+    const z = Math.min(z0 + (zEnd - z0) * smoothstep(0.2, 1, t) - bow * Math.pow(Math.sin(Math.PI * Math.pow(t, 0.52)), 0.8), skin - 0.02);
     put([x, y, z], [Math.sign(x) * 0.3, 0.2, -1], KIND.cable, y > -0.62 ? 1 : neckW(y));
   }
   while (n < count) { headS(rnd, o); put(o.p, o.n, KIND.surface, o.h); }

@@ -97,6 +97,8 @@ uniform float uFog;
 uniform float uSize;
 uniform float uBokeh;
 uniform float uHint;      // 0..1 lose angedeuteter Kopf im Hero (Teil der Form-Partikel wartet schon nah am Ziel)
+uniform vec2 uPreGain;    // Hero-Bueste: x Helligkeit, y Punktgroesse (Querformat hoeher: der Kopf ist dort kleiner im Bild)
+uniform vec2 uPreSurf;    // Hero-Bueste, Flaechen: x Anteil der Partikel am Ziel, y Helligkeit (viele Partikel: weniger, heller)
 uniform vec3 uBoxC;       // Schwebe-Wolke: Mitte
 uniform vec3 uBoxH;       // Schwebe-Wolke: halbe Ausdehnung
 uniform vec4 uTextArea;   // Bereich des Titels (NDC: Mitte xy, Radien zw): Partikel dort gedaempft, solange der Titel steht
@@ -192,16 +194,21 @@ void main() {
     // Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Kopf und Augen dichter, Schultern lockerer),
     // atmet mit dem Rumpf und folgt mit dem Kopf der Maus. Beim Scrollen verdichtet sie sich zum Hologramm.
     // Linien (Fugen, Plattenkanten, Kabel) sind im Hero alle da: sie machen die Android-Form lesbar
-    float share = kind > 1.5 ? 0.92 : (kind > 0.5 ? 1.0 : (aHw > 0.5 ? 0.72 : 0.62 * smoothstep(-3.3, -2.7, aTarget.y)));
+    // Runde 2: der Kopf steht im ersten Bild fertig geformt (Flaechen 90 %, Linien ganz, eng an der Form), nur der Rumpf
+    // bleibt lockerer. Die Wolke loest sich erst beim Scrollen in den Flug zum Hologramm auf.
+    float isLine = (kind > 0.5 && kind < 1.5) ? 1.0 : 0.0;
+    float share = kind > 1.5 ? 0.95 : (isLine > 0.5 ? 1.0 : (aHw > 0.5 ? uPreSurf.x : 0.66 * smoothstep(-3.3, -2.7, aTarget.y)));
     pre = step(aInfo.z, share) * uHint;
     if (pre > 0.0) {
       vec3 jd = normalize(vec3(sin(aRand.y * 91.7), cos(aRand.y * 37.3 + aRand.x * 5.0), sin(aRand.x * 53.1) + 0.01));
-      float rad = (0.012 + 0.1 * aRand.x * aRand.x * aRand.x) * (kind > 1.5 ? 0.3 : 1.0);
-      vec3 dr = vec3(sin(t * 0.31 + aRand.y * TAU), sin(t * 0.23 + aRand.x * 9.0), cos(t * 0.27 + aRand.y * 5.0)) * 0.035;
+      // Streuung: Linien praktisch auf der Fuge (scharf), Kopfflaechen eng, Rumpf lockerer
+      float tight = kind > 1.5 ? 0.15 : (isLine > 0.5 ? 0.08 : (aHw > 0.5 ? 0.35 : 0.8));
+      float rad = (0.008 + 0.09 * aRand.x * aRand.x * aRand.x) * tight;
+      vec3 dr = vec3(sin(t * 0.31 + aRand.y * TAU), sin(t * 0.23 + aRand.x * 9.0), cos(t * 0.27 + aRand.y * 5.0)) * (0.006 + 0.022 * tight);
       // Kabel: Lichtpunkte fliessen langsam vom Hinterkopf nach hinten unten weg (wie die Kabel in Referenz 1)
       vec3 flow = vec3(0.0);
       if (abs(kind - 1.25) < 0.1) { float ph = fract(t * 0.06 + aRand.y); flow = vec3(sign(tgt.x) * 0.08, -0.32, -0.62) * ph * ph; }
-      p = mix(p, tgt + flow + jd * rad * (abs(kind - 1.25) < 0.1 ? 0.35 : 1.0) + nrm * (0.015 + 0.045 * aRand.w) + dr, pre);
+      p = mix(p, tgt + flow + jd * rad * (abs(kind - 1.25) < 0.1 ? 3.0 : 1.0) + nrm * ((0.004 + 0.03 * aRand.w) * tight + 0.004) + dr, pre);
     }
   }
   vec3 pos = p;
@@ -255,15 +262,19 @@ void main() {
     float twP = 0.75 + 0.25 * sin(t * (0.7 + aRand.x) + aRand.y * 20.0);
     // Kantenlicht von rechts hinten: zeichnet Schaedel, Wange und Schulter als helle Kontur
     float rl = max(dot(nrm, normalize(vec3(0.75, 0.35, -0.55))), 0.0);
-    float bp = (0.24 + 2.4 * rimP * rimP * rimP) * backP * twP * (aHw > 0.5 ? 1.0 : 1.25) * (1.0 + 1.6 * rl * rl);
-    vec3 pc = mix(mix(uColA, uColB, 0.35 + 0.4 * rimP), uColW, 0.3 * rl);
-    float ps = uSize * (0.5 + 0.35 * aRand.x);
+    // weiches Fuehrungslicht von links oben vorne: modelliert Stirn, Wangen und Kinn (sonst wirkt das Gesicht hohl)
+    float kl = max(dot(nrm, normalize(vec3(-0.35, 0.55, 0.75))), 0.0);
+    float bp = (0.15 + 0.55 * kl * kl + 2.3 * rimP * rimP * rimP) * backP * twP * (aHw > 0.5 ? uPreSurf.y : 1.2) * (1.0 + 2.4 * rl * rl);
+    vec3 pc = mix(mix(uColA, uColB, 0.35 + 0.4 * rimP), uColW, 0.3 * rl + 0.25 * kl);
+    // Groesse: mindestens rund 3 Bildpunkte, sonst ist der Kern kleiner als ein Bildpunkt (graues Flimmern statt Licht)
+    float ps = uSize * (0.62 + 0.38 * aRand.x);
     if (kind > 0.5 && kind < 1.5) {
       // Fugen der Gesichtsplatten, Plattenkanten am Rumpf, Rand der Hinterkopf-Oeffnung: zeichnen schon im Hero die
       // Bueste B nach (heller als die Flaechen, damit die Android-Form im ersten Bild lesbar ist)
-      bp = (1.35 + 1.1 * rimP) * backP * twP * (1.0 + 0.8 * rl);
-      pc = mix(uColB, uColW, 0.35);
-      ps = uSize * 0.48;
+      // Rumpf-Linien (Schulterring, Spangen) leiser: von vorne liegen sie oft hintereinander und bilden helle Flecken
+      bp = (2.6 + 1.3 * rimP) * backP * twP * (1.0 + 1.0 * rl) * (aHw > 0.5 ? 1.0 : 0.5);
+      pc = mix(uColB, uColW, 0.25);
+      ps = uSize * 1.12;
       if (abs(kind - 1.25) < 0.1) {
         float ph = fract(t * 0.06 + aRand.y);
         bp = (0.7 + 0.6 * aRand.w) * sin(PI * ph) * twP;
@@ -280,9 +291,9 @@ void main() {
       pc = mix(uColA, uColB, 0.3 + 0.3 * eyes);
       ps = uSize * (0.45 + 0.09 * eyes);
     }
-    bright = mix(bright, bp, pre);
+    bright = mix(bright, bp * uPreGain.x, pre);
     col = mix(col, pc, pre);
-    wsize = mix(wsize, ps, pre);
+    wsize = mix(wsize, ps * uPreGain.y, pre);
   }
   if (isForm && f > 0.0) {
     // Roboter-Zustand: Hologramm. Kanten (Silhouette) hell, Flaechen fein, Rueckseite gedaempft
@@ -355,7 +366,8 @@ void main() {
   float pl = exp(-dot(dv, dv) * 14.0) * uPointerAmt * (1.0 - f) * (isFar ? 0.0 : 1.0);
   bright *= 1.0 + 1.5 * pl;
   float ta = length((ndc - uTextArea.xy) / uTextArea.zw);
-  bright *= 1.0 - 0.6 * uTitle * (1.0 - smoothstep(0.55, 1.1, ta)) * (1.0 - f);
+  // Titel: Partikel dahinter gedaempft, der fertig geformte Kopf nicht (er steht neben bzw. ueber dem Text)
+  bright *= 1.0 - 0.6 * uTitle * (1.0 - smoothstep(0.55, 1.1, ta)) * (1.0 - f) * (1.0 - pre * aHw);
   gl_Position.xy += normalize(dv + 1e-5) / vec2(aspect, 1.0) * pl * 0.035 * gl_Position.w;
 
   // Lichtspur im Flug: Sprite wird entlang der Bahn gestreckt (Richtung aus der Bahn kurz davor)
