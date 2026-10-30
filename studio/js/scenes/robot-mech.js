@@ -1,4 +1,4 @@
-// Android B: Mechanik und Details. Alles in Ruhelage-Koordinaten der Bueste; was am Hals sitzt, bekommt ein Kopf-Gewicht
+// Szene "robot": Mechanik und Details. Alles in Ruhelage-Koordinaten der Bueste; was am Hals sitzt, bekommt ein Kopf-Gewicht
 // (aHead, aus dem Netz gemessen) und biegt sich mit der Kopfdrehung wie die Haut. Kolben sind starr (Instanzen, pro Bild).
 //
 //   Augen       dunkles Glas mit feinem Cyan-Ring
@@ -7,8 +7,8 @@
 //               5 Kabel je Seite (eins mit Lichtimpulsen), Schellen, Chrom-Ringe oben und unten
 //   Schultern   Chrom-Ring im offenen Band des Oberarms (folgt dem Querschnitt), dunkles Lager dahinter
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { makeMechMaterial } from './materials.js';
-import { LAYOUT } from './layout.js';
+import { makeMechMaterial } from './robot-materials.js';
+import { LAYOUT } from './robot-layout.js';
 
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 const smoothstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
@@ -60,7 +60,7 @@ export function buildMechanics(THREE, o) {
   };
 
   /* ------------------------------------------------------ Geometrie-Sammler */
-  const kits = { chrome: [], graphite: [], rubber: [], cable: [], gel: [], housing: [], ceramic: [], grille: [], led: [], hose: [], chromeS: [] };
+  const kits = { chrome: [], graphite: [], rubber: [], cable: [], gel: [], housing: [], ceramic: [], grille: [], led: [], hose: [], chromeS: [], graphiteS: [] };
   // three-Geometrie vorbereiten: nicht indiziert, aUv2 aus uv, aHead (Zahl oder Funktion von y)
   const prep = (g, w, m4 = null) => {
     if (m4) g.applyMatrix4(m4);
@@ -152,7 +152,7 @@ export function buildMechanics(THREE, o) {
   const EU = {
     uIris: { value: 1 },
     uIrisCol: { value: palette.signal.clone().multiplyScalar(1.6) },
-    uIrisBase: { value: palette.steel.clone().lerp(palette.signal, 0.42).multiplyScalar(0.62) },
+    uIrisBase: { value: palette.steel.clone().lerp(palette.signal, 0.48).multiplyScalar(0.8) },
     uScanY: U.uScanY,
   };
   const scanClip = (sh) => {
@@ -170,25 +170,27 @@ export function buildMechanics(THREE, o) {
   float rr = length(vEP.xy) / R;
   float front = smoothstep(0.0, 0.25, vEP.z / R);
   float ang = atan(vEP.y, vEP.x);
-  float irisM = (1.0 - smoothstep(0.405, 0.43, rr)) * front;
+  float irisM = (1.0 - smoothstep(0.43, 0.455, rr)) * front;
   float pupil = (1.0 - smoothstep(0.135, 0.16, rr)) * front;
   float fib = 0.5 + 0.5 * sin(ang * 72.0 + sin(ang * 11.0) * 1.7 + rr * 9.0);
   fib = mix(fib, 0.5 + 0.5 * sin(ang * 29.0 + 2.0 + rr * 4.0), 0.35);
-  float coll = exp(-pow((rr - 0.235) / 0.028, 2.0));
-  vec3 irisCol = uIrisBase * (0.45 + 0.75 * fib) * (1.0 + 0.6 * coll) * (0.7 + 0.3 * smoothstep(0.42, 0.2, rr));
-  float limbus = exp(-pow((rr - 0.425) / 0.03, 2.0)) * front;
+  float coll = exp(-pow((rr - 0.25) / 0.03, 2.0));
+  vec3 irisCol = uIrisBase * (0.45 + 0.75 * fib) * (1.0 + 0.6 * coll) * (0.7 + 0.3 * smoothstep(0.445, 0.2, rr));
+  float limbus = exp(-pow((rr - 0.45) / 0.03, 2.0)) * front;
   // Augapfel zum Rand hin dunkler (Lid-Schatten)
   diffuseColor.rgb *= 0.45 + 0.55 * smoothstep(0.98, 0.55, rr) * front + 0.0;
   diffuseColor.rgb = mix(diffuseColor.rgb, irisCol, irisM);
   diffuseColor.rgb *= (1.0 - 0.55 * limbus) * (1.0 - 0.96 * pupil);
-  float ring = exp(-pow((rr - 0.41) / 0.012, 2.0)) * front;
+  float ring = exp(-pow((rr - 0.435) / 0.012, 2.0)) * front;
   totalEmissiveRadiance += uIrisCol * uIris * (ring * 0.07 + pupil * 0.12 * (1.0 - rr / 0.16) + irisM * fib * 0.03);
 }`);
   };
-  eyeMat.customProgramCacheKey = () => 'ab-eye2';
+  eyeMat.customProgramCacheKey = () => 'ab-eye3';
+  // Hornhaut: nur Spiegelung (schwarze Grundfarbe), Deckung aus der Helligkeit der Spiegelung. So erscheint das
+  // Glanzlicht der Softbox als klarer Lichtpunkt im Auge (Augenglanz), der Rest bleibt glasklar.
   const corneaMat = new THREE.MeshPhysicalMaterial({
-    color: palette.white.clone(), roughness: 0.02, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.01,
-    envMap: env, envMapIntensity: 2.4, transparent: true, depthWrite: false,
+    color: 0x000000, roughness: 0.03, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.02,
+    envMap: env, envMapIntensity: 3.2, transparent: true, depthWrite: false,
   });
   corneaMat.onBeforeCompile = (sh) => {
     sh.uniforms.uScanY = U.uScanY;
@@ -196,23 +198,30 @@ export function buildMechanics(THREE, o) {
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vEP; varying float vWY; uniform float uScanY;')
       .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\nif (vWY > uScanY) discard;')
       .replace('#include <opaque_fragment>', `float cf = pow(1.0 - abs(dot(normal, normalize(vViewPosition))), 3.0);
-diffuseColor.a = 0.03 + 0.5 * cf;
-outgoingLight *= 0.6 + 0.4 * cf;
+float cs = max(max(outgoingLight.r, outgoingLight.g), outgoingLight.b);
+float ca = clamp(cs * 1.1 + 0.2 * cf, 0.0, 1.0);
+outgoingLight = outgoingLight / max(ca, 1e-3);
+diffuseColor.a = ca;
 #include <opaque_fragment>`);
   };
-  corneaMat.customProgramCacheKey = () => 'ab-cornea';
+  corneaMat.customProgramCacheKey = () => 'ab-cornea2';
   disposables.push(eyeGeo, eyeMat, corneaGeo, corneaMat);
+  // Blick: geradeaus mit leichter Konvergenz; steht die Kamera vor dem Gesicht, folgen die Augen ihr dezent
+  // (begrenzt, gedaempft), so wirkt der Blick wach und auf den Betrachter gerichtet.
   const eyes = [];
+  const Z = V(0, 0, 1);
   for (const e of [lm.eyeL, lm.eyeR]) {
     const m = new THREE.Mesh(eyeGeo, eyeMat);
     m.position.set(e[0], e[1], e[2] - 0.004);
-    m.lookAt(e[0] * 0.2, e[1] - 0.04, e[2] + 3);
+    const rest = V(e[0] * 0.2 - e[0], 0.02, 3).normalize();
+    m.quaternion.setFromUnitVectors(Z, rest);
     const c = new THREE.Mesh(corneaGeo, corneaMat);
     c.renderOrder = 6;
     m.add(c);
-    eyes.push(m);
+    eyes.push({ m, rest, dir: rest.clone() });
     head.add(m);
   }
+  const _inv = new THREE.Matrix4(); const _cam = V(0, 0, 0); const _gd = V(0, 0, 0);
 
   /* ------------------------------------------- Mundspalt: dunkler Abschluss dahinter */
   let mouthGeo = null;
@@ -423,12 +432,13 @@ outgoingLight *= 0.6 + 0.4 * cf;
     };
     for (const sx of [-1, 1]) {
       const mir = (pts) => pts.map((p) => V(p.x * sx, p.y, p.z));
-      kits.chrome.push(tube(mir(loop(0.038, LAYOUT.ringAt)), () => 0.02, S(12, 8), 0, true));
-      kits.chrome.push(tube(mir(loop(0.05, LAYOUT.ringAt - 0.028)), () => 0.009, S(8, 6), 0, true));
-      kits.chrome.push(tube(mir(loop(0.05, LAYOUT.ringAt + 0.028)), () => 0.009, S(8, 6), 0, true));
+      // Schulterringe verschwinden im Roentgenbild mit der Scan-Linie (Kits mit '-scan'), wie das Hologramm der Schultern
+      kits.chromeS.push(tube(mir(loop(0.038, LAYOUT.ringAt)), () => 0.02, S(12, 8), 0, true));
+      kits.chromeS.push(tube(mir(loop(0.05, LAYOUT.ringAt - 0.028)), () => 0.009, S(8, 6), 0, true));
+      kits.chromeS.push(tube(mir(loop(0.05, LAYOUT.ringAt + 0.028)), () => 0.009, S(8, 6), 0, true));
       // dunkles Lager: Band hinter dem Ring
       const inner = mir(loop(0.09, LAYOUT.ringAt));
-      kits.graphite.push(tube(inner, () => 0.04, S(10, 6), 0, true));
+      kits.graphiteS.push(tube(inner, () => 0.04, S(10, 6), 0, true));
     }
   }
 
@@ -473,7 +483,7 @@ outgoingLight *= 0.6 + 0.4 * cf;
   const rnd = (() => { let a = 20261027; return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
 
   /* ------------------------------------------- Hinterkopf: Schaedelgitter, Streben, Kamm */
-  // Die Oeffnung ist eine Ellipse in (Bogenlaenge ab hinten, y), siehe layout.js. Darin ein Gitter wie ein Schaedel
+  // Die Oeffnung ist eine Ellipse in (Bogenlaenge ab hinten, y), siehe robot-layout.js. Darin ein Gitter wie ein Schaedel
   // aus Streben: Laengsrippen (Graphit) bis zur Schaedelbasis, drei Querrippen dahinter,
   // zwei Chrom-Streben. Am Kamm der Schaedelbasis (unter dem Hirnstamm, cableRoot) treten die Kabel aus.
   const SKW = LAYOUT.skull;
@@ -532,34 +542,49 @@ outgoingLight *= 0.6 + 0.4 * cf;
   }
 
   /* -------------------------------------- Hinterkopf und Nacken: Kabelbuendel (Referenz 1) */
-  // 40 bis 90 duenne Kabel und Schlaeuche: aus dem Schaedelinneren (hinter dem Gitter) zum Kamm, dort hinaus,
-  // in sieben Buendeln (leicht verdrillt, Schellen) ueber den Nacken in den Schlitz zwischen den Schulterblaettern.
+  // 40 bis 90 duenne Kabel und Schlaeuche: aus dem Schaedelinneren (hinter dem Gitter) zum Kamm, dort hinaus und
+  // locker ueber den Nacken in den Schlitz zwischen den Schulterblaettern. Sieben lose Straenge statt Zoepfe: kaum
+  // verdrillt, einzelne Kabel wandern leicht, Luecken zwischen den Straengen, nur drei Schellen. Die Straenge haengen
+  // im Nacken etwas vom Hals weg (Schwerkraft) und laufen erst kurz vor dem Schlitz zusammen.
   // Schwarzes Gummi, graue Schlaeuche, die dicken mit Rillen und Chrom-Huelsen, ~10 % mit Licht.
   {
-    const NC = hi ? 84 : 36;
+    const NC = hi ? 112 : 44;
+    // u: seitliche Lage (Bogenlaenge am Hinterkopf), d: Abstand vom Nacken, R: Radius des Strangs
     const bundles = [
-      { u: -0.27, d: 0.05, R: 0.04 }, { u: -0.17, d: 0.085, R: 0.045 }, { u: -0.075, d: 0.045, R: 0.05 }, { u: 0.0, d: 0.1, R: 0.055 },
-      { u: 0.08, d: 0.05, R: 0.05 }, { u: 0.175, d: 0.08, R: 0.045 }, { u: 0.27, d: 0.045, R: 0.04 },
+      { u: -0.33, d: 0.04, R: 0.036 }, { u: -0.215, d: 0.12, R: 0.04 }, { u: -0.1, d: 0.06, R: 0.042 }, { u: 0.0, d: 0.15, R: 0.045 },
+      { u: 0.105, d: 0.07, R: 0.042 }, { u: 0.22, d: 0.13, R: 0.04 }, { u: 0.33, d: 0.045, R: 0.036 },
     ];
     const NB = bundles.length;
-    bundles.forEach((B, i) => { B.c0 = 1 + (i % 3); });
-    const ys = [-0.56, -0.76, -0.98, -1.22, -1.45, -1.67, -1.88, -2.04];
+    // nur drei Schellen (Straenge 1, 3, 5) auf verschiedenen Hoehen
+    bundles.forEach((B, i) => { B.c0 = i === 3 ? 2 : i === 1 ? 3 : i === 5 ? 4 : -1; });
+    const ys = [-0.56, -0.76, -0.98, -1.22, -1.45, -1.67, -1.9, -2.17];
     const at = (x, y, off) => { const b = backAt(x, y); b.z -= off; return b; };
-    // Mitte eines Buendels auf Hoehe y (Index k in ys)
+    // Mitte eines Strangs auf Hoehe y (Index k in ys): breit gefaechert, erst unten im Schlitz zusammen
+    // Mitten werden je Strang und Hoehe nur einmal gesucht (backAt laeuft ueber alle Ecken des Netzes)
+    const centerCache = new Map();
     const center = (B, k) => {
+      const key = `${B.u}:${k}`;
+      let c = centerCache.get(key);
+      if (!c) { c = centerRaw(B, k); centerCache.set(key, c); }
+      return c.clone();
+    };
+    const centerRaw = (B, k) => {
       const y = ys[k];
-      const spread = [1.5, 1.25, 1.08, 0.98, 0.88, 0.68, 0.44, 0.34][k];
-      const bulge = [0.07, 0.12, 0.12, 0.095, 0.065, 0.03, -0.025, -0.14][k];
-      return at(B.u * spread, y, B.d * (k < 6 ? 1 : 0.4) + bulge);
+      const spread = [1.4, 1.36, 1.3, 1.22, 1.12, 0.98, 0.78, 0.66][k];
+      const bulge = [0.07, 0.12, 0.13, 0.11, 0.08, 0.045, -0.02, -0.15][k];
+      const out = 1 + 0.3 * Math.abs(B.u) / 0.33; // aeussere Straenge haengen weiter vom Hals weg
+      return at(B.u * spread, y, (B.d * (k < 6 ? 1 : 0.4) + bulge) * (k < 6 ? out : 1));
     };
     for (let i = 0; i < NC; i++) {
       const bi = i % NB; const B = bundles[bi];
       const core = i < NB && (bi % 2 === 1 || bi === 3);
       const k0 = rnd();
-      const r = core ? 0.018 + 0.005 * rnd() : k0 < 0.62 ? 0.0038 + 0.0032 * rnd() : k0 < 0.9 ? 0.0085 + 0.004 * rnd() : 0.013 + 0.003 * rnd();
+      const r = core ? 0.016 + 0.004 * rnd() : k0 < 0.7 ? 0.0032 + 0.0026 * rnd() : k0 < 0.93 ? 0.0075 + 0.0035 * rnd() : 0.012 + 0.003 * rnd();
       const lit = !core && i % 10 === 4;
-      const rho = core ? 0 : B.R * (0.3 + 0.7 * Math.sqrt(rnd()));
-      const ph0 = rnd() * 6.283; const tw = (rnd() < 0.5 ? 1 : -1) * (0.5 + 0.5 * rnd());
+      const rho = core ? 0 : B.R * (0.25 + 0.75 * Math.sqrt(rnd()));
+      const ph0 = rnd() * 6.283; const tw = (rnd() < 0.5 ? 1 : -1) * (0.06 + 0.1 * rnd());
+      // eigenes leichtes Wandern (seitlich und in der Tiefe), damit die Kabel nicht exakt parallel laufen
+      const wa = 0.008 + 0.014 * rnd(); const wf = 0.6 + 0.9 * rnd(); const wp = rnd() * 6.283;
       // Austritt im Schaedel: verteilt ueber das Gitter, unten dichter
       const pu = (rnd() - 0.5) * 2;
       const py = -0.4 + 0.62 * Math.pow(rnd(), 1.6);
@@ -568,14 +593,17 @@ outgoingLight *= 0.6 + 0.4 * cf;
       const ctrl = [s0.p.clone().addScaledVector(s0.n, -(0.11 + 0.03 * rnd()))];
       const sm = surfAt(Math.PI + pu * 0.35, (py - 0.48) * 0.5);
       ctrl.push(sm.p.clone().addScaledVector(sm.n, -0.12 + 0.02 * rnd()));
-      const ex = surfAt(Math.PI + (B.u * 1.7 + Math.cos(ph0) * rho) / Math.max(0.3, rBack(-0.46)), -0.46 - 0.04 * rnd());
+      const ex = surfAt(Math.PI + (B.u * 2.3 + Math.cos(ph0) * rho) / Math.max(0.3, rBack(-0.46)), -0.46 - 0.04 * rnd());
       ctrl.push(ex.p.clone().addScaledVector(ex.n, -0.035 + 0.03 * rnd()));
       ys.forEach((y, k) => {
         const c = center(B, k);
-        const a = ph0 + tw * k * 0.7;
-        const pinch = (k === B.c0 || k === B.c0 + 3) ? 0.72 : 1;
-        c.x += Math.cos(a) * rho * pinch;
-        c.z -= Math.sin(a) * rho * 0.75 * pinch;
+        const a = ph0 + tw * k;
+        const pinch = (k === B.c0) ? 0.55 : 1;
+        // unten (Schlitz) enger zusammen
+        const tight = k >= 6 ? 0.6 : 1;
+        const wob = k > 0 && k < 6 ? Math.sin(k * wf + wp) * wa : 0;
+        c.x += Math.cos(a) * rho * pinch * tight + wob;
+        c.z -= Math.sin(a) * rho * 0.8 * pinch * tight + wob * 0.6;
         ctrl.push(c);
       });
       const curve = new THREE.CatmullRomCurve3(ctrl, false, 'centripetal');
@@ -593,28 +621,36 @@ outgoingLight *= 0.6 + 0.4 * cf;
         }
       } else {
         const pts = curve.getPoints(S(64, 34));
-        const kit = lit ? 'cable' : (r > 0.008 && i % 3 !== 0) ? 'hose' : 'rubber';
+        // Mischung wie Referenz 1: viele helle, silbergraue Leitungen, dazwischen schwarze
+        const kit = lit ? 'cable' : (i % 5 < 3 || r > 0.0075) ? 'hose' : 'rubber';
         kits[kit].push(tube(pts, () => r, r > 0.008 ? S(10, 7) : S(7, 5), (y) => headW(y)));
       }
     }
-    // Schellen um die Buendel (Graphit mit Chrom-Kante)
+    // Schellen (Graphit mit Chrom-Kante), nur an drei Straengen
     for (const B of bundles) {
-      for (const k of [B.c0, B.c0 + 3]) {
-        const c = center(B, k);
-        const n0 = center(B, k + 1).sub(center(B, k - 1)).normalize();
-        const g = new THREE.CylinderGeometry(B.R + 0.022, B.R + 0.022, 0.032, S(24, 14), 1, true);
-        g.scale(1, 1, 0.8);
-        kits.graphite.push(prep(g, headW(c.y), place(c, n0)));
-        const t2 = new THREE.TorusGeometry(B.R + 0.023, 0.0045, 6, S(24, 14)).rotateX(Math.PI / 2).scale(1, 1, 0.8);
-        kits.chrome.push(prep(t2.translate(0, 0.016, 0), headW(c.y), place(c, n0)));
-      }
+      if (B.c0 < 0) continue;
+      const k = B.c0;
+      const c = center(B, k);
+      const n0 = center(B, k + 1).sub(center(B, k - 1)).normalize();
+      const Rc = B.R * 0.55 + 0.022;
+      const g = new THREE.CylinderGeometry(Rc, Rc, 0.03, S(24, 14), 1, true);
+      g.scale(1, 1, 0.8);
+      kits.graphite.push(prep(g, headW(c.y), place(c, n0)));
+      const t2 = new THREE.TorusGeometry(Rc + 0.001, 0.0045, 6, S(24, 14)).rotateX(Math.PI / 2).scale(1, 1, 0.8);
+      kits.chrome.push(prep(t2.translate(0, 0.015, 0), headW(c.y), place(c, n0)));
     }
     // Rahmen im Rueckenschlitz
+    // gleiche Form wie lBackSlot (robot-layout.js): abgerundetes Rechteck, oben breiter
     const slot = [];
-    const NS = 40;
+    const NS = 72;
+    const slotHalf = (y) => 0.31 - 0.07 * smoothstep(-1.46, -2.2, y);
     for (let j = 0; j < NS; j++) {
       const a = (j / NS) * Math.PI * 2;
-      const x = Math.cos(a) * (0.195 - 0.05 * Math.max(0, -Math.sin(a))); const y = -1.86 + Math.sin(a) * 0.43;
+      const cx = Math.cos(a); const sy = Math.sin(a);
+      // Superellipse: fast rechteckig mit runden Ecken
+      const ex = Math.sign(cx) * Math.pow(Math.abs(cx), 0.45); const ey = Math.sign(sy) * Math.pow(Math.abs(sy), 0.45);
+      const y = -1.83 + ey * 0.375;
+      const x = ex * (slotHalf(y) + 0.005);
       const b = backAt(x, y);
       slot.push(V(x, y, b.z + 0.012));
     }
@@ -659,6 +695,7 @@ outgoingLight *= 0.6 + 0.4 * cf;
   const mats = {
     chrome: makeMechMaterial(THREE, U, { color: chromeCol, metalness: 1, roughness: 0.2, envMap: env, envMapIntensity: 2.0 }, 'metal', 'chrome'),
     graphite: makeMechMaterial(THREE, U, { color: palette.steel.clone().multiplyScalar(0.55), metalness: 0.75, roughness: 0.36, envMap: env, envMapIntensity: 0.9, clearcoat: 0.4, clearcoatRoughness: 0.2 }, 'metal', 'graphite'),
+    graphiteS: makeMechMaterial(THREE, U, { color: palette.steel.clone().multiplyScalar(0.55), metalness: 0.75, roughness: 0.36, envMap: env, envMapIntensity: 0.9 }, 'metal', 'graphite-scan'),
     housing: makeMechMaterial(THREE, U, { color: palette.steel.clone().multiplyScalar(0.7), metalness: 0.6, roughness: 0.42, envMap: env, envMapIntensity: 1.0 }, 'housing', 'housing'),
     rubber: makeMechMaterial(THREE, U, { color: palette.void.clone().multiplyScalar(2.6), metalness: 0, roughness: 0.38, envMap: env, envMapIntensity: 0.9, clearcoat: 0.7, clearcoatRoughness: 0.25 }, 'metal', 'rubber'),
     cable: makeMechMaterial(THREE, U, { color: palette.ink.clone().multiplyScalar(1.4), metalness: 0, roughness: 0.3, envMap: env, envMapIntensity: 0.8, clearcoat: 0.6, clearcoatRoughness: 0.2 }, 'cable'),
@@ -666,7 +703,7 @@ outgoingLight *= 0.6 + 0.4 * cf;
     ceramic: makeMechMaterial(THREE, U, { color: o.shellCol, metalness: 0, roughness: 0.3, envMap: env, envMapIntensity: 1.0, clearcoat: 0.4, clearcoatRoughness: 0.2 }, 'metal', 'ceramic-scan'),
     grille: makeMechMaterial(THREE, U, { color: palette.mist.clone().multiplyScalar(0.55), metalness: 0.8, roughness: 0.35, envMap: env, envMapIntensity: 0.9 }, 'grille', 'grille-scan'),
     chromeS: makeMechMaterial(THREE, U, { color: chromeCol, metalness: 1, roughness: 0.2, envMap: env, envMapIntensity: 2.0 }, 'metal', 'chrome-scan'),
-    hose: makeMechMaterial(THREE, U, { color: palette.mist.clone().multiplyScalar(0.5), metalness: 0.3, roughness: 0.28, envMap: env, envMapIntensity: 1.1, clearcoat: 0.8, clearcoatRoughness: 0.18 }, 'metal', 'hose'),
+    hose: makeMechMaterial(THREE, U, { color: palette.mist.clone().lerp(palette.white, 0.25).multiplyScalar(0.62), metalness: 0.45, roughness: 0.26, envMap: env, envMapIntensity: 1.25, clearcoat: 0.8, clearcoatRoughness: 0.16 }, 'metal', 'hose'),
     led: makeMechMaterial(THREE, U, { color: palette.void.clone(), metalness: 0, roughness: 0.3, envMap: env, envMapIntensity: 0.5 }, 'led', 'led-scan'),
   };
   const meshes = [];
@@ -736,7 +773,24 @@ outgoingLight *= 0.6 + 0.4 * cf;
       });
       for (const im of [cyl, caps, rods, eyelets]) im.instanceMatrix.needsUpdate = true;
       const vis = s.scan.dissolve < 0.999 && s.buildLine > -0.6;
-      for (const e of eyes) e.visible = s.buildLine > lm.eyeL[1] + 0.1;
+      // Blickrichtung (Ruhelage des Kopfs): Kamera vor dem Gesicht -> Augen folgen ihr, sonst geradeaus
+      if (s.camPos) {
+        _inv.copy(headMat).invert();
+        _cam.copy(s.camPos).applyMatrix4(_inv);
+        const kk = 1 - Math.exp(-dt * 6);
+        for (const E of eyes) {
+          _gd.copy(_cam).sub(E.m.position).normalize();
+          const front = smoothstep(0.35, 0.75, _gd.z) * (s.gaze ?? 1);
+          // Winkel begrenzen: seitlich hoechstens ~16 Grad, vertikal ~9 Grad
+          const yaw = clamp(Math.atan2(_gd.x, _gd.z) - Math.atan2(E.rest.x, E.rest.z), -0.28, 0.28) * front;
+          const pit = clamp(Math.asin(clamp(_gd.y, -1, 1)) - Math.asin(E.rest.y), -0.16, 0.16) * front;
+          const ty = Math.atan2(E.rest.x, E.rest.z) + yaw; const tp = Math.asin(E.rest.y) + pit;
+          _gd.set(Math.sin(ty) * Math.cos(tp), Math.sin(tp), Math.cos(ty) * Math.cos(tp));
+          E.dir.lerp(_gd, kk).normalize();
+          E.m.quaternion.setFromUnitVectors(Z, E.dir);
+        }
+      }
+      for (const E of eyes) E.m.visible = s.buildLine > lm.eyeL[1] + 0.1;
       if (mouth) mouth.visible = s.scan.scanY > -0.5 && s.buildLine > -0.5;
       for (const m of meshes) m.visible = true;
       cyl.visible = caps.visible = rods.visible = eyelets.visible = vis;

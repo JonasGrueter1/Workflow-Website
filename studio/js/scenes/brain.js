@@ -30,7 +30,7 @@
 import { buildBrain, CASCADES, ARR_SCALE } from './brain-build.js';
 import { makeMaterials } from './brain-shaders.js';
 import { createHardware } from './brain-hardware.js';
-import { makeHeadShape } from './robot-geometry.js';
+import { makeHeadShape } from './robot-geometry.js'; // Kopfform der Android-Bueste (Szene robot)
 
 const SUBDIV = { high: 4, medium: 3, low: 2 };
 const FIBER_SEG = { high: 28, medium: 18, low: 12 };

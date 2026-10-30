@@ -1,4 +1,4 @@
-// Android B: Aufteilung der Schale (Fugen und Oeffnungen) als Felder in Ruhelage-Koordinaten (ARCHITEKTUR-Masse:
+// Szene "robot": Aufteilung der Schale (Fugen und Oeffnungen) als Felder in Ruhelage-Koordinaten (ARCHITEKTUR-Masse:
 // Kopfmitte im Ursprung, Gesicht +Z, Kinn y -1, Scheitel y 1, Unterkante y -3.5). Meist symmetrisch: q = (|x|, y, z).
 // Die Brust ist asymmetrisch (lSide = Vorzeichen von x): rechts im Bild (x < 0) eine weisse Brustplatte mit
 // Rippenschlitzen, links offener Muskel.
@@ -37,6 +37,8 @@ export const LAYOUT_GLSL = /* glsl */ `
 // Oberarm-Gewicht des aktuellen Punkts (aus dem Skinning, 0 Rumpf .. 1 Arm) und Seite, vor dem Aufruf setzen
 float lArm = 0.0;
 float lSide = 1.0;
+// Tiefe der naechsten Fuge (1 Plattenfuge, kleiner: feine Falte wie die Lidfuge), wird von seamField gesetzt
+float lSeamK = 1.0;
 float lArmSdf() { return (0.45 - lArm) * 0.35; }
 float lSmax(float a, float b, float k) { float h = clamp(0.5 - 0.5 * (b - a) / k, 0.0, 1.0); return mix(b, a, h) + k * h * (1.0 - h); }
 float lSmin(float a, float b, float k) { return -lSmax(-a, -b, k); }
@@ -99,9 +101,11 @@ float lSkullWin(vec3 q) {
   vec2 e = vec2(lSkullU(q) / ${SK.a.toFixed(3)}, (q.y - (${SK.yc.toFixed(3)})) / ${SK.b.toFixed(3)});
   return (length(e) - 1.0) * ${Math.min(SK.a, SK.b).toFixed(3)};
 }
-// Schlitz zwischen den Schulterblaettern: hier tauchen die Kabel in den Rumpf
+// Schlitz zwischen den Schulterblaettern: hier tauchen die Kabel in den Rumpf. Oben breit, unten schmaler, damit die
+// Kabel als lockerer Vorhang eintauchen (nicht zu einem Zopf zusammenlaufen). Breite wie slotHalf() in robot-mech.js.
 float lBackSlot(vec3 q) {
-  float s = lRoundBox(vec2(q.x, q.y + 1.86), vec2(0.19 - 0.05 * smoothstep(-1.5, -2.3, q.y), 0.42), 0.11);
+  float hw = 0.31 - 0.07 * smoothstep(-1.46, -2.2, q.y);
+  float s = lRoundBox(vec2(q.x, q.y + 1.83), vec2(hw, 0.37), 0.12);
   return max(s, q.z + 0.3);
 }
 // tief offen: keine Schale, keine Muskelschicht (Blick auf Mechanik)
@@ -109,11 +113,12 @@ float deepOpen(vec3 p) {
   vec3 q = vec3(abs(p.x), p.y, p.z);
   return min(min(lNeckBand(q), lSkullWin(q)), lBackSlot(q));
 }
-// Glas ueber dem oberen Teil des Hinterkopf-Fensters (> 0: Glas)
+// Glas ueber dem oberen Teil des Hinterkopf-Fensters (> 0: Glas). glassLow: Abstand zur Unterkante der Kappe.
+float glassLow(vec3 q) { float u = lSkullU(q); return q.y - (${SK.glassY.toFixed(3)} + 0.24 * u * u); }
 float glassField(vec3 p) {
   vec3 q = vec3(abs(p.x), p.y, p.z);
-  float u = lSkullU(q);
-  return min(-lSkullWin(q) - 0.03, q.y - (${SK.glassY.toFixed(3)} + 0.16 * u * u));
+  // runde Ecken (weiches Minimum): Unterkante und Fensterrand treffen sich tangential, keine spitze Facette
+  return lSmin(-lSkullWin(q) - 0.03, glassLow(q), 0.1);
 }
 
 // Schluesselbein-Linie (y in Abhaengigkeit von x)
@@ -165,6 +170,7 @@ float lPlates(vec3 q) {
 
 float seamField(vec3 p) {
   lSide = p.x < 0.0 ? -1.0 : 1.0;
+  lSeamK = 1.0;
   vec3 q = vec3(abs(p.x), p.y, p.z);
   float d = 1e3;
   if (q.y > -1.15) {
@@ -174,7 +180,8 @@ float seamField(vec3 p) {
     // Platten im Gesicht und Lidfuge
     if (q.z > 0.12 && face < 0.05) {
       d = min(d, max(lFaceSeams(q.xy), face));
-      d = min(d, lLid(q.xy));
+      float dl = lLid(q.xy);
+      if (dl < d) { d = dl; lSeamK = 0.45; }
     }
     // Schaedeldecke: zwei Scheitelplatten, Scheitelnaht von der Maske bis zur Oeffnung hinten
     d = min(d, max(q.x, max(-face, 0.05 - lSkullWin(q))));

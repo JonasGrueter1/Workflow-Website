@@ -1,8 +1,8 @@
-// Android B: Materialien. Schale (satinierter Lack, Fugen mit Fase und hellem Grat, AO), Muskel-Gel (tuerkis, glasig,
+// Szene "robot": Materialien. Schale (satinierter Lack, Fugen mit Fase und hellem Grat, AO), Muskel-Gel (tuerkis, glasig,
 // Innenstruktur per Parallaxe), Innenschale des Hinterkopfs (Graphit), Glas, Hologramm (Roentgen).
 // Alle Teile der Bueste teilen dieselbe Verformung im Vertex-Shader: Kopf dreht ueber aHead (0..1) mit uHeadMat,
-// Brustkorb und Schultern atmen ueber uBreath. Die Fugen und Oeffnungen kommen aus layout.js (Ruhelage-Koordinaten).
-import { LAYOUT_GLSL } from './layout.js';
+// Brustkorb und Schultern atmen ueber uBreath. Die Fugen und Oeffnungen kommen aus robot-layout.js (Ruhelage-Koordinaten).
+import { LAYOUT_GLSL } from './robot-layout.js';
 
 /* ---------------------------------------------------------------- Vertex-Teile */
 export const DEFORM_PARS = /* glsl */ `
@@ -59,6 +59,7 @@ uniform float uScanY; uniform vec3 uInner; uniform vec2 uFall; uniform float uDe
 uniform vec3 uRidge;
 varying vec3 vRest; varying vec3 vT1; varying vec3 vT2; varying vec3 vT1v; varying vec3 vT2v; varying float vArm; varying float vAO;
 float abRidge = 0.0;
+float abGap = 0.0;
 ${LAYOUT_GLSL}`)
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
 vec3 rp = vRest;
@@ -67,6 +68,7 @@ lArm = vArm;
 const float SE = 0.003;
 vec3 t1 = normalize(vT1); vec3 t2 = normalize(vT2);
 float s0 = seamField(rp);
+float abSK = lSeamK;
 vec2 sg = vec2(seamField(rp + t1 * SE) - s0, seamField(rp + t2 * SE) - s0) / SE;
 float sgl = max(length(sg), 0.35);
 float dS = s0 / sgl;
@@ -74,12 +76,19 @@ float o0 = openField(rp);
 vec2 og = vec2(openField(rp + t1 * SE) - o0, openField(rp + t2 * SE) - o0) / SE;
 float ogl = max(length(og), 0.35);
 float dO = o0 / ogl;
-// Fugenbreite mindestens etwa ein Bildpunkt (sonst zerfaellt die Linie am Handy in Punkte)
-float abPx = length(fwidth(rp));
-float SW = max(0.003, 0.42 * abPx);
-if (dO < 0.0 || dS < SW) discard;
+// Spaltmass statt Tuschelinie: die Fuge ist eine feine Rinne (Halbbreite GW) mit Fase und weichem Schatten.
+// Die Schale bleibt geschlossen (kein Blick auf die dunkle Innenschicht). Ist die Rinne schmaler als ein Bildpunkt
+// (Handy, Abstand), wird sie heller statt breiter: Deckung = Breite / Bildpunkt.
+float abPx = max(length(fwidth(rp)), 1e-5);
+if (dO < 0.0) discard;
+const float GW = 0.0021;
+float dG = max(dS - GW, 0.0);
+float gapCov = clamp(2.0 * GW / abPx, 0.0, 1.0);
+abGap = (1.0 - smoothstep(GW - 0.5 * abPx, GW + 0.5 * abPx, dS)) * gapCov * abSK;
 float ed; vec2 eg; float bw;
-if (dS - SW < dO) { ed = dS - SW; eg = sg / sgl; bw = 0.009; } else { ed = dO; eg = og / ogl; bw = 0.02; }
+if (dG < dO) { ed = dG; eg = sg / sgl; bw = 0.0075; } else { ed = dO; eg = og / ogl; bw = 0.02; }
+// Fase nur, wenn sie mindestens etwa einen Bildpunkt breit ist (sonst flimmert sie)
+float bevAA = clamp(bw / (1.6 * abPx), 0.0, 1.0) * (dG < dO ? mix(0.55, 1.0, abSK) : 1.0);
 float abEdge = ed;
 if (gl_FrontFacing) {
   vec3 gv = eg.x * vT1v + eg.y * vT2v;
@@ -88,12 +97,12 @@ if (gl_FrontFacing) {
   if (gl2 > 1e-5) {
     gv /= gl2;
     float bt = 1.0 - clamp(ed / bw, 0.0, 1.0);
-    float ang = bt * bt * 1.2;
+    float ang = bt * bt * 1.05 * bevAA;
     normal = normalize(normal * cos(ang) - gv * sin(ang));
   }
-  // Schattenlinie neben der Fuge (schmal) und heller Grat auf der Fase (spiegelt die Softbox)
-  diffuseColor.rgb *= mix(0.6, 1.0, smoothstep(0.0, max(0.012, 1.5 * abPx), ed));
-  abRidge = exp(-pow((ed - bw * 0.45) / (bw * 0.28), 2.0));
+  // weicher Schatten neben der Fuge und heller Grat auf der Fase (spiegelt die Softbox)
+  diffuseColor.rgb *= mix(mix(1.0, 0.74, bevAA), 1.0, smoothstep(0.0, max(0.01, 1.5 * abPx), ed));
+  abRidge = exp(-pow((ed - bw * 0.45) / (bw * 0.28), 2.0)) * bevAA;
   // Gravierte Linie in der Schulterkappe
 #ifndef AB_CHEAP
   float gq = grooveField(rp);
@@ -116,7 +125,7 @@ if (gl_FrontFacing) {
   float neckIn = smoothstep(-1.55, -1.3, rp.y) * smoothstep(-0.5, -0.75, rp.y);
   totalEmissiveRadiance += uEdgeCol * (0.006 + 0.03 * neckIn);
 }
-if (uDebug > 0.5) { diffuseColor.rgb = mix(vec3(1.0, 0.1, 0.1), diffuseColor.rgb, smoothstep(0.0, 0.01, ed)); }`)
+if (uDebug > 0.5) { diffuseColor.rgb = mix(vec3(1.0, 0.1, 0.1), diffuseColor.rgb, smoothstep(0.0, 0.01, min(ed, dS))); }`)
       .replace('#include <clearcoat_normal_fragment_maps>', `#include <clearcoat_normal_fragment_maps>
 #ifdef USE_CLEARCOAT
 clearcoatNormal = normal;
@@ -137,7 +146,9 @@ reflectedLight.directDiffuse *= 0.22 + 0.78 * pow(1.0 - clamp(dot(normal, normal
   // Ambient Occlusion (offline gerechnet): Ohr, Kinn und Hals, Achsel, Augenhoehlen
   float ao = clamp(vAO, 0.0, 1.0);
   ao = ao * ao * (3.0 - 2.0 * ao);
-  float aoS = mix(1.0, ao, 0.9);
+  // im Gesicht (Augenhoehlen) weniger: tiefe Schatten um die Augen wirken muede
+  float abFaceK = smoothstep(0.35, 0.55, vRest.z) * step(-0.7, vRest.y) * step(vRest.y, 0.3);
+  float aoS = mix(1.0, ao, mix(0.9, 0.62, abFaceK));
   reflectedLight.indirectDiffuse *= aoS;
   reflectedLight.indirectSpecular *= mix(1.0, ao, 0.75);
   reflectedLight.directDiffuse *= mix(1.0, ao, 0.45);
@@ -146,11 +157,13 @@ reflectedLight.directDiffuse *= 0.22 + 0.78 * pow(1.0 - clamp(dot(normal, normal
 #endif
 }`)
       .replace('#include <opaque_fragment>', `float abFall = smoothstep(uFall.x, uFall.y, rp.y);
+// Rinne der Fuge: dunkles Grau (Innenkante im Schatten), kein reines Schwarz
+outgoingLight *= 1.0 - 0.8 * abGap;
 if (gl_FrontFacing) outgoingLight += uRidge * abRidge * (0.35 + 0.65 * pow(1.0 - abs(dot(normal, normalize(vViewPosition))), 2.0)) * mix(0.4, 1.0, vAO);
 outgoingLight *= 0.35 + 0.65 * abFall;
 diffuseColor.a = abFall;
 outgoingLight = min(outgoingLight, vec3(2.2));
-outgoingLight += uEdgeCol * uEdgeGlow * exp(-abEdge / 0.006) * (gl_FrontFacing ? 1.0 : 0.0);
+outgoingLight += uEdgeCol * uEdgeGlow * exp(-abEdge / 0.0045) * (gl_FrontFacing ? 1.0 : 0.0);
 #include <opaque_fragment>`);
   };
   m.customProgramCacheKey = () => `ab-shell-${opts.key || ''}${opts.cheap ? '-cheap' : ''}`;
@@ -227,12 +240,17 @@ vec2 abPattern(int r, vec3 q, out float along, out float aaB) {
   vec2 fb = abMap(r, q);
   along = fb.y;
   float nz = abNoise(vec2(fb.x * 11.0, fb.y * 2.0));
-  float pb = (fb.x + (nz - 0.5) * 0.04) / 0.075 * 6.2832;
+  // Faecher des Brustmuskels: breitere, unregelmaessige Buendel, die zum Ansatz am Oberarm weich verschwinden
+  // (sonst Strahlenkranz). Die anderen Gruppen: feinere Buendel.
+  float per = r == 2 ? 0.11 : 0.075;
+  float pb = (fb.x + (nz - 0.5) * (r == 2 ? 0.07 : 0.04)) / per * 6.2832;
   float hb = 0.5 + 0.5 * cos(pb);
-  aaB = 1.0 - smoothstep(0.7, 1.8, fwidth(pb));
-  // Faecher des Brustmuskels: zum Ansatz am Oberarm hin weich auslaufen (sonst Strahlenkranz)
-  if (r == 2) aaB *= 0.7 * smoothstep(0.5, 1.0, fb.y);
-  float cloud = abNoise(vec2(fb.x * 5.0, fb.y * 2.5)) * 0.65 + abNoise(vec2(fb.x * 13.0, fb.y * 5.0)) * 0.35;
+  hb = mix(hb, smoothstep(0.15, 0.85, hb), 0.5);
+  aaB = 1.0 - smoothstep(0.5, 1.4, fwidth(pb));
+  if (r == 2) aaB *= 0.38 * smoothstep(0.62, 1.15, fb.y) * (0.6 + 0.4 * abNoise(vec2(fb.x * 4.0, fb.y * 1.5)));
+  // Wolke: beim Brustmuskel in kartesischen Koordinaten (in Polarkoordinaten entstuende ein Strahlenkranz)
+  vec2 cq = r == 2 ? q.xy * 2.2 : fb;
+  float cloud = abNoise(vec2(cq.x * 5.0, cq.y * 2.5)) * 0.65 + abNoise(vec2(cq.x * 13.0, cq.y * 5.0)) * 0.35;
   return vec2(mix(0.5, hb, aaB), cloud);
 }
 // Innenstruktur hinter dem Gel (Parallaxe): Rippenboegen, Brustbein. x Maske, y Chrom-Kante
@@ -314,7 +332,7 @@ for (int i = 0; i < 2; i++) {
   pulse += exp(-pow((q.y - mix(-1.4, -3.6, ph) + q.x * 0.3) / 0.09, 2.0));
 }
 float inner = (0.075 + 0.08 * cloud + 0.02 * hb * aaB) * (0.6 + 0.4 * (1.0 - fres)) * (1.0 - 0.38 * ST.x);
-vec3 glow = uGelHi * (inner + 0.24 * fres) + uGelHi * pulse * uPulse.y * (0.22 + 0.2 * hb) * (1.0 - 0.5 * ST.x);
+vec3 glow = uGelHi * (inner + 0.24 * fres) + uGelHi * pulse * uPulse.y * (0.22 + 0.12 * hb * aaB) * (1.0 - 0.5 * ST.x);
 glow += uGelHi * ST.y * 0.16 * (1.0 - fres);
 glow *= open * shade * (1.0 - uDim);
 totalEmissiveRadiance += glow;
@@ -413,13 +431,19 @@ ${LAYOUT_GLSL}`)
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
 float gF = glassField(vRest);
 if (vRest.y > uScanY || gF < 0.0) discard;
-float gEdge = exp(-gF / 0.006);`)
+// heller Rand nur oben am Fensterrand; zur Unterkante laeuft die Kappe weich aus (keine harte Facette)
+float gLow = glassLow(vec3(abs(vRest.x), vRest.y, vRest.z));
+float gFade = smoothstep(0.0, 0.11, gLow) * smoothstep(0.0, 0.025, gF);
+float gEdge = exp(-gF / 0.006) * smoothstep(0.02, 0.09, gLow);`)
       .replace('#include <opaque_fragment>', `float gFres = pow(1.0 - abs(dot(normal, normalize(vViewPosition))), 3.0);
-diffuseColor.a = clamp(0.05 + 0.75 * gFres + 0.25 * gEdge, 0.0, 1.0);
+diffuseColor.a = clamp(0.05 + 0.75 * gFres + 0.25 * gEdge, 0.0, 1.0) * gFade;
 outgoingLight = outgoingLight * (0.75 + 0.5 * gFres) + uRidge * (gEdge * 0.3 + 0.04);
+#ifdef AB_DBG_GLASS
+outgoingLight = gl_FrontFacing ? vec3(1.0, 0.0, 0.0) : vec3(0.0, 1.0, 0.0); diffuseColor.a = 0.8;
+#endif
 #include <opaque_fragment>`);
   };
-  m.customProgramCacheKey = () => 'ab-glass';
+  m.customProgramCacheKey = () => 'ab-glass2';
   return m;
 }
 

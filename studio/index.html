@@ -19,7 +19,7 @@
   <meta property="og:image" content="https://jonasgrueter1.github.io/Workflow-Website/studio/assets/img/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Leuchtender Roboterkopf aus Lichtpunkten vor dunklem Hintergrund">
+  <meta property="og:image:alt" content="Büste eines Androiden aus leuchtenden Lichtpunkten vor dunklem Hintergrund">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -67,12 +67,16 @@
       }
       // Nur mit 3D: Module der Engine und der Szenen gleich parallel laden (statt Kette main -> engine -> three -> Szenen)
       if (ok) {
-        var mods = 'vendor/three/three.module.min.js,js/config.js,js/engine.js,js/director.js,js/runner.js,js/fx/FxPass.js,vendor/three/addons/postprocessing/EffectComposer.js,vendor/three/addons/postprocessing/RenderPass.js,vendor/three/addons/postprocessing/UnrealBloomPass.js,vendor/three/addons/postprocessing/OutputPass.js,vendor/three/addons/postprocessing/Pass.js,vendor/three/addons/postprocessing/ShaderPass.js,vendor/three/addons/postprocessing/MaskPass.js,vendor/three/addons/shaders/CopyShader.js,vendor/three/addons/shaders/LuminosityHighPassShader.js,vendor/three/addons/shaders/OutputShader.js,vendor/three/addons/environments/RoomEnvironment.js,vendor/three/addons/math/MeshSurfaceSampler.js,vendor/three/addons/utils/BufferGeometryUtils.js,js/scenes/brain-build.js,js/scenes/brain-shaders.js,js/scenes/brain.js,js/scenes/cables-paths.js,js/scenes/cables-shaders.js,js/scenes/cables.js,js/scenes/dna-atlas.js,js/scenes/dna-build.js,js/scenes/dna-code.js,js/scenes/dna-shaders.js,js/scenes/dna.js,js/scenes/particles-glsl.js,js/scenes/particles-nebula.js,js/scenes/particles-shape.js,js/scenes/particles.js,js/scenes/robot-env.js,js/scenes/robot-geometry.js,js/scenes/robot-shaders.js,js/scenes/robot.js'.split(',');
+        var mods = 'vendor/three/three.module.min.js,js/config.js,js/engine.js,js/director.js,js/runner.js,js/fx/FxPass.js,vendor/three/addons/postprocessing/EffectComposer.js,vendor/three/addons/postprocessing/RenderPass.js,vendor/three/addons/postprocessing/UnrealBloomPass.js,vendor/three/addons/postprocessing/OutputPass.js,vendor/three/addons/postprocessing/Pass.js,vendor/three/addons/postprocessing/ShaderPass.js,vendor/three/addons/postprocessing/MaskPass.js,vendor/three/addons/shaders/CopyShader.js,vendor/three/addons/shaders/LuminosityHighPassShader.js,vendor/three/addons/shaders/OutputShader.js,vendor/three/addons/environments/RoomEnvironment.js,vendor/three/addons/utils/BufferGeometryUtils.js,js/scenes/brain-build.js,js/scenes/brain-shaders.js,js/scenes/brain.js,js/scenes/cables-paths.js,js/scenes/cables-shaders.js,js/scenes/cables.js,js/scenes/dna-atlas.js,js/scenes/dna-build.js,js/scenes/dna-code.js,js/scenes/dna-shaders.js,js/scenes/dna.js,js/scenes/particles-glsl.js,js/scenes/particles-nebula.js,js/scenes/particles-shape.js,js/scenes/particles.js,js/scenes/robot-mesh.js,js/scenes/robot-layout.js,js/scenes/robot-materials.js,js/scenes/robot-mech.js,js/scenes/robot-env.js,js/scenes/robot-geometry.js,js/scenes/robot.js'.split(',');
         for (var i = 0; i < mods.length; i++) {
           var l = document.createElement('link');
           l.rel = 'modulepreload'; l.href = mods[i];
           document.head.appendChild(l);
         }
+        // Netz der Android-Bueste (robot-mesh.js holt es per fetch)
+        var b = document.createElement('link');
+        b.rel = 'preload'; b.as = 'fetch'; b.href = 'assets/robot/bust.bin'; b.crossOrigin = 'anonymous';
+        document.head.appendChild(b);
       }
     })();
   </script>
@@ -119,6 +123,7 @@
       <a href="#ablauf">Ablauf</a>
       <a href="#fallbeispiel">Fallbeispiel</a>
       <a href="#ueber-mich">Über mich</a>
+      <a href="#fragen">Fragen</a>
       <a href="#kontakt">Kontakt</a>
       <a class="nav__cta" href="#kontakt">Projekt anfragen</a>
     </nav>
@@ -140,7 +145,7 @@
     <!-- Immersive Strecke: je Abschnitt ein Beat der 3D-Geschichte (Hoehe kommt aus js/config.js) -->
     <div class="story" id="story">
       <section class="chapter chapter--intro" data-scene="intro" id="top" aria-labelledby="t-intro">
-        <div class="chapter__poster" role="img" aria-label="Leuchtender Roboterkopf aus Lichtpunkten vor dunklem Hintergrund"></div>
+        <div class="chapter__poster" role="img" aria-label="Büste eines Androiden aus leuchtenden Lichtpunkten vor dunklem Hintergrund"></div>
         <div class="chapter__panel">
           <div class="chapter__text">
             <p class="eyebrow" data-intro>Jonas Grüter · Region Sempach</p>
@@ -163,6 +168,7 @@
             <p class="kicker" data-anim><span>01</span> Partner</p>
             <h2 class="headline" id="t-robot" data-split>Modern gebaut. Persönlich betreut.</h2>
             <p data-anim>Sie arbeiten direkt mit mir, ohne Umwege über eine grosse Agentur. Schnell, persönlich und mit den neusten KI-Werkzeugen.</p>
+            <p class="story-tags" data-anim>Direkter Kontakt · Fixpreis · Kostenloser Entwurf</p>
           </div>
         </div>
       </section>
@@ -173,7 +179,8 @@
           <div class="chapter__text">
             <p class="kicker" data-anim><span>02</span> Einblick</p>
             <h2 class="headline" id="t-zoom" data-split>Was dahinter steckt.</h2>
-            <p data-anim>Eine gute Lösung beginnt nicht beim Design. Sie beginnt beim Verständnis für Ihren Betrieb.</p>
+            <p data-anim>Eine gute Lösung beginnt nicht beim Design, sondern beim Verständnis für Ihren Betrieb. Darum höre ich zuerst zu.</p>
+            <p class="story-tags" data-anim>Zuhören · Planen · Bauen</p>
           </div>
         </div>
       </section>
@@ -184,7 +191,8 @@
           <div class="chapter__text">
             <p class="kicker" data-anim><span>03</span> Intelligenz</p>
             <h2 class="headline" id="t-brain" data-split>Künstliche Intelligenz, verständlich eingesetzt.</h2>
-            <p data-anim>KI kann lesen, schreiben, sortieren und zusammenfassen. Ich richte sie so ein, dass sie Ihnen im Alltag Routinearbeit abnehmen kann.</p>
+            <p data-anim>KI kann lesen, schreiben, sortieren und zusammenfassen. Ich richte sie so ein, dass sie Ihnen Routinearbeit abnimmt und Sie die Entscheidungen behalten.</p>
+            <p class="story-tags" data-anim>Lesen · Schreiben · Sortieren · Zusammenfassen</p>
           </div>
         </div>
       </section>
@@ -210,6 +218,7 @@
             <p class="kicker" data-anim><span>05</span> Code</p>
             <h2 class="headline" id="t-dna" data-split>Die DNA Ihrer Website.</h2>
             <p data-anim>Jede Website entsteht aus eigenem Code, zugeschnitten auf Ihren Betrieb. Keine Vorlage, bei der nur Farben und Bilder getauscht werden.</p>
+            <p class="story-tags" data-anim>Eigener Code · Handyoptimiert · Google-Grundlagen</p>
           </div>
         </div>
         <!-- Angebotsmoment unter dem fertigen Website-Geruest (nur mit 3D, eingeblendet von js/ui.js setOffer) -->
@@ -225,19 +234,21 @@
           <div class="chapter__text">
             <p class="kicker" data-anim><span>06</span> Kontakt</p>
             <h2 class="headline headline--xl" id="t-outro" data-split>Bereit, wenn Sie es sind.</h2>
-            <p data-anim>Erzählen Sie mir von Ihrem Betrieb. Den ersten Entwurf Ihrer neuen Website erhalten Sie kostenlos.</p>
+            <p data-anim>Erzählen Sie mir von Ihrem Betrieb. Den ersten Entwurf Ihrer neuen Website erhalten Sie kostenlos und unverbindlich.</p>
             <div class="actions" data-anim>
               <a class="btn" href="#kontakt">Projekt besprechen <span class="btn__arrow" aria-hidden="true"></span></a>
               <a class="btn btn--ghost" href="#leistungen">Leistungen ansehen</a>
             </div>
+            <p class="outro-mail" data-anim><span class="mono">Direkt per Mail</span> <a class="link" href="mailto:jonas.grueter.web@gmail.com">jonas.grueter.web@gmail.com</a></p>
           </div>
         </div>
       </section>
     </div>
 
-    <!-- Normale Abschnitte: schnell, klar, fuer KMU -->
+    <!-- Normale Abschnitte: schnell, klar, fuer KMU. Reihenfolge: Leistungen, KI im Betrieb, Warum ich, Ablauf,
+         Fallbeispiel, Werkzeuge, Ueber mich, Fragen, Kontakt -->
     <div class="content" id="content" tabindex="-1">
-      <section class="section" id="leistungen" aria-labelledby="t-leistungen">
+      <section class="section section--echo-petrol" id="leistungen" aria-labelledby="t-leistungen">
         <div class="wrap">
           <header class="section__head" data-reveal>
             <p class="kicker">Leistungen</p>
@@ -276,44 +287,171 @@
                 <li><strong>Wissensassistent für Ihr Team.</strong> Eine KI, die Ihre eigenen Dokumente kennt und Fragen dazu beantwortet.</li>
                 <li><strong>Datenschutz mitgedacht.</strong> Jede Lösung plane ich von Anfang an nach dem Schweizer Datenschutzgesetz (DSG).</li>
               </ol>
+              <p class="card__note card__note--warm"><span class="mono">Beispiele</span> <span>Was KI in Ihrer Branche übernehmen kann, sehen Sie <a class="link" href="#ki-beispiele">im nächsten Abschnitt</a>.</span></p>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section" id="ablauf" aria-labelledby="t-ablauf">
+      <section class="section section--alt section--echo-violet" id="ki-beispiele" aria-labelledby="t-kib">
+        <div class="wrap">
+          <header class="section__head" data-reveal>
+            <p class="kicker">KI im Alltag</p>
+            <h2 class="headline" id="t-kib">Was KI in Ihrem Betrieb übernehmen kann.</h2>
+            <p class="lead">Vier Beispiele, wie KI einem KMU im Alltag Arbeit abnimmt. Die KI bereitet vor, Sie entscheiden.</p>
+          </header>
+          <div class="branches">
+            <article class="branch" data-reveal aria-labelledby="t-br1">
+              <div class="branch__head">
+                <span class="branch__no mono" aria-hidden="true">01</span>
+                <h3 class="branch__title" id="t-br1">Fahrschule</h3>
+                <p class="branch__tags mono">Fragen · Anmeldungen</p>
+              </div>
+              <ul class="ticks">
+                <li>Ein Assistent auf Ihrer Website beantwortet häufige Fragen zu Preisen, Kursdaten und dem Weg zum Führerausweis, auch abends und am Wochenende.</li>
+                <li>Anmeldungen aus Mails und Formularen landen geordnet in einer Liste, statt einzeln abgetippt zu werden.</li>
+              </ul>
+            </article>
+            <article class="branch" data-reveal aria-labelledby="t-br2">
+              <div class="branch__head">
+                <span class="branch__no mono" aria-hidden="true">02</span>
+                <h3 class="branch__title" id="t-br2">Handwerk</h3>
+                <p class="branch__tags mono">Offerten · Rapporte</p>
+              </div>
+              <ul class="ticks">
+                <li>Aus Notizen, Fotos oder einer Sprachnachricht von der Baustelle entsteht ein Offertentwurf, den Sie nur noch prüfen.</li>
+                <li>Arbeitsrapporte werden automatisch zusammengefasst und für die Rechnung vorbereitet.</li>
+              </ul>
+            </article>
+            <article class="branch" data-reveal aria-labelledby="t-br3">
+              <div class="branch__head">
+                <span class="branch__no mono" aria-hidden="true">03</span>
+                <h3 class="branch__title" id="t-br3">Treuhand und Büro</h3>
+                <p class="branch__tags mono">Belege · Dokumente</p>
+              </div>
+              <ul class="ticks">
+                <li>Die KI liest Angaben aus Rechnungen, Belegen und PDFs aus und überträgt sie in Ihre Tabellen.</li>
+                <li>Ein Wissensassistent findet in Ihren eigenen Vorlagen und Dokumenten schnell die richtige Stelle.</li>
+              </ul>
+            </article>
+            <article class="branch" data-reveal aria-labelledby="t-br4">
+              <div class="branch__head">
+                <span class="branch__no mono" aria-hidden="true">04</span>
+                <h3 class="branch__title" id="t-br4">Gastronomie</h3>
+                <p class="branch__tags mono">Reservationen · Bewertungen</p>
+              </div>
+              <ul class="ticks">
+                <li>Anfragen für Reservationen, Gruppen und Anlässe erhalten sofort einen fertigen Antwortentwurf.</li>
+                <li>Auf Online-Bewertungen schlägt die KI passende Antworten vor, die Sie nur noch freigeben.</li>
+              </ul>
+            </article>
+          </div>
+          <div class="section__foot" data-reveal>
+            <p>Das sind Beispiele. Was in Ihrem Betrieb sinnvoll ist, finden wir in einem kurzen Gespräch heraus.</p>
+            <a class="btn" href="#kontakt" data-thema="KI für meinen Betrieb">KI für meinen Betrieb besprechen <span class="btn__arrow" aria-hidden="true"></span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--echo-blue" id="warum" aria-labelledby="t-warum">
+        <div class="wrap">
+          <header class="section__head" data-reveal>
+            <p class="kicker">Warum ich</p>
+            <h2 class="headline" id="t-warum">Was Sie von mir erwarten können.</h2>
+          </header>
+          <ul class="reasons">
+            <li class="reason" data-reveal>
+              <span class="reason__mark" aria-hidden="true"></span>
+              <h3 class="reason__title">Erst sehen, dann entscheiden.</h3>
+              <p>Den ersten Entwurf Ihrer Website erhalten Sie kostenlos und unverbindlich, bevor Sie etwas bezahlen.</p>
+            </li>
+            <li class="reason" data-reveal>
+              <span class="reason__mark" aria-hidden="true"></span>
+              <h3 class="reason__title">Fester Preis, klare Abmachung.</h3>
+              <p>Die Offerte nennt Preis, Umfang und Zeitplan. Der Preis bleibt fest, auch wenn ich länger brauche.</p>
+            </li>
+            <li class="reason" data-reveal>
+              <span class="reason__mark" aria-hidden="true"></span>
+              <h3 class="reason__title">Ein Ansprechpartner.</h3>
+              <p>Sie sprechen direkt mit der Person, die Ihre Website baut. Ohne Agentur und ohne Umwege.</p>
+            </li>
+            <li class="reason" data-reveal>
+              <span class="reason__mark" aria-hidden="true"></span>
+              <h3 class="reason__title">Eigener Code statt Baukasten.</h3>
+              <p>Jede Website entsteht für Ihren Betrieb und ist auf jedem Handy gut lesbar. Bevor Sie sie sehen, prüfe ich sie automatisch auf Handy und Computer.</p>
+            </li>
+            <li class="reason reason--warm" data-reveal>
+              <span class="reason__mark" aria-hidden="true"></span>
+              <h3 class="reason__title">KI, die ich selbst einsetze.</h3>
+              <p>Ich nutze KI zuerst für meine eigene Arbeit, zum Beispiel für die Suche nach neuen Kunden. Sie erhalten Erprobtes statt Theorie.</p>
+            </li>
+            <li class="reason" data-reveal>
+              <span class="reason__mark" aria-hidden="true"></span>
+              <h3 class="reason__title">Volle Aufmerksamkeit.</h3>
+              <p>Ich arbeite nur an einem Kundenprojekt gleichzeitig und plane mit realistischen Fristen. Wird ein Termin knapp, melde ich mich sofort.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section--alt section--echo-blue-l" id="ablauf" aria-labelledby="t-ablauf">
         <div class="wrap">
           <header class="section__head" data-reveal>
             <p class="kicker">Ablauf</p>
             <h2 class="headline" id="t-ablauf">So läuft es ab.</h2>
-            <p class="lead">Vier klare Schritte. Sie wissen jederzeit, wo Ihr Projekt steht.</p>
+            <p class="lead">Vier klare Schritte. Sie wissen jederzeit, was Sie tun, was ich tue und wie lange es etwa dauert.</p>
           </header>
-          <ol class="steps">
-            <li class="step" data-reveal>
-              <span class="step__no mono">01</span>
-              <h3>Kennenlernen und Entwurf</h3>
-              <p>Wir sprechen kurz über Ihren Betrieb und Ihre Ziele. Danach sehen Sie einen ersten Entwurf, kostenlos und unverbindlich.</p>
+          <ol class="timeline">
+            <li class="tl" data-reveal>
+              <div class="tl__head">
+                <span class="tl__no mono">01</span>
+                <h3 class="tl__title">Kennenlernen und Entwurf</h3>
+              </div>
+              <dl class="tl__body">
+                <div class="tl__part"><dt class="mono">Sie</dt><dd>Erzählen mir per Formular oder Mail kurz von Ihrem Betrieb. In einem kurzen Gespräch klären wir Ihre Ziele.</dd></div>
+                <div class="tl__part"><dt class="mono">Ich</dt><dd>Schaue mir Ihre heutige Website und Ihre Inhalte an und baue einen ersten Entwurf, in zwei Designs zur Auswahl.</dd></div>
+                <div class="tl__part tl__part--time"><dt class="mono">Dauer</dt><dd>Den Termin für den Entwurf vereinbaren wir im Gespräch. Der Entwurf ist kostenlos und unverbindlich.</dd></div>
+              </dl>
             </li>
-            <li class="step" data-reveal>
-              <span class="step__no mono">02</span>
-              <h3>Fixpreis-Offerte</h3>
-              <p>Sie erhalten eine Offerte mit festem Preis und klarem Umfang. Sie entscheiden in Ruhe.</p>
+            <li class="tl" data-reveal>
+              <div class="tl__head">
+                <span class="tl__no mono">02</span>
+                <h3 class="tl__title">Wunschliste und Fixpreis-Offerte</h3>
+              </div>
+              <dl class="tl__body">
+                <div class="tl__part"><dt class="mono">Sie</dt><dd>Wählen in einer Online-Wunschliste Ihr Design, die Seiten und die Funktionen. Der Preis rechnet dabei sofort mit.</dd></div>
+                <div class="tl__part"><dt class="mono">Ich</dt><dd>Schreibe Ihnen eine Offerte mit festem Preis, klarem Umfang und einem Zeitplan mit Zielmonat. Darin steht auch, wer was übernimmt: Sie, Ihr Webmaster oder ich.</dd></div>
+                <div class="tl__part tl__part--time"><dt class="mono">Dauer</dt><dd>Die Offerte gilt 30 Tage. Sie entscheiden in Ruhe.</dd></div>
+              </dl>
             </li>
-            <li class="step" data-reveal>
-              <span class="step__no mono">03</span>
-              <h3>Umsetzung</h3>
-              <p>Ich setze alles um und halte Sie auf dem Laufenden. Ihre Rückmeldungen fliessen direkt ein.</p>
+            <li class="tl" data-reveal>
+              <div class="tl__head">
+                <span class="tl__no mono">03</span>
+                <h3 class="tl__title">Umsetzung</h3>
+              </div>
+              <dl class="tl__body">
+                <div class="tl__part"><dt class="mono">Sie</dt><dd>Liefern Texte, Preise und Fotos, am besten innert zwei Wochen nach dem Auftrag. In zwei Korrekturrunden senden Sie mir Ihre Wünsche jeweils gesammelt in einer Mail.</dd></div>
+                <div class="tl__part"><dt class="mono">Ich</dt><dd>Baue Design und alle Seiten, optimiere für Handy, Tablet und Computer und richte Formular und Google-Grundlagen ein. Ich halte Sie auf dem Laufenden.</dd></div>
+                <div class="tl__part tl__part--time"><dt class="mono">Dauer</dt><dd>Rund 10 bis 16 Wochen ab Erhalt aller Inhalte bis zur Aufschaltung, je nach Umfang und inklusive Ihrer Prüfzeiten.</dd></div>
+              </dl>
             </li>
-            <li class="step" data-reveal>
-              <span class="step__no mono">04</span>
-              <h3>Übergabe und Betreuung</h3>
-              <p>Ich schalte alles auf und zeige Ihnen, wie es funktioniert. Auf Wunsch bleibe ich danach Ihr Ansprechpartner.</p>
+            <li class="tl" data-reveal>
+              <div class="tl__head">
+                <span class="tl__no mono">04</span>
+                <h3 class="tl__title">Abnahme, Übergabe und Betreuung</h3>
+              </div>
+              <dl class="tl__body">
+                <div class="tl__part"><dt class="mono">Sie</dt><dd>Prüfen die fertige Website über einen Testlink und geben sie frei.</dd></div>
+                <div class="tl__part"><dt class="mono">Ich</dt><dd>Schalte die Website auf oder übergebe sie Ihrem Webmaster, teste Seiten und Formulare und zeige Ihnen, wie alles funktioniert.</dd></div>
+                <div class="tl__part tl__part--time"><dt class="mono">Dauer</dt><dd>Prüfung innert 10 Arbeitstagen. Fehler an meiner Arbeit, die Sie innert 30 Tagen nach der Abnahme melden, behebe ich kostenlos. Danach auf Wunsch Betreuung.</dd></div>
+              </dl>
             </li>
           </ol>
+          <p class="note-line" data-reveal><span class="mono">KI-Lösungen</span> Bei KI-Lösungen gehen wir in denselben Schritten vor: zuerst verstehen, dann eine Offerte mit klarem Umfang, dann umsetzen und einführen.</p>
         </div>
       </section>
 
-      <section class="section" id="fallbeispiel" aria-labelledby="t-fall">
+      <section class="section section--echo-ember" id="fallbeispiel" aria-labelledby="t-fall">
         <div class="wrap">
           <header class="section__head" data-reveal>
             <p class="kicker">Fallbeispiel</p>
@@ -321,10 +459,26 @@
             <p class="lead">Bevor ich KI bei Ihnen einsetze, setze ich sie bei mir selbst ein. Für die Suche nach neuen Kunden habe ich einen Workflow mit KI-Agenten gebaut, der von der Recherche bis zur fertigen Mail alles vorbereitet.</p>
           </header>
           <div class="facts" data-reveal>
-            <div class="fact"><span class="fact__num" data-count="200"><span class="n">200</span>+</span><span class="fact__label">Websites automatisch geprüft</span></div>
-            <div class="fact"><span class="fact__num" data-count="28"><span class="n">28</span></span><span class="fact__label">Betriebe genau analysiert</span></div>
-            <div class="fact"><span class="fact__num" data-count="18"><span class="n">18</span></span><span class="fact__label">Website-Demos mit je zwei Designs</span></div>
-            <div class="fact fact--warm"><span class="fact__num" data-count="3"><small>unter</small> <span class="n">3</span> <small>Std.</small></span><span class="fact__label">bis zur ersten positiven Antwort</span></div>
+            <div class="fact">
+              <span class="fact__num" data-count="200"><span class="n">200</span>+</span>
+              <span class="fact__label">Websites automatisch geprüft</span>
+              <span class="fact__sub">Handy, HTTPS und Aktualität</span>
+            </div>
+            <div class="fact">
+              <span class="fact__num" data-count="28"><span class="n">28</span></span>
+              <span class="fact__label">Betriebe genau analysiert</span>
+              <span class="fact__sub">die passendsten der Region</span>
+            </div>
+            <div class="fact">
+              <span class="fact__num" data-count="18"><span class="n">18</span></span>
+              <span class="fact__label">Website-Demos gebaut</span>
+              <span class="fact__sub">je zwei Designs, automatisch geprüft</span>
+            </div>
+            <div class="fact fact--warm">
+              <span class="fact__num"><small>unter</small> <span class="n">3</span> <small>Std.</small></span>
+              <span class="fact__label">bis zur ersten positiven Antwort</span>
+              <span class="fact__sub">nach dem Versand der Mails</span>
+            </div>
           </div>
           <div class="case">
             <div class="case__flow" data-reveal>
@@ -338,21 +492,64 @@
                 <li><span class="pipeline__no mono">06</span><span>Überwacht jeden Abend automatisch die Antworten.</span></li>
               </ol>
             </div>
-            <aside class="case__result" data-reveal>
+            <aside class="case__result" data-reveal aria-label="Ergebnis">
               <p class="case__label mono">Ergebnis</p>
               <p class="case__big">Die erste positive Antwort eines Betriebs kam weniger als drei Stunden nach dem Versand.</p>
+              <p class="case__close">In die Mails kommt nur, was belegt ist, und verschickt wird erst nach meiner Freigabe.</p>
               <p class="case__close">Solche Abläufe baue ich auch für Ihren Betrieb, abgestimmt auf Ihre Arbeit und Ihre Programme.</p>
-              <a class="btn btn--ghost" href="#kontakt">Projekt besprechen</a>
+              <a class="btn btn--ghost" href="#kontakt" data-thema="KI für meinen Betrieb">Projekt besprechen</a>
             </aside>
           </div>
         </div>
       </section>
 
-      <section class="section" id="ueber-mich" aria-labelledby="t-ueber">
+      <section class="section section--alt section--echo-green" id="werkzeuge" aria-labelledby="t-werkzeuge">
+        <div class="wrap">
+          <header class="section__head" data-reveal>
+            <p class="kicker">Werkzeuge</p>
+            <h2 class="headline" id="t-werkzeuge">Womit ich arbeite.</h2>
+            <p class="lead">Bewährte Technik für Ihre Website und moderne KI für alles, was sich wiederholt.</p>
+          </header>
+          <ul class="tools">
+            <li class="tool" data-reveal>
+              <p class="tool__cat mono">Web</p>
+              <h3 class="tool__title">HTML, CSS und JavaScript</h3>
+              <p>Die Grundbausteine jeder Website. Ich schreibe den Code selbst, darum sieht Ihre Seite genau so aus, wie sie soll, und bleibt schlank.</p>
+            </li>
+            <li class="tool" data-reveal>
+              <p class="tool__cat mono">Inhalte</p>
+              <h3 class="tool__title">WordPress</h3>
+              <p>Für alle, die Inhalte selber ändern möchten. Texte, Preise und Fotos bearbeiten Sie im Browser.</p>
+            </li>
+            <li class="tool" data-reveal>
+              <p class="tool__cat mono">3D und Animation</p>
+              <h3 class="tool__title">Three.js, WebGL und GSAP</h3>
+              <p>3D-Grafik und flüssige Animationen direkt im Browser, wie auf dieser Website.</p>
+            </li>
+            <li class="tool tool--warm" data-reveal>
+              <p class="tool__cat mono">KI</p>
+              <h3 class="tool__title">KI-Modelle und KI-Agenten</h3>
+              <p>Programme, die lesen, schreiben, sortieren und Teilaufgaben selbständig erledigen. Ich setze sie für Recherche, Texte und Automatisierung ein.</p>
+            </li>
+            <li class="tool" data-reveal>
+              <p class="tool__cat mono">Automatisierung</p>
+              <h3 class="tool__title">Node.js und Python</h3>
+              <p>Kleine Programme, die Abläufe selbständig erledigen, zum Beispiel Websites prüfen, Bilder aufbereiten oder Ergebnisse zusammenfassen.</p>
+            </li>
+            <li class="tool" data-reveal>
+              <p class="tool__cat mono">Qualität</p>
+              <h3 class="tool__title">Automatische Tests</h3>
+              <p>Ein Testprogramm öffnet jede Seite wie ein echter Besucher auf Handy und Computer und meldet Fehler, bevor Sie etwas sehen.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section--echo-violet-r" id="ueber-mich" aria-labelledby="t-ueber">
         <div class="wrap grid grid--about">
           <header class="section__head" data-reveal>
             <p class="kicker">Über mich</p>
-            <h2 class="headline" id="t-ueber">Hinter dem Roboter steckt ein Mensch.</h2>
+            <h2 class="headline" id="t-ueber">Hinter der Maschine steckt ein Mensch.</h2>
             <ul class="chips-list" aria-label="Kurzfakten">
               <li>16 Jahre</li>
               <li>KV-Lehre, 2. Lehrjahr</li>
@@ -367,7 +564,7 @@
             </figure>
             -->
           </header>
-          <div class="prose" data-reveal>
+          <div class="prose panel" data-reveal>
             <p>Ich bin Jonas Grüter, 16 Jahre alt, und wohne in der Region Sempach. Ich mache eine KV-Lehre bei einer grossen Versicherung und baue daneben Websites und KI-Lösungen für Unternehmen.</p>
             <p>In der Lehre sehe ich jeden Tag, wie ein Unternehmen arbeitet: Abläufe, Kunden, Zahlen. Dieses Verständnis bringe ich in jedes Projekt mit.</p>
             <p>Ich arbeite mit den modernsten KI-Werkzeugen, für mich sind sie das normale Handwerkszeug. Darum bin ich schnell, und Sie haben trotzdem immer direkt mit mir zu tun.</p>
@@ -376,13 +573,89 @@
         </div>
       </section>
 
-      <section class="section section--contact" id="kontakt" aria-labelledby="t-kontakt">
+      <section class="section section--alt section--echo-green-l" id="fragen" aria-labelledby="t-fragen">
+        <div class="wrap grid grid--faq">
+          <header class="section__head" data-reveal>
+            <p class="kicker">Häufige Fragen</p>
+            <h2 class="headline" id="t-fragen">Fragen, ehrlich beantwortet.</h2>
+            <p class="lead">Ihre Frage ist nicht dabei? <a class="link" href="#kontakt">Schreiben Sie mir</a>, ich antworte persönlich.</p>
+          </header>
+          <div class="faq" data-reveal>
+            <div class="faq__item">
+              <h3 class="faq__q"><button type="button" id="faq-q1" aria-controls="faq-a1" aria-expanded="true"><span>Was kostet eine neue Website?</span><i class="faq__icon" aria-hidden="true"></i></button></h3>
+              <div class="faq__a" id="faq-a1">
+                <div class="faq__inner">
+                  <p>Das hängt davon ab, wie viele Seiten und Funktionen Sie brauchen. Nach einem kurzen Gespräch erhalten Sie eine Fixpreis-Offerte, und der Preis bleibt fest. In der Online-Wunschliste sehen Sie schon beim Auswählen, wie sich der Preis zusammensetzt. Der erste Entwurf ist kostenlos, und Mehrwertsteuer kommt keine dazu.</p>
+                </div>
+              </div>
+            </div>
+            <div class="faq__item">
+              <h3 class="faq__q"><button type="button" id="faq-q2" aria-controls="faq-a2" aria-expanded="true"><span>Wie lange dauert es?</span><i class="faq__icon" aria-hidden="true"></i></button></h3>
+              <div class="faq__a" id="faq-a2">
+                <div class="faq__inner">
+                  <p>Den Termin für den Entwurf vereinbaren wir im ersten Gespräch. Für die fertige Website rechne ich ab Erhalt aller Inhalte mit rund 10 bis 16 Wochen bis zur Aufschaltung, je nach Umfang und inklusive Ihrer Prüfzeiten. Weil ich neben der Lehre arbeite, plane ich lieber realistisch als knapp. Den Zielmonat sehen Sie schon in der Offerte.</p>
+                </div>
+              </div>
+            </div>
+            <div class="faq__item">
+              <h3 class="faq__q"><button type="button" id="faq-q3" aria-controls="faq-a3" aria-expanded="true"><span>Was passiert, wenn mir der Entwurf nicht gefällt?</span><i class="faq__icon" aria-hidden="true"></i></button></h3>
+              <div class="faq__a" id="faq-a3">
+                <div class="faq__inner">
+                  <p>Dann sagen Sie es mir einfach. Der Entwurf ist kostenlos und unverbindlich, es entstehen keine Kosten. Im Auftrag sind zwei Korrekturrunden enthalten, und was nicht der Offerte entspricht, behebe ich vor der Abnahme kostenlos. Steigen Sie vorher aus, bezahlen Sie nur die bis dahin geleistete Arbeit.</p>
+                </div>
+              </div>
+            </div>
+            <div class="faq__item">
+              <h3 class="faq__q"><button type="button" id="faq-q4" aria-controls="faq-a4" aria-expanded="true"><span>Kann ich die Website später selber ändern?</span><i class="faq__icon" aria-hidden="true"></i></button></h3>
+              <div class="faq__a" id="faq-a4">
+                <div class="faq__inner">
+                  <p>Ja, wenn Sie das möchten. Mit WordPress ändern Sie Texte, Preise und Fotos selber im Browser, und ich zeige Ihnen bei der Übergabe, wie es geht. WordPress braucht regelmässige Updates. Wer sie macht, halten wir in der Offerte fest. Ohne WordPress übernehme ich Änderungen für Sie, im Pflegepaket oder nach Aufwand.</p>
+                </div>
+              </div>
+            </div>
+            <div class="faq__item">
+              <h3 class="faq__q"><button type="button" id="faq-q5" aria-controls="faq-a5" aria-expanded="true"><span>Wer kümmert sich um Hosting, Domain und E-Mail?</span><i class="faq__icon" aria-hidden="true"></i></button></h3>
+              <div class="faq__a" id="faq-a5">
+                <div class="faq__inner">
+                  <p>Haben Sie schon einen Anbieter oder Webmaster, bleibt alles dort, und ich übergebe die fertige Website. Haben Sie noch nichts, richte ich Domain und Hosting mit Ihnen ein. Die laufenden Kosten dafür bezahlen Sie direkt dem Anbieter, sie sind nicht im Fixpreis enthalten. An Ihren E-Mail-Einstellungen ändere ich nichts.</p>
+                </div>
+              </div>
+            </div>
+            <div class="faq__item">
+              <h3 class="faq__q"><button type="button" id="faq-q6" aria-controls="faq-a6" aria-expanded="true"><span>Betreuen Sie die Website auch nach der Übergabe?</span><i class="faq__icon" aria-hidden="true"></i></button></h3>
+              <div class="faq__a" id="faq-a6">
+                <div class="faq__inner">
+                  <p>Ja. Fehler an meiner Arbeit, die Sie innert 30 Tagen nach der Abnahme melden, behebe ich kostenlos. Danach können Sie ein Pflegepaket wählen: ein fester Monatsbetrag mit einer Stunde für Änderungen pro Monat, auf Ende jedes Monats kündbar. Oder Sie melden sich, wenn Sie etwas brauchen, und ich sage Ihnen vorher, wie viele Stunden es braucht.</p>
+                </div>
+              </div>
+            </div>
+            <div class="faq__item">
+              <h3 class="faq__q"><button type="button" id="faq-q7" aria-controls="faq-a7" aria-expanded="true"><span>Wie steht es um den Datenschutz?</span><i class="faq__icon" aria-hidden="true"></i></button></h3>
+              <div class="faq__a" id="faq-a7">
+                <div class="faq__inner">
+                  <p>Ich plane jede Lösung nach dem Schweizer Datenschutzgesetz (DSG) und setze so wenige fremde Dienste wie möglich ein. Impressum und Datenschutzerklärung baue ich ein. Die Texte liefern Sie oder geben sie frei, eine rechtliche Prüfung mache ich nicht. Bei KI-Lösungen klären wir zuerst, welche Daten verarbeitet werden und wo. Ohne Ihre Zustimmung gebe ich keine Personendaten in KI-Dienste ein.</p>
+                </div>
+              </div>
+            </div>
+            <div class="faq__item">
+              <h3 class="faq__q"><button type="button" id="faq-q8" aria-controls="faq-a8" aria-expanded="true"><span>Sie sind erst 16. Ist das seriös?</span><i class="faq__icon" aria-hidden="true"></i></button></h3>
+              <div class="faq__a" id="faq-a8">
+                <div class="faq__inner">
+                  <p>Eine berechtigte Frage. Darum ist bei mir alles schriftlich geregelt: Preis, Umfang, Zeitplan und Zahlung stehen in der Offerte. Weil ich minderjährig bin, unterschreiben meine Eltern den Auftrag als gesetzliche Vertretung mit, damit ist er voll gültig. Den Entwurf sehen Sie, bevor Sie etwas bezahlen, und den grössten Teil des Preises bezahlen Sie erst nach der Abnahme.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--contact section--echo-gold" id="kontakt" aria-labelledby="t-kontakt">
         <div class="wrap grid grid--contact">
           <header class="section__head" data-reveal>
             <p class="kicker">Kontakt</p>
             <h2 class="headline" id="t-kontakt">Erzählen Sie mir von Ihrem Projekt.</h2>
             <p class="lead">Ein paar Sätze genügen. Ich melde mich mit Fragen oder direkt mit einem Vorschlag.</p>
-            <p class="contact-note">Ich antworte in der Regel innert 24 Stunden. Unter der Woche bin ich tagsüber in der Lehre, darum meistens am Abend.</p>
+            <p class="contact-note">Ich antworte in der Regel innert zwei Arbeitstagen. Tagsüber bin ich in der Lehre, darum meistens am Abend.</p>
             <p class="contact-mail"><span class="mono">Lieber per Mail?</span><a class="link" href="mailto:jonas.grueter.web@gmail.com">jonas.grueter.web@gmail.com</a></p>
           </header>
           <form class="form" id="kontakt-form" action="https://api.web3forms.com/submit" method="POST" data-reveal novalidate>
@@ -444,7 +717,7 @@
         <p>Region Sempach, Kanton Luzern · <a class="link" href="mailto:jonas.grueter.web@gmail.com">jonas.grueter.web@gmail.com</a></p>
       </div>
       <div class="footer__col footer__col--end">
-        <p class="mono footer__meta">© <span id="year">2026</span> Jonas Grüter · Version 1, Vorschau</p>
+        <p class="mono footer__meta">© <span id="year">2026</span> Jonas Grüter · Version 2, Vorschau</p>
         <p class="footer__small">Gebaut aus eigenem Code. Kein Tracking, keine Cookies.</p>
         <a class="footer__top link" href="#top">Nach oben</a>
       </div>

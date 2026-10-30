@@ -55,6 +55,12 @@ export const ANCHORS = Object.freeze({
   wireframe: Object.freeze({ center: v(0, 0.5, -36), width: 5.6, height: 3.4 }),
 });
 
+/* ------------------------------------------------------------ Szene robot */
+// ownBackdrop: eigener Hintergrund der Android-Bueste (weicher Lichtkegel und Nebel hinter dem Kopf,
+// js/scenes/robot-env.js buildBackdrop). Auf false setzen, sobald ein globales Hintergrund-Modul den Raum hinter der
+// Bueste uebernimmt. Ohne Code-Aenderung testen: index.html oder dev.html mit ?robotbg=0 (aus) bzw. ?robotbg=1 (an).
+export const ROBOT = Object.freeze({ ownBackdrop: true });
+
 /* ------------------------------------------------------- Szenen (Beats) */
 // Reihenfolge = Reihenfolge der <section data-scene> in index.html.
 // len = Hoehe des Abschnitts in vh. Daraus misst der Director die Zeitfenster (global 0..1).
@@ -91,21 +97,45 @@ export const CAMERA_KEYS = Object.freeze([
   // Hero: lose angedeuteter Kopf mit leuchtendem Kern rechts der Mitte (Hochformat: oberes Drittel), Titel links unten
   { at: 'intro@0', pos: [0.15, 0.32, 13.4], look: [-1.75, -0.3, 0], fov: 30, posM: [0, 0.35, 11.0], lookM: [0, -3.25, 0] },
   { at: 'intro@1', pos: [0.6, 0.3, 12.0], look: [-0.9, -0.3, 0], fov: 31, posM: [0.5, 0.3, 9.6], lookM: [0, -2.1, 0] },
-  // Roboter leicht rechts der Mitte, links Platz fuer den Text (Hochformat: zentriert, Text unten)
-  { at: 'robot@0.5', pos: [3.6, 0.9, 8.2], look: [-0.32, -0.45, 0.14], fov: 32, lookM: [0, -0.45, 0] },
-  { at: 'robot@1', pos: [1.8, 0.45, 5.6], look: [-0.5, -0.15, 0.16], fov: 33, posM: [1.8, 0.45, 6.4], lookM: [0, -1.5, 0] },
-  // "Was dahinter steckt": Kopf rechts, die Schale wird durchsichtig. Danach kreist die Kamera vor dem Gesicht vorbei
-  // nach vorne links oben: Dreiviertelansicht des Gehirns in der Roentgen-Schale (Stirn, Schlaefe, Kleinhirn lesbar)
-  // Hochformat: naeher und hoeher, die Unterkante der Bueste bleibt ausserhalb des Bildes
-  { at: 'zoom@0.35', pos: [1.0, 0.32, 4.3], look: [-0.58, 0.02, 0.14], fov: 36, posM: [0.5, 0.4, 4.6], lookM: [0, -1.15, 0] },
-  // Waehrend des Roentgen-Scans schon seitlich: das Gehirn ist nie frontal (zwei runde Haelften) zu sehen
-  { at: 'zoom@0.5', pos: [-1.5, 0.95, 3.7], look: [-0.45, 0.12, 0], fov: 38, posM: [-1.3, 0.5, 3.9], lookM: [-0.05, -0.8, 0] },
-  { at: 'zoom@0.7', pos: [-2.0, 1.35, 3.1], look: [-0.3, 0.12, 0], fov: 39, posM: [-1.6, 0.8, 2.85], lookM: [-0.04, -0.6, -0.05] },
-  { at: 'zoom@1', pos: [-2.15, 1.5, 2.85], look: [-0.7, 0.12, -0.12], fov: 40, posM: [-1.68, 1.21, 2.3], lookM: [-0.03, -0.46, -0.1] },
+  // Android-Bueste in Dreiviertelansicht von rechts vorne (+x): das Gesicht wendet sich dem Text links zu, die Bueste
+  // steht rechts der Mitte. Danach kreist die Kamera ruhig auf derselben Seite weiter (Hochformat: Bueste oben, Text unten)
+  {
+    at: 'robot@0.5', pos: [4.2, 0.75, 7.4], look: [-0.98, -0.69, 0.58], fov: 31,
+    lookM: [0.18, -2.8, 0.3],
+  },
+  {
+    at: 'robot@1', pos: [6.3, 0.55, 3.9], look: [-0.54, -0.63, 0.78], fov: 32,
+    lookM: [0.24, -2.48, 0.05],
+  },
+  // "Was dahinter steckt": Profil von schraeg hinten, solange der Text steht. Gesicht blickt nach links zum Text,
+  // rechts im Bild der offene Hinterkopf mit Schaedelgitter, Glaskappe und Kabeln.
+  {
+    at: 'zoom@0.22', pos: [7.0, 0.45, -2.3], look: [0.23, -0.46, 0.61], fov: 30,
+    posM: [7.0, 0.5, -2.3], lookM: [0.18, -1.89, -0.35],
+  },
+  {
+    at: 'zoom@0.38', pos: [6.6, 0.55, -1.9], look: [0.19, -0.41, 0.59], fov: 31,
+    posM: [6.6, 0.6, -1.95], lookM: [0.2, -1.8, -0.35],
+  },
+  // Roentgen-Scan (zoom@0.3 bis 0.84): die Kamera kommt seitlich nach vorne oben, das Gehirn erscheint in seiner
+  // Hardware (Seitenansicht, nie frontal), am Ende Dreiviertelansicht von vorne rechts oben
+  {
+    at: 'zoom@0.6', pos: [4.3, 0.95, 0.6], look: [-0.07, -0.16, 0.33], fov: 34,
+    posM: [4.4, 1.0, 0.6], lookM: [0.25, -1.11, -0.06],
+  },
+  {
+    at: 'zoom@0.8', pos: [3.2, 1.15, 1.7], look: [-0.2, 0.04, 0.26], fov: 37,
+    posM: [3.6, 1.25, 2.0], lookM: [0.25, -0.94, 0.04],
+  },
+  {
+    at: 'zoom@1', pos: [2.3, 1.35, 2.55], look: [-0.44, 0.14, 0.26], fov: 40,
+    posM: [2.3, 1.5, 3.0], lookM: [0.22, -0.9, 0.19],
+  },
   // Text "Intelligenz" links, Gehirn rechts; dann taucht die Kamera ein, fliegt durch und hinten hinaus.
   // Hochformat: der Kopf fuellt rund 70 % der Bildbreite
-  { at: 'brain@0.3', pos: [-1.62, 1.2, 2.18], look: [-0.58, 0.16, -0.12], fov: 40, posM: [-1.6, 1.15, 2.2], lookM: [-0.03, -0.45, -0.1] },
-  { at: 'brain@0.55', pos: [-0.5, 0.52, 0.42], look: [0.15, 0.22, -0.5], fov: 54 },
+  // (Seit dem Einbau der Android-Bueste von vorne rechts, gleiche Seite wie Roboter und Zoom.)
+  { at: 'brain@0.3', pos: [1.62, 1.2, 2.18], look: [-0.42, 0.12, 0.21], fov: 40, posM: [1.9, 1.35, 2.6], lookM: [0.18, -0.7, 0.15] },
+  { at: 'brain@0.55', pos: [0.5, 0.52, 0.42], look: [-0.15, 0.22, -0.5], fov: 54 },
   // Austrittspunkt der Kabel nicht in der Bildmitte, leichte Neigung: liest sich als "Kabel werden gezogen"
   { at: 'brain@0.78', pos: [0.02, 0.32, -0.25], look: [0.25, -0.05, -1.0], fov: 58, roll: 6 },
   { at: 'brain@1', pos: [-0.35, 0.55, -0.85], look: [0, 0, -3], fov: 55, roll: 2.5 },
@@ -136,10 +166,12 @@ export const CAMERA_KEYS = Object.freeze([
   // Geruest fertig: oben im Bild, darunter Platz fuer die Angebotszeile (HTML, js/ui.js setOffer)
   { at: 'dna@0.74', pos: [0, 0.44, -29.25], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -28.85], lookM: [0, -0.5, -36] },
   { at: 'dna@1', pos: [0, 0.42, -29.45], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -29.05], lookM: [0, -0.5, -36] },
-  { at: 'outro@0', cut: true, pos: [0, 0.0, 4.6], look: [0, -0.2, 0], fov: 34, posM: [0, 0.2, 6.5], lookM: [0, -2.25, 0] },
+  // Ausklang: Schnitt auf das Gesicht (die Augen erwachen im Lichtblitz), dann zieht die Kamera langsam zurueck in eine
+  // ruhige Dreiviertelansicht leicht von unten: die Bueste rechts, der Blick zum Kontakt links (Hochformat: Bueste oben)
+  { at: 'outro@0', cut: true, pos: [0.5, 0.05, 4.5], look: [-0.22, -0.27, 0.03], fov: 34, posM: [0.4, 0.2, 6.0], lookM: [0.01, -1.95, 0.09] },
   {
-    at: 'outro@1', pos: [-1.9, 0.15, 8.6], look: [-1.1, -0.45, 0], fov: 32,
-    posM: [0, 0.4, 9.0], lookM: [0, -3.1, 0],
+    at: 'outro@1', pos: [3.7, -0.3, 7.9], look: [-1.19, -0.75, 0.56], fov: 31,
+    posM: [3.4, 0.1, 8.4], lookM: [0.06, -2.83, 0.15],
   },
 ]);
 export const CUT_FADE = 0.008; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 9 vh)
