@@ -37,12 +37,19 @@ const segD = (px, py, ax, ay, bx, by) => {
   const h = clamp(((px - ax) * vx + (py - ay) * vy) / (vx * vx + vy * vy), 0, 1);
   return Math.hypot(px - ax - vx * h, py - ay - vy * h);
 };
-const FACE_LINES = [
-  [-0.01, 0.214, 0.2, 0.236], [0.2, 0.236, 0.42, 0.232], [0.42, 0.232, 0.62, 0.196], [0.62, 0.196, 0.9, 0.12],
-  [0.9, -0.03, 0.56, -0.125], [0.56, -0.125, 0.4, -0.168], [0.4, -0.168, 0.245, -0.178], [0.245, -0.178, 0.168, -0.212],
-  [0.168, -0.212, 0.142, -0.33], [0.142, -0.33, 0.158, -0.428], [0.158, -0.428, 0.06, -0.452], [0.06, -0.452, -0.01, -0.455],
-  [0.158, -0.428, 0.228, -0.502], [0.228, -0.502, 0.292, -0.622], [0.292, -0.622, 0.312, -0.8], [0.312, -0.8, 0.322, -1.08],
-];
+// Gesichtsplatten wie layout.js lFaceSeams: Stirnbogen und seitliche Maskenlinie (Augenhoehlenrand, unter dem Jochbein)
+const faceSeams = (x, y) => {
+  const fh = Math.abs(y - (0.262 - 0.11 * x * x));
+  const t = clamp(-y / 0.95, 0, 1);
+  const ck = Math.max(Math.abs(x - (0.672 - 0.33 * Math.pow(t, 1.45))), y - 0.2);
+  return Math.min(fh, ck);
+};
+// Hinterkopf-Oeffnung wie layout.js lSkullWin (Ellipse in Bogenlaenge ab hinten und y)
+const SKW = LAYOUT.skull;
+const skullWin = (x, y, z) => {
+  const u = (Math.PI - Math.atan2(x, z)) * Math.hypot(x, z);
+  return (Math.hypot(u / SKW.a, (y - SKW.yc) / SKW.b) - 1) * Math.min(SKW.a, SKW.b);
+};
 const lJaw = (x, y, z) => -(y + 0.62 + 0.63 * (z - 0.05)) / 1.183;
 const smax = (a, b, k) => { const h = clamp(0.5 - 0.5 * (b - a) / k, 0, 1); return b + (a - b) * h + k * h * (1 - h); };
 const lFace = (x, y, z) => {
@@ -52,21 +59,20 @@ const lFace = (x, y, z) => {
   const ths = 1.2 + 0.36 * smoothstep(-0.12, -0.62, y);
   return smax(smax(A, (th - ths) * rxz, 0.08), lJaw(x, y, z), 0.05);
 };
-/** Abstand zur naechsten Linie am Kopf (Gesichtsplatten, Maske, Schaedelring, Lidfalte) */
+/** Abstand zur naechsten Linie am Kopf (Maske, Stirn- und Wangenfuge, Lidfalte, Scheitelnaht, Rand der Oeffnung) */
 function headLine(px, y, z) {
   const x = Math.abs(px);
   let d = 9;
   const face = lFace(x, y, z);
   if (y > -1.15 && y > -0.75 - 0.6 * Math.max(z, 0)) d = Math.min(d, Math.abs(face));
   if (z > 0.12 && face < 0.05) {
-    let s = 9;
-    for (const L of FACE_LINES) s = Math.min(s, segD(x, y, L[0], L[1], L[2], L[3]));
-    d = Math.min(d, Math.max(s, face));
+    d = Math.min(d, Math.max(faceSeams(x, y), face));
     const ex = (x - 0.3) / 0.15; const ey = (y + 0.012) / 0.078;
     if (y > 0.0) d = Math.min(d, Math.abs(Math.hypot(ex, ey) - 1) * 0.08);
   }
-  const R = y - (0.43 - 0.06 * z);
-  if (face > 0) d = Math.min(d, Math.abs(R));
+  const win = skullWin(x, y, z);
+  if (face > 0 && win > 0.05) d = Math.min(d, x);
+  if (y > -0.66) d = Math.min(d, Math.abs(win));
   return d;
 }
 /** Abstand zu Plattenkanten am Rumpf: Schluesselbein-Spangen, Bogen der Brustplatte, Schulterring */
@@ -155,10 +161,11 @@ export function sampleRobot(THREE, A, count, rnd) {
   }
   const lm = BUST.lm;
   const o = { p: [0, 0, 0], n: [0, 0, 0], h: 0 };
-  const neckOpen = (x, y, z) => y < -0.66 && y > -1.5 && Math.hypot(x, z + 0.22) < 0.5 && lJaw(Math.abs(x), y, z) > 0;
+  const neckOpen = (x, y, z) => (y < -0.66 && y > -1.5 && Math.hypot(x, z + 0.22) < 0.5 && lJaw(Math.abs(x), y, z) > 0)
+    || (y > -0.66 && z < 0.1 && skullWin(Math.abs(x), y, z) < 0);
   const headS = makeSurface(BUST, (x, y, z) => y > -1.1 && !neckOpen(x, y, z));
   const torsoS = makeSurface(BUST, (x, y, z) => y <= -1.1 && !neckOpen(x, y, z));
-  const counts = { head: 0.27, headLines: 0.07, eyes: 0.022, ears: 0.016, neck: 0.07, torso: 0.46, torsoLines: 0.045, cables: 0.03 };
+  const counts = { head: 0.27, headLines: 0.07, eyes: 0.012, ears: 0.016, neck: 0.07, torso: 0.46, torsoLines: 0.045, cables: 0.03 };
   const N = {};
   let sum = 0;
   for (const [k, v] of Object.entries(counts)) { N[k] = Math.floor(count * v); sum += N[k]; }
@@ -171,13 +178,15 @@ export function sampleRobot(THREE, A, count, rnd) {
     if (headLine(o.p[0], o.p[1], o.p[2]) > 0.007) continue;
     put(o.p, o.n, KIND.line, o.h); i++;
   }
-  // Augen: Iris-Ring und Pupille (hellste Art)
+  // Augen: Iris-Ring und Pupille
   for (let i = 0; i < N.eyes; i++) {
     const e = i % 2 ? lm.eyeL : lm.eyeR;
     const a = rnd() * Math.PI * 2;
-    const r = rnd() < 0.75 ? 0.052 + (rnd() - 0.5) * 0.006 : Math.sqrt(rnd()) * 0.02;
+    // Iris-Ring als feine Linie, nur die Pupille leuchtet (sonst drei grelle Flecken mit dem Funken im Kopf)
+    const ringPt = rnd() < 0.8;
+    const r = ringPt ? 0.052 + (rnd() - 0.5) * 0.006 : Math.sqrt(rnd()) * 0.016;
     const z = Math.sqrt(Math.max(0, 0.128 * 0.128 - r * r));
-    put([e[0] + Math.cos(a) * r, e[1] - 0.01 + Math.sin(a) * r, e[2] - 0.004 + z], [0, 0, 1], KIND.visor, 1);
+    put([e[0] + Math.cos(a) * r, e[1] - 0.01 + Math.sin(a) * r, e[2] - 0.004 + z], [0, 0, 1], ringPt ? KIND.line : KIND.visor, 1);
   }
   // Sensormodule an den Ohren: Chrom-Ring und Rand
   const ears = lm.ears || [];

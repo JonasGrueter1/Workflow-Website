@@ -149,11 +149,12 @@ function frame(THREE, p, dir, spin = 0) {
 export function materialsKit(THREE) {
   const C = (h) => new THREE.Color(h);
   return {
-    TI: { c: C(0x8e969e), m: 0.92, r: 0.3 },
-    TID: { c: C(0x4c545c), m: 0.9, r: 0.38 },
-    GR: { c: C(0x1b2129), m: 0.5, r: 0.48 },
-    RB: { c: C(0x0b0d10), m: 0, r: 0.7 },
-    CHROME: { c: C(0xc8d0d8), m: 1, r: 0.12 },
+    // v3: hellere, kuehlere Metalle (Titan hell, Stahl mittel), Graphit nicht mehr schwarz
+    TI: { c: C(0xb4bec8), m: 0.9, r: 0.28 },
+    TID: { c: C(0x6f7b87), m: 0.88, r: 0.34 },
+    GR: { c: C(0x262d35), m: 0.5, r: 0.42 },
+    RB: { c: C(0x111419), m: 0, r: 0.6 },
+    CHROME: { c: C(0xc8d0d8), m: 1, r: 0.22 },
     CER: { c: C(0xcfd6dc), m: 0, r: 0.35 },
     GLOW: { c: C(0x0a0f14), m: 0, r: 0.5, e: 1 },
     GLOWS: { c: C(0x0a0f14), m: 0, r: 0.5, e: 0.45 },
@@ -216,26 +217,18 @@ export function buildServo(THREE, P, c, side, q = 1) {
     const g = new THREE.LatheGeometry(pts.map(([r, y]) => new THREE.Vector2(r, y)), S(seg));
     P.add(g, frame(THREE, c.clone().addScaledVector(n, off), n), mat);
   };
-  // Schlaefenplatte (deckt den Pol der Radial-Karte): flach, gefast, mit Schraubenkranz
-  lathe([[0.0, -0.075], [0.235, -0.075], [0.25, -0.06], [0.25, -0.046], [0.236, -0.036], [0.15, -0.036]], M.TI, 64);
-  for (let i = 0; i < 10; i++) {
-    const a = (i / 10) * Math.PI * 2 + 0.15;
-    const g = new THREE.CylinderGeometry(0.0075, 0.0075, 0.008, 10);
-    g.translate(Math.cos(a) * 0.205, -0.034, Math.sin(a) * 0.205);
+  // v3: kleines, buendiges Kiefergelenk (r 0.15 statt 0.25), matt, ohne Leuchtring. Deckt den Pol der Radial-Karte.
+  const SAT = { c: new THREE.Color(0x6d7781), m: 0.85, r: 0.38 }; // satiniertes Titan: kein Spiegel-Fleck
+  lathe([[0.0, -0.06], [0.142, -0.06], [0.152, -0.05], [0.152, -0.04], [0.142, -0.032], [0.1, -0.032]], SAT, 56);
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2 + 0.2;
+    const g = new THREE.CylinderGeometry(0.0055, 0.0055, 0.006, 10);
+    g.translate(Math.cos(a) * 0.124, -0.03, Math.sin(a) * 0.124);
     P.add(g, frame(THREE, c, n), M.CHROME);
   }
-  lathe([[0.0, -0.06], [0.128, -0.06], [0.138, -0.045], [0.138, -0.004], [0.13, 0.004], [0.118, 0.006]], M.TID);
-  lathe([[0.118, 0.006], [0.114, 0.013], [0.1, 0.015], [0.088, 0.01]], M.TI);
-  lathe([[0.088, 0.01], [0.086, -0.004], [0.0, -0.004]], M.GR);
-  // Nabe: zwei Stufen, polierter Deckel
-  lathe([[0.0, 0.022], [0.042, 0.022], [0.05, 0.015], [0.05, -0.004]], M.TI, 40);
-  lathe([[0.0, 0.029], [0.022, 0.028], [0.03, 0.022]], M.CHROME, 32);
-  for (let i = 0; i < 6; i++) {
-    const a = (i / 6) * Math.PI * 2 + 0.3;
-    const g = new THREE.CylinderGeometry(0.0065, 0.0065, 0.006, 10);
-    g.translate(Math.cos(a) * 0.107, 0.015, Math.sin(a) * 0.107);
-    P.add(g, frame(THREE, c, n), M.CHROME);
-  }
+  lathe([[0.0, -0.05], [0.088, -0.05], [0.094, -0.04], [0.094, -0.016], [0.086, -0.01], [0.0, -0.01]], M.TID, 40);
+  lathe([[0.0, -0.002], [0.034, -0.002], [0.04, -0.008], [0.04, -0.014]], SAT, 32);
+  lathe([[0.0, 0.003], [0.017, 0.002], [0.022, -0.003]], M.TID, 24);
   // Kolben: Zylinder (Titan) + Stange (Chrom), Augen an beiden Enden
   const A = c.clone().addScaledVector(n, -0.02).add(new THREE.Vector3(-side * 0.04, -0.1, -0.06));
   const B = new THREE.Vector3(side * 0.3, -1.3, -0.36);
@@ -246,7 +239,7 @@ export function buildServo(THREE, P, c, side, q = 1) {
     g.translate(0, len / 2, 0);
     P.add(g, frame(THREE, at, dir), mat);
   };
-  cyl(0.024, 0.024, L * 0.52, A.clone().addScaledVector(dir, 0.03), M.TI);
+  cyl(0.024, 0.024, L * 0.52, A.clone().addScaledVector(dir, 0.03), SAT);
   cyl(0.027, 0.027, 0.02, A.clone().addScaledVector(dir, 0.03), M.TID);
   cyl(0.027, 0.027, 0.02, A.clone().addScaledVector(dir, 0.03 + L * 0.52 - 0.02), M.TID);
   cyl(0.012, 0.012, L * 0.46, A.clone().addScaledVector(dir, 0.03 + L * 0.52), M.CHROME, 16);

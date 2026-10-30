@@ -1,20 +1,23 @@
-// Szene "robot", Variante android-a v2: Androidin nach Referenz 1 (Profil, Haut-Porzellan, offener Hinterkopf).
+// Szene "robot", Variante android-a v3: Androidin nach Referenz 1 (Profil, Haut-Porzellan, offener Schaedel).
 // Gleiche Schnittstelle wie js/scenes/robot.js: create(ctx) -> { group, look, update, setActive, dispose }.
 //
 // Aufbau
-//   Grundform   MakeHuman-Basis (CC0) mit weiblichen Targets, Kalotte flacher, Hals laenger (scripts2/build_v5.py),
-//               assets/android-a/head.bin (Vierecke, ~120 KB). Zur Laufzeit Catmull-Clark (high 2, sonst 1 Stufe).
-//   Haut        Gesicht und Hals: heller, warmer Grundton, Wrap-Diffuse mit warmem Terminator, Lippen, Lider, Brauen,
-//               Wimpern (Band mit Haar-Alpha). Bueste unterhalb des Kragens: Keramik mit Fugen.
-//   Schnitt     Ab Schaedelmitte nach hinten offen (shape.js CUT). Kante mit Materialstaerke.
-//   Innen       Grossformen zuerst: Titan-Kamm ueber den Scheitel, zwei Lagen Milchglas, Wirbelsaeule bis in die
-//               Schaedelbasis, Servo hinter dem Ohr mit Kolben zum Hals. Dann Module, Spangen, Anschluesse.
-//               Innere Schale aus hellen Titanplatten (nur Rauheit/Normale, kein Leuchten).
-//   Kabel       6 bis 8 gefuehrte Buendel mit Manschetten in den Ruecken, Faecher aus steifen Glasfasern nach hinten
-//               oben, kurze Boegen unter dem Glas. high 8 Buendel + 70 Fasern, medium 6 + 36, low 6 + 22.
-//   Licht       eigenes Dreipunkt-Licht im Kameraraum (materials.js), weicher Lichtschein hinter dem Kopf.
-//   Pose        Im Beat robot dreht sie sich ins Profil, Blick zum Text (links). Zum Roentgen-Zoom dreht sie zurueck
-//               nach vorne (Gehirn und Gehirn-Hardware aus brain.js passen nur in der Grundstellung). Outro: Profil.
+//   Grundform   MakeHuman-Basis (CC0) mit weiblichen Targets, Kiefer/Wangen schlanker, Mundwinkel leicht hoch, Hals laenger
+//               (scripts2/build_v5.py + sculpt_v7.py), assets/android-a/head.bin (~120 KB). Laufzeit: Catmull-Clark
+//               (high 2, sonst 1 Stufe).
+//   Haut        heller, leicht warmer Porzellan-Ton, Wrap-Diffuse mit dezentem Terminator, breite leise Farbvariation,
+//               Lippen rose, Lider/Augenhoehlen dunkler, weiche Brauen, Wimpern. Kantenlicht nur als schmaler Saum.
+//   Schnitt     v3: ab dem Haaransatz offen (shape.js CUT): Glaskuppel ueber der Mechanik statt kahlem Puppenkopf,
+//               an der Schlaefe hinter dem Auge, vor dem Ohr, hinter dem Kiefer, Hals hinten offen.
+//   Innen       zwei Lagen Milchglas, gestufte Schalenbaender an der Kante, Titan-Kamm, Filamente unter dem Glas,
+//               kleines buendiges Kiefergelenk (kein Leuchtring), Wirbelsaeule, Module. Innere Schale stahlblau mit
+//               eisigem Licht aus den Fugen (gross verlaufend, kein Pixelrauschen).
+//   Kabel       Buendel laufen am Nacken zur Wirbelsaeule zusammen, Faecher aus dunklen Fasern und Glasstaeben strahlt
+//               nach hinten (Silhouette wie Referenz 1), Filamente unter dem Glas. high 6+56+56, medium 6+32+28, low 4+20+14.
+//   Licht       eigenes Dreipunkt-Licht im Kameraraum (materials.js), Lichtkegel hinter dem Kopf mit Dunst,
+//               Schultern versinken nach unten im Dunkel. Nur Emission blueht (Schwelle 1.65 ausser im Roentgen).
+//   Pose        Im Beat robot dreht sie sich ins Profil, Blick zum Text (links). Erst zoom 0.1-0.42 zurueck nach vorne
+//               (Gehirn und Gehirn-Hardware aus brain.js passen nur in der Grundstellung). Outro: Profil/Dreiviertel.
 // Ablauf (ctx.director.beat, wie robot.js): robot 0.08-0.26 Hologramm, 0.26-0.64 Aufbau von unten, danach Leerlauf.
 //   zoom 0.3-0.84 Roentgen-Scan von oben nach unten (gleiche Formel wie robotScan), Gehirn (brain.js) sichtbar.
 //   outro: ganz, ruhig, Iris leuchtet im Lichtblitz auf.
@@ -31,9 +34,9 @@ import { makeCablePaths, buildCables } from './cables.js';
 
 const ASSET = new URL('../../../assets/android-a/', import.meta.url);
 const TIER = {
-  high: { levels: 2, bundles: 8, perBundle: 9, fan: 46, arcs: 16, seg: 64, radial: 6, grid: 1, boards: 16 },
-  medium: { levels: 1, bundles: 6, perBundle: 6, fan: 28, arcs: 8, seg: 40, radial: 5, grid: 0.7, boards: 10 },
-  low: { levels: 1, bundles: 6, perBundle: 5, fan: 18, arcs: 6, seg: 30, radial: 4, grid: 0.5, boards: 6 },
+  high: { levels: 2, bundles: 6, perBundle: 9, fan: 56, arcs: 12, flow: 56, seg: 64, radial: 6, grid: 1, boards: 16 },
+  medium: { levels: 1, bundles: 6, perBundle: 6, fan: 32, arcs: 6, flow: 28, seg: 40, radial: 5, grid: 0.7, boards: 10 },
+  low: { levels: 1, bundles: 4, perBundle: 5, fan: 20, arcs: 4, flow: 14, seg: 30, radial: 4, grid: 0.5, boards: 6 },
 };
 // Gesamtdrehung (Koerper + Kopf) in rad: Gesicht nach links zum Text. Koerper uebernimmt 55 %, der Kopf den Rest.
 export const POSE = { robot: -1.02, outro: -1.32, body: 0.55 };
@@ -186,7 +189,7 @@ export async function create(ctx) {
   }
 
   // Kabel (zuerst: die Buendel-Fuehrungen braucht die Mechanik)
-  const paths = makeCablePaths(THREE, rmap, net.pos, { bundles: T.bundles, perBundle: T.perBundle, fan: T.fan, arcs: T.arcs, seed: 11 });
+  const paths = makeCablePaths(THREE, rmap, net.pos, { bundles: T.bundles, perBundle: T.perBundle, fan: T.fan, arcs: T.arcs, flow: T.flow, seed: 11 });
   const cables = buildCables(THREE, U, env, paths, { seg: T.seg, radial: T.radial, palette });
   cables.mesh.renderOrder = 4;
   body.add(cables.mesh);
@@ -208,9 +211,9 @@ export async function create(ctx) {
   // Gestufte Schalen-Baender hinter der Gesichtskante (Porzellan, helles Titan, dunkles Titan mit feiner Lichtkante)
   const earArr = [[-SERVO[0], SERVO[1], SERVO[2]], [SERVO[0], SERVO[1], SERVO[2]]];
   const BANDS = [
-    { f0: 0.012, f1: 0.078, off: -0.004, color: new THREE.Color(0.74, 0.7, 0.68), metal: 0, rough: 0.4, seg: 0.5 },
-    { f0: 0.088, f1: 0.158, off: -0.013, color: new THREE.Color(0xb3bcc4), metal: 0.7, rough: 0.3, seg: 0.38 },
-    { f0: 0.168, f1: 0.236, off: -0.022, color: new THREE.Color(0x6a747d), metal: 0.8, rough: 0.34, seg: 0.3, glow: 0.45 },
+    { f0: 0.012, f1: 0.062, off: -0.004, color: new THREE.Color(0.7, 0.68, 0.67), metal: 0, rough: 0.4, seg: 0.5 },
+    { f0: 0.07, f1: 0.118, off: -0.012, color: new THREE.Color(0xb3bcc4), metal: 0.7, rough: 0.3, seg: 0.38 },
+    { f0: 0.126, f1: 0.166, off: -0.02, color: new THREE.Color(0x8b97a3), metal: 0.8, rough: 0.32, seg: 0.3, glow: 0.22 },
   ];
   const bands = BANDS.map((B) => {
     const g = buildRadialSurface(THREE, rmap, {
@@ -285,7 +288,8 @@ export async function create(ctx) {
         follow = 1 - smoothstep(0.0, 0.32, zm.p);
         irisOn = 0.12 * smoothstep(0.62, 0.72, rb.p) + 0.2 * smoothstep(0.0, 0.2, zm.p) * (1 - smoothstep(0.3, 0.5, zm.p));
         // ins Profil drehen, zum Roentgen zurueck in die Grundstellung (Gehirn passt nur dort)
-        pose = POSE.robot * smoothstep(0.18, 0.52, rb.p) * (1 - smoothstep(0.02, 0.3, zm.p));
+        // v3: spaet zurueckdrehen (zoom 0.1-0.42): der Scan erreicht den Kopf erst bei ~0.42, so ist sie fast nie frontal
+        pose = POSE.robot * smoothstep(0.18, 0.52, rb.p) * (1 - smoothstep(0.1, 0.42, zm.p));
       } else {
         irisOn = 0.12 + 0.9 * Math.exp(-Math.pow((out.p - 0.06) / 0.08, 2));
         pose = POSE.outro + 0.06 * out.p;
@@ -354,8 +358,13 @@ export async function create(ctx) {
         _hv.set(0, -0.1, 0).sub(camera.position).normalize();
         halo.position.set(0, -0.1, 0).addScaledVector(_hv, 2.4);
         halo.quaternion.copy(camera.quaternion);
-        halo.scale.setScalar(10);
+        // so gross, dass das Bild immer ganz bedeckt ist (Hochformat, Lens-Shift): sonst sieht man die Kante der Flaeche
+        const hD = camera.position.distanceTo(halo.position);
+        const hH = 2 * hD * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) * 1.5;
+        halo.scale.set(Math.max(10, hH * camera.aspect), Math.max(10, hH), 1);
+        mats.halo.uniforms.uAsp.value.set(halo.scale.x / 10, halo.scale.y / 10);
         mats.halo.uniforms.uAmt.value = haloAmt;
+        mats.halo.uniforms.uT.value = time;
       }
 
       if (dbg.size) {
@@ -377,7 +386,8 @@ export async function create(ctx) {
       look.exposure = mix4(1.0, 1.0, 1.0, 1.02);
       const xr = smoothstep(0.45, 0.75, zm.p);
       look.bloom = (mix4(0.62, 0.68, 0.95, 0.7) + 0.3 * xr) * (ctx.isMobile ? 0.86 : 1);
-      look.bloomThreshold = mix4(0.86, 0.86, 0.72, 0.84) - 0.1 * xr;
+      // v3: Haut und helle Teile bluehen nicht (nur Emission > 1): keine Lichtflecken an Stirn, Schlaefe, Schultern
+      look.bloomThreshold = mix4(1.65, 1.55, 0.72, 1.65) - 0.65 * xr;
       look.parallax = 0.24 * follow + 0.02;
       look.drift = 0.022 * (1 - smoothstep(0.4, 0.9, zm.p)) + 0.004;
       look.flash = inOutro ? 0 : 0.06 * Math.exp(-Math.pow((br.p - 0.46) / 0.05, 2));

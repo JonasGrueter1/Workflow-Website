@@ -21,10 +21,13 @@ export function mulberry32(seed) {
 // Tiefe der Grenze Gesicht/Mechanik (z) als Funktion der Hoehe y. Stuetzstellen alle 0.3 ab y = 1.2 nach unten.
 // Vorne (z groesser) bleibt Porzellan, dahinter oeffnet sich der Kopf. Am Scheitel etwa Schaedelmitte, an der Schlaefe
 // hinter dem Auge, vor dem Ohr, hinter dem Kieferwinkel, am Hals die hintere Haelfte.
+// v3: Die Kalotte ist ab dem Haaransatz offen (Glaskuppel ueber der Mechanik statt kahler Puppenkopf).
+//     Haaransatz Mitte y ~ 0.52, an der Schlaefe hinter dem Augenwinkel nach unten, vor dem Ohr, hinter dem Kiefer.
 export const CUT = {
   y0: 1.2,
-  dy: 0.3,
-  z: [-0.06, -0.02, 0.1, 0.29, 0.4, 0.37, 0.17, -0.09, -0.31, -0.5, -0.8, -0.9],
+  dy: 0.15,
+  //   y: 1.2   1.05  0.9   0.75  0.6   0.45  0.3   0.15  0     -0.15 -0.3  -0.45 -0.6  -0.75 -0.9  -1.05 -1.2  -1.35 -1.5  -1.65 -1.8  -1.95
+  z: [1.3, 1.3, 1.25, 1.12, 0.95, 0.7, 0.55, 0.48, 0.43, 0.4, 0.36, 0.28, 0.16, 0.04, -0.09, -0.2, -0.31, -0.4, -0.5, -0.65, -0.8, -0.9],
   neckY: -1.85, // darunter (Schultern, Brust) ist alles geschlossen (Hals v2 um 0.1 laenger)
 };
 

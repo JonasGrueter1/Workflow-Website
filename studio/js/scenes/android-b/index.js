@@ -53,12 +53,12 @@ export async function create(ctx) {
   const DEPTH = 0.032;
   const CORE = 0.13;
   // Hinterkopf: Innenschale (Graphit, 0.13 tiefer) und Glas, nur die Vierecke im Bereich des Fensters
-  const backHead = (x, y, z) => z < 0.2 && y > -0.9 && y < 0.56 && Math.atan2(Math.abs(x), z + 0.05) > 1.75;
+  const backHead = (x, y, z) => z < 0.2 && y > -0.72 && y < 0.6 && Math.atan2(Math.abs(x), z + 0.05) > 1.6;
   const geo = {
     shell: toGeometry(THREE, mesh),
     muscle: toGeometry(THREE, mesh, -DEPTH),
     core: toGeometry(THREE, subMesh(mesh, backHead), -CORE),
-    glass: toGeometry(THREE, subMesh(mesh, (x, y, z) => backHead(x, y, z) && y > -0.3), 0),
+    glass: toGeometry(THREE, subMesh(mesh, (x, y, z) => backHead(x, y, z) && y > -0.12), 0),
   };
 
   /* --------------------------------------------------------- Uniforms */
@@ -76,7 +76,7 @@ export async function create(ctx) {
     uGel: { value: palette.signal.clone().multiplyScalar(0.16) },
     uGelHi: { value: palette.signal.clone().multiplyScalar(0.85) },
     uStruct: { value: palette.steel.clone().multiplyScalar(0.22) },
-    uRidge: { value: palette.white.clone().lerp(palette.ice, 0.25).multiplyScalar(0.4) },
+    uRidge: { value: palette.white.clone().lerp(palette.ice, 0.2).multiplyScalar(0.3) },
     uCoreDepth: { value: CORE },
     uPulse: { value: new THREE.Vector4(0.22, 1.0, 1.0, 0) },
     uDepth: { value: DEPTH },
@@ -91,9 +91,9 @@ export async function create(ctx) {
 
   /* ------------------------------------------------------- Materialien */
   const env = buildStudioEnv(THREE, ctx.renderer, palette);
-  const shellCol = palette.white.clone().multiplyScalar(0.86);
+  const shellCol = palette.white.clone().multiplyScalar(0.93);
   const mats = {
-    shell: makeShellMaterial(THREE, U, { color: shellCol, envMap: env.texture, envIntensity: 1.0, clearcoat: hi ? 0.4 : 0.3, cheap: !hi }),
+    shell: makeShellMaterial(THREE, U, { color: shellCol, envMap: env.texture, envIntensity: 1.22, clearcoat: hi ? 0.4 : 0.3, cheap: !hi }),
     muscle: makeMuscleMaterial(THREE, U, { color: palette.signal.clone().multiplyScalar(0.16), envMap: env.texture, envIntensity: 1.1, cheap: !hi }),
     holo: makeHoloMaterial(THREE, U),
     core: makeCoreMaterial(THREE, U, { color: palette.mist.clone().multiplyScalar(0.36), envMap: env.texture }),

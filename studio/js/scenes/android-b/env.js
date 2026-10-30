@@ -63,9 +63,9 @@ export function buildStudioEnv(THREE, renderer, palette) {
   const cool = palette.white.clone().lerp(palette.ice, 0.3);
   const coolDeep = palette.white.clone().lerp(palette.signal, 0.22);
   // Fuehrungslicht: grosse Softbox vorne links oben (neutral, kein Ember auf dem Weiss)
-  panel(8, 11, white.clone().multiplyScalar(4.3), [-9.5, 4.5, 4.0], 0.45);
+  panel(8, 11, white.clone().multiplyScalar(5.4), [-9.5, 4.5, 4.0], 0.45);
   // Aufheller vorne rechts, schwach und gross
-  panel(9, 10, white.clone().multiplyScalar(0.08), [8.5, 0.5, 6.5], 0.6);
+  panel(9, 10, white.clone().multiplyScalar(0.22), [8.5, 0.5, 6.5], 0.6);
   // Oberlicht, klein (Scheitel-Glanz)
   panel(11, 11, white.clone().multiplyScalar(0.8), [0, 12, 1], 0.7);
   // Kantenlicht: zwei hohe Streifen hinten links und rechts, dazu ein Balken hinten oben

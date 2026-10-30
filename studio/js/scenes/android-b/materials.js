@@ -231,7 +231,7 @@ vec2 abPattern(int r, vec3 q, out float along, out float aaB) {
   float hb = 0.5 + 0.5 * cos(pb);
   aaB = 1.0 - smoothstep(0.7, 1.8, fwidth(pb));
   // Faecher des Brustmuskels: zum Ansatz am Oberarm hin weich auslaufen (sonst Strahlenkranz)
-  if (r == 2) aaB *= smoothstep(0.12, 0.5, fb.y);
+  if (r == 2) aaB *= 0.7 * smoothstep(0.5, 1.0, fb.y);
   float cloud = abNoise(vec2(fb.x * 5.0, fb.y * 2.5)) * 0.65 + abNoise(vec2(fb.x * 13.0, fb.y * 5.0)) * 0.35;
   return vec2(mix(0.5, hb, aaB), cloud);
 }
@@ -367,7 +367,7 @@ vec3 abBump(vec3 pos, vec3 n, float h) {
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
 vec3 rp = vRest;
 vec3 q = vec3(abs(rp.x), rp.y, rp.z);
-if (rp.y > uScanY || lSkullWin(q) > 0.1) discard;
+if (rp.y > uScanY || lSkullWin(q) > 0.1 || rp.y < -0.64) discard;
 float th = atan(q.x, q.z);
 float u = (3.14159 - th) * length(q.xz);
 // Querrippen und Laengsnut
@@ -415,8 +415,8 @@ float gF = glassField(vRest);
 if (vRest.y > uScanY || gF < 0.0) discard;
 float gEdge = exp(-gF / 0.006);`)
       .replace('#include <opaque_fragment>', `float gFres = pow(1.0 - abs(dot(normal, normalize(vViewPosition))), 3.0);
-diffuseColor.a = clamp(0.2 + 0.6 * gFres + 0.6 * gEdge, 0.0, 1.0);
-outgoingLight = outgoingLight * (0.75 + 0.5 * gFres) + uRidge * (gEdge * 1.0 + 0.06);
+diffuseColor.a = clamp(0.05 + 0.75 * gFres + 0.25 * gEdge, 0.0, 1.0);
+outgoingLight = outgoingLight * (0.75 + 0.5 * gFres) + uRidge * (gEdge * 0.3 + 0.04);
 #include <opaque_fragment>`);
   };
   m.customProgramCacheKey = () => 'ab-glass';

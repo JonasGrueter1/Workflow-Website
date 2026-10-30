@@ -60,7 +60,7 @@ function writeCable(out, made, pts, o) {
 }
 
 export function makeCablePaths(THREE, rmap, pos, o) {
-  const { bundles: nBundles = 8, perBundle = 9, fan = 70, arcs = 16 } = o;
+  const { bundles: nBundles = 8, perBundle = 9, fan = 70, arcs = 16, flow = 0 } = o;
   const rnd = mulberry32(o.seed || 7);
   const d = { x: 0, y: 0, z: 0 };
   const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
@@ -70,17 +70,18 @@ export function makeCablePaths(THREE, rmap, pos, o) {
     return out.set(RC[0] + d.x * r, RC[1] + d.y * r, RC[2] + d.z * r);
   };
   const backZ = makeBackSurface(pos);
-  const total = nBundles * (perBundle + 2) + fan + arcs;
+  const total = nBundles * (perBundle + 2) + fan + arcs + flow;
   const out = { data: new Float32Array(total * K * 4), inst0: new Float32Array(total * 4), inst1: new Float32Array(total * 4) };
   let made = 0;
   const guides = [];
 
   /* 1) Buendel: Wurzel am Hinterkopf, aussen am Nacken entlang, Buchse im oberen Ruecken */
+  // v3: Buendel laufen zur Wirbelsaeule zusammen (V-Form wie ein Zopf), statt als Gitter parallel nach unten
   const roots = [
-    { a: Math.PI * 1.13, b: 0.2, endX: 0.07, R: 0.042 },
-    { a: Math.PI * 1.03, b: 0.48, endX: 0.2, R: 0.036 },
-    { a: Math.PI * 0.93, b: 0.66, endX: 0.32, R: 0.03 },
-    { a: Math.PI * 1.2, b: 0.78, endX: 0.44, R: 0.028 },
+    { a: Math.PI * 1.13, b: 0.2, endX: 0.06, R: 0.04 },
+    { a: Math.PI * 1.03, b: 0.5, endX: 0.13, R: 0.034 },
+    { a: Math.PI * 0.95, b: 0.72, endX: 0.2, R: 0.028 },
+    { a: Math.PI * 1.2, b: 0.78, endX: 0.26, R: 0.026 },
   ];
   const sides = [1, -1];
   const order = [];
@@ -91,8 +92,8 @@ export function makeCablePaths(THREE, rmap, pos, o) {
     const nrm = V(d.x, d.y, d.z);
     const p1 = root.clone().addScaledVector(nrm, 0.11).add(V(0, -0.05, -0.02));
     const yA = -0.92; const yB = -1.3; const yE = -1.66 - 0.06 * Math.abs(B.endX);
-    const xA = B.s * (0.12 + B.endX * 0.55); const xB = B.s * (0.08 + B.endX * 0.75); const xE = B.s * B.endX;
-    const gap = 0.12 + B.R + 0.04 * (bi % 2);
+    const xA = B.s * (0.1 + B.endX * 0.6); const xB = B.s * (0.05 + B.endX * 0.7); const xE = B.s * B.endX;
+    const gap = 0.045 + B.R + 0.03 * (bi % 2); // v3: dichter am Nacken (kein Gitter aus Staeben)
     const p2 = V(xA, yA, backZ(xA, yA) - gap);
     const p3 = V(xB, yB, backZ(xB, yB) - gap * 0.85);
     const zE = backZ(xE, yE);
@@ -135,22 +136,28 @@ export function makeCablePaths(THREE, rmap, pos, o) {
   /* 2) Faecher: steife Glasfasern nach hinten oben */
   let guard = 0; let nf = 0;
   while (nf < fan && guard++ < fan * 40) {
-    const a = Math.PI * (0.6 + 0.42 * rnd());
-    const b = (rnd() - 0.5) * 2.1;
+    // v3: strahlenfoermig vom Hinterkopf nach hinten (oben bis unten), wie Referenz 1. Seitlich wenig (keine Peruecke).
+    const a = Math.PI * (0.62 + 0.55 * Math.pow(rnd(), 0.8));
+    const b = (rnd() - 0.5) * 1.3;
     const root = onSkull(a, b, -0.032);
-    if (cutField(root.x, root.y, root.z) < 0.16) continue;
+    if (cutField(root.x, root.y, root.z) < 0.2) continue;
     if (Math.abs(root.x) < 0.05) continue; // Kamm
     const nrm = V(d.x, d.y, d.z);
-    const dir = nrm.clone().multiplyScalar(0.7).add(V(root.x * 0.4, -0.05 + 0.15 * (rnd() - 0.5), -0.9)).normalize();
-    const side = V(rnd() - 0.5, (rnd() - 0.5) * 0.6, 0).multiplyScalar(0.3);
-    const L = 0.45 + 1.15 * Math.pow(rnd(), 0.7);
-    const sag = 0.06 + 0.16 * rnd();
+    const dir = nrm.clone().multiplyScalar(0.85).add(V(0, 0.05, -0.75)).normalize();
+    dir.x *= 0.45; dir.normalize();
+    const side = V(rnd() - 0.5, (rnd() - 0.5) * 0.6, 0).multiplyScalar(0.22);
+    const L = 0.35 + 1.25 * Math.pow(rnd(), 0.65);
+    const sag = 0.02 + 0.08 * rnd();
     const pts = [];
     for (let k = 0; k <= 12; k++) {
       const s = (k / 12) * L;
       pts.push(root.clone().addScaledVector(dir, s).addScaledVector(side, s * s * 0.5).add(V(0, -sag * s * s, 0)));
     }
-    writeCable(out, made++, pts, { radius: 0.0022 + rnd() * 0.0032, kind: KIND.FIBER, sway: true, rnd, pulse: rnd() < 0.3 ? 1 : 0, hideX: true });
+    // Dicken etwa 1:5, wenige dicke Glasstaebe, Impulse sparsam
+    const thick = rnd();
+    const radius = 0.0024 + 0.0095 * thick * thick * thick;
+    const glass = thick > 0.72;
+    writeCable(out, made++, pts, { radius, kind: glass ? KIND.GLASS : KIND.FIBER, sway: true, rnd, pulse: glass ? 0.3 : (rnd() < 0.12 ? 1 : 0), hideX: true });
     nf++;
   }
 
@@ -170,6 +177,30 @@ export function makeCablePaths(THREE, rmap, pos, o) {
     const kind = rnd() < 0.5 ? KIND.METAL : KIND.RUBBER;
     writeCable(out, made++, pts, { radius: 0.004 + rnd() * 0.006, kind, sway: false, rnd, hideX: true });
     na++;
+  }
+  /* 4) Filamente unter dem Glas: vom Haaransatz in weichen Bahnen nach hinten, laufen am Hinterkopf zusammen
+        (wie gekaemmtes Haar aus Glasfaser, eisig). Liegen an der Schale an: keine Peruecken-Silhouette. */
+  guard = 0; let nfl = 0;
+  while (nfl < flow && guard++ < flow * 60) {
+    const b0 = (rnd() - 0.5) * 2.5;
+    let a0 = Math.PI * 0.32;
+    let p0 = null;
+    for (; a0 < Math.PI * 1.1; a0 += 0.01) { p0 = onSkull(a0, b0, -0.036); if (cutField(p0.x, p0.y, p0.z) > 0.2) break; }
+    if (!p0 || p0.y < -0.35) continue;
+    const a1 = Math.PI * (1.08 + 0.14 * rnd());
+    const b1 = b0 * (0.25 + 0.2 * rnd());
+    const pts = [];
+    const lift = 0.006 + rnd() * 0.012;
+    const n = 20;
+    for (let k = 0; k <= n; k++) {
+      const t = k / n;
+      const e = t * t * (3 - 2 * t);
+      pts.push(onSkull(a0 + (a1 - a0) * t, b0 + (b1 - b0) * e, -0.04 + lift * Math.sin(Math.PI * t) + 0.004 * Math.sin(t * 9 + b0 * 5)));
+    }
+    const r = rnd();
+    const kind = r < 0.5 ? KIND.WHITE : r < 0.78 ? KIND.GLASS : KIND.METAL;
+    writeCable(out, made++, pts, { radius: 0.0028 + rnd() * 0.0045, kind, sway: false, rnd, pulse: kind === KIND.GLASS && rnd() < 0.5 ? 0.22 : 0, hideX: true });
+    nfl++;
   }
   return { ...out, count: made, K, guides };
 }
@@ -206,14 +237,16 @@ export function buildCables(THREE, U, env, paths, o) {
     uSway: { value: 1 },
     uCabRubber: { value: new THREE.Color(0x1a2128) },
     uCabMetal: { value: new THREE.Color(0xaab3bc) },
-    uCabFiber: { value: new THREE.Color(0.3, 0.38, 0.44) },
-    uCabWhite: { value: new THREE.Color(0.8, 0.83, 0.86) },
-    uCabGlass: { value: new THREE.Color(0.16, 0.26, 0.32) },
+    // v3: Fasern dunkel und glaenzend (Silhouette mit Lichtkante statt weisser Striche)
+    uCabFiber: { value: new THREE.Color(0.07, 0.09, 0.11) },
+    uCabWhite: { value: new THREE.Color(0.72, 0.76, 0.8) },
+    uCabGlass: { value: new THREE.Color(0.2, 0.32, 0.4) },
   };
   const mat = new THREE.MeshStandardMaterial({
     color: 0xffffff, roughness: 0.4, metalness: 0.3, envMap: env, envMapIntensity: 0.9, transparent: true,
   });
   mat.onBeforeCompile = (shader) => {
+    shader.fragmentShader = '#define AA_CLAMP 1.8\n' + shader.fragmentShader;
     patchCommon(THREE, shader, U, {
       raw: true,
       uniforms: uC,
@@ -290,8 +323,8 @@ export function buildCables(THREE, U, env, paths, o) {
         diffuseColor.rgb = cc;
         float aaFade = 1.0 - smoothstep(uFadeY.x - 0.3, uFadeY.y - 0.4, vAaPos.y);
         diffuseColor.a *= aaFade * uAlpha;
-        float cr = kind < 0.5 ? 0.42 : kind < 1.5 ? 0.26 : kind < 2.5 ? 0.12 : kind < 3.5 ? 0.3 : 0.08;
-        float cm = kind < 0.5 ? 0.0 : kind < 1.5 ? 1.0 : 0.0;
+        float cr = kind < 0.5 ? 0.42 : kind < 1.5 ? 0.26 : kind < 2.5 ? 0.2 : kind < 3.5 ? 0.3 : 0.08;
+        float cm = kind < 0.5 ? 0.0 : kind < 1.5 ? 1.0 : kind < 2.5 ? 0.7 : 0.0;
       `)
       .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = cr;')
       .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nmetalnessFactor = cm;')
@@ -304,10 +337,10 @@ export function buildCables(THREE, U, env, paths, o) {
         float core = smoothstep(0.84, 0.97, nv);
         float pp = fract(uTime * vC1.x / max(L, 0.5) + vC1.y) * 1.6 - 0.3;
         float pulse = exp(-aaSq((vT - pp) * L / 0.07)) * step(0.01, vC1.x);
-        em += kG * core * (0.55 + 3.0 * pulse);
+        em += kG * core * (0.32 + 2.2 * pulse);
         // Fasern: einzelne Spitzen leuchten
         float kF = step(1.5, kind) * step(kind, 2.5);
-        em += kF * step(0.5, vC1.x) * smoothstep(0.96, 1.0, vT) * 2.2;
+        em += kF * step(0.5, vC1.x) * smoothstep(0.96, 1.0, vT) * 1.5;
         totalEmissiveRadiance += mix(uSig, uIce, 0.35 + 0.4 * pulse) * em * uGlow * (1.0 - smoothstep(uFadeY.x, uFadeY.y, vAaPos.y));
       `)
       .replace('#include <opaque_fragment>', /* glsl */ `
@@ -322,7 +355,7 @@ export function buildCables(THREE, U, env, paths, o) {
         #include <opaque_fragment>
       `);
   };
-  mat.customProgramCacheKey = () => `aa-cables2-${K}`;
+  mat.customProgramCacheKey = () => `aa-cables3-${K}`;
   const mesh = new THREE.Mesh(base, mat);
   mesh.frustumCulled = false;
   return { mesh, mat, geo: base, tex, U: uC };

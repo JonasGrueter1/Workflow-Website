@@ -5,9 +5,11 @@
 //
 // seamField(p): ungefaehre Distanz zur naechsten Fuge (Nullstellen glatter Funktionen, auf Bereiche begrenzt).
 //   Der Shader rechnet daraus mit dem Tangential-Gradienten die Distanz auf der Oberflaeche (gleichmaessige Fugenbreite).
-//   Gesicht in vier Platten: Stirn, Augenpartie mit Nasenruecken, Wange mit Kiefer, Mund und Kinn. Feine Lidfuge.
+//   Gesicht symmetrisch wie eine Maske: Stirnplatte, Gesichtsmaske, seitliche Wangen- und Kieferplatten. Feine Lidfuge.
+//   Schaedel: zwei Scheitelplatten mit Scheitelnaht (kein Ring mehr, wirkte wie ein Helm).
 // openField(p): < 0 dort, wo keine Schale ist.
-//   tief offen (deepOpen, auch keine Muskelschicht): Hinterkopf ab der Ohr-Platte (Mechanik, Kabel, Glas),
+//   tief offen (deepOpen, auch keine Muskelschicht): Hinterhaupt als gewoelbte Oeffnung bis in den Nacken
+//   (Schaedelgitter, Kabel, oben eine klare Glaskappe, die die Kopfform haelt),
 //   Hals rundum (Kopfwender, Kehlkopf, Wirbel), Schlitz zwischen den Schulterblaettern (dort tauchen die Kabel ein).
 //   Muskel offen: Rumpf vorne ausserhalb der Platten, Schulterring.
 
@@ -18,8 +20,10 @@ export const LAYOUT = {
   ringHalf: 0.03,
   deltoid: [1.56, -2.02, -0.24],
   deltoidR: 0.6,
-  // Hinterkopf-Fenster: Bogen ab th0 (Winkel von vorne) bis hinten, y von bot bis top. Glas oberhalb von glassY.
-  skull: { th0: 2.0, top: 0.36, bot: -0.44, glassY: 0.0 },
+  // Hinterkopf-Oeffnung: Ellipse in (Bogenlaenge u ab hinten, y), Mitte yc, Halbachsen a (u) und b (y).
+  // Oben gewoelbt wie das Hinterhaupt, unten offen in den Nacken (geht in die Hals-Oeffnung ueber).
+  // Glas: schmale, gewoelbte Kappe im oberen Teil (oberhalb glassY, gewoelbter Unterrand).
+  skull: { yc: -0.22, a: 0.92, b: 0.68, top: 0.46, bot: -0.9, glassY: -0.02 },
   // Brustplatte: Unterrand als Kreisbogen (Mitte, Radius)
   pecC: [0.08, -1.74],
   pecR: 1.16,
@@ -52,28 +56,16 @@ float lFace(vec3 q) {
 }
 float lRing(vec3 q) { return q.y - (0.43 - 0.06 * q.z); }
 
-// Fugen der Gesichtsplatten (Vorderansicht x/y, nur x >= 0): Stirn | Augenpartie mit Nase | Wange mit Kiefer | Mund und Kinn
+// Fugen der Gesichtsplatten (Vorderansicht x/y, nur x >= 0), symmetrisch wie eine Maske:
+// Stirnplatte | Gesichtsmaske (Augen, Nase, Mund, Kinn) | seitliche Wangen- und Kieferplatte.
+// Keine Linien durch Mund und Nasenfluegel (sonst wirkt es wie eine Bauchrednerpuppe).
 float lFaceSeams(vec2 p) {
-  float d = lLine(p, vec2(-0.01, 0.214), vec2(0.2, 0.236));
-  d = min(d, lLine(p, vec2(0.2, 0.236), vec2(0.42, 0.232)));
-  d = min(d, lLine(p, vec2(0.42, 0.232), vec2(0.62, 0.196)));
-  d = min(d, lLine(p, vec2(0.62, 0.196), vec2(0.9, 0.12)));
-  // unter dem Auge zum Nasenfluegel
-  d = min(d, lLine(p, vec2(0.9, -0.03), vec2(0.56, -0.125)));
-  d = min(d, lLine(p, vec2(0.56, -0.125), vec2(0.4, -0.168)));
-  d = min(d, lLine(p, vec2(0.4, -0.168), vec2(0.245, -0.178)));
-  d = min(d, lLine(p, vec2(0.245, -0.178), vec2(0.168, -0.212)));
-  d = min(d, lLine(p, vec2(0.168, -0.212), vec2(0.142, -0.33)));
-  d = min(d, lLine(p, vec2(0.142, -0.33), vec2(0.158, -0.428)));
-  // unter der Nase
-  d = min(d, lLine(p, vec2(0.158, -0.428), vec2(0.06, -0.452)));
-  d = min(d, lLine(p, vec2(0.06, -0.452), vec2(-0.01, -0.455)));
-  // Nasolabial-Linie zum Kiefer
-  d = min(d, lLine(p, vec2(0.158, -0.428), vec2(0.228, -0.502)));
-  d = min(d, lLine(p, vec2(0.228, -0.502), vec2(0.292, -0.622)));
-  d = min(d, lLine(p, vec2(0.292, -0.622), vec2(0.312, -0.8)));
-  d = min(d, lLine(p, vec2(0.312, -0.8), vec2(0.322, -1.08)));
-  return d;
+  // Stirn: flacher Bogen ueber den Brauen
+  float fh = abs(p.y - (0.262 - 0.11 * p.x * p.x));
+  // Maske: aussen am Augenhoehlenrand hinunter, unter dem Jochbein nach innen zum Kiefer
+  float t = clamp(-p.y / 0.95, 0.0, 1.0);
+  float ck = max(abs(p.x - (0.672 - 0.33 * pow(t, 1.45))), p.y - 0.2);
+  return min(fh, ck);
 }
 // Lidfuge: oberer Bogen knapp ueber dem Auge (Lidfalte)
 float lLid(vec2 p) {
@@ -98,15 +90,14 @@ float lNeckBand(vec3 q) {
   float w = max(bot - q.y, -lHeadSdf(q));
   return max(w, rn - 0.52);
 }
-// Hinterkopf: Fenster ab der Ohr-Platte nach hinten
-float lSkullWin(vec3 q) {
-  float rxz = length(q.xz);
+// Hinterkopf: Oeffnung ab hinter der Ohr-Platte, gewoelbt, unten in den Nacken offen
+float lSkullU(vec3 q) {
   float th = atan(q.x, q.z);
-  float u = (3.14159 - th) * rxz;
-  float uMax = (3.14159 - ${SK.th0.toFixed(3)}) * 0.8;
-  float yc = ${(0.5 * (SK.top + SK.bot)).toFixed(3)};
-  float yh = ${(0.5 * (SK.top - SK.bot)).toFixed(3)};
-  return lRoundBox(vec2(u, q.y - yc), vec2(uMax, yh), 0.22);
+  return (3.14159 - th) * length(q.xz);
+}
+float lSkullWin(vec3 q) {
+  vec2 e = vec2(lSkullU(q) / ${SK.a.toFixed(3)}, (q.y - (${SK.yc.toFixed(3)})) / ${SK.b.toFixed(3)});
+  return (length(e) - 1.0) * ${Math.min(SK.a, SK.b).toFixed(3)};
 }
 // Schlitz zwischen den Schulterblaettern: hier tauchen die Kabel in den Rumpf
 float lBackSlot(vec3 q) {
@@ -121,7 +112,8 @@ float deepOpen(vec3 p) {
 // Glas ueber dem oberen Teil des Hinterkopf-Fensters (> 0: Glas)
 float glassField(vec3 p) {
   vec3 q = vec3(abs(p.x), p.y, p.z);
-  return min(-lSkullWin(q) - 0.012, q.y - (${SK.glassY.toFixed(3)} + 0.05 * q.x * q.x));
+  float u = lSkullU(q);
+  return min(-lSkullWin(q) - 0.03, q.y - (${SK.glassY.toFixed(3)} + 0.16 * u * u));
 }
 
 // Schluesselbein-Linie (y in Abhaengigkeit von x)
@@ -148,13 +140,13 @@ float lPlates(vec3 q) {
     // Brustplatte wie der grosse Brustmuskel: vom Brustbein zur Achsel, oben Schluesselbein, unten runder Bogen
     float xLat = 1.12;
     float inside = lSmax(lSmax(0.012 - q.x, q.y - (cy - 0.085), 0.05), lSmax(lPecLow(q), lSmax(0.05 - dd, q.x - xLat, 0.1), 0.08), 0.06);
-    // Rippenschlitze: drei Boegen parallel zum Unterrand
+    // Rippenschlitze: vier kurze, leicht geneigte Schlitze aussen unten (wie Rippen), innen tuerkis
     float slit = 1e3;
-    for (int k = 0; k < 3; k++) {
-      float rk = 0.13 + 0.1 * float(k);
-      float xe = 0.9 - 0.12 * float(k);
-      float s = lSmax(abs(lPecLow(q) + rk) - 0.017, max(0.16 - q.x, q.x - xe), 0.03);
-      slit = min(slit, s);
+    for (int k = 0; k < 4; k++) {
+      float fk = float(k);
+      float yk = -2.1 - 0.082 * fk - 0.11 * (q.x - 0.72);
+      float s = lSmax(abs(q.y - yk) - 0.0135, max(0.5 + 0.035 * fk - q.x, q.x - (0.99 - 0.03 * fk)), 0.016);
+      slit = min(slit, max(s, lPecLow(q) + 0.07));
     }
     pec = max(inside, -slit);
   }
@@ -184,10 +176,8 @@ float seamField(vec3 p) {
       d = min(d, max(lFaceSeams(q.xy), face));
       d = min(d, lLid(q.xy));
     }
-    // Schaedeldecke: Ring ausserhalb der Maske, Scheitelnaht darueber
-    float R = lRing(q);
-    d = min(d, lSeg(R, face));
-    d = min(d, max(q.x, max(-R, -face)));
+    // Schaedeldecke: zwei Scheitelplatten, Scheitelnaht von der Maske bis zur Oeffnung hinten
+    d = min(d, max(q.x, max(-face, 0.05 - lSkullWin(q))));
   }
   // Ruecken: Schulterblatt
   d = min(d, max(abs(length(q - vec3(0.78, -2.6, -1.1)) - 0.62), max(q.z + 0.45, 0.12 - q.x)));

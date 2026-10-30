@@ -29,8 +29,9 @@ export function makeUniforms(THREE, palette, shared) {
     uPulse: { value: 0 },
     uFadeY: { value: new THREE.Vector2(-2.45, -3.4) },
     uEngK: { value: 0 },
-    uRigDir: { value: [V(-0.55, 0.5, 0.67), V(0.8, -0.2, 0.55), V(-0.62, 0.3, -0.72), V(0.55, 0.55, -0.62)] },
-    uRigCol: { value: [C(1.0, 0.94, 0.87, 2.0), C(0.78, 0.87, 1.0, 0.42), C(0.8, 0.92, 1.0, 2.1), C(0.55, 0.86, 1.0, 1.9)] },
+    // v3: Key etwas seitlicher und waermer, Aufhellung ~1:4, Kanten schmaler und kraeftiger
+    uRigDir: { value: [V(-0.84, 0.42, 0.36), V(0.7, -0.12, 0.66), V(-0.8, 0.16, -0.58), V(0.6, 0.45, -0.66)] },
+    uRigCol: { value: [C(1.0, 0.95, 0.9, 2.45), C(0.72, 0.84, 1.0, 0.55), C(0.82, 0.92, 1.0, 2.6), C(0.5, 0.86, 1.0, 2.2)] },
   };
 }
 
@@ -90,11 +91,22 @@ for (int aaI = 0; aaI < 4; aaI++) {
   directLight.color = uRigCol[aaI] * uRigK[aaI];
   directLight.visible = true;
   #ifdef AA_SKIN
-  {
+  if (aaI >= 2) {
+    // Kantenlicht auf der Haut: nur ein schmaler Saum am Umriss (Fresnel), Glanz gedaempft. Kein Hotspot auf der Stirn.
+    float aaNdl = dot(geometryNormal, directLight.direction);
+    float aaNv = clamp(dot(geometryNormal, geometryViewDir), 0.0, 1.0);
+    float aaRim = smoothstep(-0.05, 0.4, aaNdl) * pow(1.0 - aaNv, 2.2);
+    reflectedLight.directDiffuse += directLight.color * aaRim * 0.5 * material.diffuseColor * vec3(1.0, 0.95, 0.92);
+    vec3 aaDc = material.diffuseColor;
+    material.diffuseColor = vec3(0.0);
+    directLight.color *= 0.3;
+    RE_Direct(directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight);
+    material.diffuseColor = aaDc;
+  } else {
     float aaNdl = dot(geometryNormal, directLight.direction);
     float aaWd = max(0.0, (aaNdl + AA_WRAP) / (1.0 + AA_WRAP));
     float aaTerm = smoothstep(-AA_WRAP, 0.05, aaNdl) * (1.0 - smoothstep(0.05, 0.6, aaNdl));
-    vec3 aaTint = mix(vec3(1.0), uScatter, aaTerm);
+    vec3 aaTint = mix(vec3(1.0), uScatter, aaTerm * 0.55);
     reflectedLight.directDiffuse += directLight.color * aaWd * aaTint * BRDF_Lambert(material.diffuseColor);
     vec3 aaDc = material.diffuseColor;
     material.diffuseColor = vec3(0.0);
@@ -159,9 +171,9 @@ float aaBrow(vec3 p) {
   if (t < -0.08 || t > 1.08) return 0.0;
   float tc = clamp(t, 0.0, 1.0);
   float yc = 0.068 + 0.05 * sin(3.14159 * pow(tc, 0.75)) - 0.012 * tc;
-  float hw = mix(0.016, 0.006, tc);
+  float hw = mix(0.02, 0.008, tc);
   float d = abs(p.y - yc);
-  float m = 1.0 - smoothstep(hw * 0.2, hw, d);
+  float m = 1.0 - smoothstep(0.0, hw, d);
   m *= smoothstep(-0.08, 0.04, t) * (1.0 - smoothstep(0.92, 1.08, t));
   // Haare: schraeg, innen steil nach oben, aussen flach nach aussen
   float ang = mix(1.25, 0.25, tc);
@@ -175,7 +187,7 @@ float aaBrow(vec3 p) {
   hair *= step(0.25, rnd);
   float fw = fwidth(across / 0.0032);
   hair = mix(hair, 0.45, smoothstep(0.35, 0.9, fw));
-  return m * (0.55 + 0.45 * hair) * smoothstep(0.55, 0.7, p.z);
+  return m * (0.7 + 0.3 * hair) * smoothstep(0.55, 0.7, p.z);
 }
 // Lidrand oben (Wimpernlinie) und Augenhoehle
 void aaEyeZones(vec3 p, out float lash, out float socket, out float lid) {
@@ -197,15 +209,16 @@ void aaEyeZones(vec3 p, out float lash, out float socket, out float lid) {
 export function makeSkin(THREE, U, env, o) {
   const { hi } = o;
   const mat = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(0.72, 0.64, 0.6),
-    roughness: 0.46,
+    // v3: heller, leicht warmer Porzellan-Hautton (statt grauem Ton), Klarlack nur schwach, etwas Sheen
+    color: new THREE.Color(0.68, 0.56, 0.5),
+    roughness: 0.5,
     metalness: 0,
     ior: 1.4,
-    clearcoat: hi ? 0.14 : 0.1,
-    clearcoatRoughness: 0.32,
-    sheen: 0.25,
-    sheenColor: new THREE.Color(0.3, 0.3, 0.32),
-    sheenRoughness: 0.45,
+    clearcoat: hi ? 0.07 : 0.05,
+    clearcoatRoughness: 0.4,
+    sheen: 0.3,
+    sheenColor: new THREE.Color(0.32, 0.28, 0.28),
+    sheenRoughness: 0.5,
     envMap: env,
     envMapIntensity: 0.3,
     side: THREE.DoubleSide,
@@ -214,15 +227,15 @@ export function makeSkin(THREE, U, env, o) {
   const uIn = {
     uInner: { value: new THREE.Color(0x0c1218) },
     uSeamCol: { value: new THREE.Color(0x2b3440) },
-    uScatter: { value: new THREE.Vector3(1.0, 0.42, 0.3) },
-    uLip: { value: new THREE.Color(0.62, 0.33, 0.32) },
-    uBrowCol: { value: new THREE.Color(0.07, 0.055, 0.05) },
-    uShell: { value: new THREE.Color(0.78, 0.8, 0.82) },
+    uScatter: { value: new THREE.Vector3(1.0, 0.52, 0.4) },
+    uLip: { value: new THREE.Color(0.56, 0.26, 0.24) },
+    uBrowCol: { value: new THREE.Color(0.2, 0.15, 0.13) },
+    uShell: { value: new THREE.Color(0.6, 0.55, 0.52) }, // Bueste: entsaettigtes Porzellan, kein harter Wechsel zur Haut
   };
   mat.onBeforeCompile = (shader) => {
     patchCommon(THREE, shader, U, {
       uniforms: uIn,
-      rigK: new THREE.Vector4(1, 1, 1.0, 0.45),
+      rigK: new THREE.Vector4(1, 1, 1.0, 0.6),
       vertexHead: 'attribute float aAO;\nvarying float vAO;',
       vertexPos: 'vAO = aAO;',
       fragmentHead: /* glsl */ `
@@ -260,17 +273,23 @@ export function makeSkin(THREE, U, env, o) {
         float aaG = (1.0 - smoothstep(0.0016, 0.0045, aaSeam)) * aaShellW;
         vec3 sk = diffuseColor.rgb;
         // Albedo-Variation: Wangen, Nasenspitze, Ohren etwas waermer, Augenhoehlen und Lider dunkler, Lippen rose
-        float aaChk = exp(-aaSq((abs(P.x) - 0.37) / 0.13) - aaSq((P.y + 0.36) / 0.16)) * smoothstep(0.45, 0.7, P.z);
-        sk *= mix(vec3(1.0), vec3(1.03, 0.9, 0.88), aaChk * 0.6);
-        float aaNose = exp(-aaSq(P.x / 0.07) - aaSq((P.y + 0.36) / 0.08)) * smoothstep(1.0, 1.1, P.z);
-        sk *= mix(vec3(1.0), vec3(1.02, 0.9, 0.88), aaNose * 0.5);
+        // breit und leise: Wangen, Nase, Kinn minimal waermer, Stirn und Schlaefen kuehler (kein Rouge-Fleck)
+        float aaChk = exp(-aaSq((abs(P.x) - 0.36) / 0.2) - aaSq((P.y + 0.33) / 0.22)) * smoothstep(0.4, 0.7, P.z);
+        sk *= mix(vec3(1.0), vec3(1.02, 0.93, 0.92), aaChk * 0.45);
+        float aaNose = exp(-aaSq(P.x / 0.08) - aaSq((P.y + 0.34) / 0.1)) * smoothstep(0.98, 1.1, P.z);
+        sk *= mix(vec3(1.0), vec3(1.02, 0.93, 0.92), aaNose * 0.5);
+        float aaCool = smoothstep(0.1, 0.45, P.y) + smoothstep(0.62, 0.4, P.z) * smoothstep(-0.2, 0.1, P.y);
+        sk *= mix(vec3(1.0), vec3(0.96, 0.97, 1.0), clamp(aaCool, 0.0, 1.0) * 0.5);
+        // ganz feine Unregelmaessigkeit (gross, kein Rauschen auf Pixelebene)
+        sk *= 0.975 + 0.05 * aaNoised(P * 9.0).w;
         float aaLash; float aaSock; float aaLidZ;
         aaEyeZones(P, aaLash, aaSock, aaLidZ);
-        sk *= mix(vec3(1.0), vec3(0.8, 0.72, 0.74), aaSock * 0.55);
+        sk *= mix(vec3(1.0), vec3(0.78, 0.68, 0.68), aaSock * 0.5);
+        sk *= mix(vec3(1.0), vec3(0.92, 0.84, 0.84), aaLidZ * 0.6);
         float aaLipM = aaLipMask(P);
-        sk = mix(sk, uLip, aaLipM * 0.72);
+        sk = mix(sk, uLip, aaLipM * 0.58);
         float aaBrowM = aaBrow(P);
-        sk = mix(sk, uBrowCol, aaBrowM * 0.55);
+        sk = mix(sk, uBrowCol, aaBrowM * 0.3);
         sk = mix(sk, vec3(0.03, 0.025, 0.025), aaLash * 0.85);
         diffuseColor.rgb = mix(sk, uShell, aaShellW);
         diffuseColor.rgb = mix(diffuseColor.rgb, uSeamCol, 0.85 * aaG);
@@ -295,7 +314,7 @@ export function makeSkin(THREE, U, env, o) {
       `)
       .replace('#include <lights_physical_fragment>', /* glsl */ `#include <lights_physical_fragment>
         // Lippen etwas glaenzender, Brauen matt, Keramik glatter mit Klarlack
-        material.roughness = clamp(material.roughness - 0.12 * aaLipM + 0.2 * aaBrowM - 0.2 * aaShellW, 0.08, 1.0);
+        material.roughness = clamp(material.roughness - 0.12 * aaLipM + 0.2 * aaBrowM - 0.1 * aaShellW, 0.08, 1.0);
         if (!gl_FrontFacing) {
           material.roughness = 0.7;
           #ifdef USE_CLEARCOAT
@@ -306,7 +325,7 @@ export function makeSkin(THREE, U, env, o) {
           #endif
         }
         #ifdef USE_CLEARCOAT
-        material.clearcoat = mix(material.clearcoat, 0.6, aaShellW) * (1.0 - aaG) * smoothstep(0.3, 0.9, aaAO);
+        material.clearcoat = mix(material.clearcoat, 0.25, aaShellW) * (1.0 - aaG) * smoothstep(0.3, 0.9, aaAO);
         #endif
         #ifdef USE_SHEEN
         material.sheenColor *= (1.0 - aaShellW) * (1.0 - aaBrowM);
@@ -319,6 +338,11 @@ export function makeSkin(THREE, U, env, o) {
           reflectedLight.indirectDiffuse = mix(reflectedLight.indirectDiffuse, vec3(l) * vec3(1.0, 0.96, 0.95), 0.75) * aaAO * 0.45;
         }
         reflectedLight.indirectSpecular *= aaAO * aaAO;
+        {
+          float aaPool = mix(1.0, 0.1, smoothstep(-1.4, -2.35, vAaPos.y));
+          reflectedLight.directDiffuse *= aaPool; reflectedLight.directSpecular *= aaPool;
+          reflectedLight.indirectDiffuse *= aaPool; reflectedLight.indirectSpecular *= aaPool;
+        }
       `)
       .replace('#include <emissivemap_fragment>', /* glsl */ `#include <emissivemap_fragment>
         // Aufbau- und Scan-Linie: heller Saum in Signal-Cyan
@@ -357,7 +381,8 @@ export function makeRibbon(THREE, U, env, o) {
         float aaL = smoothstep(0.7, 0.9, vRib) * (1.0 - smoothstep(0.95, 1.0, vRib));
         float aaFace = smoothstep(0.08, 0.45, abs(dot(normal, normalize(vViewPosition))));
         float aaTop = 1.0 - 0.75 * smoothstep(0.6, 0.85, vAaObj.y);
-        totalEmissiveRadiance += uSig * 0.7 * aaL * uGlow * aaFace * aaTop;`);
+        totalEmissiveRadiance += uSig * 0.3 * aaL * uGlow * aaFace * aaTop;`);
+    shader.fragmentShader = '#define AA_CLAMP 1.4\n' + shader.fragmentShader;
   };
   mat.customProgramCacheKey = () => 'aa-ribbon';
   return mat;
@@ -369,17 +394,19 @@ export function makeRibbon(THREE, U, env, o) {
 export function makeInner(THREE, U, env, o) {
   const { hi } = o;
   const mat = new THREE.MeshStandardMaterial({
-    color: 0xffffff, roughness: 0.38, metalness: 0.85, envMap: env, envMapIntensity: 1.0,
+    color: 0xffffff, roughness: 0.38, metalness: 0.85, envMap: env, envMapIntensity: 0.7,
+    side: THREE.DoubleSide, // v3: von oben durch die offene Kalotte nie die Mechanik der Gegenseite sehen
   });
   const uIn = {
-    uTi: { value: new THREE.Color(0x93a6b5) },
-    uTiD: { value: new THREE.Color(0x3c4c5a) },
-    uGr: { value: new THREE.Color(0x141a21) },
+    // v3 eisig: Milchglas-Keramik hell und kuehl, wenige Stahlplatten als Kontrast
+    uTi: { value: new THREE.Color(0.2, 0.29, 0.38) },
+    uTiD: { value: new THREE.Color(0.36, 0.46, 0.55) },
+    uGr: { value: new THREE.Color(0.08, 0.1, 0.13) },
   };
   mat.onBeforeCompile = (shader) => {
     patchCommon(THREE, shader, U, {
       uniforms: uIn,
-      rigK: new THREE.Vector4(0.9, 1, 0.7, 1.0),
+      rigK: new THREE.Vector4(0.6, 1, 0.8, 1.0),
       vertexHead: 'attribute vec2 aUV;\nvarying vec2 vUV2;',
       vertexPos: 'vUV2 = aUV;',
       fragmentHead: /* glsl */ `
@@ -402,23 +429,27 @@ export function makeInner(THREE, U, env, o) {
         if (vAaPos.y > uScanY) discard;
       `)
       .replace('#include <color_fragment>', /* glsl */ `#include <color_fragment>
-        vec2 hp = vUV2 / 0.11;
+        vec2 hp = vUV2 / 0.085;
         vec4 hx = aaHex(hp);
         float hd = aaHexD(hx.xy);
         float cellR = aaHash12(hx.zw);
         float fw = fwidth(hd);
-        float groove = 1.0 - smoothstep(0.455 - fw, 0.455 + fw, hd);
-        float bevel = smoothstep(0.40, 0.455, hd) * groove;
-        vec3 col = mix(uTi, uTiD, step(0.62, cellR));
-        col = mix(col, uGr, step(0.86, cellR));
-        float rough = mix(0.3, 0.48, step(0.62, cellR));
-        float metal = mix(0.9, 0.6, step(0.86, cellR));
+        float groove = 1.0 - smoothstep(0.46 - fw, 0.46 + fw, hd);
+        float bevel = smoothstep(0.38, 0.46, hd) * groove;
+        // Fugen nur, solange die Zelle gross genug ist (sonst Mittelwert: kein Flimmern)
+        float aaSmall = smoothstep(0.08, 0.22, fw);
+        groove = mix(groove, 0.9, aaSmall); bevel *= 1.0 - aaSmall;
+        vec3 col = mix(uTi, uTiD, step(0.6, cellR) * 0.6);
+        col = mix(col, uGr, step(0.975, cellR) * 0.7);
+        float rough = mix(0.3, 0.4, step(0.6, cellR));
+        float metal = 0.55;
         // gebuerstet: feine Streifen nur in der Rauheit
         float br = aaHash12(floor(vUV2 * vec2(700.0, 5.0)));
         rough += (br - 0.5) * 0.06 * smoothstep(1.2, 0.3, fwidth(vUV2.x * 700.0));
         col *= 0.92 + 0.08 * cellR;
         col = mix(col * 0.25, col, groove);
         col *= 1.0 - 0.35 * bevel;
+        if (!gl_FrontFacing) col *= 0.45;
         diffuseColor.rgb = col;
       `)
       .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = rough;')
@@ -440,8 +471,14 @@ export function makeInner(THREE, U, env, o) {
       `)
       .replace('#include <emissivemap_fragment>', /* glsl */ `#include <emissivemap_fragment>
         totalEmissiveRadiance += uSig * 3.0 * exp(-aaSq((vAaPos.y - uScanY) / 0.012)) * step(uScanY, 8.0);
-        // kuehles Licht von innen in den Fugen (sehr leise), wirkt eisig statt schwarz
-        totalEmissiveRadiance += uSig * 0.06 * (1.0 - groove) * smoothstep(0.1, 0.4, aaF);
+        // Eis: weiches Licht von innen, gross verlaufend (kein Pixelrauschen), in den Fugen etwas staerker
+        {
+          float nvI = abs(dot(normal, normalize(vViewPosition)));
+          float big = 0.55 + 0.45 * aaNoised(vAaObj * 3.2 + vec3(0.0, uTime * 0.03, 0.0)).w;
+          float deep = smoothstep(0.05, 0.35, aaF);
+          float iceCell = (1.0 - step(0.9, cellR));
+          totalEmissiveRadiance += uIce * (0.035 * big * iceCell + 0.16 * (1.0 - groove) * big + 0.06 * pow(1.0 - nvI, 2.0)) * deep;
+        }
       `);
     if (hi) shader.fragmentShader = '#define AA_HI\n' + shader.fragmentShader;
   };
@@ -455,7 +492,7 @@ export function makeInner(THREE, U, env, o) {
 export function makeGlass(THREE, U, env, o) {
   const { layer = 0 } = o;
   const mat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(0.55, 0.66, 0.74), roughness: layer ? 0.42 : 0.24, metalness: 0, envMap: env, envMapIntensity: 1.1,
+    color: new THREE.Color(0.55, 0.66, 0.74), roughness: layer ? 0.42 : 0.28, metalness: 0, envMap: env, envMapIntensity: 0.75,
     transparent: true, depthWrite: false, side: THREE.DoubleSide,
     blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor,
   });
@@ -463,7 +500,7 @@ export function makeGlass(THREE, U, env, o) {
   mat.onBeforeCompile = (shader) => {
     patchCommon(THREE, shader, U, {
       uniforms: uG,
-      rigK: new THREE.Vector4(0.8, 0.8, 1.2, 1.3),
+      rigK: new THREE.Vector4(0.4, 0.55, 1.0, 1.15),
       fragmentHead: /* glsl */ `
         uniform float uLayer;
         // Glasplatten: Bereich hinter der Kante, oberhalb einer Unterkante, mit Fugen.
@@ -509,11 +546,11 @@ export function makeGlass(THREE, U, env, o) {
         vec3 aaV = normalize(vViewPosition);
         float aaFr = pow(1.0 - abs(dot(normal, aaV)), 2.5);
         // Milchglas: Grundtruebung + Fresnel + Fase
-        float aaA = clamp(mix(0.13, 0.08, uLayer) + 0.5 * aaFr + 0.35 * aaBev, 0.0, 1.0) * uAlpha * (1.0 - uXray * 0.85);
+        float aaA = clamp(mix(0.17, 0.1, uLayer) + 0.42 * aaFr + 0.4 * aaBev, 0.0, 1.0) * uAlpha * (1.0 - uXray * 0.85);
         float aaScan = 1.0 - smoothstep(uScanY - 0.02, uScanY + 0.02, vAaPos.y);
         aaA *= mix(1.0, aaScan, step(uScanY, 8.0));
-        vec3 milk = uIce * 0.035 * (1.0 - uLayer * 0.4);
-        gl_FragColor = vec4((min(outgoingLight, vec3(1.2)) + milk) * aaA * 1.35, aaA * 0.8);
+        vec3 milk = uIce * (0.05 + 0.08 * aaFr) * (1.0 - uLayer * 0.4);
+        gl_FragColor = vec4((min(outgoingLight, vec3(0.55)) + milk) * aaA * 1.12, aaA * 0.8);
       `);
   };
   mat.customProgramCacheKey = () => `aa-glass2-${layer}`;
@@ -527,8 +564,8 @@ export function makeEye(THREE, U, env, o) {
     color: 0xffffff, roughness: 0.4, metalness: 0, clearcoat: 0.8, clearcoatRoughness: 0.04, envMap: env, envMapIntensity: 0.5,
   });
   const uE = {
-    uSclera: { value: new THREE.Color(0.66, 0.64, 0.63) },
-    uIris: { value: new THREE.Color(0x3d5a69) },
+    uSclera: { value: new THREE.Color(0.7, 0.68, 0.67) },
+    uIris: { value: new THREE.Color(0x5b4232) },
     uIrisRing: { value: palette.signal.clone() },
     uIrisOn: { value: 0.1 },
   };
@@ -623,8 +660,10 @@ export function makeParts(THREE, U, env) {
       .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
         float aaPul = 0.8 + 0.2 * sin(uTime * 1.3 + vAaObj.y * 6.0);
         totalEmissiveRadiance += uSig * max(vPbr.z, 0.0) * 1.6 * aaPul * uGlow;`);
+    // v3: Glanzpunkte auf Metall nicht ueber die Bloom-Schwelle (sonst weisse Flecken an Schlaefe und Scheitel)
+    shader.fragmentShader = '#define AA_CLAMP 1.45\n' + shader.fragmentShader;
   };
-  mat.customProgramCacheKey = () => 'aa-parts2';
+  mat.customProgramCacheKey = () => 'aa-parts3';
   return mat;
 }
 
@@ -668,6 +707,8 @@ export function makeHolo(THREE, U, o = {}) {
         float lines = smoothstep(0.82, 1.0, abs(fract(vAaPos.y * 38.0) - 0.5) * 2.0);
         float open = aaCut(vAaObj) > 0.0 ? uOpen : 1.0;
         float fade = 1.0 - smoothstep(uFadeY.x + 0.4, uFadeY.y + 0.2, vAaPos.y);
+        // im Roentgen nur Kopf und Hals: Schultern blenden aus
+        fade *= mix(1.0, 1.0 - smoothstep(-1.3, -1.9, vAaPos.y), uXray);
         float i = (0.04 + 0.9 * fr + 0.12 * lines) * open * fade * a;
         gl_FragColor = vec4(uHoloCol * i, 1.0);
       }`,
@@ -719,7 +760,7 @@ export function makeBand(THREE, U, env, o) {
         totalEmissiveRadiance += uSig * uBand.w * exp(-max(dB, 0.0) / 0.0025) * uGlow * aaFace * aaTop;
         totalEmissiveRadiance += uSig * 3.0 * exp(-aaSq((vAaPos.y - uScanY) / 0.012)) * step(uScanY, 8.0);
       `);
-    shader.fragmentShader = '#define AA_CLAMP 1.6\n' + shader.fragmentShader;
+    shader.fragmentShader = '#define AA_CLAMP 1.4\n' + shader.fragmentShader;
   };
   mat.customProgramCacheKey = () => 'aa-band2';
   mat.userData.u = uB;
@@ -727,14 +768,19 @@ export function makeBand(THREE, U, env, o) {
 }
 
 /* ================================================================== Lichtschein hinter dem Kopf */
-// Weiche, kuehle Aufhellung des Hintergrunds hinter dem Kopf (Billboard, additiv, unter der Bloom-Schwelle).
+// v3: Hintergrund hinter dem Kopf statt einfarbigem Navy: weicher, kuehler Lichtkegel hinter dem Hinterkopf,
+// darin langsam ziehender Dunst (2 Oktaven Wertrauschen), schwache schraege Lichtbahnen und ein tiefer, warmer Hauch
+// unten (Gegenpol zum Cyan). Billboard, additiv, alles unter der Bloom-Schwelle.
 export function makeHalo(THREE, palette) {
   return new THREE.ShaderMaterial({
     uniforms: {
-      uCol: { value: palette.steel.clone().lerp(palette.signal, 0.14).multiplyScalar(0.26) },
-      uCol2: { value: palette.deep.clone().lerp(palette.ice, 0.03) },
+      uCol: { value: palette.steel.clone().lerp(palette.signal, 0.2).multiplyScalar(0.3) },
+      uCol2: { value: palette.deep.clone().lerp(palette.ice, 0.04) },
+      uWarm: { value: palette.emberDeep.clone().multiplyScalar(0.016) },
       uAmt: { value: 1 },
       uOff: { value: new THREE.Vector2(0.16, 0.1) },
+      uT: { value: 0 },
+      uAsp: { value: new THREE.Vector2(1, 1) }, // Groesse der Flaeche relativ zu 10 Einheiten: Muster bleibt gleich gross
     },
     transparent: true,
     depthWrite: false,
@@ -743,16 +789,29 @@ export function makeHalo(THREE, palette) {
       varying vec2 vUv;
       void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: /* glsl */ `
-      uniform vec3 uCol, uCol2;
-      uniform float uAmt;
+      uniform vec3 uCol, uCol2, uWarm;
+      uniform float uAmt, uT;
       uniform vec2 uOff;
+      uniform vec2 uAsp;
       varying vec2 vUv;
+      float h21(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+      float vn(vec2 p) {
+        vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y);
+      }
       void main() {
-        vec2 p = (vUv - 0.5) * 2.0 - uOff;
+        vec2 p = (vUv - 0.5) * 2.0 * uAsp - uOff;
         float r = length(p * vec2(1.0, 1.15));
-        float g = exp(-r * r * 4.5);
-        float g2 = exp(-r * r * 0.9) * 0.35;
-        vec3 c = uCol * g + uCol2 * g2;
+        float g = exp(-r * r * 3.6);
+        float g2 = exp(-r * r * 0.8) * 0.4;
+        vec2 q = p * 2.2 + vec2(uT * 0.012, -uT * 0.006);
+        float haze = vn(q) * 0.65 + vn(q * 2.3 + 7.1) * 0.35;
+        // schraege Lichtbahnen von oben hinten (sehr schwach)
+        float a = dot(p, normalize(vec2(0.55, 1.0)));
+        float rays = pow(0.5 + 0.5 * sin(a * 9.0 + vn(vec2(a * 3.0, 1.3)) * 2.0), 6.0) * exp(-r * 1.4) * smoothstep(-0.4, 0.4, p.y);
+        vec3 c = uCol * g * (0.62 + 0.6 * haze) + uCol2 * g2 * (0.8 + 0.4 * haze) + uCol * rays * 0.22;
+        float wy = (p.y + 0.95) / 0.4;
+        c += uWarm * exp(-wy * wy) * exp(-p.x * p.x * 0.6);
         gl_FragColor = vec4(c * uAmt, 1.0);
       }`,
   });

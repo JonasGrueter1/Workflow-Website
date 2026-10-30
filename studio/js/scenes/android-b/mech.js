@@ -182,7 +182,7 @@ export function buildMechanics(THREE, o) {
   diffuseColor.rgb = mix(diffuseColor.rgb, irisCol, irisM);
   diffuseColor.rgb *= (1.0 - 0.55 * limbus) * (1.0 - 0.96 * pupil);
   float ring = exp(-pow((rr - 0.41) / 0.012, 2.0)) * front;
-  totalEmissiveRadiance += uIrisCol * uIris * (ring * 0.2 + pupil * 0.14 * (1.0 - rr / 0.16) + irisM * fib * 0.022);
+  totalEmissiveRadiance += uIrisCol * uIris * (ring * 0.07 + pupil * 0.12 * (1.0 - rr / 0.16) + irisM * fib * 0.03);
 }`);
   };
   eyeMat.customProgramCacheKey = () => 'ab-eye2';
@@ -472,95 +472,143 @@ outgoingLight *= 0.6 + 0.4 * cf;
   const headW = (y) => (y > -0.62 ? 1 : wAt(y));
   const rnd = (() => { let a = 20261027; return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
 
-  /* ------------------------------------------- Hinterkopf: Schaedelrippen und Chrom-Streben */
+  /* ------------------------------------------- Hinterkopf: Schaedelgitter, Streben, Kamm */
+  // Die Oeffnung ist eine Ellipse in (Bogenlaenge ab hinten, y), siehe layout.js. Darin ein Gitter wie ein Schaedel
+  // aus Streben: Laengsrippen (Graphit) bis zur Schaedelbasis, drei Querrippen dahinter,
+  // zwei Chrom-Streben. Am Kamm der Schaedelbasis (unter dem Hirnstamm, cableRoot) treten die Kabel aus.
   const SKW = LAYOUT.skull;
+  const uHalf = (y) => SKW.a * Math.sqrt(Math.max(0, 1 - Math.pow((y - SKW.yc) / SKW.b, 2)));
+  const rBack = (y) => surfAt(Math.PI, y).r;
+  const winTh = (y) => uHalf(y) / Math.max(0.3, rBack(y));
   {
-    const ribs = [0.25, 0.09, -0.07, -0.23, -0.39];
-    ribs.forEach((y, k) => {
-      const span = 1.02 - 0.06 * Math.abs(k - 1.5);
+    // Laengsrippen: von oben (unter der Schale) nach unten zum Kamm
+    const NM = hi ? 9 : 7;
+    for (let k = 0; k < NM; k++) {
+      const f = (k / (NM - 1)) * 2 - 1;
+      const pts = [];
+      const yTop = SKW.yc + SKW.b * Math.sqrt(Math.max(0, 1 - Math.pow(f * 0.86, 2))) + 0.05;
+      for (let j = 0; j <= 16; j++) {
+        const t = j / 16;
+        const y = yTop + (-0.36 - yTop) * t;
+        const th = Math.PI + f * (winTh(Math.min(y, 0.3)) + 0.06) * (1 - 0.3 * t * t);
+        const s0 = surfAt(th, y);
+        pts.push(s0.p.clone().addScaledVector(s0.n, -(0.062 + 0.02 * t * t)));
+      }
+      kits.graphite.push(tube(smooth(pts, S(44, 22)), (t) => 0.012 + 0.006 * t, S(10, 6), 1));
+    }
+    // Querrippen dahinter
+    for (const y of [0.2, -0.04, -0.27]) {
+      const span = winTh(y) + 0.14;
       const pts = [];
       const n = S(36, 20);
       for (let j = 0; j <= n; j++) {
         const th = Math.PI + (j / n - 0.5) * 2 * span;
         const s0 = surfAt(th, y);
-        pts.push(s0.p.clone().addScaledVector(s0.n, -0.06));
+        pts.push(s0.p.clone().addScaledVector(s0.n, -0.095));
       }
-      const sm = smooth(pts, S(60, 30));
-      kits.graphite.push(tube(sm, () => 0.015, S(12, 8), 1));
-    });
-    // Laengsrippen (Graphit) von oben nach unten, mit den Querrippen ein Gitter wie ein Schaedel aus Streben
-    for (const dth of [-0.78, -0.52, -0.13, 0.13, 0.52, 0.78]) {
-      const pts = [];
-      for (let j = 0; j <= 14; j++) {
-        const y = SKW.top + 0.03 - (j / 14) * (SKW.top - SKW.bot + 0.02);
-        const s0 = surfAt(Math.PI + dth * (1 - 0.12 * (j / 14)), y);
-        pts.push(s0.p.clone().addScaledVector(s0.n, -0.07));
-      }
-      kits.graphite.push(tube(smooth(pts, S(36, 18)), () => 0.012, S(10, 6), 1));
+      kits.graphite.push(tube(smooth(pts, S(60, 30)), () => 0.016, S(12, 8), 1));
     }
-    // senkrechte Chrom-Streben
-    for (const dth of [-0.3, 0.3]) {
+    // zwei Chrom-Streben senkrecht neben der Mitte
+    for (const sx of [-1, 1]) {
       const pts = [];
       for (let j = 0; j <= 12; j++) {
-        const y = SKW.top + 0.02 - (j / 12) * (SKW.top - SKW.bot - 0.1);
-        const s0 = surfAt(Math.PI + dth, y);
-        pts.push(s0.p.clone().addScaledVector(s0.n, -0.042));
+        const t = j / 12;
+        const y = 0.34 + (-0.42 - 0.34) * t;
+        const s0 = surfAt(Math.PI + sx * 0.3 * (1 - 0.15 * t), y);
+        pts.push(s0.p.clone().addScaledVector(s0.n, -0.048));
       }
-      kits.chrome.push(tube(smooth(pts, S(40, 20)), () => 0.0095, S(10, 6), 1));
+      kits.chrome.push(tube(smooth(pts, S(36, 18)), () => 0.0085, S(10, 6), 1));
     }
+    // Kamm an der Schaedelbasis: Graphit-Steg mit Chrom-Kante, hier treten die Kabel aus
+    const comb = [];
+    for (let j = 0; j <= 18; j++) {
+      const th = Math.PI + (j / 18 - 0.5) * 2 * (winTh(-0.44) + 0.1);
+      const s0 = surfAt(th, -0.44);
+      comb.push(s0.p.clone().addScaledVector(s0.n, -0.07));
+    }
+    const cs = smooth(comb, S(44, 22));
+    kits.graphite.push(tube(cs, () => 0.026, S(12, 8), 1));
+    kits.chrome.push(tube(cs.map((p) => V(p.x, p.y + 0.026, p.z)), () => 0.006, 6, 1));
   }
 
   /* -------------------------------------- Hinterkopf und Nacken: Kabelbuendel (Referenz 1) */
-  // 40 bis 80 duenne Kabel und Schlaeuche treten hinten aus dem Schaedel (nahe cableRoot), fliessen ueber den Nacken
-  // und tauchen zwischen den Schulterblaettern in den Rumpf. Schwarzes Gummi, Chrom-Huelsen an den dicken, ~10 % mit Licht.
+  // 40 bis 90 duenne Kabel und Schlaeuche: aus dem Schaedelinneren (hinter dem Gitter) zum Kamm, dort hinaus,
+  // in sieben Buendeln (leicht verdrillt, Schellen) ueber den Nacken in den Schlitz zwischen den Schulterblaettern.
+  // Schwarzes Gummi, graue Schlaeuche, die dicken mit Rillen und Chrom-Huelsen, ~10 % mit Licht.
   {
-    const NC = hi ? 72 : 34;
-    const lanes = [];
-    for (let i = 0; i < NC; i++) lanes.push({ u: (i + 0.5) / NC * 2 - 1 + (rnd() - 0.5) * 0.03, l: rnd(), k: rnd() });
-    lanes.forEach((c, i) => {
-      const r = c.k < 0.6 ? 0.004 + 0.004 * rnd() : c.k < 0.88 ? 0.009 + 0.004 * rnd() : 0.015 + 0.005 * rnd();
-      const lit = i % 10 === 3;
-      const u = c.u; const l = c.l;
-      const ys = -0.3 + 0.55 * rnd() * (1 - 0.5 * Math.abs(u));
-      const th0 = Math.PI - u * 0.62;
-      const s0 = surfAt(th0, ys);
-      const p0 = s0.p.clone().addScaledVector(s0.n, -(0.1 + 0.015 * rnd()));
-      // Austritt durch den unteren Teil des Fensters, dann ueber die Schaedelbasis nach unten
-      const s1 = surfAt(Math.PI - u * 0.5, -0.36);
-      const p1 = s1.p.clone().addScaledVector(s1.n, 0.01 + 0.05 * l);
-      const ph = rnd() * 6.28;
-      const wob = (y, a) => 0.35 * a * Math.sin(y * 7.0 + ph);
-      const at = (x, y, off) => { const b = backAt(x, y); b.z -= off; return b; };
-      const ctrl = [p0, s0.p.clone().lerp(p1, 0.55).addScaledVector(s0.n, -0.04), p1,
-        at(u * 0.34 + wob(-0.62, 0.012), -0.62, 0.045 + 0.09 * l),
-        at(u * 0.3 + wob(-0.92, 0.014), -0.92, 0.03 + 0.1 * l),
-        at(u * 0.26 + wob(-1.2, 0.014), -1.2, 0.022 + 0.08 * l),
-        at(u * 0.26, -1.46, 0.012 + 0.05 * l),
-        at(u * 0.17, -1.68, -0.005 + 0.025 * l),
-        at(u * 0.12, -1.9, -0.06),
-        at(u * 0.1, -2.05, -0.16)];
-      const pts = smooth(ctrl, S(56, 30));
-      const kit = lit ? 'cable' : (i % 2 === 1 || r > 0.014) ? 'hose' : 'rubber';
-      kits[kit].push(tube(pts, () => r, r > 0.012 ? S(12, 8) : S(7, 5), (y) => headW(y)));
-      // Chrom-Huelse am Austritt (dicke Kabel)
-      if (r > 0.012) {
-        const curve = new THREE.CatmullRomCurve3(pts);
-        for (const t of [0.12, 0.62]) {
+    const NC = hi ? 84 : 36;
+    const bundles = [
+      { u: -0.27, d: 0.05, R: 0.04 }, { u: -0.17, d: 0.085, R: 0.045 }, { u: -0.075, d: 0.045, R: 0.05 }, { u: 0.0, d: 0.1, R: 0.055 },
+      { u: 0.08, d: 0.05, R: 0.05 }, { u: 0.175, d: 0.08, R: 0.045 }, { u: 0.27, d: 0.045, R: 0.04 },
+    ];
+    const NB = bundles.length;
+    bundles.forEach((B, i) => { B.c0 = 1 + (i % 3); });
+    const ys = [-0.56, -0.76, -0.98, -1.22, -1.45, -1.67, -1.88, -2.04];
+    const at = (x, y, off) => { const b = backAt(x, y); b.z -= off; return b; };
+    // Mitte eines Buendels auf Hoehe y (Index k in ys)
+    const center = (B, k) => {
+      const y = ys[k];
+      const spread = [1.5, 1.25, 1.08, 0.98, 0.88, 0.68, 0.44, 0.34][k];
+      const bulge = [0.07, 0.12, 0.12, 0.095, 0.065, 0.03, -0.025, -0.14][k];
+      return at(B.u * spread, y, B.d * (k < 6 ? 1 : 0.4) + bulge);
+    };
+    for (let i = 0; i < NC; i++) {
+      const bi = i % NB; const B = bundles[bi];
+      const core = i < NB && (bi % 2 === 1 || bi === 3);
+      const k0 = rnd();
+      const r = core ? 0.018 + 0.005 * rnd() : k0 < 0.62 ? 0.0038 + 0.0032 * rnd() : k0 < 0.9 ? 0.0085 + 0.004 * rnd() : 0.013 + 0.003 * rnd();
+      const lit = !core && i % 10 === 4;
+      const rho = core ? 0 : B.R * (0.3 + 0.7 * Math.sqrt(rnd()));
+      const ph0 = rnd() * 6.283; const tw = (rnd() < 0.5 ? 1 : -1) * (0.5 + 0.5 * rnd());
+      // Austritt im Schaedel: verteilt ueber das Gitter, unten dichter
+      const pu = (rnd() - 0.5) * 2;
+      const py = -0.4 + 0.62 * Math.pow(rnd(), 1.6);
+      const pth = Math.PI + pu * winTh(Math.min(py, 0.25)) * 0.85;
+      const s0 = surfAt(pth, py);
+      const ctrl = [s0.p.clone().addScaledVector(s0.n, -(0.11 + 0.03 * rnd()))];
+      const sm = surfAt(Math.PI + pu * 0.35, (py - 0.48) * 0.5);
+      ctrl.push(sm.p.clone().addScaledVector(sm.n, -0.12 + 0.02 * rnd()));
+      const ex = surfAt(Math.PI + (B.u * 1.7 + Math.cos(ph0) * rho) / Math.max(0.3, rBack(-0.46)), -0.46 - 0.04 * rnd());
+      ctrl.push(ex.p.clone().addScaledVector(ex.n, -0.035 + 0.03 * rnd()));
+      ys.forEach((y, k) => {
+        const c = center(B, k);
+        const a = ph0 + tw * k * 0.7;
+        const pinch = (k === B.c0 || k === B.c0 + 3) ? 0.72 : 1;
+        c.x += Math.cos(a) * rho * pinch;
+        c.z -= Math.sin(a) * rho * 0.75 * pinch;
+        ctrl.push(c);
+      });
+      const curve = new THREE.CatmullRomCurve3(ctrl, false, 'centripetal');
+      if (core) {
+        // Rillenschlauch: Radius moduliert entlang der Laenge
+        const n = hi ? 420 : 90;
+        const pts = curve.getSpacedPoints(n);
+        const L = curve.getLength();
+        const ribs = hi ? (t) => r * (1 + 0.16 * Math.pow(0.5 + 0.5 * Math.cos((t * L / 0.026) * 6.283), 2)) : () => r;
+        kits.hose.push(tube(pts, ribs, S(14, 8), (y) => headW(y)));
+        for (const t of [0.34, 0.97]) {
           const p = curve.getPointAt(t); const d = curve.getTangentAt(t);
-          const g = new THREE.CylinderGeometry(r * 1.45, r * 1.45, 0.05, S(14, 8), 1, false);
+          const g = new THREE.CylinderGeometry(r * 1.45, r * 1.45, 0.05, S(16, 8), 1, false);
           kits.chrome.push(prep(g, headW(p.y), place(p, d)));
         }
+      } else {
+        const pts = curve.getPoints(S(64, 34));
+        const kit = lit ? 'cable' : (r > 0.008 && i % 3 !== 0) ? 'hose' : 'rubber';
+        kits[kit].push(tube(pts, () => r, r > 0.008 ? S(10, 7) : S(7, 5), (y) => headW(y)));
       }
-    });
-    // Kabelkamm an der Schaedelbasis: Graphit-Steg mit Chrom-Kante
-    const comb = [];
-    for (let j = 0; j <= 16; j++) {
-      const s0 = surfAt(Math.PI + (j / 16 - 0.5) * 1.15, SKW.bot + 0.035);
-      comb.push(s0.p.clone().addScaledVector(s0.n, -0.012));
     }
-    const cs = smooth(comb, S(40, 20));
-    kits.graphite.push(tube(cs, () => 0.02, S(12, 8), 1));
-    kits.chrome.push(tube(cs.map((p) => V(p.x, p.y + 0.019, p.z)), () => 0.0055, 6, 1));
+    // Schellen um die Buendel (Graphit mit Chrom-Kante)
+    for (const B of bundles) {
+      for (const k of [B.c0, B.c0 + 3]) {
+        const c = center(B, k);
+        const n0 = center(B, k + 1).sub(center(B, k - 1)).normalize();
+        const g = new THREE.CylinderGeometry(B.R + 0.022, B.R + 0.022, 0.032, S(24, 14), 1, true);
+        g.scale(1, 1, 0.8);
+        kits.graphite.push(prep(g, headW(c.y), place(c, n0)));
+        const t2 = new THREE.TorusGeometry(B.R + 0.023, 0.0045, 6, S(24, 14)).rotateX(Math.PI / 2).scale(1, 1, 0.8);
+        kits.chrome.push(prep(t2.translate(0, 0.016, 0), headW(c.y), place(c, n0)));
+      }
+    }
     // Rahmen im Rueckenschlitz
     const slot = [];
     const NS = 40;
@@ -577,20 +625,22 @@ outgoingLight *= 0.6 + 0.4 * cf;
   for (const e of (lm.ears || [])) {
     const c = V(...e.c); const n = V(...e.n).normalize();
     if (n.x * c.x < 0) n.negate();
-    const R = (e.rmax || 0.18) + 0.04;
-    const M = place(c.clone().addScaledVector(n, 0.005), n);
+    const R = (e.rmax || 0.18) + 0.005;
+    const M = place(c.clone().addScaledVector(n, 0.002), n);
+    // flache Scheibe mit zwei Fasen, innen eine Stufe, kleines Gitter in der Mitte (Sensor), Chrom-Ring
     const prof = [
-      [0.096, 0.024], [0.104, 0.034], [0.116, 0.039], [R - 0.05, 0.039], [R - 0.022, 0.03], [R - 0.004, 0.008], [R, -0.02], [R - 0.004, -0.06],
+      [0.052, 0.02], [0.058, 0.026], [0.066, 0.027], [R * 0.62, 0.027], [R * 0.62 + 0.006, 0.022], [R * 0.62 + 0.012, 0.021],
+      [R - 0.03, 0.021], [R - 0.012, 0.015], [R - 0.002, 0.002], [R, -0.02], [R - 0.004, -0.06],
     ].map(([x, y]) => new THREE.Vector2(x, y));
     kits.ceramic.push(prep(new THREE.LatheGeometry(prof, S(72, 40)), 1, M));
-    const gr = new THREE.CircleGeometry(0.098, S(48, 28)).rotateX(-Math.PI / 2).translate(0, 0.018, 0);
+    const gr = new THREE.CircleGeometry(0.054, S(40, 24)).rotateX(-Math.PI / 2).translate(0, 0.016, 0);
     kits.grille.push(prep(gr, 1, M));
-    const ring = new THREE.TorusGeometry(0.1, 0.0075, 10, S(64, 32)).rotateX(Math.PI / 2).translate(0, 0.026, 0);
+    const ring = new THREE.TorusGeometry(0.056, 0.0055, 10, S(56, 28)).rotateX(Math.PI / 2).translate(0, 0.022, 0);
     kits.chromeS.push(prep(ring, 1, M));
     // Status-Punkt oben hinten auf dem Rand
-    const led = new THREE.SphereGeometry(0.009, 12, 8);
+    const led = new THREE.SphereGeometry(0.006, 12, 8);
     const a = -2.3;
-    led.translate(Math.cos(a) * (R - 0.032), 0.039, Math.sin(a) * (R - 0.032) * (c.x > 0 ? 1 : -1));
+    led.translate(Math.cos(a) * (R * 0.62 - 0.03), 0.028, Math.sin(a) * (R * 0.62 - 0.03) * (c.x > 0 ? 1 : -1));
     kits.led.push(prep(led, 1, M));
   }
 
