@@ -2,22 +2,22 @@
 //
 // - Tausende leuchtende GPU-Partikel mit eigenem Shader: Curl-Noise-Stroemung, Tiefenunschaerfe (Bokeh),
 //   wenige helle Funken zwischen feinem Staub, Staub, der in einem Lichtkegel aufleuchtet, Reaktion auf die Maus.
-// - Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Augen, Plattenlinien, Kern, atmet, Kopf folgt der Maus).
+// - Hero: die Bueste steht schon zu etwa zwei Dritteln aus Licht (Plattenlinien, Rand der Hinterkopf-Oeffnung, Kabel, die
+//   langsam nach hinten wegfliessen, Kantenlicht von rechts hinten; atmet, Kopf folgt der Maus).
 // - Ab der zweiten Haelfte des Intros ziehen sich die Partikel in einer sanften Spirale zur Roboter-Silhouette
 //   zusammen (von unten nach oben), im Flug als feine Lichtspuren, bei der Ankunft mit kurzem Aufblitzen.
 //   Die Zielpunkte liegen auf der Android-Bueste der Szene robot (particles-shape.js, Netz aus robot-mesh.js).
 // - Uebergabe an die Szene "robot": erscheint ihr Hologramm, treten die fertigen Partikel zurueck (nur Funkeln);
 //   an ihrer Abtastebene leuchten die Partikel auf und gehen darunter in die Schale ueber.
-// - Dahinter ein ruhiger Hintergrund: Verlaufs-Nebel (vorab gerechnete Textur) und ferne, unscharfe Lichter.
+// - Dahinter ferne, unscharfe Lichter. Den Raum selbst (Nebel, Licht) zeichnet backdrop.js (Farbwelt intro).
 //
 // Alles ist eine reine Funktion von (Zeit, Scroll): rueckwaerts scrollen setzt den Roboter wieder in Partikel um.
 // Pro Frame werden nur Uniforms gesetzt (keine Schleifen ueber Partikel, keine Allokationen).
-// Hilfsdateien: particles-shape.js (Zielpunkte), particles-glsl.js (Shader), particles-nebula.js (Nebel-Textur).
-// Qualitaet: Mengen x tier.particles, Stufe low mit einfacherem Curl-Rauschen und kleinerer Nebel-Textur.
+// Hilfsdateien: particles-shape.js (Zielpunkte), particles-glsl.js (Shader).
+// Qualitaet: Mengen x tier.particles, Stufe low mit einfacherem Curl-Rauschen.
 
 import { sampleRobot, mulberry32, KIND, HEAD_PIVOT } from './particles-shape.js';
-import { makeNebulaTexture } from './particles-nebula.js';
-import { POINTS_VERT, POINTS_FRAG, BG_VERT, BG_FRAG, BEAM_VERT, BEAM_FRAG } from './particles-glsl.js';
+import { POINTS_VERT, POINTS_FRAG, BEAM_VERT, BEAM_FRAG } from './particles-glsl.js';
 
 // Mengen bei Stufe high (werden mit tier.particles multipliziert)
 // Drei Ebenen: wenige grosse unscharfe Punkte vorne (fore), scharfe Mitte (form), feiner Staub (dust) und ferne
@@ -119,6 +119,10 @@ export async function create(ctx) {
     uSize: { value: 0.03 },
     uBokeh: { value: 1.6 },
     uHint: { value: 0 },
+    uPreGain: { value: new THREE.Vector2(1, 1) },
+    // Kopfflaechen im Hero: gleich viele Partikel pro Bildpunkt auf jeder Stufe (high hat doppelt so viele Partikel,
+    // dort sonst ein Nebelschleier statt einzelner Lichtpunkte)
+    uPreSurf: { value: new THREE.Vector2(Math.min(0.9, 0.45 / k), k > 0.75 ? 1.5 : 1.0) },
     uBoxC: { value: new THREE.Vector3(0, 0.3, -2.5) },
     uBoxH: { value: new THREE.Vector3(12.5, 6.8, 8.5) },
     uTextArea: { value: new THREE.Vector4(-0.45, -0.3, 0.8, 0.62) },
@@ -153,33 +157,6 @@ export async function create(ctx) {
   points.renderOrder = 2;
   group.add(points);
 
-  /* ---------------------------------------------------- Hintergrund-Nebel */
-  const segs = quality === 'high' ? [48, 24] : quality === 'medium' ? [32, 16] : [24, 12];
-  const bgGeo = new THREE.SphereGeometry(140, segs[0], segs[1]);
-  const nebula = quality === 'high' ? makeNebulaTexture(THREE, 320, 160) : makeNebulaTexture(THREE, 224, 112);
-  const bgUniforms = {
-    uNeb: { value: nebula },
-    uAlpha: { value: 0 },
-    uVoid: { value: palette.void.clone() },
-    uDeep: { value: palette.deep.clone().multiplyScalar(3.6) },
-    uGlow: { value: palette.signal.clone().multiplyScalar(0.06) },
-    uWarm: { value: palette.emberDeep.clone().multiplyScalar(0.028) },
-    uGlowDir: { value: new THREE.Vector3(0.12, 0.02, -1).normalize() },
-    uWarmDir: { value: new THREE.Vector3(0.9, -0.35, -0.55).normalize() },
-  };
-  const bgMat = new THREE.ShaderMaterial({
-    uniforms: bgUniforms,
-    vertexShader: BG_VERT,
-    fragmentShader: BG_FRAG,
-    side: THREE.BackSide,
-    depthWrite: false,
-    depthTest: false,
-  });
-  const bg = new THREE.Mesh(bgGeo, bgMat);
-  bg.frustumCulled = false;
-  bg.renderOrder = -100;
-  group.add(bg);
-
   /* ------------------------------------------------------------ Lichtkegel */
   const beamGeo = new THREE.CylinderGeometry(BEAM.r0, BEAM.r0 + BEAM.slope * BEAM.length, BEAM.length,
     quality === 'low' ? 32 : 64, 1, true);
@@ -205,69 +182,19 @@ export async function create(ctx) {
   beam.frustumCulled = false;
   group.add(beam);
 
-  /* ------------------------------------------- Leuchtender Kern (Fokuspunkt) */
-  // Im Hero leuchtet im lose angedeuteten Kopf ein ruhiger Kern, genau dort, wo spaeter das Gehirn sitzt.
-  const coreGeo = new THREE.PlaneGeometry(2, 2);
-  const coreUniforms = {
-    uTime: shared.uTime,
-    uI: { value: 0 },
-    uSize: { value: 1.0 },
-    uFog: { value: 0.035 },
-    uCore: { value: palette.ice.clone().multiplyScalar(3.0) },
-    uHalo: { value: palette.signal.clone().multiplyScalar(0.6) },
-    uWarm: { value: palette.ember.clone().multiplyScalar(1.3) },
-  };
-  const coreMat = new THREE.ShaderMaterial({
-    uniforms: coreUniforms,
-    vertexShader: /* glsl */ `
-      uniform float uSize;
-      uniform float uFog;
-      varying vec2 vQ;
-      varying float vFog;
-      void main() {
-        vQ = position.xy;
-        vec4 mv = modelViewMatrix * vec4(0.0, 0.0, 0.0, 1.0);
-        float f = uFog * 0.8 * -mv.z;
-        vFog = exp(-f * f);
-        mv.xy += position.xy * uSize;
-        gl_Position = projectionMatrix * mv;
-      }`,
-    fragmentShader: /* glsl */ `
-      uniform float uTime;
-      uniform float uI;
-      uniform vec3 uCore;
-      uniform vec3 uHalo;
-      uniform vec3 uWarm;
-      varying vec2 vQ;
-      varying float vFog;
-      void main() {
-        float r2 = dot(vQ, vQ);
-        if (r2 > 1.0) discard;
-        float pulse = 0.88 + 0.12 * sin(uTime * 1.3);
-        float spark = exp(-r2 * 900.0);
-        float core = exp(-r2 * 160.0);
-        float inner = exp(-r2 * 28.0);
-        float halo = exp(-r2 * 5.0) * (1.0 - smoothstep(0.6, 1.0, r2));
-        vec3 c = uWarm * spark * 0.8 + uCore * core * pulse + uHalo * (inner * 0.55 + halo * 0.35) * pulse;
-        gl_FragColor = vec4(c * uI * vFog, 1.0);
-      }`,
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-  });
-  const core = new THREE.Mesh(coreGeo, coreMat);
-  core.position.copy(anchors.brain.center);
-  core.frustumCulled = false;
-  core.renderOrder = 3;
-  group.add(core);
+  // Kein leuchtender Kern mehr im Kopf (wirkte wie ein Lampenfleck auf der Stirn, auf dem Handy wie eine Stirnlampe).
 
   /* ----------------------------------------------- Groesse, Seitenverhaeltnis */
+  let preGain = 1;
   const setAspect = (w, h) => {
     const a = w / Math.max(1, h);
     const t = smoothstep(0.6, 1.3, a);
     uniforms.uBoxH.value.set(lerp(6.6, 12.5, t), lerp(10.5, 6.8, t), 8.5);
     // Hochformat: das FOV wird breiter, Partikel sonst zu klein
     uniforms.uSize.value = 0.03 * lerp(1.4, 1, t);
+    // Hero-Bueste: im Querformat kleiner im Bild (weniger Partikel pro Bildpunkt), darum heller
+    preGain = lerp(1.6, 2.4, t);
+    uniforms.uPreGain.value.set(preGain, lerp(1, 1.3, t));
     // Titel: im Querformat links unten, im Hochformat unten ueber die ganze Breite
     if (a < 0.85) uniforms.uTextArea.value.set(0, -0.42, 1.4, 0.55);
     else uniforms.uTextArea.value.set(-0.45, -0.3, 0.8, 0.62);
@@ -313,7 +240,7 @@ export async function create(ctx) {
       u.uForm.value = form;
       u.uGather.value = gather;
       u.uBuildY.value = buildY;
-      u.uTitle.value = 1 - smoothstep(0.45, 0.7, intro.p); // solange der Hero-Text steht (BEATS intro.text)
+      u.uTitle.value = 1 - smoothstep(0.28, 0.5, intro.p); // solange der Hero-Text steht (BEATS intro.text)
       // Ist der feste Roboter geladen und sichtbar, uebernimmt sein Hologramm (sonst bleibt der Partikel-Roboter hell)
       if (!robotGroup && time >= robotLookup) {
         robotLookup = time + 1;
@@ -324,9 +251,6 @@ export async function create(ctx) {
       u.uHolo.value = robotOn ? smoothstep(0.05, 0.22, rb.p) : 0;
       u.uIgnite.value = ignite;
       u.uHint.value = ignite;
-      coreUniforms.uI.value = ignite * weight * (1 - smoothstep(0.04, 0.3, rb.p)) * (0.85 + 0.15 * (1 - gather));
-      coreUniforms.uFog.value = scene.fog ? scene.fog.density : 0.035;
-      core.visible = coreUniforms.uI.value > 0.002;
       u.uAlpha.value = weight;
       u.uFocus.value = camera.position.distanceTo(focusPoint);
       u.uFog.value = scene.fog ? scene.fog.density : 0.035;
@@ -341,7 +265,10 @@ export async function create(ctx) {
       const kk = 1 - Math.exp(-dt * 2.2);
       const idleYaw = Math.sin(time * 0.19) * 0.04 + Math.sin(time * 0.067) * 0.025;
       const idlePitch = Math.sin(time * 0.15 + 1.0) * 0.018;
-      yaw += (pointer.sx * 0.26 + idleYaw - yaw) * kk;
+      // Hero: Kopf leicht zum Text gedreht (Dreiviertelansicht, der offene Hinterkopf mit den Kabeln wird sichtbar);
+      // bis zum Beat robot zurueck in die Ruhelage, damit die Uebergabe an das Hologramm deckungsgleich bleibt
+      const heroYaw = -0.55 * (1 - smoothstep(0.25, 0.95, intro.p));
+      yaw += (pointer.sx * 0.26 + idleYaw + heroYaw - yaw) * kk;
       pitch += (-pointer.sy * 0.1 + idlePitch - pitch) * kk;
       euler.set(pitch, yaw, Math.sin(time * 0.11) * 0.01 - yaw * 0.06);
       const hm = u.uHeadMat.value.makeRotationFromEuler(euler);
@@ -353,12 +280,19 @@ export async function create(ctx) {
       u.uBeam.value = ignite * (0.65 + 0.35 * gather) * (1 - build);
       beamUniforms.uIntensity.value = 0.075 * ignite * weight * (0.7 + 0.3 * gather) * (1 - 0.8 * build);
       beamUniforms.uFog.value = u.uFog.value;
-      bgUniforms.uAlpha.value = weight * (0.25 + 0.75 * ignite);
-      bg.rotation.y = time * 0.004; // Nebel zieht kaum merklich weiter
 
       // Bildwirkung: bei der Ankunft etwas mehr Glanz
       const arrive = smoothstep(0.55, 0.95, form) * (1 - build);
-      api.look.bloom = 0.95 + 0.08 * arrive;
+      // Hero: Bloom enger, damit die fertige Bueste scharf bleibt (kein Nebelschleier), beim Formen wieder weiter
+      // Schwelle hoch: nur die hellen Kerne der Linien leuchten, die vielen Flaechenpunkte nicht (sonst Nebelschleier)
+      // Hero: wenig, enger Bloom (sonst legt sich ein Nebelschleier ueber die feinen Linien der Bueste); die Helligkeit
+      // kommt aus den Partikeln selbst (uPreGain). Beim Formen wieder der volle Schein.
+      const fw = smoothstep(0.0, 0.5, form);
+      api.look.bloom = 0.38 + 0.42 * fw + 0.08 * arrive;
+      api.look.bloomRadius = 0.5 + 0.16 * fw;
+      api.look.bloomThreshold = 1.0 - 0.28 * fw;
+      // die eigene Helligkeit der Hero-Bueste geht mit dem Bloom zurueck (kein heller Nebelball beim Formen)
+      u.uPreGain.value.x = lerp(preGain, 1, fw);
       api.look.parallax = 0.32 - 0.08 * form;
     },
 
@@ -368,13 +302,8 @@ export async function create(ctx) {
       offResize();
       geometry.dispose();
       material.dispose();
-      bgGeo.dispose();
-      bgMat.dispose();
-      nebula.dispose();
       beamGeo.dispose();
       beamMat.dispose();
-      coreGeo.dispose();
-      coreMat.dispose();
       group.clear();
     },
   };

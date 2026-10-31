@@ -8,9 +8,10 @@
 //   Streben      4 Rohre zur Innenschale des Kopfes, 2 zu den Ohrmodulen, Gummipuffer, Flansche mit Schrauben
 //   Stammsaeule  vom Kiel in den Hals (neck.top), Rueckenmark-Kabel dahinter
 //   Rundstecker  am Kabelaustritt (ANCHORS.cableRoot): Raendelring, 5 Buchsen, aus denen die Kabel kommen
-//   Platinen     2 Schlaefenplatinen, 1 Rueckplatine (Leiterbahnen, Chips, Kuehlrippen, Heatpipes, Luefter, LEDs)
+//   Platinen     2 Schlaefenplatinen, 1 Rueckplatine (Leiterbahnen, flache Module ohne Aufdruck, LEDs; seit Runde 2
+//                ohne Luefter, Kuehlrippen und Heatpipes: die Bauteiltypen bleiben im Baukasten, kein Layout nutzt sie)
 //   Kabel        12 Elektroden-Kabel in die Rinde (Lichtpaket vom Gehirn zur Platine), 3 geflochtene Stamm-Buendel,
-//                Flachbandkabel vom Visier zum Ring
+//                Flachbandkabel von der Optik-Platine zwischen den Augen zum Ring
 // Ein Draw Call fuer alle festen Teile (brain-hw-shaders.js), einer fuer die Leuchtpunkte.
 import { makeBrainProbe, ARR_SCALE, CASCADES } from './brain-build.js';
 import { KIND, makeHardwareMaterial, makeGlowMaterial } from './brain-hw-shaders.js';
@@ -522,9 +523,10 @@ export function buildHardware(o) {
       const surf = probe.hitAlong(top.x, top.y, top.z, d.x, d.y, d.z, 0.25, false);
       const len = Math.min(0.11, surf > 0 ? surf + (w === 2 ? 0.03 : 0.004) : 0.05);
       const bottom = top.clone().addScaledVector(d, Math.max(0.02, len));
-      tube([top, top.clone().lerp(bottom, 0.5), bottom], 0.0036, mat(cAu.clone().multiplyScalar(0.75), 1, 0.3), { seg: 5 });
+      // Elektroden-Stifte in Chrom (vorher Gold: wirkten im Bloom wie orange Stecknadeln)
+      tube([top, top.clone().lerp(bottom, 0.5), bottom], 0.0036, mat(cAl.clone(), 1, 0.22), { seg: 5 });
       cyl(top.clone().addScaledVector(d, 0.01), d, 0.007, 0.007, 0.01, RB, 10);
-      B.geo(new THREE.IcosahedronGeometry(0.0072, 1), m4(bottom, new THREE.Quaternion()), AU);
+      B.geo(new THREE.IcosahedronGeometry(0.0062, 1), m4(bottom, new THREE.Quaternion()), mat(cAl.clone(), 1, 0.18));
       glow(bottom.clone().addScaledVector(N, 0.006), 0.045, ice, 1.0, 1, 12 + w);
       info.wires.push(bottom.clone());
     });
@@ -551,10 +553,11 @@ export function buildHardware(o) {
     B.sweep(P, F, rrect(0.008, 0.016, 0.0025, 2), TI);
     box(pr.clone().add(V(0, 0.016, 0)), plane, Y, 0.036, 0.012, 0.03, TIP);
     bolt(pr.clone().add(V(0, 0.022, 0)), Y, 0.005);
-    // Polster an der Hirnseite: Gummischeibe mit Kontaktring
+    // Polster an der Hirnseite: flache Chromscheibe mit feinem Kontaktring (Runde 2: vorher dicke schwarze Gummikoepfe,
+    // wirkten wie Pinnnadeln)
     const sp = V(h.x * last.t, last.y, z0 + h.z * last.t);
-    const pc = sp.clone().addScaledVector(h, 0.009);
-    cyl(pc, h, 0.024, 0.024, 0.008, (g) => (g === 1 ? mat(cRb, 0, 0.8, KIND.PAD, ci) : RB), 20, discUV);
+    const pc = sp.clone().addScaledVector(h, 0.006);
+    cyl(pc, h, 0.019, 0.019, 0.004, (g) => (g === 1 ? mat(cAl.clone().multiplyScalar(0.85), 1, 0.24, KIND.PAD, ci) : AL), 20, discUV);
     glow(pc.clone().addScaledVector(h, 0.007), 0.05, sig, 1.0, 4, ci);
     info.pads.push(sp.clone());
   });
@@ -789,7 +792,8 @@ export function buildHardware(o) {
     for (const c of L.comps) {
       if (c.t === 'soc') {
         boxOn(c.u, c.v, c.w, c.h, 0.003, EP);
-        const lidM = (gi) => (gi === 2 ? mat(cTi.clone().multiplyScalar(0.9), 1, 0.32, KIND.LABEL) : TIP);
+        // Deckel dunkel (Graphit mit etwas Titan), kein Aufdruck: ruhige Module statt Bausatz-Chips
+        const lidM = (gi) => (gi === 2 ? mat(cGr.clone().lerp(cTi, 0.28), 1, 0.3, KIND.LABEL) : TIP);
         boxOn(c.u, c.v, c.w - 0.008, c.h - 0.008, 0.006, lidM, c.fins ? null : label(c.label), 0.003);
         if (c.fins) {
           const n = c.fins.n;
@@ -832,8 +836,7 @@ export function buildHardware(o) {
         B.geo(new THREE.LatheGeometry(ring, S(48, 24)), m4(fc, qAlign(Y, Nb)), TIP);
         const FAN = mat(cGr.clone().lerp(cTi, 0.15), 0, 0.45, KIND.FAN);
         cyl(fc.clone().addScaledVector(Nb, 0.012), Nb, 0.022, 0.022, 0.016, FAN, 24);
-        cyl(fc.clone().addScaledVector(Nb, 0.0205), Nb, 0.006, 0.006, 0.0012, mat(ember.clone(), 0, 0.4, KIND.EMBER), 16);
-        glow(fc.clone().addScaledVector(Nb, 0.024), 0.03, ember, 1.0, 6, 0);
+        cyl(fc.clone().addScaledVector(Nb, 0.0205), Nb, 0.006, 0.006, 0.0012, AL, 16);
         const blade = new THREE.Shape();
         const r0 = 0.023; const r1 = 0.063;
         blade.moveTo(r0, 0);
@@ -925,12 +928,13 @@ export function buildHardware(o) {
     }
   }
 
-  /* ================================================================== 8. Flachbandkabel vom Visier zum Ring */
+  /* ================================================================== 8. Flachbandkabel von der Optik zum Ring */
   {
     const front = ringAt(0);
-    // Start an der Rueckseite der LED-Platine (0.022 hinter der Huelle in der Visiermitte, robot-geometry VISOR.boardOff)
-    const p0 = V(0, -0.19, 0.902);
-    const pts = smoothPath(THREE, [p0, V(0, -0.15, 0.8), V(0, -0.165, 0.68), front.clone().add(V(0, 0.013, -0.004))], S(40, 20));
+    // Start an der Optik-Platine zwischen den Augen der Android-Bueste (Welt etwa 0, 0, 0.74: hinter der Nasenwurzel,
+    // innerhalb der Schale, Augen bei x +-0.30)
+    const p0 = V(0, -0.235, 0.8);
+    const pts = smoothPath(THREE, [p0, V(0, -0.205, 0.72), V(0, -0.19, 0.64), front.clone().add(V(0, 0.013, -0.004))], S(40, 20));
     const F = planarFrames(THREE, pts, V(1, 0, 0), V(0, -0.6, 0.5));
     B.sweep(pts, F, rrect(0.003, 0.12, 0.0012, 1), mat(cGr.clone().multiplyScalar(0.9), 0, 0.5, KIND.FLEX), {
       uvy: (qq) => 0.5 + qq.y / 0.12,
@@ -981,7 +985,7 @@ export function buildHardware(o) {
     const d = V(dd[0] * R.x, dd[1] * R.y, dd[2] * R.z).normalize();
     const { p, n } = nrmAt(d);
     const ec = p.clone().addScaledVector(n, 0.004);
-    cyl(ec, n, 0.021, 0.021, 0.006, (g) => (g === 1 ? mat(cAu, 1, 0.3, KIND.ELEC, i) : AU), 24, discUV);
+    cyl(ec, n, 0.021, 0.021, 0.006, (g) => (g === 1 ? mat(cAl, 1, 0.25, KIND.ELEC, i) : AL), 24, discUV);
     glow(ec.clone().addScaledVector(n, 0.008), 0.065, sig, 1.25, 1, i);
     info.elec.push(p.clone());
     // Kabel: vom Anker in weichem Bogen zur Hirnoberflaeche und darauf entlang bis zur Elektrode
@@ -1228,7 +1232,17 @@ export function createHardware(ctx, data, o) {
       U.uXray.value = xr;
       // Kapitel Kabel (ohne Kopf): leichte Kontur, damit der KI-Kern vor dem dunklen Raum lesbar bleibt
       U.uRimK.value = 0.45 * smoothstep(0.0, 0.2, cb.p);
-      U.uHwAlpha.value = st.weight;
+      // Runde 2: Beim Eintauchen verschwindet die Hardware ganz (brain@0.34 bis 0.46). Im Gehirn bleiben nur Neuronen,
+      // Impulse und Licht, keine Platinen oder Klammern direkt vor der Linse. Zurueck kommt sie erst in der Kabel-
+      // Uebersicht (cables@0.02 bis 0.18), wenn die Kamera das Gehirn von aussen sieht.
+      const hide = inCables ? 1 - smoothstep(0.02, 0.18, cb.p) : smoothstep(0.34, 0.46, br.p);
+      const hwA = st.weight * (1 - hide);
+      U.uHwAlpha.value = hwA;
+      mesh.visible = hwA > 0.002;
+      glowMesh.visible = mesh.visible;
+      // Nahe Hardware blendet zusaetzlich mit dem Abstand aus (Kabel-Uebersicht, Kamera dicht am Kopf)
+      const dive = smoothstep(0.35, 0.5, br.p) * (1 - smoothstep(0.85, 0.97, br.p));
+      U.uHwNear.value.set(0.07 + 0.13 * dive, 0.26 + 0.42 * dive);
       U.uPcbOn.value = 0.25 + 0.75 * smoothstep(0.45, 0.95, zm.p);
       U.uSock.value = inCables ? 1 : smoothstep(0.55, 0.85, br.p);
       U.uRun.value = 0.4 + 0.6 * smoothstep(0.5, 1, zm.p);

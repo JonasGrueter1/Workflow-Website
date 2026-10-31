@@ -156,6 +156,7 @@ export class Director {
     this._up = new THREE.Vector3(0, 1, 0);
     for (const b of BEATS) this.beats[b.name] = { name: b.name, label: b.label, len: b.len, start: 0, end: 1, p: 0, w: 0, tp: 0 };
     for (const name of Object.keys(MODULES)) this.modules[name] = { name, local: 0, weight: 0, active: false, windows: [] };
+    this._moduleList = Object.values(this.modules); // pro Frame ohne neues Array durchlaufen
     if (story) {
       for (const b of BEATS) {
         const el = story.querySelector(`[data-scene="${b.name}"]`);
@@ -287,7 +288,7 @@ export class Director {
     }
 
     // Module
-    for (const m of Object.values(this.modules)) {
+    for (const m of this._moduleList) {
       let weight = 0;
       for (const w of m.windows) weight = Math.max(weight, windowWeight(g, w.start, w.end, MODULE_FADE));
       const w0 = m.windows[0];
@@ -321,7 +322,10 @@ export class Director {
   /** Effektives vertikales FOV fuer das aktuelle Seitenverhaeltnis */
   fovFor(fov, aspect = this.aspect) {
     if (aspect >= PORTRAIT.refAspect) return fov;
-    const k = Math.min(PORTRAIT.maxFactor, Math.pow(PORTRAIT.refAspect / aspect, PORTRAIT.exponent));
+    let k = Math.min(PORTRAIT.maxFactor, Math.pow(PORTRAIT.refAspect / aspect, PORTRAIT.exponent));
+    // Hochformat (Tablet bis Handy): mindestens so weit wie bei Seitenverhaeltnis 0.59, fuer das posM/lookM abgestimmt
+    // sind. Sonst waere das Bild auf Tablets enger und der Kopf stiesse oben an die Kopfzeile.
+    if (aspect < PORTRAIT.below) k = Math.max(k, PORTRAIT.minPortrait);
     const half = THREE.MathUtils.degToRad(fov / 2);
     return THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(half) * k));
   }
@@ -392,12 +396,15 @@ export class Director {
     let bestName = null;
     let bestP = 0;
     const last = BEATS.length - 1;
-    BEATS.forEach((b, i) => {
+    for (let i = 0; i < BEATS.length; i++) {
+      const b = BEATS[i];
       const el = this.sections[b.name];
-      if (!el) return;
+      if (!el) continue;
       const s = this.beats[b.name];
       const p = s.tp;
-      const t = b.text;
+      // Hochformat: Panels stehen fix unten (style.css). Eigene Fenster (BEATS[].textM), sonst bleibt der Text stehen,
+      // bis kurz vor dem naechsten Panel (kaum Bilder ohne Satz auf dem Handy)
+      const t = this.portrait && b.textM ? b.textM : b.text;
       let fin;
       let fout;
       if (t) {
@@ -406,7 +413,7 @@ export class Director {
       } else {
         fin = i === 0 ? 1 : smoothstep(0.02, 0.12, p);
         // Ausblenden erst, waehrend das Panel nach oben wegscrollt (rund 40 vh): kurze Strecken ohne Text
-        fout = i === last ? 1 : 1 - smoothstep(s.pinOut - 0.06, s.pinOut + 40 / b.len, p);
+        fout = i === last ? 1 : this.portrait ? 1 - smoothstep(0.84, 0.97, p) : 1 - smoothstep(s.pinOut - 0.06, s.pinOut + 40 / b.len, p);
       }
       const o = Math.round(fin * fout * 1000) / 1000;
       shiftT += (this._clear[b.name] || 0) * o;
@@ -422,7 +429,7 @@ export class Director {
         for (const fn of this.panelListeners) fn(el, on, b.name);
       }
       this._dom.set(el, cache);
-    });
+    }
     this._shiftTarget = shiftT;
     this._updateScrim(bestName, bestO, bestP);
   }
@@ -432,10 +439,12 @@ export class Director {
   _updateScrim(name, o, p) {
     const sc = this.scrim;
     const r = name ? this._rects[name] : null;
-    const def = BEATS.find((b) => b.name === name);
+    let def = null;
+    for (let i = 0; i < BEATS.length; i++) if (BEATS[i].name === name) def = BEATS[i];
     if (!r || !def || o <= 0.001) { sc.a = 0; return; }
     const s = this.beats[name];
-    const up = Math.max(0, p - s.pinOut) * r.sec;
+    // Hochformat: Panels stehen fix (ausser Ausklang), die Zone wandert nicht mit
+    const up = this.portrait && name !== 'outro' ? 0 : Math.max(0, p - s.pinOut) * r.sec;
     const padX = r.w * 0.08;
     const padY = r.h * 0.12;
     sc.x = (r.x + r.w / 2) / r.W;
@@ -443,5 +452,8 @@ export class Director {
     sc.rx = (r.w / 2 + padX) / r.W;
     sc.ry = (r.h / 2 + padY) / r.H;
     sc.a = o * (def.scrim ?? 0.45);
+    // Hochformat: der Text steht dort auf einer eigenen, fast deckenden Flaeche. Ein voller Scrim reichte bis ueber
+    // den Kopf oben im Bild (Ausklang: graues, flaues Gesicht), darum halb, im Ausklang gar nicht (Runde 2)
+    if (this.portrait) sc.a *= name === 'outro' ? 0 : 0.5;
   }
 }

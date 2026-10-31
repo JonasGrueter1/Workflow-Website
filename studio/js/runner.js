@@ -101,7 +101,7 @@ export class Runner {
     }
     blendLook(this.entries, undefined, this.look);
     // Schnitt (Ende Code -> Roboter): kein Schwarz, sondern ein kurzer Lichtblitz. Das fertige Geruest blendet auf,
-    // im Licht steht der Roboter, dessen Visier danach erwacht.
+    // im Licht steht die Android-Bueste, deren Augen danach erwachen.
     const c = d.cutFade;
     if (c > 0) {
       // kurzer, heller Peak (c^3): wirkt als Lichtblitz, nicht als milchiger Schleier

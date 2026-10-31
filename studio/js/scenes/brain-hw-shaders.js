@@ -205,8 +205,9 @@ export function makeHardwareMaterial(THREE, U, opts) {
           float r = length(vAtl);
           float ring = smoothstep(0.62, 0.7, r) * (1.0 - smoothstep(0.8, 0.88, r));
           float e = uPad[int(hwIdx + 0.5)];
-          diffuseColor.rgb = mix(diffuseColor.rgb, uHwGold, ring);
-          hwMetal = ring;
+          // Kontaktring in hellem Chrom (Runde 2: vorher Gold, im Bloom ein oranger Ring)
+          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.82, 0.86, 0.9), ring);
+          hwMetal = 1.0;
           hwEmis += uHwSig * ring * (0.25 + 2.6 * e);
         }
         if (hwK == 14) hwEmis += uHwEmber * 2.4;
@@ -216,7 +217,8 @@ export function makeHardwareMaterial(THREE, U, opts) {
         hwEmis += uHwIce * (hwLine * 1.8 + hwBirth * 0.35);
         // Roentgen-Toenung: dunkler, damit das Gehirn fuehrt
         diffuseColor.rgb *= mix(1.0, 0.8, uXray);
-        diffuseColor.a = uHwAlpha * hwVis * smoothstep(uHwNear.x, uHwNear.y, vViewPosition.z);`)
+        diffuseColor.a = uHwAlpha * hwVis * smoothstep(uHwNear.x, uHwNear.y, vViewPosition.z);
+        if (diffuseColor.a < 0.004) discard; // unsichtbar: auch keine Tiefe schreiben (Neuronen dahinter bleiben)`)
       .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
         roughnessFactor = hwRough;`)
       .replace('#include <metalnessmap_fragment>', `#include <metalnessmap_fragment>

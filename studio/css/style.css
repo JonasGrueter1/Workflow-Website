@@ -349,6 +349,9 @@ strong { font-weight: 550; color: var(--c-text); }
 }
 .is-content .site-header::after, :is(.no-gl, .no-js) .site-header.is-scrolled::after { opacity: 1; }
 .is-content .site-header::before { opacity: 0; }
+/* Ausklang (Runde 2): die feste Leiste schon hier, das Kontakt-Panel scrollt sonst sichtbar hinter das Logo */
+.gl[data-beat="outro"] .site-header::after { opacity: 1; }
+.gl[data-beat="outro"] .site-header::before { opacity: 0; }
 .gl:not(.is-ready) .site-header, .gl:not(.is-ready) .hud { opacity: 0; }
 .site-header, .hud { transition: opacity 0.8s var(--ease-out); }
 .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 550; letter-spacing: -0.02em; margin-right: auto; font-size: 1.02rem; }
@@ -441,6 +444,9 @@ main { position: relative; z-index: 1; }
   background: radial-gradient(closest-side, rgba(4, 6, 10, 0.85), rgba(4, 6, 10, 0.5) 55%, rgba(4, 6, 10, 0));
   pointer-events: none;
 }
+/* Hero (Runde 2): Verlauf reicht rechts kaum ueber den Titel hinaus, sonst lag er grau ueber der Partikel-Bueste.
+   Der Titel steht auf dunklem Grund, die Partikel dahinter daempft der Shader selbst. */
+.chapter--intro .chapter__text::before { inset: -20% -3% -20% -24%; background: radial-gradient(closest-side, rgba(4, 6, 10, 0.78), rgba(4, 6, 10, 0.4) 55%, rgba(4, 6, 10, 0)); }
 /* Schatten als Filter auf dem ganzen Titel: text-shadow wuerde an den Wort-Masken (.w, overflow hidden) abgeschnitten */
 .chapter .headline { font-size: var(--fs-story); line-height: 1.04; letter-spacing: -0.038em; margin-bottom: var(--sp-5); color: var(--c-text); filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.55)); }
 .chapter .headline--xl { font-size: clamp(2.4rem, 1.2rem + 3.6vw, 5rem); line-height: 1; }
@@ -508,6 +514,8 @@ main { position: relative; z-index: 1; }
    --oo macht die Blende steil: Text ist entweder voll sichtbar oder weg (o 0.2 bis 0.8 -> 0 bis 1),
    nie lange halb transparent ueber dem Bild. */
 .gl .chapter { height: calc(var(--len, 180) * 1vh); --oo: clamp(0, calc((var(--o, 0) - 0.2) / 0.6), 1); }
+/* Link an der 3D-Strecke vorbei (nur Hochformat, siehe unten) */
+.story-skip { display: none; }
 .gl .chapter__panel {
   position: sticky;
   top: 0;
@@ -556,7 +564,7 @@ main { position: relative; z-index: 1; }
   transform: translate3d(-50%, 0, 0);
   transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out), visibility 0s;
 }
-.gl.is-content .chapter__offer { opacity: 0; visibility: hidden; }
+.gl.is-content .chapter__offer, .gl[data-beat="outro"] .chapter__offer { opacity: 0; visibility: hidden; }
 .chapter__offer p { margin: 0; color: var(--c-text); font-size: 0.98rem; line-height: 1.4; }
 .chapter__offer .btn { --h: 44px; flex: none; }
 .gl [data-split]:not(.is-split) { opacity: 0; }
@@ -649,7 +657,12 @@ main { position: relative; z-index: 1; }
 .section + .section { border-top: 1px solid var(--c-line); }
 .section--alt { background: var(--c-page-alt); }
 /* Farb-Echo der Szenen am Rand (hoechstens 6 % Deckkraft, nie hell hinter einer Textspalte) */
-.section::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.section::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  /* weich einblenden: keine harte Kante an der Abschnittsgrenze ueber dem abgedunkelten 3D-Bild */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%);
+  mask-image: linear-gradient(to bottom, transparent, #000 20%);
+}
 .section--echo-petrol::before { background: radial-gradient(48vw 70% at 100% 0%, rgba(31, 111, 124, 0.06), transparent 70%); }
 .section--echo-violet::before { background: radial-gradient(44vw 60% at 0% 100%, rgba(106, 42, 140, 0.06), transparent 70%); }
 .section--echo-violet-r::before { background: radial-gradient(44vw 70% at 100% 100%, rgba(106, 42, 140, 0.05), transparent 70%); }
@@ -1108,6 +1121,8 @@ main { position: relative; z-index: 1; }
 .form-status.is-info { color: var(--c-soft); }
 .form-status .link { justify-self: start; margin-top: 4px; }
 .form__privacy { margin: 0; font-size: var(--fs-small); line-height: 1.55; color: var(--c-muted); }
+.form__privacy .link { color: var(--c-soft); }
+.field__hint { margin: 8px 0 0; font-size: var(--fs-small); line-height: 1.45; color: var(--c-muted); }
 
 /* ------------------------------------------------------------ Footer */
 .site-footer { position: relative; z-index: 1; background: var(--c-void); border-top: 1px solid var(--c-line); padding: var(--sp-7) 0 calc(var(--sp-7) + env(safe-area-inset-bottom)); font-size: var(--fs-small); color: var(--c-muted); }
@@ -1120,6 +1135,8 @@ main { position: relative; z-index: 1; }
 .footer__brand .brand__mark::after { width: 4px; height: 4px; }
 .footer__meta { font-size: var(--fs-mono); letter-spacing: 0.08em; }
 .footer__small { color: var(--c-muted); }
+.footer__legal { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.footer__legal .link { color: var(--c-soft); }
 .footer__top { justify-self: end; color: var(--c-soft); }
 
 /* ------------------------------------------------------------ Einblendungen */
@@ -1250,6 +1267,34 @@ html.js:not(.ui-on) [data-reveal] { animation: reveal-safety 0.6s ease 3s forwar
     transition: opacity 0.5s;
   }
   .gl.is-content .story-bar, .gl:not(.is-ready) .story-bar { opacity: 0; }
+  /* Hochformat: Strecke rund 28 % kuerzer (der Director misst die echten Hoehen), Leistungen kommen frueher.
+     Die Panels (ausser Ausklang) stehen fix unten statt zu kleben: der Text bleibt stehen, bis das naechste Panel
+     kommt, und scrollt nie ueber das Motiv in der oberen Bildhaelfte. */
+  .gl .chapter { height: calc(var(--len, 180) * 0.72vh); }
+  .gl .chapter:not(.chapter--outro) .chapter__panel { position: fixed; left: 0; right: 0; top: 0; }
+  /* Runde 2: unten rechts unter dem Text-Panel statt oben rechts (dort lag die Pill auf dem Kopf des Androiden).
+     Nur zwischen Hero (dort fuehrt "Direkt zu den Leistungen" an der Strecke vorbei) und Ausklang, nicht neben der
+     Angebotszeile im Kapitel Code. */
+  .gl .story-skip {
+    display: inline-flex;
+    align-items: center;
+    position: fixed;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    right: var(--gutter);
+    z-index: 55;
+    min-height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    background: rgba(5, 8, 13, 0.62);
+    font: 500 10.5px/1 var(--f-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-soft);
+    transition: opacity 0.5s, visibility 0.5s;
+  }
+  .gl.is-content .story-skip, .gl:not(.is-ready) .story-skip, .gl.offer-on .story-skip,
+  .gl[data-beat="intro"] .story-skip, .gl[data-beat="outro"] .story-skip { opacity: 0; visibility: hidden; }
   .story-bar i { position: absolute; inset: 0; background: var(--c-signal); box-shadow: 0 0 8px var(--c-signal); transform-origin: left; transform: scaleX(var(--story, 0)); }
   .chapter--right .chapter__panel { justify-content: flex-start; }
   .chapter:not(.chapter--intro) .chapter__text { max-width: 36rem; }
@@ -1347,7 +1392,13 @@ html.js:not(.ui-on) [data-reveal] { animation: reveal-safety 0.6s ease 3s forwar
   .chapter--intro .scroll-cue { display: none; }
   /* Ausklang auf dem Handy: kompakter Textblock, damit oben der Kopf sichtbar bleibt (Mail steht gleich danach im Kontakt) */
   .gl .chapter--outro .outro-mail { display: none; }
-  .gl .chapter--outro .chapter__text::before { top: -56px; }
+  .gl .chapter--outro .chapter__text::before {
+    /* Runde 2: Verlauf beginnt knapp ueber dem Text (vorher 56 px darueber: dunkler Balken ueber Mund und Kinn) */
+    top: -22px;
+    /* Unterkante laeuft ueber rund 140 px weich aus (keine harte Kante beim Wegscrollen ueber dem Gesicht) */
+    bottom: calc(-1 * max(8vh, 48px) - 140px);
+    background: linear-gradient(to bottom, rgba(5, 8, 13, 0) 0, rgba(5, 8, 13, 0.88) 30px, rgba(5, 8, 13, 0.94) calc(100% - 180px), rgba(5, 8, 13, 0) 100%);
+  }
 }
 @media (max-width: 420px) {
   .nav-toggle { padding: 0; width: 44px; justify-content: center; }
@@ -1361,3 +1412,13 @@ html.js:not(.ui-on) [data-reveal] { animation: reveal-safety 0.6s ease 3s forwar
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .js [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* ------------------------------------------------------------------ Rechtliches (impressum.html, datenschutz.html) */
+.legal-page .site-header { position: absolute; }
+.legal { padding: calc(var(--header-h) + clamp(48px, 8vw, 110px)) 0 clamp(72px, 10vw, 140px); background: var(--c-page); min-height: 70vh; }
+.legal .wrap { max-width: 46rem; }
+.legal h1 { font-size: var(--fs-h2); margin-bottom: var(--sp-6); }
+.legal h2 { font-size: 1.25rem; letter-spacing: -0.02em; margin: var(--sp-6) 0 var(--sp-3); color: var(--c-text); }
+.legal p { color: var(--c-soft); line-height: 1.65; max-width: 62ch; }
+.legal .link { color: var(--c-ice); }
+.legal__meta { font-size: var(--fs-small); color: var(--c-muted); }

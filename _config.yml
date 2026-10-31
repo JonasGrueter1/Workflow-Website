@@ -1,0 +1,6 @@
+# GitHub Pages (Jekyll): interne Dateien der eigenen Website nicht veroeffentlichen.
+# ARCHITEKTUR.md enthaelt interne Notizen, dev.html/dev.js sind nur die Testseite fuer Szenen.
+exclude:
+  - studio/ARCHITEKTUR.md
+  - studio/dev.html
+  - studio/js/dev.js

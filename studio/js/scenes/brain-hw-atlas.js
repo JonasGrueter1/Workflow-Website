@@ -19,7 +19,8 @@ function templeLayout(f) {
     { t: 'mem', u: U(0.083), v: -0.002, w: 0.05, h: 0.024, label: 'mem' },
     { t: 'mem', u: U(-0.093), v: 0.036, w: 0.05, h: 0.024, label: 'mem2' },
     { t: 'mem', u: U(-0.093), v: -0.002, w: 0.05, h: 0.024, label: 'mem2' },
-    { t: 'fins', u: U(-0.163), v: 0.006, w: 0.058, h: 0.12, n: 7, fh: 0.034, axis: 'v' },
+    // Runde 2: kein Kuehlkoerper mehr (wirkte wie ein Modellbausatz), dafuer ein flaches Graphitmodul
+    { t: 'soc', u: U(-0.163), v: 0.006, w: 0.05, h: 0.1, label: 'plain' },
     { t: 'hdr', u: U(0.005), v: 0.079, w: 0.07, h: 0.016, pins: 7 },
     { t: 'cap', u: U(0.14), v: -0.035, r: 0.012, hgt: 0.024 },
     { t: 'cap', u: U(0.168), v: -0.035, r: 0.012, hgt: 0.024 },
@@ -52,19 +53,18 @@ function templeLayout(f) {
       { n: 5, pitch: 0.0042, w: 0.0016, pts: [[U(-0.093), -0.014], [U(-0.093), -0.03], [U(-0.078), -0.045], [U(-0.078), -0.074]] },
     ],
     leds: 3,
-    silk: [{ text: 'JG-NPU-01', u: U(0.1), v: 0.07, size: 0.011 }, { text: 'REV.B', u: U(-0.1), v: 0.072, size: 0.009 },
-      { text: 'U1', u: U(-0.005), v: 0.063, size: 0.008 }, { text: 'CH-LU 2026', u: U(0.0), v: -0.09, size: 0.0075, skip: true }],
+    silk: [], // Runde 2: kein lesbarer Aufdruck (wirkte wie ein Bausatz)
   };
 }
 
 function backLayout() {
   // Tablar hinter dem Kleinhirn, Bauteile oben. v+ = nach hinten (zur Schale), v- = nach vorne (zum Gehirn)
   const comps = [
-    { t: 'soc', u: 0.083, v: 0.012, w: 0.086, h: 0.086, label: 'soc2', fins: { n: 9, fh: 0.034 } },
-    { t: 'fan', u: -0.112, v: -0.012, r: 0.066 },
+    // Runde 2: ohne Luefter und Kuehlrippen, flache Module ohne Aufdruck
+    { t: 'soc', u: 0.083, v: 0.012, w: 0.086, h: 0.086, label: 'soc2' },
+    { t: 'soc', u: -0.112, v: -0.012, w: 0.12, h: 0.1, label: 'plain' },
     { t: 'mem', u: 0.178, v: 0.04, w: 0.024, h: 0.048, label: 'mem', rot: 1 },
     { t: 'mem', u: 0.178, v: -0.018, w: 0.024, h: 0.048, label: 'mem', rot: 1 },
-    { t: 'fins', u: -0.112, v: 0.075, w: 0.11, h: 0.028, n: 8, fh: 0.026, axis: 'v' },
     { t: 'hdr', u: 0.083, v: -0.08, w: 0.08, h: 0.014, pins: 8 },
     { t: 'cap', u: -0.012, v: -0.068, r: 0.012, hgt: 0.024 },
     { t: 'cap', u: 0.014, v: -0.068, r: 0.012, hgt: 0.024 },
@@ -92,8 +92,7 @@ function backLayout() {
       { n: 10, pitch: 0.0062, w: 0.0018, pulse: 0.4, pts: [[0.083, 0.055], [0.083, 0.066], [0.08, 0.08]] },
     ],
     leds: 4,
-    silk: [{ text: 'JG-CORE', u: 0.0, v: -0.086, size: 0.0085 }, { text: '0.8 Nm', u: 0.19, v: -0.062, size: 0.007 },
-      { text: 'U7', u: 0.083, v: 0.064, size: 0.0075 }],
+    silk: [],
   };
 }
 
@@ -130,8 +129,7 @@ function riserLayout() {
       { n: 5, pitch: 0.0044, w: 0.0016, pts: [[-0.095, -0.045], [-0.12, -0.045], [-0.13, -0.06]] },
     ],
     leds: 2,
-    silk: [{ text: 'JG-MEM 4x', u: 0.0, v: 0.054, size: 0.009 }, { text: 'KI-EINHEIT', u: 0.06, v: -0.095, size: 0.0085 },
-      { text: 'U9', u: -0.06, v: -0.088, size: 0.0075 }],
+    silk: [],
   };
 }
 
@@ -450,15 +448,7 @@ export function buildAtlas(layouts, scale = 1) {
     }
   }
 
-  // Chip-Beschriftungen (A: Druck bzw. Gravur), aufrecht
-  const lbl = (k, lines, px) => {
-    const [x, y, w, h] = reg(k);
-    drawText(R, lines, x + w / 2, y + h / 2, px * scale);
-  };
-  lbl('soc', ['JG-NPU', 'A17 2610', 'CH · LU'], 30);
-  lbl('soc2', ['JG-CORE', 'X2 2610', 'KI-EINHEIT'], 28);
-  lbl('mem', ['JG 8G', 'LP5X'], 20);
-  lbl('mem2', ['JG 4G', 'NV-02'], 20);
+  // Runde 2: keine lesbaren Chip-Beschriftungen mehr, nur Pin-1-Punkt und Rahmen (ruhige, dunkle Module)
   {
     // Pin-1-Punkte und Rahmenlinie auf den grossen Chips
     for (const k of ['soc', 'soc2']) {
