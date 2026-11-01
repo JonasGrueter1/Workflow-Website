@@ -184,7 +184,7 @@ export async function create(ctx) {
         const lp = clamp01((zm.p - 0.24) / 0.07);
         leak = lp > 0 && lp < 1 ? Math.sin(Math.PI * lp) : 0;
         U.uEdgeY.value = 1.25 - 2.9 * lp;
-        holoAmt = 0.6 * smoothstep(0.3, 0.42, zm.p) * (1 - 0.55 * smoothstep(0.6, 0.95, zm.p)) * (1 - smoothstep(0.32, 0.5, br.p));
+        holoAmt = 0.6 * smoothstep(0.3, 0.42, zm.p) * (1 - 0.55 * smoothstep(0.6, 0.95, zm.p)) * (1 - smoothstep(0.15, 0.46, br.p));
         // Aufbau im Beat robot: erst Hologramm (0.08-0.26), dann von unten nach oben fest (0.26-0.64)
         const b = smoothstep(0.26, 0.64, rb.p);
         buildLine = b >= 0.999 ? 9 : -3.6 + (1.25 + 3.6) * b;
@@ -232,8 +232,9 @@ export async function create(ctx) {
       U.uMechCut.value = buildLine;
       // Mechanik (Schaedelgitter, Kabel, Hals) loest sich auf, waehrend die Kamera ins Gehirn taucht: so verschwindet
       // sie nicht hart am Ende des Fensters (brain@0.6 plus Rampe), wenn sie von innen gross im Bild steht
-      // Runde 2: frueher (brain@0.3 bis 0.45), damit beim Eintauchen keine Kabel und Stangen mehr vor der Linse stehen
-      U.uMechFade.value = inOutro ? 0 : smoothstep(0.3, 0.45, br.p);
+      // Runde 2: frueher, damit beim Eintauchen keine Kabel und Stangen mehr vor der Linse stehen (Version 4: der
+      // Anflug ist laenger, brain@0.12 bis 0.38)
+      U.uMechFade.value = inOutro ? 0 : smoothstep(0.12, 0.38, br.p);
       // Augen: kurzes Flackern beim Einschalten, im Ausklang hell im Lichtblitz
       const flick = power > 0 && power < 1 ? 0.55 + 0.45 * Math.sin(time * 47) * Math.sin(time * 13) : 1;
       const irisBoost = power * flick * (inOutro ? 1 + 1.4 * Math.exp(-Math.pow(out.p / 0.12, 2)) : 1);
@@ -275,14 +276,14 @@ export async function create(ctx) {
         mats.shellIn.envMapIntensity = mats.shell.envMapIntensity;
       }
       const xr = smoothstep(0.45, 0.75, zm.p);
-      look.bloom = (mix4(0.55, 0.6, 0.6, 0.6) + 0.3 * xr * (1 - smoothstep(0.3, 0.5, br.p))) * (ctx.isMobile ? 0.86 : 1);
+      look.bloom = (mix4(0.55, 0.6, 0.6, 0.6) + 0.3 * xr * (1 - smoothstep(0.12, 0.46, br.p))) * (ctx.isMobile ? 0.86 : 1);
       look.bloomThreshold = mix4(1.5, 1.4, 1.05, 1.5) - 0.35 * xr;
       if (noBloom) look.bloom = 0;
       if (dbgFlags.includes('nokey')) { look.key = 0; look.rim = 0; }
       if (dbgFlags.includes('noenv')) { mats.shell.envMapIntensity = 0; }
       look.parallax = (inOutro ? 0.28 : 0.26) * follow + 0.02;
       look.drift = 0.025 * (1 - smoothstep(0.4, 0.9, zm.p)) + 0.004;
-      look.flash = inOutro ? 0 : 0.06 * Math.exp(-Math.pow((br.p - 0.46) / 0.05, 2));
+      look.flash = inOutro ? 0 : 0.06 * Math.exp(-Math.pow((br.p - 0.4) / 0.086, 2));
     },
     setActive() {},
     dispose() {

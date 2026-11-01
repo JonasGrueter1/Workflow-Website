@@ -1,16 +1,19 @@
 // Szene "cables": Aus dem Gehirn werden Glasfaserbuendel gezogen und mit fuenf Werkzeug-Knoten verbunden.
-// Fenster: brain@0.7 bis dna@0.3 (siehe config.js MODULES).
+// Fenster: brain@0.7 bis cables@1 (siehe config.js MODULES, danach Schnitt auf den Ausklang).
 //
-// Zeitachse u in Beat-Einheiten: -0.3 = brain@0.7, 0 = cables@0, 1 = cables@1 = dna@0, 1.3 = dna@0.3
+// Zeitachse u in Beat-Einheiten: -0.3 = brain@0.7, 0 = cables@0, 1 = cables@1 (Schnitt)
 //   -0.25..0.42  Kabel wachsen aus dem Hirnstamm (gestaffelt), leuchtende Spitze vorne
 //   -0.12..0.10  Knoten erscheinen als leise Ziele (Ring schliesst sich, Icon gedimmt)
-//    Verbindung  Knoten startet: Schockwelle, Licht in der Kugel, Label-Punkt leuchtet
+//    Verbindung  Knoten startet: Schockwelle, Licht in der Kugel
 //    danach      Lichtimpulse laufen zu den Knoten (Takt pro Kabel), jeder Treffer laesst den Knoten
 //                aufleuchten. Selten laeuft ein warmer Impuls zurueck zum Gehirn.
-//    0.70..1.00  Fokus auf den Website-Knoten, die Kamera fliegt hinein (Portal), danach Helix (dna)
+//
+// Version 4: Die Knoten sind Links. Beschriftungen zeichnet die Szene nicht mehr selbst: sie meldet pro Bild die
+// Bildposition jedes Knotens (api.screen, ohne Allokation) und js/nodes.js setzt die HTML-Links darueber. Zeigt
+// oder fokussiert man einen Link, leuchtet sein Knoten und die Impulse laufen schneller (api.setHighlight).
 //
 // Leistung: 5 Draw Calls (Staub, Fasern + Maentel, Ringe, Knoten, Spitzen). Alles Bewegte im Shader,
-// pro Frame nur wenige Uniforms und 5 Labels (nur bei Aenderung ins DOM geschrieben).
+// pro Frame nur wenige Uniforms.
 import {
   STRANDS, SAMPLES, RING_SEG, MOTES, buildCurves, buildFibreGeometry, buildRingGeometry, buildNodeGeometry,
   buildMoteGeometry, smoothstep,
@@ -29,6 +32,7 @@ const GROW = {
   website: [0.0, 0.42],
 };
 const SPEED = 3.4;        // Impulse in Welt-Einheiten pro Sekunde
+const HI_SPEED = 2.2;     // hervorgehobenes Kabel: Impulse so viel schneller (zusaetzlich zu SPEED)
 const GAP = 4.2;          // Pause zwischen zwei Impulsen (in Laengeneinheiten)
 const RET_FACTOR = 2.6;   // Rueck-Impulse sind seltener
 
@@ -102,35 +106,20 @@ export function create(ctx) {
     group.add(o);
   }
 
-  /* ------------------------------------------------------------ Labels */
-  const overlay = ctx.overlay;
-  const labels = curves.map((c) => {
-    const el = document.createElement('div');
-    el.className = 'gl-label';
-    el.setAttribute('aria-hidden', 'true');
-    // Label seitlich der Kugel (die Kabel kommen von unten): [Linie][Punkt][Name], links gespiegelt
-    el.style.cssText = 'opacity:0;display:flex;align-items:center;gap:8px;'
-      + 'text-shadow:0 0 14px rgba(4,6,10,0.95),0 0 3px rgba(4,6,10,0.9);pointer-events:none;';
-    const line = document.createElement('span');
-    line.style.cssText = 'display:block;width:18px;height:1px;flex:none;'
-      + 'background:linear-gradient(to right,rgba(70,230,255,0),rgba(70,230,255,0.6));';
-    const dot = document.createElement('span');
-    dot.style.cssText = 'display:block;flex:none;width:5px;height:5px;border-radius:50%;box-sizing:border-box;'
-      + 'border:1px solid var(--c-muted);background:transparent;transition:background .35s,border-color .35s;';
-    const txt = document.createElement('span');
-    txt.textContent = NODE_LABELS[c.name] || c.name;
-    el.append(line, dot, txt);
-    if (overlay) overlay.appendChild(el);
-    // Breite grob aus der Textlaenge (Mono-Schrift, Grossbuchstaben, Laufweite) plus Linie und Punkt
-    const w = (txt.textContent.length * 8.6) + 39;
-    return {
-      el, line, dot, w, x: -1, y: -1, o: -1, on: null, glow: -1, hidden: true, side: 1, sideSet: 0,
-      vis: 0, occ: 1, depth: 0, cx: 0, cy: 0, r: 0, nx: 0, ny: 0, on1: 0, flash: 0,
-    };
-  });
+  /* ------------------------------------------------------------ Bildpositionen der Knoten (fuer js/nodes.js) */
+  // Pro Knoten: Mitte (cx, cy) und Radius r in CSS-Pixeln, Sichtbarkeit vis 0..1 (Knoten im Bild, nicht unter Kopfzeile,
+  // HUD oder Text, nicht hinter einem naeheren Knoten), side = Seite der Beschriftung (1 rechts, -1 links), w = Breite der
+  // Beschriftung (setzt nodes.js nach dem Messen). Die Objekte werden pro Bild nur ueberschrieben.
+  const screen = curves.map((c) => ({
+    name: c.name, label: NODE_LABELS[c.name] || c.name,
+    cx: 0, cy: 0, r: 0, vis: 0, on: 0, side: 1, w: (NODE_LABELS[c.name] || c.name).length * 8.6 + 52, wf: 0,
+    depth: 0, occ: 1, nx0r: 0, nx0l: 0, ny: 0, nx: 0, base: 0,
+  }));
+  let hiName = null;
+  const hi = new Float32Array(curves.length); // Hervorhebung pro Knoten, weich 0..1
 
-  /* ------------------------------------------------- Sichere Zonen der Labels */
-  // Labels duerfen nicht unter Kopfzeile, HUD (unten rechts) oder dem Text-Panel liegen: dort weich ausblenden.
+  /* ------------------------------------------------- Sichere Zonen der Links */
+  // Knoten-Links duerfen nicht unter Kopfzeile, HUD (unten rechts) oder dem Text-Panel liegen: dort weich ausblenden.
   const safe = { top: 76, hud: null, dirty: true };
   const measureSafe = () => {
     safe.dirty = false;
@@ -152,16 +141,22 @@ export function create(ctx) {
   // Text-Panel (Zone aus director.scrim, in UV mit y oben), einmal pro Frame
   function measureText(W, H) {
     const sc = director.scrim;
-    textBox.on = sc && sc.a > 0.01 ? Math.min(1, sc.a * 2.5) : 0;
+    // Hochformat: der Scrim ist dort nur halb so stark, der Text steht aber voll da (fast deckende Flaeche)
+    const portrait = W / Math.max(1, H) < 0.85;
+    textBox.on = sc && sc.a > 0.01 ? Math.min(1, sc.a * (portrait ? 5 : 2.5)) : 0;
     if (!textBox.on) return;
     textBox.x0 = (sc.x - sc.rx) * W - 12;
     textBox.x1 = (sc.x + sc.rx) * W + 12;
     textBox.y0 = (1 - sc.y - sc.ry) * H - 12;
     textBox.y1 = (1 - sc.y + sc.ry) * H + 12;
   }
+  // Abstand zum Text mit der vollen Breite (wf: mit Untertitel, den nodes.js beim Zeigen einblendet), damit die
+  // Beschriftung auch beim Zeigen nicht in den Text laeuft
+  const fullW = (lb) => Math.max(lb.w, lb.wf || 0);
   const textDist = (lb, side) => {
-    const x0 = side > 0 ? lb.nx0r : lb.nx0l - lb.w;
-    return boxDist(x0, lb.ny - 9, x0 + lb.w, lb.ny + 9, textBox);
+    const w = fullW(lb);
+    const x0 = side > 0 ? lb.nx0r : lb.nx0l - w;
+    return boxDist(x0, lb.ny - 9, x0 + w, lb.ny + 9, textBox);
   };
   function safeFade(lb, W, H) {
     const x0 = lb.side > 0 ? lb.nx : lb.nx - lb.w;
@@ -202,7 +197,6 @@ export function create(ctx) {
     retOffset: i * 2.11 + 1.3,
   }));
   const tmpV = new THREE.Vector3();
-  const camPos = new THREE.Vector3();
   const nodePos = U.uNodePos.value;
   // Knoten werden von hinten nach vorne gezeichnet (ein Draw Call, vormultipliziertes Alpha)
   const idxAttr = nodeGeo.geometry.getAttribute('aIdx');
@@ -230,10 +224,8 @@ export function create(ctx) {
   function timeline(global) {
     const bb = director.beat('brain');
     const bc = director.beat('cables');
-    const bd = director.beat('dna');
     if (global < bc.start) return (global - bc.start) / Math.max(1e-6, bb.end - bb.start);
-    if (global < bd.start) return (global - bc.start) / Math.max(1e-6, bc.end - bc.start);
-    return 1 + (global - bd.start) / Math.max(1e-6, bd.end - bd.start);
+    return (global - bc.start) / Math.max(1e-6, bc.end - bc.start);
   }
 
   // Punkt auf der Mittellinie bei Bogenlaenge s (inkl. Schweben/Schwingen wie im Shader)
@@ -262,15 +254,14 @@ export function create(ctx) {
     return out;
   }
 
-  function hideLabels() {
-    for (const lb of labels) {
-      if (!lb.hidden) { lb.el.style.opacity = '0'; lb.o = 0; lb.hidden = true; }
-    }
+  function hideScreen() {
+    for (const sc of screen) sc.vis = 0;
   }
 
   const api = {
     group,
-    look: { bloom: 1.0, bloomRadius: 0.4, parallax: 0.12, drift: 0.018, fogDensity: 0.026 },
+    // Keine chromatische Aberration: die Knoten am Bildrand (E-Mail, Dokumente) sind Links und sollen scharf sein
+    look: { bloom: 1.0, bloomRadius: 0.4, parallax: 0.12, drift: 0.018, fogDensity: 0.026, aberration: 0, vignette: 0.45 },
 
     update(time, dt, local, global, weight = 1) {
       const u = timeline(global);
@@ -278,16 +269,21 @@ export function create(ctx) {
       U.uTrunk.value = smoothstep(-0.06, 0.12, u);
       U.uFog.value = ctx.scene.fog ? ctx.scene.fog.density : 0.03;
       camera.updateMatrixWorld();
-      camPos.setFromMatrixPosition(camera.matrixWorld);
 
-      const focus = smoothstep(0.62, 0.95, u);
       measureText(ctx.size.width, ctx.size.height);
+      // Hervorhebung (Link gezeigt oder fokussiert): weich ein und aus
+      let anyHi = 0;
+      for (let i = 0; i < count; i++) {
+        const want = hiName === names[i] ? 1 : 0;
+        hi[i] += (want - hi[i]) * (1 - Math.exp(-Math.max(dt, 1 / 60) * (want ? 9 : 5)));
+        if (dt === 0) hi[i] = want;
+        anyHi = Math.max(anyHi, hi[i]);
+      }
       U.uMotes.value = smoothstep(-0.25, 0.5, u) * 1.15;
       for (let i = 0; i < count; i++) {
         const cv = curves[i];
         const st = state[i];
         const L = cv.length;
-        const name = cv.name;
 
         // Schweben des Knotens
         const bob = U.uCab2.value[i];
@@ -311,6 +307,8 @@ export function create(ctx) {
         if (dt === 0) st.on = connected ? 1 : 0;
 
         // Impulse (CPU rechnet die Koepfe, der Shader zeichnet: Treffer und Aufleuchten sind synchron)
+        // Hervorgehobenes Kabel: der Takt laeuft schneller (Phase verschieben statt Periode aendern, ohne Sprung)
+        st.offset += dt * HI_SPEED * hi[i];
         const ph = ((time + st.offset) % st.period + st.period) % st.period;
         const P = ph * SPEED - 1.0;
         const arrive = L - 0.12;
@@ -331,13 +329,12 @@ export function create(ctx) {
         const flash = connected
           ? Math.max(Math.exp(-pulseAge * 3.4) * st.on, Math.exp(-Math.max(0, bootAge) * 2.2) * 1.2)
           : 0;
-        // Portal: Kamera fliegt in den Website-Knoten
-        const dist = camPos.distanceTo(nodePos[i]);
-        const portal = name === 'website' ? 1 - smoothstep(0.7, 3.2, dist) : 0;
-        const inside = smoothstep(0.32, 0.6, dist);
-        const fc = name === 'website' ? focus : 0;
-        U.uNodeA.value[i].set(appear * inside * nodeHeaderFade(i), st.on, Math.min(1.4, flash), fc);
-        U.uNodeB.value[i].set(shockAge, shockAmp, portal, name === 'website' ? 0 : focus);
+        // Hervorhebung: Knoten leuchtet (Rand, Halo, Icon), die anderen treten etwas zurueck
+        const glowHi = hi[i] * st.on * (0.55 + 0.15 * Math.sin(time * 5.0 + i));
+        const dimO = (anyHi - hi[i]) * 0.55;
+        // w = Hervorhebung: das Icon unter der Maus (oder mit Fokus) wird hell und scharf gezeichnet
+        U.uNodeA.value[i].set(appear * nodeHeaderFade(i), st.on, Math.min(1.4, flash + glowHi), hi[i]);
+        U.uNodeB.value[i].set(shockAge, shockAmp, 0, dimO);
 
         // Spitze
         const tipI = gx > 0 && gx < 1 ? smoothstep(0, 0.04, gx) * (1 - smoothstep(0.9, 1, gx)) : 0;
@@ -345,15 +342,20 @@ export function create(ctx) {
         pointAt(cv, st.grow, time, tmpV);
         tip.set(tmpV.x, tmpV.y, tmpV.z, tipI);
 
-        // Label (Position hier, Schreiben ins DOM nach der Verdeckungspruefung)
-        placeLabel(i, appear * inside * weight * (1 - portal) * (1 - (name === 'website' ? 0 : focus * 0.6)), st.on, flash);
+        // Bildposition fuer den Link (Verdeckung danach in resolveScreen)
+        placeNode(i, appear * weight, st.on);
       }
       sortNodes();
-      resolveLabels(dt);
+      resolveScreen(dt);
     },
 
+    /** Bildpositionen der Knoten (nur lesen, siehe oben) */
+    screen,
+    /** Knoten hervorheben (Name aus NODE_LABELS) oder null */
+    setHighlight(name) { hiName = name || null; },
+
     setActive(active) {
-      if (!active) hideLabels();
+      if (!active) hideScreen();
     },
 
     dispose() {
@@ -364,18 +366,16 @@ export function create(ctx) {
       tipGeo.dispose();
       moteGeo.dispose();
       for (const m of Object.values(mats)) m.dispose();
-      for (const lb of labels) lb.el.remove();
+      hideScreen();
       group.clear();
     },
   };
 
-  // Pass 1: Bildschirmposition, Grundsichtbarkeit, Tiefe
-  function placeLabel(i, vis, on, flash) {
-    const lb = labels[i];
-    lb.on1 = on;
-    lb.flash = flash;
-    lb.vis = 0;
-    if (!overlay) return;
+  // Pass 1: Bildposition, Grundsichtbarkeit, Tiefe, Seite der Beschriftung
+  function placeNode(i, vis, on) {
+    const lb = screen[i];
+    lb.on = on;
+    lb.base = 0;
     const p = nodePos[i];
     tmpV.copy(p).applyMatrix4(camera.matrixWorldInverse);
     const depth = -tmpV.z;
@@ -388,86 +388,51 @@ export function create(ctx) {
     lb.cx = (tmpV.x * 0.5 + 0.5) * W;
     lb.cy = (-tmpV.y * 0.5 + 0.5) * H;
     lb.r = rPx;
-    // Seite mit Hysterese: rechts der Kugel, nahe am rechten Rand oder am Text-Panel links davon
-    // (ein Label neben dem Text wuerde sonst ausgeblendet und wirkte blasser als die anderen)
-    lb.nx0r = lb.cx + (rPx * 1.18 + 2);
-    lb.nx0l = lb.cx - (rPx * 1.18 + 2);
+    // Beschriftung neben der Trefferflaeche (mindestens 24 px Radius um die Mitte)
+    const hit = Math.max(24, rPx * 1.25);
+    lb.nx0r = lb.cx + hit + 4;
+    lb.nx0l = lb.cx - hit - 4;
     lb.ny = lb.cy;
-    const room = W - (lb.cx + rPx * 1.2 + lb.w + 16);
+    // Seite mit Hysterese: rechts der Kugel, nahe am rechten Rand oder am Text-Panel links davon
+    const room = W - (lb.nx0r + fullW(lb) + 16);
     const textR = textBox.on ? textDist(lb, 1) < 30 : false;
     const textL = textBox.on ? textDist(lb, -1) < 30 : false;
     if (lb.side > 0 && (room < 0 || (textR && !textL))) lb.side = -1;
     else if (lb.side < 0 && room > 40 && !(textR && !textL) && (!textBox.on || textDist(lb, 1) > 60)) lb.side = 1;
-    lb.nx = lb.cx + lb.side * (rPx * 1.18 + 2);
-    lb.ny = lb.cy;
-    // Knoten muss im Bild sein, Label ganz lesbar
+    lb.nx = lb.side > 0 ? lb.nx0r : lb.nx0l;
+    // Knoten muss im Bild sein, Beschriftung ganz lesbar
     const x0 = lb.side > 0 ? lb.nx : lb.nx - lb.w;
     if (lb.cx < 8 || lb.cx > W - 8 || lb.cy < 12 || lb.cy > H - 12 || x0 < 4 || x0 + lb.w > W - 4 || rPx < 5) return;
     if (safe.dirty) measureSafe();
-    lb.vis = vis * smoothstep(5, 12, rPx) * (1 - smoothstep(Math.min(W, H) * 0.22, Math.min(W, H) * 0.36, rPx)) * safeFade(lb, W, H);
+    lb.base = vis * smoothstep(5, 12, rPx) * (1 - smoothstep(Math.min(W, H) * 0.22, Math.min(W, H) * 0.36, rPx)) * safeFade(lb, W, H);
   }
 
-  // Pass 2: Labels, die von einem naeheren Knoten oder Label verdeckt werden, weich ausblenden
-  function resolveLabels(dt) {
+  // Pass 2: Knoten, deren Beschriftung von einem naeheren Knoten oder dessen Beschriftung verdeckt wird, weich ausblenden
+  function resolveScreen(dt) {
     for (let i = 0; i < count; i++) {
-      const a = labels[i];
+      const a = screen[i];
       let occ = 0;
-      if (a.vis > 0) {
-        const ax = a.side > 0 ? a.nx + a.w * 0.5 : a.nx - a.w * 0.5; // Mitte des Labels
+      if (a.base > 0) {
+        const ax = a.side > 0 ? a.nx + a.w * 0.5 : a.nx - a.w * 0.5; // Mitte der Beschriftung
         const hw = a.w * 0.5 + 6;
         for (let j = 0; j < count; j++) {
-          const b = labels[j];
-          if (j === i || !(b.vis > 0.05) || b.depth >= a.depth) continue;
-          // naeherer Knoten (Kugel mit Halo) ueber dem Label?
+          const b = screen[j];
+          if (j === i || !(b.base > 0.05) || b.depth >= a.depth) continue;
+          // naeherer Knoten (Kugel mit Halo) ueber der Beschriftung?
           const dx = Math.max(Math.abs(ax - b.cx) - hw, 0);
           const dy = Math.max(Math.abs(a.ny - b.cy) - 10, 0);
           if (dx * dx + dy * dy < (b.r * 1.35) ** 2) occ = 1;
-          // naeheres Label im Weg?
+          // naehere Beschriftung im Weg?
           const bx = b.side > 0 ? b.nx + b.w * 0.5 : b.nx - b.w * 0.5;
-          if (Math.abs(ax - bx) < (a.w + b.w) * 0.5 + 10 && Math.abs(a.ny - b.ny) < 24) occ = 1;
+          if (Math.abs(ax - bx) < (a.w + b.w) * 0.5 + 10 && Math.abs(a.ny - b.ny) < 30) occ = 1;
           // eigene Kugel hinter einer naeheren Kugel?
           const dc = Math.hypot(a.cx - b.cx, a.cy - b.cy);
           if (dc < b.r * 1.1 + a.r * 0.6) occ = 1;
         }
       }
       a.occ += ((occ ? 0 : 1) - a.occ) * (1 - Math.exp(-10 * Math.max(dt, 1 / 60)));
-      writeLabel(a, a.vis * a.occ);
-    }
-  }
-
-  function writeLabel(lb, vis) {
-    let o = Math.round(vis * 100) / 100;
-    if (o <= 0.01) {
-      if (!lb.hidden) { lb.el.style.opacity = '0'; lb.o = 0; lb.hidden = true; }
-      return;
-    }
-    lb.hidden = false;
-    const rx = Math.round(lb.nx * 2) / 2;
-    const ry = Math.round(lb.ny * 2) / 2;
-    if (lb.side !== lb.sideSet) {
-      lb.el.style.flexDirection = lb.side > 0 ? 'row' : 'row-reverse';
-      lb.line.style.transform = lb.side > 0 ? 'none' : 'scaleX(-1)';
-      lb.sideSet = lb.side;
-      lb.x = -1;
-    }
-    if (rx !== lb.x || ry !== lb.y) {
-      lb.el.style.transform = lb.side > 0
-        ? `translate3d(${rx}px, ${ry}px, 0) translateY(-50%)`
-        : `translate3d(${rx}px, ${ry}px, 0) translate(-100%, -50%)`;
-      lb.x = rx;
-      lb.y = ry;
-    }
-    if (o !== lb.o) { lb.el.style.opacity = String(o); lb.o = o; }
-    const isOn = lb.on1 > 0.5;
-    if (isOn !== lb.on) {
-      lb.dot.style.background = isOn ? 'var(--c-signal)' : 'transparent';
-      lb.dot.style.borderColor = isOn ? 'var(--c-signal)' : 'var(--c-muted)';
-      lb.on = isOn;
-    }
-    const glow = isOn ? Math.round(Math.min(1, lb.flash) * 6) : 0;
-    if (glow !== lb.glow) {
-      lb.dot.style.boxShadow = glow ? `0 0 ${4 + glow * 2}px rgba(70,230,255,${(0.35 + glow * 0.1).toFixed(2)})` : 'none';
-      lb.glow = glow;
+      const v = a.base * a.occ;
+      a.vis = v < 0.01 ? 0 : Math.round(v * 100) / 100;
     }
   }
 

@@ -50,14 +50,12 @@ export const ANCHORS = Object.freeze({
     website: v(0, 0.5, -10.0),
   }),
   nodeRadius: 0.32,
-  dna: Object.freeze({ start: v(0, 0.5, -10.4), end: v(0, 0.5, -32), radius: 1.1, turnLength: 4.2 }),
-  wireframe: Object.freeze({ center: v(0, 0.5, -36), width: 5.6, height: 3.4 }),
 });
 
 /* ------------------------------------------------------- Hintergrund */
 // Farbwelten des Hintergrund-Moduls (js/scenes/backdrop.js), eine pro Beat plus "inhalt" (Inhaltsbereich).
 // backdrop.js mischt sie nach dem Fortschritt: weiche Kante BACKDROP_FADE (global) um jede Beat-Grenze, am Schnitt
-// (Ende Code -> Ausklang) ein harter Wechsel im Lichtblitz, im Inhaltsbereich nach director.content zu "inhalt".
+// (Ende Kabel -> Ausklang) ein harter Wechsel im Lichtblitz, im Inhaltsbereich nach director.content zu "inhalt".
 // Farben sRGB-Hex (wie HEX), gemischt wird linear. Punkte in Weltkoordinaten (ANCHORS):
 //   glowAt     Gegenlicht-Halo liegt (vom Auge aus) hinter diesem Punkt, glowShift verschiebt ihn im Bild
 //              (Anteil, x rechts, y oben). So bleibt das Licht beim Kreisen der Kamera hinter dem Motiv.
@@ -75,23 +73,30 @@ export const BACKDROPS = Object.freeze({
     glowAt: [0.3, -0.6, 0], glowShift: [0.02, 0.1], rayAt: [2.6, 10.5, -3.0], accentAt: [14, -6, -12],
     horizon: -0.02, horizonGlow: 0.2, glow: 0.42, glowSize: 1.3,
     fog: 0.9, fogScale: 1.0, fogSpeed: 0.004, rays: 1.0, rayFreq: 7, stars: 0.5, dust: 0.5, bokeh: 0.12,
+    washA: 0x000000, washB: 0x2a7f9a, washC: 0xb8784a, wash: 0.3,
   },
   // Kuehles Fotostudio passend zur Android-Bueste: weiches Gegenlicht hinter dem Kopf, leiser Dunst, breite
-  // schraege Lichtbahnen von oben rechts (Seite des Kantenlichts), fast statisch
+  // schraege Lichtbahnen von oben rechts (Seite des Kantenlichts). Version 4 (Rueckmeldung "Hintergrund langweilig"):
+  // dunkler, leicht spiegelnder Studio-Boden unter der Bueste (Lichtkegel um den Fuss, gespiegeltes Gegenlicht,
+  // Lichtkante am Horizont) und drei grosse, weiche Lichtflaechen in Cyan, Violett und Ember, die langsam wandern
   robot: {
     base: 0x080c12, mid: 0x121b26, hi: 0x4d6b85, accent: 0x14100c, fogColor: 0x080d14,
     rayColor: 0x7f9fb8, starColor: 0xbdf6ff,
+    washA: 0x8fd6ec, washB: 0x4a3ca8, washC: 0xd9905a,
     glowAt: [0, -0.35, 0], glowShift: [0.0, 0.06], rayAt: [6, 9, -7], accentAt: [-12, -4, 8],
-    horizon: -0.12, horizonGlow: 0.12, glow: 0.9, glowSize: 1.7,
+    horizon: -0.12, horizonGlow: 0.16, glow: 0.9, glowSize: 1.7,
     fog: 0.35, fogScale: 0.8, fogSpeed: 0.002, rays: 0.28, rayFreq: 3, dust: 0.12,
+    wash: 1.0, floor: 0.85, floorY: -3.5, floorShine: 1.3, pool: 1.0,
   },
   // Scan-Labor: wie das Studio, dazu Messraster, Scanlinie und Messkreis (steigen mit dem Roentgen-Scan)
   zoom: {
     base: 0x060f17, mid: 0x0d212c, hi: 0x3a87a0, accent: 0x0f4a5a, fogColor: 0x05141c,
     rayColor: 0x6fbfd0, gridColor: 0x2aa6bf, starColor: 0xbdf6ff,
     glowAt: [0, -0.2, 0], glowShift: [0.0, 0.04], rayAt: [6, 9, -7], accentAt: [0, -10, -10],
+    washA: 0x5fd0e0, washB: 0x3a5fd8, washC: 0x4a3ca8,
     horizon: -0.08, horizonGlow: 0.15, glow: 0.8, glowSize: 1.5,
     fog: 0.4, fogScale: 0.9, fogSpeed: 0.003, rays: 0.12, rayFreq: 3, grid: 0.12, dust: 0.1,
+    wash: 0.75, floor: 0.6, floorY: -3.5, floorShine: 1.1, pool: 0.6,
   },
   // Biolumineszenz: violetter Nebel, dessen Schwaden selbst leuchten (magenta, Raender tuerkis), Sporen; das Gehirn
   // bleibt Cyan davor. Gegenlicht hinter dem Hinterkopf (die Kamera taucht spaeter genau dorthin)
@@ -101,24 +106,18 @@ export const BACKDROPS = Object.freeze({
     glowAt: [0, 0.35, -1.6], glowShift: [0.2, 0.1], rayAt: [0, 10, -10], accentAt: [-6, -8, -14],
     horizon: -0.05, horizonGlow: 0.06, glow: 0.9, glowSize: 1.6,
     fog: 0.75, fogScale: 1.2, fogSpeed: 0.006, aurora: 1.0, dust: 0.35, bokeh: 0.18,
+    washA: 0x000000, washB: 0x7a3fe0, washC: 0x2fb7b0, wash: 0.4,
   },
   // Glasfaser-Blau: tiefe Ebene weit unten mit Lichtpaketen auf feinen Bahnen, Bokeh, Sterne; Licht hinter dem
-  // Website-Knoten (dort geht die Reise weiter)
+  // Website-Knoten
   cables: {
     base: 0x030916, mid: 0x0a1a33, hi: 0x2a63b8, accent: 0x0a1f40, fogColor: 0x040b1a,
     streakColor: 0x46e6ff, gridColor: 0x1d4f8f, bokehColor: 0x3a7fe0, starColor: 0xbdf6ff,
     glowAt: [0, 0.5, -14], glowShift: [0, 0], rayAt: [0, 10, -10], accentAt: [10, -10, -20],
     horizon: -0.04, horizonGlow: 0.3, glow: 0.55, glowSize: 1.4,
-    fog: 0.3, fogScale: 1.0, fogSpeed: 0.004, streaks: 0.45, bokeh: 0.3, stars: 0.25,
+    fog: 0.3, fogScale: 1.0, fogSpeed: 0.004, streaks: 0.7, bokeh: 0.3, stars: 0.25,
     floor: 0.85, floorY: -9, floorGrid: 2.2, floorShine: 0.8,
-  },
-  // Code-Raum Gruen-Tuerkis: leiser Code-Regen auf der Tunnelwand, Lichtkern beim Website-Geruest (-z)
-  dna: {
-    base: 0x02100e, mid: 0x05302a, hi: 0x17a888, accent: 0x0a3a30, fogColor: 0x03130f,
-    codeColor: 0x1fd1a5, starColor: 0xbdf6ff,
-    glowAt: [0, 0.5, -60], glowShift: [0, 0], rayAt: [0, 10, -10], accentAt: [0, -10, -30],
-    horizon: 0, horizonGlow: 0.2, glow: 0.6, glowSize: 1.2,
-    fog: 0.3, fogScale: 1.1, fogSpeed: 0.004, code: 0.06, dust: 0.15,
+    washA: 0x000000, washB: 0x5a3ccf, washC: 0x2a7fe0, wash: 0.5,
   },
   // Morgenlicht: goldenes Horizontgluehen hinter den Schultern rechts (nie hinter dem Kontakt-Text links), Strahlen
   // von rechts oben, Goldstaub, oben kuehl
@@ -126,8 +125,10 @@ export const BACKDROPS = Object.freeze({
     base: 0x07080a, mid: 0x151210, hi: 0xe0a05a, accent: 0x1d3550, fogColor: 0x0b0a09,
     rayColor: 0xffd29a, starColor: 0xffd7a0,
     glowAt: [0.4, -1.3, -0.6], glowShift: [0.34, -0.05], rayAt: [9, 6, -10], accentAt: [-6, 30, -4],
+    washA: 0xffc890, washB: 0x3a5fa8, washC: 0xc86a5a,
     horizon: -0.12, horizonGlow: 0.42, glow: 0.4, glowSize: 1.15,
     fog: 0.3, fogScale: 0.9, fogSpeed: 0.003, rays: 0.22, rayFreq: 5, dust: 0.14,
+    wash: 0.85, floor: 0.8, floorY: -3.5, floorShine: 1.2, pool: 0.8,
   },
   // Inhaltsbereich: ruhig, nur Verlauf und ein Rest Waerme
   inhalt: {
@@ -140,26 +141,37 @@ export const BACKDROPS = Object.freeze({
 /* ------------------------------------------------------- Szenen (Beats) */
 // Reihenfolge = Reihenfolge der <section data-scene> in index.html.
 // len = Hoehe des Abschnitts in vh. Daraus misst der Director die Zeitfenster (global 0..1).
+// Version 4: fuenf Text-Stationen statt sieben Kapitel (das Kapitel Code mit Helix und Website-Geruest ist weg).
+// Scrollweg bis zum Inhalt: Summe der Laengen minus 100 vh (der letzte Beat zaehlt nur mit len - 100), also 580 vh.
+// Der Beat brain hat keinen Text: dort taucht die Kamera langsam ins Gehirn (TEMPO begrenzt zusaetzlich das Tempo).
 export const BEATS = Object.freeze([
-  // text = [ein0, ein1, aus0, aus1] (p im Beat), scrim = Abdunkeln des Bildes hinter dem Text (FxPass, 0..1)
-  // intro: Scrim leise (Runde 2): der grosse Titel steht auf dunklem Grund, die Partikel hinter ihm daempft der Shader
-  // selbst; ein starker Scrim reichte bis ueber den Kopf der Partikel-Bueste und machte ihn grau
-  { name: 'intro', len: 120, label: 'Start', text: [0, 0, 0.28, 0.5], scrim: 0.1 },
-  { name: 'robot', len: 180, label: 'Partner', scrim: 0.42 },
-  { name: 'zoom', len: 170, label: 'Einblick', scrim: 0.45 },
-  // brain: Text weg, bevor die Kamera eintaucht und die Helligkeit steigt (vorher stand er bei brain@0.5 noch halb da)
-  // textM: Fenster im Hochformat (Strecke dort 28 % kuerzer, Text steht laenger, Bild oben bleibt frei)
-  { name: 'brain', len: 150, label: 'Intelligenz', text: [0.02, 0.12, 0.22, 0.36], textM: [0.02, 0.12, 0.3, 0.42], scrim: 0.62 },
-  { name: 'cables', len: 190, label: 'Verbindung', text: [0.14, 0.24, 0.46, 0.6], textM: [0.1, 0.2, 0.8, 0.94], scrim: 0.5 },
-  { name: 'dna', len: 210, label: 'Code', text: [0.02, 0.12, 0.4, 0.54], scrim: 0.62 },
-  { name: 'outro', len: 160, label: 'Kontakt', scrim: 0.45 },
+  // text = [ein0, ein1, aus0, aus1] (p im Beat), textM = Fenster im Hochformat, scrim = Abdunkeln hinter dem Text
+  // (FxPass, 0..1). Die Panels (ausser Hero und Ausklang) stehen fix im Bild und blenden nur ueber diese Fenster.
+  // intro: Scrim leise (der Titel steht auf dunklem Grund, ein starker Scrim machte den Kopf der Partikel-Bueste grau)
+  { name: 'intro', len: 60, label: 'Start', text: [0, 0, 0.3, 0.62], scrim: 0.1 },
+  // robot: Text, sobald die Bueste Form annimmt; weg, bevor die Kamera ins Profil kreist
+  { name: 'robot', len: 90, label: 'Entlastung', text: [0.3, 0.42, 0.86, 0.97], textM: [0.3, 0.42, 0.9, 0.99], scrim: 0.42 },
+  // zoom: Text im Profil, weg vor dem Roentgen-Scan ueber dem Gesicht
+  { name: 'zoom', len: 120, label: 'Was KI kann', text: [0.02, 0.12, 0.42, 0.54], textM: [0.02, 0.12, 0.5, 0.62], scrim: 0.45 },
+  // brain: kein Text (langsames Eintauchen, Flug durch das Gehirn und hinten hinaus)
+  { name: 'brain', len: 160, label: 'Im Kern', noText: true, scrim: 0 },
+  // cables: Text, sobald die Uebersicht steht; die fuenf Knoten sind Links (js/nodes.js), bis zum Schnitt
+  { name: 'cables', len: 110, label: 'Verbindung', text: [0.16, 0.28, 0.9, 0.985], textM: [0.12, 0.24, 0.92, 0.99], scrim: 0.5 },
+  { name: 'outro', len: 150, label: 'Einstieg', scrim: 0.45 },
 ]);
 
 // Breite der Ueberblendung an Beat-Grenzen (in global-Einheiten, ca. 2.6 vh pro 0.002).
 export const BEAT_FADE = 0.02;
 
+// Tempo-Grenze (V4-KONZEPT 5.2): zwischen from und to folgt der gedaempfte Fortschritt dem Scroll hoechstens mit
+// vhPerSec (Scrollweg pro Sekunde). Ein schneller Wisch spielt den Flug ins Gehirn so trotzdem ruhig ab, die Szene
+// holt danach auf. Liegt das Ziel schon hinter dem Fenster (weitergescrollt), gilt catchUp mal so schnell.
+// Spruenge (Ueberspringen, Anker: Ziel aendert sich in einem Bild um mehr als jump) gehen sofort.
+export const TEMPO = Object.freeze({ from: 'zoom@0.6', to: 'cables@0.3', vhPerSec: 52, catchUp: 2.6, jump: 0.15 });
+
 // Module (js/scenes/<name>.js) und ihre Zeitfenster. 'beat@p' = Punkt p (0..1) im Beat.
 // windows[0] ist das Hauptfenster: daraus kommt `local`. Weitere Fenster halten das Modul nur aktiv.
+// Faellt ein Fensterrand auf einen Schnitt (cut in CAMERA_KEYS), ist er hart (kein Ein- oder Ausblenden ueber den Schnitt).
 export const MODULES = Object.freeze({
   // Hintergrund hinter allem: immer aktiv (Gewicht 1), Farbwelten aus BACKDROPS
   backdrop: { windows: [{ from: 'intro@0', to: 'outro@1' }] },
@@ -167,8 +179,7 @@ export const MODULES = Object.freeze({
   // robot bleibt bis brain@0.6 aktiv: die Roentgen-Schale (Hologramm) umgibt das Gehirn, bis die Kamera eintaucht
   robot: { windows: [{ from: 'robot@0', to: 'brain@0.6' }, { from: 'outro@0', to: 'outro@1' }] },
   brain: { windows: [{ from: 'zoom@0.3', to: 'cables@1' }] },
-  cables: { windows: [{ from: 'brain@0.7', to: 'dna@0.3' }] },
-  dna: { windows: [{ from: 'dna@0', to: 'dna@1' }] },
+  cables: { windows: [{ from: 'brain@0.7', to: 'cables@1' }] },
 });
 export const MODULE_FADE = 0.015;
 
@@ -213,50 +224,31 @@ export const CAMERA_KEYS = Object.freeze([
     at: 'zoom@1', pos: [2.3, 1.35, 2.55], look: [-0.44, 0.14, 0.26], fov: 40,
     posM: [2.3, 1.5, 3.0], lookM: [0.22, -0.9, 0.19],
   },
-  // Text "Intelligenz" links, Gehirn rechts; dann taucht die Kamera ein, fliegt durch und hinten hinaus.
-  // Hochformat: der Kopf fuellt rund 70 % der Bildbreite
-  // (Seit dem Einbau der Android-Bueste von vorne rechts, gleiche Seite wie Roboter und Zoom.)
-  { at: 'brain@0.3', pos: [1.62, 1.2, 2.18], look: [-0.42, 0.12, 0.21], fov: 40, posM: [1.9, 1.35, 2.6], lookM: [0.18, -0.7, 0.15] },
+  // Dreiviertelansicht von vorne rechts oben (ohne Text), dann taucht die Kamera langsam ein (brain@0.12 bis 0.55,
+  // rund 70 vh plus Tempo-Grenze), fliegt durch das Gehirn und hinten hinaus. Hochformat: Kopf fuellt rund 70 % der Breite
+  { at: 'brain@0.12', pos: [1.62, 1.2, 2.18], look: [-0.42, 0.12, 0.21], fov: 40, posM: [1.9, 1.35, 2.6], lookM: [0.18, -0.7, 0.15] },
+  { at: 'brain@0.34', pos: [1.05, 0.88, 1.32], look: [-0.3, 0.16, -0.1], fov: 46, posM: [1.25, 0.95, 1.6], lookM: [0.1, -0.35, -0.05] },
   { at: 'brain@0.55', pos: [0.5, 0.52, 0.42], look: [-0.15, 0.22, -0.5], fov: 54 },
   // Austrittspunkt der Kabel nicht in der Bildmitte, leichte Neigung: liest sich als "Kabel werden gezogen"
   { at: 'brain@0.78', pos: [0.02, 0.32, -0.25], look: [0.25, -0.05, -1.0], fov: 58, roll: 6 },
   { at: 'brain@1', pos: [-0.35, 0.55, -0.85], look: [0, 0, -3], fov: 55, roll: 2.5 },
-  // Uebersicht von schraeg oben: Gehirn unten rechts, Kabel laufen nach links zu den Knoten, Text rechts
-  // Aufstieg: Blick etwas hoeher, damit der Kalender-Knoten (hoechster Knoten) nie unter der Kopfzeile liegt
-  { at: 'cables@0.1', pos: [-2.3, 1.75, -0.1], look: [0.55, 0.78, -3.9], fov: 52 },
-  { at: 'cables@0.3', pos: [-6.8, 5.94, 2.23], look: [1.5, 0.5, -5.0], fov: 46, lookM: [1.5, -3.0, -5.0] },
-  { at: 'cables@0.5', pos: [-7.4, 6.35, 1.86], look: [1.7, 0.4, -5.2], fov: 45, lookM: [1.7, -3.0, -5.2] },
-  { at: 'cables@0.8', pos: [-4.4, 3.15, -2.9], look: [1.2, 1.0, -7.4], fov: 44 },
-  // Auf den Website-Knoten zu, schon leicht von links: danach steht die Helix einmal von aussen im Bild
-  { at: 'cables@1', pos: [-1.9, 1.05, -7.6], look: [0.15, 0.5, -11.2], fov: 44, posM: [-1.2, 1.2, -7.0], lookM: [0.1, -0.4, -11.5] },
-  // Helix von aussen (Dreiviertelansicht von links): zwei Straenge mit Sprossen, klar als Doppelhelix lesbar.
-  // Text links, die Helix rechts und nach links in die Tiefe. zTrack: die Kamera ist noch nicht in der Helix
-  // (dna-build.js rechnet damit, wann Zeichen hinter der Kamera verloeschen)
-  {
-    at: 'dna@0.1', pos: [-2.75, 0.95, -11.0], look: [0.5, 0.45, -15.9], fov: 46, zTrack: -9.9,
-    posM: [-2.1, 1.6, -9.6], lookM: [0.35, -0.9, -15.0],
-  },
-  // Kamera schwenkt vor den Anfang der Helix und taucht entlang der Achse ein (nicht durch die Wand)
-  {
-    at: 'dna@0.21', pos: [-0.55, 0.62, -9.5], look: [-1.0, 0.5, -16], fov: 50, zTrack: -10.0,
-    posM: [-0.4, 0.75, -9.4], lookM: [0, 0.1, -16],
-  },
-  // Eingetaucht: Fluchtpunkt rechts der Mitte, solange links der Text steht
-  { at: 'dna@0.33', pos: [0.2, 0.56, -15.0], look: [-1.55, 0.55, -20.5], fov: 50, lookM: [0, 0.5, -20.5] },
-  // Uebergang ins Geruest: zuegig nah heran, damit es frueh gross und klar im Bild steht
-  { at: 'dna@0.58', pos: [0.1, 0.48, -28.0], look: [0, 0.33, -36], fov: 43 },
-  // Geruest fertig: oben im Bild, darunter Platz fuer die Angebotszeile (HTML, js/ui.js setOffer)
-  { at: 'dna@0.74', pos: [0, 0.44, -29.25], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -28.85], lookM: [0, -0.5, -36] },
-  { at: 'dna@1', pos: [0, 0.42, -29.45], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -29.05], lookM: [0, -0.5, -36] },
-  // Ausklang: Schnitt auf das Gesicht (die Augen erwachen im Lichtblitz), dann zieht die Kamera langsam zurueck in eine
-  // ruhige Dreiviertelansicht leicht von unten: die Bueste rechts, der Blick zum Kontakt links (Hochformat: Bueste oben)
+  // Uebersicht von schraeg oben: Gehirn unten rechts, Kabel laufen nach links zu den Knoten, Text rechts.
+  // Version 4: die Kamera bleibt bis zum Schnitt in der Uebersicht (ruhiges Driften), damit man die Knoten anklicken
+  // kann. Aufstieg: Blick etwas hoeher, damit der Kalender-Knoten (hoechster Knoten) nie unter der Kopfzeile liegt
+  { at: 'cables@0.12', pos: [-2.3, 1.75, -0.1], look: [0.55, 0.78, -3.9], fov: 52 },
+  { at: 'cables@0.36', pos: [-6.8, 5.94, 2.23], look: [1.5, 0.5, -5.0], fov: 46, lookM: [1.5, -3.0, -5.0] },
+  { at: 'cables@0.66', pos: [-7.3, 6.25, 1.9], look: [1.65, 0.42, -5.15], fov: 45, lookM: [1.65, -3.0, -5.15] },
+  { at: 'cables@1', pos: [-7.55, 6.3, 1.35], look: [1.75, 0.38, -5.35], fov: 44.5, lookM: [1.75, -3.0, -5.35] },
+  // Ausklang: Schnitt aus der Kabel-Uebersicht auf das Gesicht (die Augen erwachen im Lichtblitz), dann zieht die
+  // Kamera langsam zurueck in eine ruhige Dreiviertelansicht leicht von unten: die Bueste rechts, der Blick zum
+  // Kontakt links (Hochformat: Bueste oben)
   { at: 'outro@0', cut: true, pos: [0.5, 0.05, 4.5], look: [-0.22, -0.27, 0.03], fov: 34, posM: [0.5, 0.2, 6.6], lookM: [0.01, -1.95, 0.09] },
   {
     at: 'outro@1', pos: [3.7, -0.3, 7.9], look: [-1.19, -0.75, 0.56], fov: 31,
     posM: [3.9, 0.2, 9.6], lookM: [0.06, -3.2, 0.15],
   },
 ]);
-export const CUT_FADE = 0.008; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 9 vh)
+export const CUT_FADE = 0.012; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 7 vh)
 
 // Hochformat: vertikales FOV wird erweitert, damit horizontal genug Bild bleibt.
 // minPortrait: im Hochformat mindestens dieser Faktor (= Wert bei Seitenverhaeltnis 0.59), damit Tablets im Hochformat

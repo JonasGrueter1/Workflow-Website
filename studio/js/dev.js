@@ -1,5 +1,5 @@
 // Testseite fuer Szenen-Entwickler: dev.html?scene=robot&local=0.4&cam=orbit&q=high
-// scene    particles|robot|brain|cables|dna|all, oder mehrere mit Komma (z. B. robot,brain fuer den Roentgen-Zoom:
+// scene    particles|robot|brain|cables|all, oder mehrere mit Komma (z. B. robot,brain fuer den Roentgen-Zoom:
 //          die erste Szene bestimmt local und bleibt immer aktiv, die weiteren laufen in ihren eigenen Fenstern)
 // local    Startwert 0..1 im Hauptfenster der ersten Szene
 // at       statt local ein fester Punkt der Story (beat@p, z. B. at=zoom@0.4)
@@ -34,8 +34,7 @@ const FOCUS = {
   robot: { target: [0, -0.6, 0], radius: 7.5 },
   brain: { target: ANCHORS.brain.center.toArray(), radius: 2.4 },
   cables: { target: [0, 0.2, -5.5], radius: 13 },
-  dna: { target: [0, 0.5, -22], radius: 18 },
-  all: { target: [0, 0, -8], radius: 26 },
+  all: { target: [0, 0, -4], radius: 20 },
 };
 
 const $ = (id) => document.getElementById(id);

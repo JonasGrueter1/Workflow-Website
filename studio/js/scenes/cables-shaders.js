@@ -374,11 +374,13 @@ const NODE_FS = /* glsl */ `
     // Icon
     int k = int(vIdx + 0.5);
     vec2 id = icon(k, vP / 0.9);
-    float hw = 0.03;
+    // Hervorgehoben (focus): Icon voll hell und etwas kraeftiger, auch wenn das Kabel noch nicht angekommen ist
+    float lit = max(on, focus);
+    float hw = 0.03 + 0.008 * focus;
     float ic = cover(id.x, hw) * inside;
     float acc = cover(id.y, hw) * inside;
-    vec3 icCol = mix(uMist * 0.3, uIce * 1.25, on) + uIce * 1.3 * flash;
-    vec3 accCol = mix(uMist * 0.3, k == 4 ? uIce * 1.25 : uEmber * 1.6, on) + uIce * 0.8 * flash;
+    vec3 icCol = mix(uMist * 0.3, uIce * 1.25, lit) + uIce * 1.3 * flash;
+    vec3 accCol = mix(uMist * 0.3, k == 4 ? uIce * 1.25 : uEmber * 1.6, lit) + uIce * 0.8 * flash;
     float icA = 1.0 - smoothstep(0.0, 0.45, portal);
 
     vec3 glow = rim * rimCol * (1.0 - 0.5 * portal)

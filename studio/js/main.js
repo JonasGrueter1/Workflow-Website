@@ -71,7 +71,7 @@ function toFallback(reason) {
   let anchor = null;
   let anchorTop = 0;
   if (window.scrollY > 0) {
-    for (const el of document.querySelectorAll('.chapter, .content > .section, .site-footer')) {
+    for (const el of document.querySelectorAll('.chapter, .content > section, .ftr')) {
       const r = el.getBoundingClientRect();
       if (r.bottom > window.innerHeight * 0.3) { anchor = el; anchorTop = el.classList.contains('chapter') ? 0 : r.top; break; }
     }
@@ -103,11 +103,12 @@ async function boot() {
   const story = document.getElementById('story');
   ui.progress(0.04);
 
-  const [engineMod, directorMod, runnerMod, config] = await Promise.all([
+  const [engineMod, directorMod, runnerMod, config, nodesMod] = await Promise.all([
     import('./engine.js'),
     import('./director.js'),
     import('./runner.js'),
     import('./config.js'),
+    import('./nodes.js'),
   ]);
   if (dead) return;
   ui.progress(0.22);
@@ -143,6 +144,15 @@ async function boot() {
     runner.dispose();
     if (ctx.overlay) ctx.overlay.textContent = '';
   });
+  // Die fuenf Knoten der Kabel-Szene als Links (js/nodes.js)
+  const cablesMod = mods.find((m) => m.name === 'cables');
+  const nodeLinks = cablesMod ? new nodesMod.NodeLinks({
+    director,
+    cables: cablesMod.inst,
+    onRestore: (section, on) => ui.setInteractive(section, on),
+    alive: () => !cablesMod.failed,
+  }) : null;
+  if (nodeLinks) cleanups.push(() => nodeLinks.dispose());
 
   // Alle Shader vorab kompilieren, damit Uebergaenge nicht ruckeln
   director.update(0);
@@ -204,7 +214,6 @@ async function boot() {
     ui.setStory(director.global, contentDim > 0.35);
     director.pullScroll();
     director.update(dtRaw);
-    ui.setOffer(director.beats.dna.tp, contentDim > 0.35);
 
     // Im Inhaltsbereich ist das Canvas fast ganz abgedeckt: ein letztes Bild rendern, dann anhalten (spart Akku)
     if (background) {
@@ -217,6 +226,10 @@ async function boot() {
     engine.updatePointer(dt, time);
     director.applyCamera(camera, engine.pointer, look, time);
     look = runner.step(time, dt);
+    if (nodeLinks) {
+      nodeLinks.setContent(contentDim > 0.35);
+      nodeLinks.update();
+    }
     look.dim = Math.max(look.dim, contentDim * 0.62);
     engine.setScrim(director.scrim);
     engine.applyLook(look, time);
@@ -268,7 +281,7 @@ async function boot() {
   });
 
   // Zugriff fuer Tests und Szenen-Entwicklung: window.__studio
-  window.__studio = { engine, director, runner, ctx, toFallback, get frame() { return frameNo; } };
+  window.__studio = { engine, director, runner, ctx, nodeLinks, toFallback, get frame() { return frameNo; } };
   if (new URLSearchParams(window.location.search).has('debug')) mountStats(engine, director);
 
   start();

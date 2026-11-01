@@ -1,13 +1,14 @@
 // Szene "backdrop": Shader des Hintergrunds. Ein Vollbild-Dreieck, pro Bildpunkt die Welt-Blickrichtung
 // (aus projectionMatrixInverse inkl. Lens-Shift und matrixWorld der Kamera). Der Hintergrund dreht sich also korrekt
-// mit der Kamera, liegt aber unendlich weit weg. Ausnahmen mit echter Parallaxe: Boden (Ebene y = uFloorY) und der
-// Code-Tunnel (Zylinder um die Helix-Achse), beide aus der Kameraposition geschnitten.
+// mit der Kamera, liegt aber unendlich weit weg. Ausnahme mit echter Parallaxe: der Boden (Ebene y = uFloorY), aus der
+// Kameraposition geschnitten.
 //
 // Bausteine (alle ueber Uniforms gewichtet, Werte aus backdrop.js, gemischt aus BACKDROPS in config.js):
-//   Verlauf + Horizontband, Akzent-Dunst, Gegenlicht-Halo (uGlowDir), Nebel (1..3 Rausch-Zugriffe, Domain-Warp, vom
+//   Verlauf + Horizontband, Akzent-Dunst, Gegenlicht-Halo (uGlowDir), Lichtflaechen (uWash: drei grosse, weiche
+//   Farbflaechen, die langsam um das Gegenlicht wandern, Version 4), Nebel (1..3 Rausch-Zugriffe, Domain-Warp, vom
 //   Gegenlicht beleuchtet), Lichtstrahlen um eine eigene Quelle (uRayDir), Biolumineszenz der Nebelschwaden (uAurora),
-//   Sterne, Staub, Bokeh, Boden mit Spiegelung und Punktraster (+ Datenpakete auf den Rasterlinien, uStreaks),
-//   Messraster mit Scanlinie und Messkreis, Code-Regen im Tunnel.
+//   Sterne, Staub, Bokeh, Boden mit Spiegelung (Studio-Boden: Lichtbahn unter dem Motiv, Lichtkante am Horizont,
+//   optional Punktraster und Datenpakete auf den Rasterlinien, uStreaks), Messraster mit Scanlinie und Messkreis.
 // BD_Q: 2 = high, 1 = medium, 0 = low (weniger Zugriffe, weniger Ebenen).
 // Helligkeit (linear, vor dem Tonemapping): Flaechen bleiben unter ~0.06, nur Halo-Kern, Pakete, Sterne und Bokeh
 // werden heller (bis ~0.5, leichtes Bluehen). Die Mengen aus BACKDROPS (0..1) sind hier auf diese Werte skaliert.
@@ -72,8 +73,13 @@ uniform float uStreaks;
 uniform vec3 uStreakColor;
 uniform float uBokeh;
 uniform vec3 uBokehColor;
-uniform float uCode;
-uniform vec3 uCodeColor;
+uniform float uWash;
+uniform vec3 uWashA;
+uniform vec3 uWashB;
+uniform vec3 uWashC;
+uniform vec3 uPoolAt;
+uniform float uPool;
+uniform float uWashSide;
 uniform float uDetail;
 uniform vec4 uScrimRect;
 uniform float uScrimA;
@@ -118,6 +124,25 @@ float aaLine(float x, float w, float width) {
   return 1.0 - smoothstep(width * w, (width + 1.2) * w, abs(x));
 }
 
+// Lichtflaechen (Version 4, Rueckmeldung "Hintergrund langweilig"): drei grosse, weiche Lichter um das Gegenlicht, wie
+// im Fotostudio: eine hohe, schmale Lichtbahn neben dem Motiv (Softbox, uWashA), eine breite Flaeche oben (uWashB) und ein
+// warmer Schein unten (uWashC). Lage in Winkeln um das Gegenlicht (x weg vom Text, uWashSide), sie wandern sehr
+// langsam. Keine Rauschzugriffe. Der Boden spiegelt sie (washAt mit gespiegelter Richtung).
+vec3 washAt(vec3 d) {
+  vec3 gw = uGlowDir;
+  float fr = dot(d, gw);
+  if (fr <= 0.0) return vec3(0.0);
+  vec3 r1 = normalize(cross(gw, vec3(0.0, 1.0, 0.0)) + vec3(1e-5, 0.0, 0.0));
+  vec3 r2 = cross(r1, gw);
+  vec3 q = d - gw * fr;
+  vec2 p = vec2(dot(q, r1) * uWashSide, dot(q, r2));
+  float T = uTime * 0.045;
+  vec2 a = (p - vec2(0.21 + 0.035 * sin(T * 1.3), 0.04)) / vec2(0.055, 0.4);
+  vec2 b = (p - vec2(0.1 + 0.08 * sin(T * 0.9 + 1.0), 0.3 + 0.05 * sin(T * 0.7))) / vec2(0.32, 0.17);
+  vec2 c = (p - vec2(0.16 + 0.1 * sin(T * 0.8 + 4.0), -0.28)) / vec2(0.3, 0.14);
+  return (uWashA * exp(-dot(a, a)) + uWashB * exp(-dot(b, b)) + uWashC * exp(-dot(c, c))) * 0.2 * smoothstep(0.0, 0.5, fr);
+}
+
 void main() {
   vec3 d = normalize(vDir);
   vec2 suv = gl_FragCoord.xy / uRes;
@@ -157,6 +182,9 @@ void main() {
   float halo = pow(lit, 70.0 / gs) * 0.6 + pow(lit, 10.0 / gs) * 0.26 + pow(lit, 2.6 / gs) * 0.07;
   col += uHi * halo * uGlow * 0.22;
 
+  /* ---- Lichtflaechen (Farbflaechen um das Gegenlicht, siehe washAt) */
+  if (uWash > 0.001) col += washAt(d) * uWash * (1.0 - 0.6 * txt);
+
   /* ---- Boden (echte Ebene, Parallaxe) */
   float floorMask = 0.0;
   if (uFloor > 0.001 && d.y < -0.001 && uCamPos.y > uFloorY + 0.05) {
@@ -171,7 +199,13 @@ void main() {
     refl += uHi * exp(-er * er * 26.0) * uHorizonGlow * 0.1 * (0.2 + 0.8 * side2);
     float lane = pow(side, 90.0) * exp(-abs(d.y) * 3.0);
     refl += uHi * lane * 0.05 * uGlow;
-    vec3 fl = uBase * 0.6 + refl * (0.3 + 0.7 * fres) * uFloorShine;
+    // Studio-Boden (Version 4): gespiegelte Lichtflaechen, Lichtkegel auf dem Boden um den Fuss des Motivs (uPoolAt)
+    // und eine feine Lichtkante dort, wo der Boden in die Hohlkehle uebergeht
+    if (uWash > 0.001) refl += washAt(r) * uWash * 0.55;
+    vec2 pq = P.xz - uPoolAt.xz;
+    float pool = exp(-dot(pq, pq) * 0.06) * uPool;
+    refl += uHi * exp(-pow((d.y + 0.006) / 0.012, 2.0)) * uHorizonGlow * 0.08 * (0.3 + 0.7 * side2);
+    vec3 fl = uBase * 0.6 + uHi * pool * 0.045 + refl * (0.3 + 0.7 * fres) * uFloorShine;
     if (uFloorGrid > 0.001) {
       vec2 g = P.xz / uFloorGrid;
       vec2 fw = max(fwidth(g), vec2(1e-4));
@@ -293,50 +327,6 @@ void main() {
     float tick = aaLine(fract(ra + 0.5) - 0.5, raw, 0.4)
       * (1.0 - smoothstep(0.0, 1.0, abs(rc - uRingCos - 0.006) / 0.006));
     col += uHi * (ring * 0.5 + tick * 0.35) * uGrid * det;
-  }
-
-  /* ---- Code-Regen auf der Tunnelwand um die Helix-Achse (Zylinder r 5.5, Achse x 0, y 0.5) */
-  if (uCode > 0.001) {
-    vec2 o2 = uCamPos.xy - vec2(0.0, 0.5);
-    vec2 d2 = d.xy;
-    float a = dot(d2, d2);
-    float c = dot(o2, o2) - 30.25;
-    if (a > 1e-5 && c < 0.0) {
-      float b = dot(o2, d2);
-      float t = (-b + sqrt(max(b * b - a * c, 0.0))) / a;
-      vec3 P = uCamPos + d * t;
-      float th = atan(P.y - 0.5, P.x);
-      float u = (th / TAU + 0.5) * 96.0;
-      float rowf0 = P.z / 0.5;
-      float ci = floor(u);
-      float hc = hash12(vec2(ci, 7.1));
-      float rowf = rowf0 + uTime * (1.2 + 2.4 * hc) + hc * 50.0;
-      float ri = floor(rowf);
-      float len = 10.0 + floor(hc * 16.0);
-      float ph = fract((ri + floor(hc * 997.0)) / len);
-      float bright = exp(-ph * 7.0) * step(ph, 0.75);
-      bright *= step(0.42, hash12(vec2(ci, 1.3)));          // nicht jede Spalte laeuft
-      vec2 lc = vec2(fract(u), fract(rowf));
-      vec2 cw = max(fwidth(vec2(u, rowf)), vec2(1e-4));
-      float cellPx = 1.0 / max(cw.x, cw.y);
-      // Zeichen als 3 x 5 Punktmatrix, nur wenn die Zelle gross genug ist (sonst mittlere Deckung, kein Flimmern)
-      vec2 gq = (lc - vec2(0.18, 0.12)) / vec2(0.64, 0.76);
-      float glyph = 0.42;
-#if BD_Q > 0
-      if (cellPx > 7.0) {
-        vec2 gi = floor(gq * vec2(3.0, 5.0));
-        float inside = step(0.0, gq.x) * step(gq.x, 0.999) * step(0.0, gq.y) * step(gq.y, 0.999);
-        float flick = floor(uTime * (0.6 + 4.0 * step(0.86, hash12(vec2(ri, ci)))));
-        float bit = step(0.48, hash13(vec3(ci * 3.0 + gi.x, ri * 5.0 + gi.y, flick)));
-        vec2 gf = fract(gq * vec2(3.0, 5.0)) - 0.5;
-        float dotm = 1.0 - smoothstep(0.32, 0.48, max(abs(gf.x), abs(gf.y)));
-        glyph = mix(0.42, inside * bit * dotm, smoothstep(7.0, 13.0, cellPx));
-      }
-#endif
-      float fadeZ = exp(-abs(P.z - uCamPos.z) * 0.045);
-      vec3 cc = mix(uCodeColor, vec3(0.85, 1.0, 0.95), smoothstep(0.03, 0.0, ph) * 0.6);
-      col += cc * bright * glyph * fadeZ * uCode * det;
-    }
   }
 
   /* ---- Sterne (fein, funkelnd) und Staub (weich, steigt langsam) */

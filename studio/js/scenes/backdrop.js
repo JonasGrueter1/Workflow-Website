@@ -6,14 +6,14 @@
 // und Tonemapping. Pro Bildpunkt rechnet der Shader die Welt-Blickrichtung: der Hintergrund dreht sich mit der Kamera
 // (Kamerafahrten bekommen Tiefe), liegt aber unendlich weit weg.
 //
-// Farbwelten: BACKDROPS in config.js, eine pro Beat (intro Petrol, robot Studio, zoom Scan-Labor, brain Biolumineszenz,
-// cables Glasfaser-Blau, dna Code-Raum, outro Morgenlicht) und "inhalt". Mischung hier (ohne Allokationen pro Frame):
+// Farbwelten: BACKDROPS in config.js, eine pro Beat (intro Petrol, robot Studio mit Boden, zoom Scan-Labor, brain
+// Biolumineszenz, cables Glasfaser-Blau, outro Morgenlicht) und "inhalt". Mischung hier (ohne Allokationen pro Frame):
 //   - weiche Kante BACKDROP_FADE (global) um jede Beat-Grenze, Gewichte normiert
-//   - am Schnitt (director.cuts, Ende dna -> outro) harter Wechsel, versteckt im Lichtblitz des Runners
+//   - am Schnitt (director.cuts, Ende cables -> outro) harter Wechsel, versteckt im Lichtblitz des Runners
 //   - im Inhaltsbereich nach director.content (setzt main.js) zur Farbwelt "inhalt"
 // Dynamik innerhalb eines Beats (nur hier, Liste in ARCHITEKTUR.md): intro Strahlen schimmern; robot Lichtbahnen atmen
 // mit der Bueste (5.2 s); zoom Messraster und Scanlinie mit dem Roentgen-Scan; brain Aurora leiser, solange die Kamera
-// im Gehirn ist; dna Lichtkern und Code-Regen steigen mit dem Geruest; outro Sonnenaufgang (Horizont 0.4 -> 1).
+// im Gehirn ist; outro Sonnenaufgang (Horizont 0.4 -> 1).
 // Das Modul setzt ausserdem scene.fog.color auf die Nebelfarbe der Farbwelt (entfernte Objekte laufen in den
 // Hintergrund statt gegen Schwarz). Lichtfarben und Looks der anderen Szenen bleiben unberuehrt.
 //
@@ -30,17 +30,18 @@ const smoothstep = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t
 const BASE = {
   base: 0x04060a, mid: 0x070b12, hi: 0x2a3644, accent: 0x000000, fogColor: 0x04060a,
   rayColor: 0x8fe3ee, starColor: 0xbdf6ff, gridColor: 0x2aa6bf, streakColor: 0x46e6ff, bokehColor: 0x46e6ff,
-  codeColor: 0x1fd1a5, auroraA: 0x5b2bd1, auroraB: 0xb0307a, auroraEdge: 0x2fb7b0,
+  auroraA: 0x5b2bd1, auroraB: 0xb0307a, auroraEdge: 0x2fb7b0,
+  washA: 0x46e6ff, washB: 0x6a3fd0, washC: 0xffa45c,
   glowAt: [0, 0, -10], glowShift: [0, 0], rayAt: [0, 10, -10], accentAt: [10, -4, -10],
   horizon: 0, horizonGlow: 0, glow: 0, glowSize: 1, fog: 0, fogScale: 1, fogSpeed: 0.004, rays: 0, rayFreq: 6,
   aurora: 0, stars: 0, dust: 0, floor: 0, floorY: -3.6, floorGrid: 0, floorShine: 1, grid: 0, streaks: 0, bokeh: 0,
-  code: 0, detail: 1,
+  wash: 0, pool: 0, detail: 1,
 };
 const COLORS = ['base', 'mid', 'hi', 'accent', 'fogColor', 'rayColor', 'starColor', 'gridColor', 'streakColor',
-  'bokehColor', 'codeColor', 'auroraA', 'auroraB', 'auroraEdge'];
+  'bokehColor', 'auroraA', 'auroraB', 'auroraEdge', 'washA', 'washB', 'washC'];
 const POINTS = ['glowAt', 'rayAt', 'accentAt'];
 const NUMS = ['horizon', 'horizonGlow', 'glow', 'glowSize', 'fog', 'fogScale', 'fogSpeed', 'rays', 'rayFreq', 'aurora',
-  'stars', 'dust', 'floor', 'floorY', 'floorGrid', 'floorShine', 'grid', 'streaks', 'bokeh', 'code', 'detail',
+  'stars', 'dust', 'floor', 'floorY', 'floorGrid', 'floorShine', 'grid', 'streaks', 'bokeh', 'wash', 'pool', 'detail',
   'shiftX', 'shiftY'];
 const N = Object.fromEntries(NUMS.map((k, i) => [k, i]));
 
@@ -97,7 +98,8 @@ export function create(ctx) {
     uRingDir: { value: v3() }, uRingCos: { value: 0.99 },
     uStreaks: { value: 0 }, uStreakColor: { value: C.streakColor },
     uBokeh: { value: 0 }, uBokehColor: { value: C.bokehColor },
-    uCode: { value: 0 }, uCodeColor: { value: C.codeColor },
+    uWash: { value: 0 }, uWashA: { value: C.washA }, uWashB: { value: C.washB }, uWashC: { value: C.washC },
+    uPool: { value: 0 }, uPoolAt: { value: PT.glowAt }, uWashSide: { value: 1 },
     uDetail: { value: 1 },
     uScrimRect: { value: new THREE.Vector4(0.25, 0.5, 0.2, 0.2) }, uScrimA: { value: 0 },
   };
@@ -122,6 +124,7 @@ export function create(ctx) {
 
   /* ------------------------------------------------------------ Zustand */
   const fogRot = { a: 0, b: 0 };
+  const washSide = { v: 1, target: 1 };
   const _right = v3();
   const _up = v3();
   const _d = v3();
@@ -165,7 +168,6 @@ export function create(ctx) {
       /* Dynamik innerhalb der Beats (Faktoren auf die Werte der jeweiligen Farbwelt) */
       const zm = director.beat('zoom');
       const br = director.beat('brain');
-      const dn = director.beat('dna');
       const ou = director.beat('outro');
       const inOutro = g >= ou.start - 0.04;
       // Roentgen-Scan: gleiche Formel wie robotScan in robot.js (xray, scanY)
@@ -176,10 +178,8 @@ export function create(ctx) {
       P.robot.mul[N.rays] = 1 + 0.06 * Math.sin((time * Math.PI * 2) / 5.2);
       P.zoom.mul[N.grid] = smoothstep(0.4, 0.58, zm.p);
       P.zoom.mul[N.rays] = 1 - smoothstep(0.3, 0.5, zm.p);
-      const inside = smoothstep(0.45, 0.56, br.p) * (1 - smoothstep(0.86, 0.98, br.p));
+      const inside = smoothstep(0.38, 0.56, br.p) * (1 - smoothstep(0.86, 0.98, br.p));
       P.brain.mul[N.aurora] = 1 - 0.6 * inside;
-      P.dna.mul[N.glow] = 0.35 + 0.65 * smoothstep(0.45, 0.75, dn.p);
-      P.dna.mul[N.code] = 0.5 + 0.5 * smoothstep(0.15, 0.4, dn.p);
       const sun = smoothstep(0, 0.8, ou.p);
       P.outro.mul[N.horizonGlow] = 0.4 + 0.6 * sun;
       P.outro.mul[N.glow] = 0.55 + 0.45 * sun;
@@ -250,10 +250,17 @@ export function create(ctx) {
       U.uGrid.value = m[N.grid];
       U.uStreaks.value = m[N.streaks];
       U.uBokeh.value = m[N.bokeh];
-      U.uCode.value = m[N.code];
+      U.uWash.value = m[N.wash];
+      U.uPool.value = m[N.pool];
       U.uDetail.value = m[N.detail];
 
       const sc = director.scrim;
+      // Lichtflaechen auf die Seite weg vom Text (gedaempft, damit sie beim Wechsel der Textseite wandern statt springen)
+      const portrait = ctx.size.width / Math.max(1, ctx.size.height) < 0.85;
+      if (portrait) washSide.target = 1;
+      else if (sc && sc.a > 0.1) washSide.target = sc.x < 0.5 ? 1 : -1;
+      washSide.v += (washSide.target - washSide.v) * (1 - Math.exp(-dt * 1.2));
+      U.uWashSide.value = washSide.v;
       if (sc && sc.a > 0.001) {
         U.uScrimRect.value.set(sc.x, sc.y, Math.max(0.02, sc.rx), Math.max(0.02, sc.ry));
         U.uScrimA.value = sc.a;

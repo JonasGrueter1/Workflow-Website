@@ -54,20 +54,23 @@ float lFace(vec3 q) {
   float th = atan(q.x, q.z);
   float ths = 1.2 + 0.36 * smoothstep(-0.12, -0.62, q.y);
   float B = (th - ths) * rxz;
-  return lSmax(lSmax(A, B, 0.08), lJaw(q), 0.05);
+  // Version 4: Ecken der Maske runder (vorher 0.08 und 0.05), kein spitzer Winkel am Kiefer
+  return lSmax(lSmax(A, B, 0.11), lJaw(q), 0.1);
 }
 float lRing(vec3 q) { return q.y - (0.43 - 0.06 * q.z); }
 
 // Fugen der Gesichtsplatten (Vorderansicht x/y, nur x >= 0), symmetrisch wie eine Maske:
 // Stirnplatte | Gesichtsmaske (Augen, Nase, Mund, Kinn) | seitliche Wangen- und Kieferplatte.
 // Keine Linien durch Mund und Nasenfluegel (sonst wirkt es wie eine Bauchrednerpuppe).
+// Version 4 (Gesicht weicher): die Wangenfuge laeuft als flacher Bogen weiter aussen hinunter (endet am Kiefer statt
+// unter dem Jochbein nach innen zur Nase zu ziehen) und geht mit einer Rundung in die Stirnfuge ueber.
 float lFaceSeams(vec2 p) {
   // Stirn: flacher Bogen ueber den Brauen
   float fh = abs(p.y - (0.262 - 0.11 * p.x * p.x));
-  // Maske: aussen am Augenhoehlenrand hinunter, unter dem Jochbein nach innen zum Kiefer
+  // Wange: aussen am Augenhoehlenrand hinunter, sanft nach innen zum Kiefer
   float t = clamp(-p.y / 0.95, 0.0, 1.0);
-  float ck = max(abs(p.x - (0.672 - 0.33 * pow(t, 1.45))), p.y - 0.2);
-  return min(fh, ck);
+  float ck = max(abs(p.x - (0.668 - 0.2 * t * t)), p.y - 0.2);
+  return lSmin(fh, ck, 0.02);
 }
 // Lidfuge: oberer Bogen knapp ueber dem Auge (Lidfalte)
 float lLid(vec2 p) {
@@ -179,7 +182,9 @@ float seamField(vec3 p) {
     d = min(d, max(abs(face), -(q.y + 0.75 + 0.6 * max(q.z, 0.0))));
     // Platten im Gesicht und Lidfuge
     if (q.z > 0.12 && face < 0.05) {
-      d = min(d, max(lFaceSeams(q.xy), face));
+      // Plattenfugen im Gesicht etwas flacher als die Maske (weicher, Version 4)
+      float dc = max(lFaceSeams(q.xy), face);
+      if (dc < d) { d = dc; lSeamK = 0.7; }
       float dl = lLid(q.xy);
       if (dl < d) { d = dl; lSeamK = 0.45; }
     }

@@ -61,6 +61,104 @@ export function applyExpression(mesh, amt = 1) {
       }
     }
   }
+  softenFace(mesh, amt);
+  return mesh;
+}
+
+/**
+ * Weichere Gesichtsform (Version 4, Rueckmeldung "spitzig, stutzig, die Kieferecken neben der Nase"): Die Bueste hat
+ * kantige Wangenknochen und einen breiten, eckigen Kiefer (in der Dreiviertelansicht stehen Jochbein und Kieferwinkel
+ * der abgewandten Seite als Ecken neben der Nase). Auf dem Kontrollnetz, vor der Glaettung, damit Schale, Partikel und
+ * Kopfform dasselbe Gesicht haben:
+ *   1. Kiefer schmaler zum Kinn hin (der Kieferwinkel wandert nach innen, Gesicht ovaler statt eckig)
+ *   2. Wangen fuellen (Mulde seitlich der Mundwinkel)
+ *   3. Taubin-Glaettung (ohne Schrumpfen) auf Wangen und Kiefer: Kanten am Jochbein und am Kiefer werden runde Flaechen
+ * Augen, Nase, Lippen und Ohren bleiben unberuehrt (Gewicht 0 dort, weicher Uebergang).
+ */
+const SOFTEN_ITERS = 16;
+export function softenFace(mesh, amt = 1) {
+  const { pos, nV, quads, head, lm } = mesh;
+  if (!amt || !quads || !head) return mesh;
+  const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const eyes = lm && lm.eyeL ? [lm.eyeL, lm.eyeR] : [[0.304, 0, 0.597], [-0.304, 0, 0.597]];
+  // Gewicht pro Ecke: 1 auf Wangen und Kiefer, 0 an Augen, Nase, Mund, Ohr, Schaedel und Hals
+  const w = new Float32Array(nV);
+  for (let i = 0; i < nV; i++) {
+    if (head[i] < 0.5) continue;
+    const x = pos[i * 3]; const y = pos[i * 3 + 1]; const z = pos[i * 3 + 2];
+    const ax = Math.abs(x);
+    let k = ss(-1.12, -0.98, y) * (1 - ss(-0.02, 0.12, y)) * ss(-0.25, 0.05, z);
+    if (!k) continue;
+    // Augen (nur Lider und Augapfel bleiben, wie applyExpression sie setzt; Jochbein darunter wird geglaettet)
+    for (const e of eyes) k *= ss(0.17, 0.25, Math.hypot(x - e[0], (y - e[1]) * 1.25, (z - e[2]) * 0.8));
+    // Nase: schmaler Streifen in der Mitte bis unter die Nasenfluegel
+    k *= 1 - (1 - ss(0.12, 0.18, ax)) * ss(-0.56, -0.48, y) * ss(0.45, 0.6, z);
+    // Lippen
+    k *= 1 - (1 - ss(0.17, 0.23, ax)) * ss(-0.76, -0.71, y) * (1 - ss(-0.52, -0.47, y)) * ss(0.55, 0.66, z);
+    // Ohr und Ohr-Platte
+    k *= 1 - ss(0.6, 0.68, ax) * ss(-0.35, -0.12, -z);
+    w[i] = k;
+  }
+
+  // 1. Kiefer zum Kinn hin schmaler: x nach innen, staerker aussen und unten (rund 9 % am Kieferwinkel)
+  for (let i = 0; i < nV; i++) {
+    const x = pos[i * 3]; const y = pos[i * 3 + 1]; const z = pos[i * 3 + 2];
+    if (head[i] < 0.5 || z < -0.3) continue;
+    const ax = Math.abs(x);
+    const t = ss(-0.42, -0.9, y) * ss(0.18, 0.55, ax) * (1 - ss(-0.05, -0.3, z) * 0.5);
+    pos[i * 3] = x * (1 - 0.095 * t * amt);
+    // Kieferwinkel leicht nach vorne runden (nimmt die Stufe unter der Wange)
+    pos[i * 3 + 2] = z + 0.012 * t * ss(0.4, 0.62, ax) * amt;
+  }
+
+  // 2. Wangen fuellen: die Mulde seitlich der Mundwinkel (unter dem Jochbein, ueber dem Kiefermuskel) nach vorne und
+  //    aussen heben. Sie liess Jochbein und Kieferwinkel als Ecken stehen (hohle, kantige Wangen).
+  for (let i = 0; i < nV; i++) {
+    if (!w[i]) continue;
+    const x = pos[i * 3]; const y = pos[i * 3 + 1]; const z = pos[i * 3 + 2];
+    const ax = Math.abs(x);
+    const dx = (ax - 0.43) / 0.17; const dy = (y + 0.56) / 0.19;
+    const f = Math.exp(-(dx * dx + dy * dy)) * ss(0.2, 0.45, z) * amt;
+    if (f < 1e-3) continue;
+    const s = Math.sign(x) || 1;
+    pos[i * 3] = x + s * 0.012 * f;
+    pos[i * 3 + 2] = z + 0.03 * f;
+  }
+
+  // 3. Taubin-Glaettung (lambda/mu) nur im Gewicht w: Nachbarn aus den Vierecken
+  const nb = new Map();
+  const add = (a, b) => {
+    if (!w[a]) return;
+    let s = nb.get(a);
+    if (!s) { s = new Set(); nb.set(a, s); }
+    s.add(b);
+  };
+  for (let f = 0; f < quads.length; f += 4) {
+    for (let e = 0; e < 4; e++) {
+      const a = quads[f + e]; const b = quads[f + ((e + 1) & 3)];
+      add(a, b); add(b, a);
+    }
+  }
+  const ids = Array.from(nb.keys());
+  const lists = ids.map((i) => Array.from(nb.get(i)));
+  const tmp = new Float32Array(ids.length * 3);
+  const pass = (f) => {
+    for (let j = 0; j < ids.length; j++) {
+      const i = ids[j]; const L = lists[j];
+      let sx = 0; let sy = 0; let sz = 0;
+      for (const n of L) { sx += pos[n * 3]; sy += pos[n * 3 + 1]; sz += pos[n * 3 + 2]; }
+      const inv = 1 / L.length;
+      const k = f * w[i] * amt;
+      tmp[j * 3] = pos[i * 3] + (sx * inv - pos[i * 3]) * k;
+      tmp[j * 3 + 1] = pos[i * 3 + 1] + (sy * inv - pos[i * 3 + 1]) * k;
+      tmp[j * 3 + 2] = pos[i * 3 + 2] + (sz * inv - pos[i * 3 + 2]) * k;
+    }
+    for (let j = 0; j < ids.length; j++) {
+      const i = ids[j];
+      pos[i * 3] = tmp[j * 3]; pos[i * 3 + 1] = tmp[j * 3 + 1]; pos[i * 3 + 2] = tmp[j * 3 + 2];
+    }
+  };
+  for (let it = 0; it < SOFTEN_ITERS; it++) { pass(0.5); pass(-0.53); }
   return mesh;
 }
 /* Glaettung im Web Worker (robot-mesh-worker.js), damit der Hauptthread frei bleibt. Faellt der Worker aus (alter

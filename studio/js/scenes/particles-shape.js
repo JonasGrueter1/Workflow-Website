@@ -34,11 +34,11 @@ const segD = (px, py, ax, ay, bx, by) => {
   const h = clamp(((px - ax) * vx + (py - ay) * vy) / (vx * vx + vy * vy), 0, 1);
   return Math.hypot(px - ax - vx * h, py - ay - vy * h);
 };
-// Gesichtsplatten wie robot-layout.js lFaceSeams: Stirnbogen und seitliche Maskenlinie (Augenhoehlenrand, unter dem Jochbein)
+// Gesichtsplatten wie robot-layout.js lFaceSeams: Stirnbogen und seitliche Wangenfuge (Version 4: flacher Bogen)
 const faceSeams = (x, y) => {
   const fh = Math.abs(y - (0.262 - 0.11 * x * x));
   const t = clamp(-y / 0.95, 0, 1);
-  const ck = Math.max(Math.abs(x - (0.672 - 0.33 * Math.pow(t, 1.45))), y - 0.2);
+  const ck = Math.max(Math.abs(x - (0.668 - 0.2 * t * t)), y - 0.2);
   return Math.min(fh, ck);
 };
 // Hinterkopf-Oeffnung wie robot-layout.js lSkullWin (Ellipse in Bogenlaenge ab hinten und y)
@@ -54,7 +54,7 @@ const lFace = (x, y, z) => {
   const rxz = Math.hypot(x, z);
   const th = Math.atan2(x, z);
   const ths = 1.2 + 0.36 * smoothstep(-0.12, -0.62, y);
-  return smax(smax(A, (th - ths) * rxz, 0.08), lJaw(x, y, z), 0.05);
+  return smax(smax(A, (th - ths) * rxz, 0.11), lJaw(x, y, z), 0.1);
 };
 /** Abstand zur naechsten Linie am Kopf (Maske, Stirn- und Wangenfuge, Lidfalte, Scheitelnaht, Rand der Oeffnung) */
 function headLine(px, y, z) {
