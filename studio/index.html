@@ -79,7 +79,7 @@
       }
       // Nur mit 3D: Module der Engine und der Szenen gleich parallel laden (statt Kette main -> engine -> three -> Szenen)
       if (ok) {
-        var mods = "vendor/three/three.module.min.js,js/config.js,js/engine.js,js/director.js,js/runner.js,js/fx/FxPass.js,vendor/three/addons/postprocessing/EffectComposer.js,vendor/three/addons/postprocessing/RenderPass.js,vendor/three/addons/postprocessing/UnrealBloomPass.js,vendor/three/addons/postprocessing/OutputPass.js,vendor/three/addons/postprocessing/Pass.js,vendor/three/addons/postprocessing/ShaderPass.js,vendor/three/addons/postprocessing/MaskPass.js,vendor/three/addons/shaders/CopyShader.js,vendor/three/addons/shaders/LuminosityHighPassShader.js,vendor/three/addons/shaders/OutputShader.js,vendor/three/addons/environments/RoomEnvironment.js,vendor/three/addons/utils/BufferGeometryUtils.js,js/scenes/backdrop-noise.js,js/scenes/backdrop-glsl.js,js/scenes/backdrop.js,js/scenes/brain-build.js,js/scenes/brain-shaders.js,js/scenes/brain-hw-atlas.js,js/scenes/brain-hw-shaders.js,js/scenes/brain-hardware.js,js/scenes/brain.js,js/scenes/cables-paths.js,js/scenes/cables-shaders.js,js/scenes/cables.js,js/nodes.js,js/scenes/particles-glsl.js,js/scenes/particles-shape.js,js/scenes/particles.js,js/scenes/robot-mesh.js,js/scenes/robot-layout.js,js/scenes/robot-materials.js,js/scenes/robot-mech.js,js/scenes/robot-env.js,js/scenes/robot-geometry.js,js/scenes/robot.js".split(',');
+        var mods = "vendor/three/three.module.min.js,js/config.js,js/engine.js,js/director.js,js/runner.js,js/fx/FxPass.js,vendor/three/addons/postprocessing/EffectComposer.js,vendor/three/addons/postprocessing/RenderPass.js,vendor/three/addons/postprocessing/UnrealBloomPass.js,vendor/three/addons/postprocessing/OutputPass.js,vendor/three/addons/postprocessing/Pass.js,vendor/three/addons/postprocessing/ShaderPass.js,vendor/three/addons/postprocessing/MaskPass.js,vendor/three/addons/shaders/CopyShader.js,vendor/three/addons/shaders/LuminosityHighPassShader.js,vendor/three/addons/shaders/OutputShader.js,vendor/three/addons/environments/RoomEnvironment.js,vendor/three/addons/utils/BufferGeometryUtils.js,js/scenes/backdrop-noise.js,js/scenes/backdrop-glsl.js,js/scenes/backdrop.js,js/scenes/brain-build.js,js/scenes/brain-shaders.js,js/scenes/brain-hw-atlas.js,js/scenes/brain-hw-shaders.js,js/scenes/brain-hardware.js,js/scenes/brain.js,js/scenes/cables-paths.js,js/scenes/cables-shaders.js,js/scenes/cables.js,js/nodes.js,js/scenes/dna-atlas.js,js/scenes/dna-code.js,js/scenes/dna-build.js,js/scenes/dna-shaders.js,js/scenes/dna.js,js/scenes/particles-glsl.js,js/scenes/particles-shape.js,js/scenes/particles.js,js/scenes/robot-mesh.js,js/scenes/robot-layout.js,js/scenes/robot-materials.js,js/scenes/robot-mech.js,js/scenes/robot-env.js,js/scenes/robot-geometry.js,js/scenes/robot.js".split(',');
         for (var i = 0; i < mods.length; i++) {
           var l = document.createElement('link');
           l.rel = 'modulepreload'; l.href = mods[i];
@@ -215,7 +215,7 @@
 <div class="story-bar" aria-hidden="true"><i></i></div>
 <a class="story-skip" href="#weiter" aria-label="Animation überspringen, weiter zum Inhalt">Animation überspringen</a>
 <aside class="hud" aria-hidden="true">
-<span class="hud__index"><span id="hud-index">00</span><small>/05</small></span>
+<span class="hud__index"><span id="hud-index">00</span><small>/06</small></span>
 <span class="hud__track"><i></i><span class="hud__ticks"></span></span>
 <span class="hud__label" id="hud-label">Start</span>
 </aside>
@@ -277,11 +277,27 @@
         </div>
       </section>
 
+      <section class="chapter chapter--left" data-scene="dna" aria-labelledby="t-dna">
+        <div class="chapter__poster"></div>
+        <div class="chapter__panel">
+          <div class="chapter__text">
+            <p class="kicker" data-anim><span>05</span> Websites</p>
+            <h2 class="headline" id="t-dna" data-split>Websites aus eigenem Code.</h2>
+            <p data-anim>Schnell geladen, auf jedem Handy gut lesbar, bei Google sauber beschrieben. Anfragen über Ihre Website landen auf Wunsch in derselben Liste wie Mail und WhatsApp.</p>
+            <p class="story-tags" data-anim>Nach Mass · Eigener Code · Anfragen in einer Liste</p>
+          </div>
+        </div>
+        <div class="chapter__offer" id="offer">
+          <p>Ihr erster Entwurf ist kostenlos. Danach erhalten Sie eine Fixpreis-Offerte.</p>
+          <a class="btn" href="kontakt/?thema=website" tabindex="-1">Kostenlosen Entwurf anfragen <span class="btn__arrow" aria-hidden="true"></span></a>
+        </div>
+      </section>
+
       <section class="chapter chapter--left chapter--outro" data-scene="outro" aria-labelledby="t-outro">
         <div class="chapter__poster"></div>
         <div class="chapter__panel">
           <div class="chapter__text">
-            <p class="kicker" data-anim><span>05</span> Einstieg</p>
+            <p class="kicker" data-anim><span>06</span> Einstieg</p>
             <h2 class="headline headline--xl" id="t-outro" data-split>Klein anfangen, Nutzen messen, dann entscheiden.</h2>
             <p data-anim>Der KI-Check zum Fixpreis von CHF 360 zeigt, wo KI in Ihrem Betrieb Zeit spart und was das kostet. Für eine neue Website erhalten Sie zuerst einen kostenlosen Entwurf.</p>
             <div class="actions" data-anim>
@@ -412,7 +428,7 @@
 <section class="sec sec--soft" id="vertrauen" aria-labelledby="vertrauen-t">
 <div class="wrap">
 <header class="sec__head" data-reveal>
-<p class="t-eyebrow">Bevor Sie schreiben</p>
+<p class="t-eyebrow">Bevor Sie anrufen</p>
 <h2 class="t-h2" id="vertrauen-t">Was Sie vorher wissen wollen.</h2>
 </header>
 <ul class="cards cards--4 cards--white"><li class="card card--link" data-reveal>
@@ -470,7 +486,7 @@
 <p class="ftr__name"><span class="mark" aria-hidden="true"></span>Jonas Grüter</p>
 <p>KI und Websites für KMU in der Zentralschweiz</p>
 <p class="ftr__claim">KI entlastet Ihr Team, sie ersetzt niemanden.</p>
-<p class="ftr__contact">Region Sempach, Kanton Luzern<br><a href="mailto:jonas.grueter.web@gmail.com">jonas.grueter.web@gmail.com</a></p>
+<p class="ftr__contact">Region Sempach, Kanton Luzern<br><a href="mailto:jonas.grueter.web@gmail.com">jonas.grueter.web@gmail.com</a><br><a href="tel:0763025043">076 302 50 43</a><br>Schauensee 28a, 6204 Sempach</p>
 </div>
 <nav class="ftr__nav" aria-label="Fusszeile"><div class="ftr__col">
 <p class="ftr__title" id="ft-0">KI</p>

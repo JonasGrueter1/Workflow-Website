@@ -1,14 +1,15 @@
 // Szene "backdrop": Shader des Hintergrunds. Ein Vollbild-Dreieck, pro Bildpunkt die Welt-Blickrichtung
 // (aus projectionMatrixInverse inkl. Lens-Shift und matrixWorld der Kamera). Der Hintergrund dreht sich also korrekt
-// mit der Kamera, liegt aber unendlich weit weg. Ausnahme mit echter Parallaxe: der Boden (Ebene y = uFloorY), aus der
-// Kameraposition geschnitten.
+// mit der Kamera, liegt aber unendlich weit weg. Ausnahmen mit echter Parallaxe: der Boden (Ebene y = uFloorY) und der
+// Code-Tunnel (Zylinder um die Helix-Achse, Kapitel Code), beide aus der Kameraposition geschnitten.
 //
 // Bausteine (alle ueber Uniforms gewichtet, Werte aus backdrop.js, gemischt aus BACKDROPS in config.js):
 //   Verlauf + Horizontband, Akzent-Dunst, Gegenlicht-Halo (uGlowDir), Lichtflaechen (uWash: drei grosse, weiche
 //   Farbflaechen, die langsam um das Gegenlicht wandern, Version 4), Nebel (1..3 Rausch-Zugriffe, Domain-Warp, vom
 //   Gegenlicht beleuchtet), Lichtstrahlen um eine eigene Quelle (uRayDir), Biolumineszenz der Nebelschwaden (uAurora),
 //   Sterne, Staub, Bokeh, Boden mit Spiegelung (Studio-Boden: Lichtbahn unter dem Motiv, Lichtkante am Horizont,
-//   optional Punktraster und Datenpakete auf den Rasterlinien, uStreaks), Messraster mit Scanlinie und Messkreis.
+//   optional Punktraster und Datenpakete auf den Rasterlinien, uStreaks), Messraster mit Scanlinie und Messkreis,
+//   Code-Regen im Tunnel (uCode, Kapitel Code).
 // BD_Q: 2 = high, 1 = medium, 0 = low (weniger Zugriffe, weniger Ebenen).
 // Helligkeit (linear, vor dem Tonemapping): Flaechen bleiben unter ~0.06, nur Halo-Kern, Pakete, Sterne und Bokeh
 // werden heller (bis ~0.5, leichtes Bluehen). Die Mengen aus BACKDROPS (0..1) sind hier auf diese Werte skaliert.
@@ -73,6 +74,8 @@ uniform float uStreaks;
 uniform vec3 uStreakColor;
 uniform float uBokeh;
 uniform vec3 uBokehColor;
+uniform float uCode;
+uniform vec3 uCodeColor;
 uniform float uWash;
 uniform vec3 uWashA;
 uniform vec3 uWashB;
@@ -327,6 +330,50 @@ void main() {
     float tick = aaLine(fract(ra + 0.5) - 0.5, raw, 0.4)
       * (1.0 - smoothstep(0.0, 1.0, abs(rc - uRingCos - 0.006) / 0.006));
     col += uHi * (ring * 0.5 + tick * 0.35) * uGrid * det;
+  }
+
+  /* ---- Code-Regen auf der Tunnelwand um die Helix-Achse (Zylinder r 5.5, Achse x 0, y 0.5) */
+  if (uCode > 0.001) {
+    vec2 o2 = uCamPos.xy - vec2(0.0, 0.5);
+    vec2 d2 = d.xy;
+    float a = dot(d2, d2);
+    float c = dot(o2, o2) - 30.25;
+    if (a > 1e-5 && c < 0.0) {
+      float b = dot(o2, d2);
+      float t = (-b + sqrt(max(b * b - a * c, 0.0))) / a;
+      vec3 P = uCamPos + d * t;
+      float th = atan(P.y - 0.5, P.x);
+      float u = (th / TAU + 0.5) * 96.0;
+      float rowf0 = P.z / 0.5;
+      float ci = floor(u);
+      float hc = hash12(vec2(ci, 7.1));
+      float rowf = rowf0 + uTime * (1.2 + 2.4 * hc) + hc * 50.0;
+      float ri = floor(rowf);
+      float len = 10.0 + floor(hc * 16.0);
+      float ph = fract((ri + floor(hc * 997.0)) / len);
+      float bright = exp(-ph * 7.0) * step(ph, 0.75);
+      bright *= step(0.42, hash12(vec2(ci, 1.3)));          // nicht jede Spalte laeuft
+      vec2 lc = vec2(fract(u), fract(rowf));
+      vec2 cw = max(fwidth(vec2(u, rowf)), vec2(1e-4));
+      float cellPx = 1.0 / max(cw.x, cw.y);
+      // Zeichen als 3 x 5 Punktmatrix, nur wenn die Zelle gross genug ist (sonst mittlere Deckung, kein Flimmern)
+      vec2 gq = (lc - vec2(0.18, 0.12)) / vec2(0.64, 0.76);
+      float glyph = 0.42;
+#if BD_Q > 0
+      if (cellPx > 7.0) {
+        vec2 gi = floor(gq * vec2(3.0, 5.0));
+        float inside = step(0.0, gq.x) * step(gq.x, 0.999) * step(0.0, gq.y) * step(gq.y, 0.999);
+        float flick = floor(uTime * (0.6 + 4.0 * step(0.86, hash12(vec2(ri, ci)))));
+        float bit = step(0.48, hash13(vec3(ci * 3.0 + gi.x, ri * 5.0 + gi.y, flick)));
+        vec2 gf = fract(gq * vec2(3.0, 5.0)) - 0.5;
+        float dotm = 1.0 - smoothstep(0.32, 0.48, max(abs(gf.x), abs(gf.y)));
+        glyph = mix(0.42, inside * bit * dotm, smoothstep(7.0, 13.0, cellPx));
+      }
+#endif
+      float fadeZ = exp(-abs(P.z - uCamPos.z) * 0.045);
+      vec3 cc = mix(uCodeColor, vec3(0.85, 1.0, 0.95), smoothstep(0.03, 0.0, ph) * 0.6);
+      col += cc * bright * glyph * fadeZ * uCode * det;
+    }
   }
 
   /* ---- Sterne (fein, funkelnd) und Staub (weich, steigt langsam) */

@@ -67,7 +67,7 @@ function mkSuche() {
     '<div class="wm-serp" aria-hidden="true">',
     '<p class="wm-serp__q"><span>küche nach mass schreinerei</span><i></i></p>',
     '<div class="wm-serp__hit">',
-    '<p class="wm-serp__site"><span class="wm-serp__fav">S</span><span>Schreinerei Beispiel<small>www.ihre-firma.ch › kuechen</small></span></p>',
+    '<p class="wm-serp__site"><span class="wm-serp__fav">S</span><span>Schreinerei Beispiel<small>ihre-firma › kuechen</small></span></p>',
     '<p class="wm-serp__title">Küchen nach Mass | Schreinerei Beispiel</p>',
     '<p class="wm-serp__desc">Küchen, Einbauschränke und Möbel aus Massivholz. Mit Ihnen geplant, in der eigenen Werkstatt gefertigt und montiert.</p>',
     '</div>',
@@ -174,7 +174,7 @@ function screenUmsetzung(ctx) {
 function screenUebergabe(ctx) {
   return join([
     '<div class="ws ws--uebergabe">',
-    '<p class="ws-url"><i class="ws-url__lock"></i><span>www.ihre-firma.ch</span><b>Online</b></p>',
+    '<p class="ws-url"><i class="ws-url__lock"></i><span>ihre-firma</span><b>Online</b></p>',
     `<div class="ws-url__page">${webBild(ctx, 'treuhand', 'laptop', { sizes: '40vw' })}</div>`,
     '</div>',
   ], '');

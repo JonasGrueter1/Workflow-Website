@@ -8,13 +8,17 @@
 //     Fokus hebt den Knoten hervor (cables.setHighlight: Knoten leuchtet, Impulse laufen schneller).
 //   Modus "pills" (Hochformat, schmale Fenster): die Links bleiben Pillen im Text-Panel. Sichtbare Knoten bekommen
 //     zusaetzlich eine Tippflaeche mit Namen (aria-hidden, tabindex -1, gleicher Link), ohne eigenen Fokus.
-// Sichtbar nur von cables@SHOW bis zum Schnitt und solange der Knoten frei im Bild steht (cables.screen[i].vis: nicht
-// unter Kopfzeile, HUD oder Text, nicht hinter einem naeheren Knoten). Unsichtbare Links: Deckkraft 0, keine
-// Zeiger-Ereignisse, tabindex -1. Sie bleiben im Accessibility-Baum (wie die Texte der Panels).
+// Sichtbar nur von cables@SHOW bis zum Ende des Beats cables und solange der Knoten frei im Bild steht
+// (cables.screen[i].vis: nicht unter Kopfzeile, HUD oder Text, nicht hinter einem naeheren Knoten). Mit dem Anflug auf
+// den Website-Knoten (Kapitel Code, Beat dna) blenden sie in HIDE (p im Beat dna) aus. Unsichtbare Links: Deckkraft 0,
+// keine Zeiger-Ereignisse, tabindex -1. Vor der Kabel-Szene bleiben sie im Accessibility-Baum (wie die Texte der
+// Panels). Ab dem Kapitel Code und im Inhaltsbereich sind die Links ueber der Buehne und die Tippflaechen inert
+// (kein Fokus, kein Klick, nicht im Accessibility-Baum); die Pillen im Text-Panel sperrt ui.setInteractive.
 // Pro Bild nur Zahlen vergleichen, ins DOM geschrieben wird nur bei Aenderung (keine Allokation pro Bild).
 
 const NODES_MQ = '(min-width: 1024px) and (min-aspect-ratio: 17/20)';
 const SHOW = [0.2, 0.32]; // Einblenden der Links im Beat cables (p)
+const HIDE = [0, 0.035]; // Ausblenden im Beat dna (p), waehrend die Kamera Richtung Website-Knoten losfliegt
 const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
 export class NodeLinks {
@@ -114,6 +118,10 @@ export class NodeLinks {
       this._measure();
     }
     for (let i = 0; i < this.hits.length; i++) this._hide(this.hits[i], this.hitState[i]);
+    // Inert neu setzen (die Pillen im Panel nie inert, sie sperrt ui.setInteractive)
+    const was = this._inert;
+    this._inert = null;
+    this._setInert(!!was);
   }
 
   /** Breite der Beschriftungen messen (Seitenwahl und Verdeckung in cables.js), je nach Modus Links oder Tippflaechen */
@@ -151,7 +159,14 @@ export class NodeLinks {
     const d = this.director;
     const b = d.beat('cables');
     const m = d.module('cables');
-    const show = !this.content && m && m.active && this.alive() && d.global < b.end ? ss(SHOW[0], SHOW[1], b.p) : 0;
+    const dn = d.beat('dna');
+    const past = this.content || (dn && d.global >= dn.start + (dn.end - dn.start) * HIDE[1]);
+    let show = 0;
+    if (!past && m && m.active && this.alive()) {
+      show = ss(SHOW[0], SHOW[1], b.p);
+      if (dn && d.global >= dn.start) show *= 1 - ss(HIDE[0], HIDE[1], dn.p);
+    }
+    this._setInert(past);
     const nodes = this.mode === 'nodes';
     const els = nodes ? this.links : this.hits;
     const sts = nodes ? this.state : this.hitState;
@@ -161,6 +176,17 @@ export class NodeLinks {
       if (v < 0.02) { this._hide(els[i], sts[i]); continue; }
       this._place(els[i], sts[i], sc, v, nodes);
     }
+  }
+
+  /** Ab dem Kapitel Code (und im Inhaltsbereich): Links ueber der Buehne und Tippflaechen inert */
+  _setInert(on) {
+    if (on === this._inert) return;
+    this._inert = on;
+    const floating = this.mode === 'nodes';
+    if (on && floating && this.nav.contains(document.activeElement)) document.activeElement.blur();
+    this.nav.inert = on && floating;
+    this.hitLayer.inert = on;
+    if (on && this.hiName) this.highlight(null);
   }
 
   _place(a, st, sc, v, focusable) {
@@ -210,6 +236,7 @@ export class NodeLinks {
       a.removeEventListener('blur', this._off);
     }
     this.setMode('pills');
+    this.nav.inert = false;
     this.root.classList.remove('nodes-on');
     for (const a of this.links) a.removeAttribute('tabindex');
     this.hitLayer.remove();

@@ -297,7 +297,7 @@ body {
 .hud__ticks {
   position: absolute;
   inset: -3px 0;
-  background: repeating-linear-gradient(90deg, var(--c-muted) 0 1px, transparent 1px calc(100% / 5));
+  background: repeating-linear-gradient(90deg, var(--c-muted) 0 1px, transparent 1px calc(100% / 6));
   opacity: 0.55;
   width: calc(100% + 1px);
 }
@@ -509,7 +509,7 @@ main { position: relative; z-index: 1; }
   transition: opacity 0.5s, visibility 0.5s, border-color 0.25s, color 0.25s;
 }
 .gl .story-skip:hover { border-color: var(--c-signal); color: #fff; }
-.gl.is-content .story-skip, .gl:not(.is-ready) .story-skip,
+.gl.is-content .story-skip, .gl:not(.is-ready) .story-skip, .gl.offer-on .story-skip, .gl.offer-end .story-skip,
 .gl[data-beat="intro"] .story-skip, .gl[data-beat="outro"] .story-skip { opacity: 0; visibility: hidden; }
 .gl .chapter__panel {
   position: sticky;
@@ -534,6 +534,40 @@ main { position: relative; z-index: 1; }
 .gl .chapter__text { pointer-events: none; }
 .gl .chapter.is-on .chapter__text a, .gl .chapter.is-on .chapter__text .actions { pointer-events: auto; }
 .gl:not(.is-ready) [data-intro] { opacity: 0; }
+
+/* Angebotsmoment: Zeile mit Knopf unter dem fertigen Website-Geruest (Ende Kapitel Code). Nur mit 3D, eingeblendet von
+   js/ui.js setOffer (Knopf sonst tabindex -1). Im Fallback steht der Satz nicht (die Station hat ihren eigenen Text). */
+.chapter__offer { display: none; }
+.gl .chapter__offer {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(56px, 10vh, 104px);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--gutter));
+  padding: 10px 10px 10px 24px;
+  border: 1px solid var(--c-line-strong);
+  border-radius: 999px;
+  background: rgba(4, 6, 10, 0.72);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(-50%, 14px, 0);
+  transition: opacity 0.6s var(--ease-out), transform 0.8s var(--ease-out), visibility 0s 0.6s;
+}
+.gl .chapter__offer.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(-50%, 0, 0);
+  transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out), visibility 0s;
+}
+/* Die Zeile liegt im Abschnitt .chapter (pointer-events: none, siehe oben): eingeblendet nimmt die ganze Pille Klicks an */
+.gl .chapter__offer.is-on { pointer-events: auto; }
+.gl.is-content .chapter__offer, .gl[data-beat="outro"] .chapter__offer { opacity: 0; visibility: hidden; }
+.chapter__offer p { margin: 0; color: var(--c-text); font-size: 0.98rem; line-height: 1.4; }
+.chapter__offer .btn { --h: 44px; flex: none; }
 
 .gl [data-split]:not(.is-split) { opacity: 0; }
 
@@ -588,6 +622,7 @@ main { position: relative; z-index: 1; }
 :is(.no-gl, .no-js) [data-scene="zoom"] .chapter__poster { background-image: url('../assets/img/poster-zoom.webp'); }
 :is(.no-gl, .no-js) [data-scene="brain"] .chapter__poster { background-image: url('../assets/img/poster-brain.webp'); }
 :is(.no-gl, .no-js) [data-scene="cables"] .chapter__poster { background-image: url('../assets/img/poster-cables.webp'); }
+:is(.no-gl, .no-js) [data-scene="dna"] .chapter__poster { background-image: url('../assets/img/poster-dna.webp'); }
 :is(.no-gl, .no-js) [data-scene="outro"] .chapter__poster { background-image: url('../assets/img/poster-outro.webp'); }
 @media (max-aspect-ratio: 4/5) {
   :is(.no-gl, .no-js) [data-scene="intro"] .chapter__poster { background-image: url('../assets/img/poster-intro-m.webp'); }
@@ -595,6 +630,7 @@ main { position: relative; z-index: 1; }
   :is(.no-gl, .no-js) [data-scene="zoom"] .chapter__poster { background-image: url('../assets/img/poster-zoom-m.webp'); }
   :is(.no-gl, .no-js) [data-scene="brain"] .chapter__poster { background-image: url('../assets/img/poster-brain-m.webp'); }
   :is(.no-gl, .no-js) [data-scene="cables"] .chapter__poster { background-image: url('../assets/img/poster-cables-m.webp'); }
+  :is(.no-gl, .no-js) [data-scene="dna"] .chapter__poster { background-image: url('../assets/img/poster-dna-m.webp'); }
   :is(.no-gl, .no-js) [data-scene="outro"] .chapter__poster { background-image: url('../assets/img/poster-outro-m.webp'); }
   /* Motiv etwas nach oben, unten steht der Text */
   :is(.no-gl, .no-js) .chapter__poster { background-size: 100% auto; background-position: 50% -7vh; margin-left: 0; }
@@ -780,6 +816,18 @@ main { position: relative; z-index: 1; }
   .scroll-cue span { writing-mode: horizontal-tb; }
   .scroll-cue i { width: 40px; height: 1px; }
   .scroll-cue i::after { background: linear-gradient(90deg, transparent, var(--c-signal)); animation-name: cue-x; }
+  /* Angebotszeile: Karte ueber die ganze Breite unten (das Geruest steht im Hochformat oben im Bild) */
+  .gl .chapter__offer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    width: calc(100vw - 2 * var(--gutter));
+    bottom: max(6vh, 32px);
+    padding: 18px;
+    border-radius: 22px;
+    text-align: center;
+  }
+  .chapter__offer p { font-size: 0.95rem; }
 }
 @media (max-width: 760px) {
   .tool-links ul { gap: 6px; }

@@ -50,12 +50,15 @@ export const ANCHORS = Object.freeze({
     website: v(0, 0.5, -10.0),
   }),
   nodeRadius: 0.32,
+  // Kapitel Code (dna): Helix hinter dem Website-Knoten, am Ende das Website-Geruest
+  dna: Object.freeze({ start: v(0, 0.5, -10.4), end: v(0, 0.5, -32), radius: 1.1, turnLength: 4.2 }),
+  wireframe: Object.freeze({ center: v(0, 0.5, -36), width: 5.6, height: 3.4 }),
 });
 
 /* ------------------------------------------------------- Hintergrund */
 // Farbwelten des Hintergrund-Moduls (js/scenes/backdrop.js), eine pro Beat plus "inhalt" (Inhaltsbereich).
 // backdrop.js mischt sie nach dem Fortschritt: weiche Kante BACKDROP_FADE (global) um jede Beat-Grenze, am Schnitt
-// (Ende Kabel -> Ausklang) ein harter Wechsel im Lichtblitz, im Inhaltsbereich nach director.content zu "inhalt".
+// (Ende Code -> Ausklang) ein harter Wechsel im Lichtblitz, im Inhaltsbereich nach director.content zu "inhalt".
 // Farben sRGB-Hex (wie HEX), gemischt wird linear. Punkte in Weltkoordinaten (ANCHORS):
 //   glowAt     Gegenlicht-Halo liegt (vom Auge aus) hinter diesem Punkt, glowShift verschiebt ihn im Bild
 //              (Anteil, x rechts, y oben). So bleibt das Licht beim Kreisen der Kamera hinter dem Motiv.
@@ -64,7 +67,8 @@ export const ANCHORS = Object.freeze({
 // Mengen 0..1 (Helligkeit linear, Kapitel 12 in ARCHITEKTUR.md). Fehlende Schluessel kommen aus `base` in backdrop.js.
 // Kontrast-Regel: base unter 0.006, mid unter 0.025 relative Leuchtdichte; helle Teile (glow, rays, horizonGlow) nur
 // auf der Seite des Motivs, nie hinter der Textspalte.
-export const BACKDROP_FADE = 0.035;
+// Version 4 mit Kapitel Code (Scrollweg 780 statt 590 vh): globale Breiten mal 0.756, gleiche Breite in vh wie V4.
+export const BACKDROP_FADE = 0.0265;
 export const BACKDROPS = Object.freeze({
   // Tiefsee-Petrol: Nebel, Lichtstrahlen von oben (aus der Richtung des Lichtkegels der Partikel), Staub
   intro: {
@@ -119,6 +123,18 @@ export const BACKDROPS = Object.freeze({
     floor: 0.85, floorY: -9, floorGrid: 2.2, floorShine: 0.8,
     washA: 0x000000, washB: 0x5a3ccf, washC: 0x2a7fe0, wash: 0.5,
   },
+  // Code-Raum Gruen-Tuerkis (wie V3), dazu die Lichtflaechen von V4: leiser Code-Regen auf der Tunnelwand, Lichtkern
+  // beim Website-Geruest (-z), kuehle Lichtbahn und ein Rest Violett aus dem Kabel-Raum, unten Mint (kein Ember: der faerbte das Gruen
+  // unter dem Geruest oliv). Kein Boden (die Kamera fliegt durch die Helix). Dynamik in backdrop.js.
+  dna: {
+    base: 0x02100e, mid: 0x05302a, hi: 0x17a888, accent: 0x0a3a30, fogColor: 0x03130f,
+    codeColor: 0x1fd1a5, starColor: 0xbdf6ff, bokehColor: 0x2fd6b0,
+    glowAt: [0, 0.5, -60], glowShift: [0, 0], rayAt: [0, 10, -10], accentAt: [0, -10, -30],
+    washA: 0x5fe0c8, washB: 0x3a5fd8, washC: 0x2fb7b0,
+    horizon: 0, horizonGlow: 0.2, glow: 0.6, glowSize: 1.2,
+    fog: 0.3, fogScale: 1.1, fogSpeed: 0.004, code: 0.06, dust: 0.15, bokeh: 0.12, stars: 0.12,
+    wash: 0.45,
+  },
   // Morgenlicht: goldenes Horizontgluehen hinter den Schultern rechts (nie hinter dem Kontakt-Text links), Strahlen
   // von rechts oben, Goldstaub, oben kuehl
   outro: {
@@ -141,8 +157,9 @@ export const BACKDROPS = Object.freeze({
 /* ------------------------------------------------------- Szenen (Beats) */
 // Reihenfolge = Reihenfolge der <section data-scene> in index.html.
 // len = Hoehe des Abschnitts in vh. Daraus misst der Director die Zeitfenster (global 0..1).
-// Version 4: fuenf Text-Stationen statt sieben Kapitel (das Kapitel Code mit Helix und Website-Geruest ist weg).
-// Scrollweg bis zum Inhalt: Summe der Laengen minus 100 vh (der letzte Beat zaehlt nur mit len - 100), also 580 vh.
+// Version 4: kurze Beats. Seit 01.11.2026 ist das Kapitel Code (dna: Helix und Website-Geruest) wieder drin (Jonas:
+// "den fand ich sehr gut"), kompakt mit 190 statt 210 vh. Sechs Text-Stationen 01 bis 06 (brain ohne Text).
+// Scrollweg bis zum Inhalt: Summe der Laengen minus 100 vh (der letzte Beat zaehlt nur mit len - 100), also 780 vh.
 // Der Beat brain hat keinen Text: dort taucht die Kamera langsam ins Gehirn (TEMPO begrenzt zusaetzlich das Tempo).
 export const BEATS = Object.freeze([
   // text = [ein0, ein1, aus0, aus1] (p im Beat), textM = Fenster im Hochformat, scrim = Abdunkeln hinter dem Text
@@ -155,13 +172,16 @@ export const BEATS = Object.freeze([
   { name: 'zoom', len: 120, label: 'Was KI kann', text: [0.02, 0.12, 0.42, 0.54], textM: [0.02, 0.12, 0.5, 0.62], scrim: 0.45 },
   // brain: kein Text (langsames Eintauchen, Flug durch das Gehirn und hinten hinaus)
   { name: 'brain', len: 160, label: 'Im Kern', noText: true, scrim: 0 },
-  // cables: Text, sobald die Uebersicht steht; die fuenf Knoten sind Links (js/nodes.js), bis zum Schnitt
+  // cables: Text, sobald die Uebersicht steht; die fuenf Knoten sind Links (js/nodes.js) bis zum Ende des Beats
   { name: 'cables', len: 110, label: 'Verbindung', text: [0.16, 0.28, 0.9, 0.985], textM: [0.12, 0.24, 0.92, 0.99], scrim: 0.5 },
+  // dna: zuerst fliegt die Kamera aus der Uebersicht in den Website-Knoten (0 bis DNA_FROM, ohne Text), dann laeuft
+  // der Ablauf aus V3 (Szene dna, local 0..1): Helix von aussen (Text), Eintauchen, Aufbau des Geruests, Angebotszeile
+  { name: 'dna', len: 190, label: 'Websites', text: [0.2, 0.27, 0.53, 0.62], textM: [0.2, 0.27, 0.5, 0.58], scrim: 0.6 },
   { name: 'outro', len: 150, label: 'Einstieg', scrim: 0.45 },
 ]);
 
-// Breite der Ueberblendung an Beat-Grenzen (in global-Einheiten, ca. 2.6 vh pro 0.002).
-export const BEAT_FADE = 0.02;
+// Breite der Ueberblendung an Beat-Grenzen (in global-Einheiten; bei 780 vh Scrollweg sind 0.015 rund 12 vh).
+export const BEAT_FADE = 0.015;
 
 // Tempo-Grenze (V4-KONZEPT 5.2): zwischen from und to folgt der gedaempfte Fortschritt dem Scroll hoechstens mit
 // vhPerSec (Scrollweg pro Sekunde). Ein schneller Wisch spielt den Flug ins Gehirn so trotzdem ruhig ab, die Szene
@@ -172,16 +192,23 @@ export const TEMPO = Object.freeze({ from: 'zoom@0.6', to: 'cables@0.3', vhPerSe
 // Module (js/scenes/<name>.js) und ihre Zeitfenster. 'beat@p' = Punkt p (0..1) im Beat.
 // windows[0] ist das Hauptfenster: daraus kommt `local`. Weitere Fenster halten das Modul nur aktiv.
 // Faellt ein Fensterrand auf einen Schnitt (cut in CAMERA_KEYS), ist er hart (kein Ein- oder Ausblenden ueber den Schnitt).
+// Kapitel Code: Anteil des Beats dna fuer den Anflug auf den Website-Knoten. Ab hier laeuft die Szene dna (local 0..1,
+// Zeitplan in js/scenes/dna.js). dna-build.js rechnet die Kamera-Keys dna@p mit demselben Wert in local um.
+export const DNA_FROM = 0.2;
+
 export const MODULES = Object.freeze({
   // Hintergrund hinter allem: immer aktiv (Gewicht 1), Farbwelten aus BACKDROPS
   backdrop: { windows: [{ from: 'intro@0', to: 'outro@1' }] },
   particles: { windows: [{ from: 'intro@0', to: 'robot@0.7' }] },
   // robot bleibt bis brain@0.6 aktiv: die Roentgen-Schale (Hologramm) umgibt das Gehirn, bis die Kamera eintaucht
   robot: { windows: [{ from: 'robot@0', to: 'brain@0.6' }, { from: 'outro@0', to: 'outro@1' }] },
-  brain: { windows: [{ from: 'zoom@0.3', to: 'cables@1' }] },
-  cables: { windows: [{ from: 'brain@0.7', to: 'cables@1' }] },
+  // brain bleibt bis in den Anflug auf den Website-Knoten (das Gehirn steht dort noch unten rechts im Bild)
+  brain: { windows: [{ from: 'zoom@0.3', to: 'dna@0.1' }] },
+  // cables bis in die Helix: der Website-Knoten oeffnet sich zum Portal, die Helix tritt aus seiner Faser
+  cables: { windows: [{ from: 'brain@0.7', to: 'dna@0.42' }] },
+  dna: { windows: [{ from: `dna@${DNA_FROM}`, to: 'dna@1' }] },
 });
-export const MODULE_FADE = 0.015;
+export const MODULE_FADE = 0.0115;
 
 /* ------------------------------------------------------------ Kamerapfad */
 // Keyframes, an Beats verankert. pos = Kameraposition, look = Blickziel, fov = vertikal in Grad.
@@ -233,13 +260,40 @@ export const CAMERA_KEYS = Object.freeze([
   { at: 'brain@0.78', pos: [0.02, 0.32, -0.25], look: [0.25, -0.05, -1.0], fov: 58, roll: 6 },
   { at: 'brain@1', pos: [-0.35, 0.55, -0.85], look: [0, 0, -3], fov: 55, roll: 2.5 },
   // Uebersicht von schraeg oben: Gehirn unten rechts, Kabel laufen nach links zu den Knoten, Text rechts.
-  // Version 4: die Kamera bleibt bis zum Schnitt in der Uebersicht (ruhiges Driften), damit man die Knoten anklicken
-  // kann. Aufstieg: Blick etwas hoeher, damit der Kalender-Knoten (hoechster Knoten) nie unter der Kopfzeile liegt
+  // Version 4: die Kamera bleibt bis cables@1 in der Uebersicht (ruhiges Driften), damit man die Knoten anklicken
+  // kann. Danach fliegt sie im Beat dna auf den Website-Knoten zu. Aufstieg: Blick etwas hoeher, damit der Kalender-Knoten (hoechster Knoten) nie unter der Kopfzeile liegt
   { at: 'cables@0.12', pos: [-2.3, 1.75, -0.1], look: [0.55, 0.78, -3.9], fov: 52 },
   { at: 'cables@0.36', pos: [-6.8, 5.94, 2.23], look: [1.5, 0.5, -5.0], fov: 46, lookM: [1.5, -3.0, -5.0] },
   { at: 'cables@0.66', pos: [-7.3, 6.25, 1.9], look: [1.65, 0.42, -5.15], fov: 45, lookM: [1.65, -3.0, -5.15] },
   { at: 'cables@1', pos: [-7.55, 6.3, 1.35], look: [1.75, 0.38, -5.35], fov: 44.5, lookM: [1.75, -3.0, -5.35] },
-  // Ausklang: Schnitt aus der Kabel-Uebersicht auf das Gesicht (die Augen erwachen im Lichtblitz), dann zieht die
+  // Kapitel Code (dna). Anflug: aus der Uebersicht hinunter auf den Website-Knoten zu (dna@0 bis DNA_FROM), an E-Mail und
+  // Dokumente vorbei. Danach die Keys aus V3, umgerechnet: p = DNA_FROM + (1 - DNA_FROM) * local (V3-Wert in Klammern).
+  {
+    at: 'dna@0.1', pos: [-4.55, 3.3, -2.75], look: [1.0, 0.95, -7.6], fov: 44,
+    lookM: [0.9, -0.6, -7.8],
+  },
+  // (cables@1 in V3) nah am Website-Knoten, schon leicht von links: danach steht die Helix einmal von aussen im Bild
+  { at: 'dna@0.2', pos: [-1.9, 1.05, -7.6], look: [0.15, 0.5, -11.2], fov: 44, posM: [-1.2, 1.2, -7.0], lookM: [0.1, -0.4, -11.5] },
+  // (dna@0.1) Helix von aussen (Dreiviertelansicht von links): zwei Straenge mit Sprossen, klar als Doppelhelix
+  // lesbar. Text links, die Helix rechts und nach links in die Tiefe. zTrack: die Kamera ist noch nicht in der Helix
+  // (dna-build.js rechnet damit, wann Zeichen hinter der Kamera verloeschen)
+  {
+    at: 'dna@0.28', pos: [-2.75, 0.95, -11.0], look: [0.5, 0.45, -15.9], fov: 46, zTrack: -9.9,
+    posM: [-2.1, 1.6, -9.6], lookM: [0.35, -0.9, -15.0],
+  },
+  // (dna@0.21) Kamera schwenkt vor den Anfang der Helix und taucht entlang der Achse ein (nicht durch die Wand)
+  {
+    at: 'dna@0.368', pos: [-0.55, 0.62, -9.5], look: [-1.0, 0.5, -16], fov: 50, zTrack: -10.0,
+    posM: [-0.4, 0.75, -9.4], lookM: [0, 0.1, -16],
+  },
+  // (dna@0.33) Eingetaucht: Fluchtpunkt rechts der Mitte, solange links der Text steht
+  { at: 'dna@0.464', pos: [0.2, 0.56, -15.0], look: [-1.55, 0.55, -20.5], fov: 50, lookM: [0, 0.5, -20.5] },
+  // (dna@0.58) Uebergang ins Geruest: zuegig nah heran, damit es frueh gross und klar im Bild steht
+  { at: 'dna@0.664', pos: [0.1, 0.48, -28.0], look: [0, 0.33, -36], fov: 43 },
+  // (dna@0.74) Geruest fertig: oben im Bild, darunter Platz fuer die Angebotszeile (HTML, js/ui.js setOffer)
+  { at: 'dna@0.792', pos: [0, 0.44, -29.25], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -28.85], lookM: [0, -0.5, -36] },
+  { at: 'dna@1', pos: [0, 0.42, -29.45], look: [0, 0.3, -36], fov: 41, posM: [0, 0.5, -29.05], lookM: [0, -0.5, -36] },
+  // Ausklang: Schnitt aus dem fertigen Website-Geruest auf das Gesicht (die Augen erwachen im Lichtblitz), dann zieht die
   // Kamera langsam zurueck in eine ruhige Dreiviertelansicht leicht von unten: die Bueste rechts, der Blick zum
   // Kontakt links (Hochformat: Bueste oben)
   { at: 'outro@0', cut: true, pos: [0.5, 0.05, 4.5], look: [-0.22, -0.27, 0.03], fov: 34, posM: [0.5, 0.2, 6.6], lookM: [0.01, -1.95, 0.09] },
@@ -248,7 +302,7 @@ export const CAMERA_KEYS = Object.freeze([
     posM: [3.9, 0.2, 9.6], lookM: [0.06, -3.2, 0.15],
   },
 ]);
-export const CUT_FADE = 0.012; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 7 vh)
+export const CUT_FADE = 0.009; // halbe Breite des Lichtblitzes um einen Schnitt (global, ca. 7 vh)
 
 // Hochformat: vertikales FOV wird erweitert, damit horizontal genug Bild bleibt.
 // minPortrait: im Hochformat mindestens dieser Faktor (= Wert bei Seitenverhaeltnis 0.59), damit Tablets im Hochformat

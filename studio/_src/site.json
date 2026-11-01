@@ -22,11 +22,11 @@
   "kontakt": {
     "mail": "jonas.grueter.web@gmail.com",
     "mailDienst": "Gmail (Google)",
-    "telefon": "",
-    "telefonZeiten": "",
+    "telefon": "076 302 50 43",
+    "telefonZeiten": "Unter der Woche am Abend, am Wochenende meist den ganzen Tag. Tagsüber nur in Notfällen.",
     "terminLink": "",
     "terminAnbieter": "",
-    "adresse": "",
+    "adresse": "Schauensee 28a, 6204 Sempach",
     "uid": "",
     "erstgespraech": "Das erste Gespräch dauert rund 20 Minuten und ist kostenlos und unverbindlich, am Abend oder nach Absprache.",
     "naechsterKiCheck": "",
@@ -69,17 +69,17 @@
     "haftpflicht": "",
     "haftung": "In jeder Offerte ist meine Haftung auf die Auftragssumme begrenzt, ausser bei Absicht oder grober Fahrlässigkeit.",
     "gewaehrleistungTage": 30,
-    "bestaetigt": false
+    "bestaetigt": true
   },
   "support": {
     "reaktionszeit": "innert eines Arbeitstags",
     "erreichbarkeit": "Tagsüber bin ich in der Lehre. Ich antworte meistens am Abend.",
-    "dringend": "Schreiben Sie «DRINGEND» in den Betreff. Solche Meldungen sehe ich spätestens in der Mittagspause und melde mich am selben Tag bis 18 Uhr.",
+    "dringend": "Schreiben Sie «DRINGEND» in den Betreff. Solche Meldungen sehe ich spätestens in der Mittagspause und melde mich am selben Tag bis 19 Uhr.",
     "stellvertretung": "",
-    "bestaetigt": false
+    "bestaetigt": true
   },
   "preise": {
-    "bestaetigt": false,
+    "bestaetigt": true,
     "stundenansatz": 45,
     "hinweis": "Richtwerte, verbindlich ist die Offerte.",
     "mwst": "Es kommt keine Mehrwertsteuer dazu.",
@@ -93,7 +93,7 @@
     "web": [
       { "id": "entwurf", "name": "Erster Entwurf", "art": "kostenlos" },
       { "id": "website", "name": "Website", "art": "ab", "betrag": 1800, "text": "Fixpreis nach Wunschliste" },
-      { "id": "pflege", "name": "Pflegepaket", "art": "monat-ab", "betrag": 40, "text": "inklusive 1 Stunde" }
+      { "id": "pflege", "name": "Pflegepaket", "art": "monat-ab", "betrag": 49, "text": "inklusive 1 Stunde" }
     ],
     "dauerWebsite": "rund 10 bis 16 Wochen ab Erhalt aller Inhalte"
   },
@@ -127,6 +127,6 @@
     "plaetze": 2,
     "frei": 2,
     "rabattKiCheck": 50,
-    "bestaetigt": false
+    "bestaetigt": true
   }
 }
