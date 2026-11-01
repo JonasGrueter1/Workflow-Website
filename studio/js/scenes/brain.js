@@ -205,7 +205,7 @@ export function create(ctx) {
       const br = director.beat('brain');
       const reveal = smoothstep(0.3, 0.92, zm.p);
       const act = 0.35 + 0.65 * smoothstep(0.5, 1.0, zm.p);
-      const flow = smoothstep(0.25, 0.9, br.p);
+      const flow = smoothstep(0.04, 0.9, br.p);
       const rootOn = 0.1 + 0.9 * smoothstep(0.55, 1.0, br.p);
 
       U.uAlpha.value = weight;
@@ -215,12 +215,17 @@ export function create(ctx) {
       // Von aussen: Netz ruhiger, damit die Windungen lesbar bleiben. Innen: Netz voll
       const camDist = ctx.camera.position.distanceTo(center);
       const outside = smoothstep(0.85, 1.7, camDist);
-      // Eintauchen (brain@0.35 bis 0.95): Netz und Bloom deutlich ruhiger, nur wenige Wellen hell (sonst brennt das Bild aus)
-      const dive = smoothstep(0.35, 0.5, br.p) * (1 - smoothstep(0.85, 0.97, br.p));
+      // Eintauchen (brain@0.2 bis 0.95): Netz und Bloom deutlich ruhiger, nur wenige Wellen hell (sonst brennt das Bild aus)
+      const dive = smoothstep(0.2, 0.46, br.p) * (1 - smoothstep(0.85, 0.97, br.p));
       U.uNetBase.value = (1 - 0.65 * outside) * (1 - 0.45 * dive);
       look.bloom = baseBloom * (1 - 0.5 * dive);
       look.bloomThreshold = 0.72 + 0.4 * dive;
       look.exposure = baseExposure * (1 - 0.08 * dive);
+      // Kabel-Szene: keine chromatische Aberration und weniger Vignette, die Knoten-Links am Bildrand (E-Mail, Dokumente)
+      // sollen scharf und hell sein (Testkunden Runde 2). Ab cables@0.2, wenn die Links erscheinen.
+      const cabOn = smoothstep(0.0, 0.2, director.beat('cables').p);
+      look.aberration = 0.006 * (1 - cabOn);
+      look.vignette = 0.85 - 0.4 * cabOn;
       U.uInside.value = 1 - outside;
       U.uFog.value = ctx.scene.fog ? ctx.scene.fog.density : 0.03;
       U.uAspect.value = ctx.size.width / Math.max(1, ctx.size.height);
@@ -239,7 +244,7 @@ export function create(ctx) {
       // Markanter Moment beim Flug durch das Gehirn: aus dem Kern (Thalamus, letzter Ausloeser) laeuft eine starke
       // Welle durch das ganze Netz, an den Scroll gekoppelt. Danach fliessen die Faserbahnen zum Kabelaustritt.
       const kw = CASCADES - 1;
-      const wv = smoothstep(0.5, 0.86, br.p);
+      const wv = smoothstep(0.46, 0.86, br.p);
       if (wv > 0 && wv < 1) {
         clocks[kw] = wv * (data.cascades.reach[kw] + 0.5);
         amps[kw] = 1.05 * act;

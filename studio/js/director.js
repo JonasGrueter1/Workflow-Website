@@ -2,7 +2,7 @@
 // Laeuft mit ScrollTrigger (index.html) oder ohne DOM (dev.html, setTarget()).
 import * as THREE from 'three';
 import {
-  BEATS, BEAT_FADE, MODULES, MODULE_FADE, CAMERA_KEYS, CUT_FADE, PORTRAIT, nominalBeatWindows,
+  BEATS, BEAT_FADE, MODULES, MODULE_FADE, CAMERA_KEYS, CUT_FADE, PORTRAIT, TEMPO, nominalBeatWindows,
 } from './config.js';
 
 /* ------------------------------------------------------------ Helfer */
@@ -27,10 +27,11 @@ export function resolveAt(str, beatWindows) {
   return w.start + (w.end - w.start) * clamp01(p);
 }
 
-// Gewicht 0..1 mit weicher Ueberblendung an beiden Enden (Raender 0 und 1 ohne Rampe)
-export function windowWeight(g, start, end, fade) {
-  const a = start <= 1e-4 ? 1 : smoothstep(start - fade, start + fade, g);
-  const b = end >= 1 - 1e-4 ? 1 : 1 - smoothstep(end - fade, end + fade, g);
+// Gewicht 0..1 mit weicher Ueberblendung an beiden Enden (Raender 0 und 1 ohne Rampe).
+// hardStart/hardEnd: Rand liegt auf einem Schnitt, dort ohne Rampe (sonst blendete ein Modul ueber den Schnitt).
+export function windowWeight(g, start, end, fade, hardStart = false, hardEnd = false) {
+  const a = start <= 1e-4 ? 1 : hardStart ? (g >= start ? 1 : 0) : smoothstep(start - fade, start + fade, g);
+  const b = end >= 1 - 1e-4 ? 1 : hardEnd ? (g < end ? 1 : 0) : 1 - smoothstep(end - fade, end + fade, g);
   return a * b;
 }
 
@@ -172,10 +173,13 @@ export class Director {
   /** Zeitfenster neu messen (nach Resize, Schriften, ScrollTrigger.refresh) */
   refresh() {
     let windows;
+    // Scrollweg in vh fuer global 0..1 (fuer die Tempo-Grenze)
+    this._vhPerG = 1;
     if (this.story && Object.keys(this.sections).length === BEATS.length) {
       const vh = window.innerHeight;
       const storyTop = this.story.getBoundingClientRect().top + window.scrollY;
       const range = Math.max(1, this.story.offsetHeight - vh);
+      this._vhPerG = (range / Math.max(1, vh)) * 100;
       windows = {};
       // Beats liegen lueckenlos aneinander: Ende = Start des naechsten (keine Rundungsfehler an den Grenzen)
       const tops = BEATS.map((b) => this.sections[b.name].getBoundingClientRect().top + window.scrollY - storyTop);
@@ -187,20 +191,24 @@ export class Director {
       });
     } else {
       windows = nominalBeatWindows();
+      this._vhPerG = BEATS.reduce((s, b) => s + b.len, 0) - 100;
       for (const b of BEATS) windows[b.name].pinOut = clamp01((b.len - 100) / b.len);
     }
     for (const b of BEATS) Object.assign(this.beats[b.name], windows[b.name]);
-    for (const [name, def] of Object.entries(MODULES)) {
-      this.modules[name].windows = def.windows.map((w) => ({
-        start: resolveAt(w.from, windows),
-        end: resolveAt(w.to, windows),
-      }));
-    }
     this._windows = windows;
     this._measureClearance();
     this._shotsL = buildShots(CAMERA_KEYS, windows, false);
     this._shotsP = buildShots(CAMERA_KEYS, windows, true);
     this.cuts = this._shotsL.slice(1).map((s) => s.t0);
+    const atCut = (t) => this.cuts.some((c) => Math.abs(c - t) < 1e-3);
+    for (const [name, def] of Object.entries(MODULES)) {
+      this.modules[name].windows = def.windows.map((w) => {
+        const start = resolveAt(w.from, windows);
+        const end = resolveAt(w.to, windows);
+        return { start, end, hardStart: atCut(start), hardEnd: atCut(end) };
+      });
+    }
+    this._tempo = TEMPO ? { a: resolveAt(TEMPO.from, windows), b: resolveAt(TEMPO.to, windows) } : null;
     this.update(0);
   }
 
@@ -264,8 +272,18 @@ export class Director {
   update(dt) {
     const prev = this.global;
     const diff = this.target - this.global;
-    if (Math.abs(diff) < 1e-5) this.global = this.target;
-    else this.global = damp(this.global, this.target, this.lambda * (Math.abs(diff) > 0.12 ? 1.8 : 1), dt);
+    // Sprung des Ziels in einem Bild (Ueberspringen, Anker, Tastatur Pos1/Ende): ohne Tempo-Grenze nachziehen
+    const lastT = this._lastTarget === undefined ? this.target : this._lastTarget;
+    if (TEMPO && Math.abs(this.target - lastT) > TEMPO.jump) this._free = true;
+    // Ziel am Ende oder am Anfang der Geschichte (Ueberspringen mit weichem Scrollen, Pos1): ebenfalls ohne Grenze
+    if (this.target >= 0.999 || this.target <= 0.001) this._free = true;
+    this._lastTarget = this.target;
+    let next;
+    if (Math.abs(diff) < 1e-5) next = this.target;
+    else next = damp(this.global, this.target, this.lambda * (Math.abs(diff) > 0.12 ? 1.8 : 1), dt);
+    if (this._free && Math.abs(this.target - next) < 0.004) this._free = false;
+    next = this._limitTempo(prev, next, dt);
+    this.global = next;
     this.velocity = dt > 0 ? (this.global - prev) / dt : 0;
     this.shift = damp(this.shift, this.portrait ? 0 : this._shiftTarget, 3.2, dt > 0 ? dt : 1);
     const g = this.global;
@@ -290,7 +308,7 @@ export class Director {
     // Module
     for (const m of this._moduleList) {
       let weight = 0;
-      for (const w of m.windows) weight = Math.max(weight, windowWeight(g, w.start, w.end, MODULE_FADE));
+      for (const w of m.windows) weight = Math.max(weight, windowWeight(g, w.start, w.end, MODULE_FADE, w.hardStart, w.hardEnd));
       const w0 = m.windows[0];
       m.local = w0 ? clamp01((g - w0.start) / Math.max(1e-6, w0.end - w0.start)) : 0;
       m.weight = weight;
@@ -317,6 +335,25 @@ export class Director {
 
     this._writeDom();
     return this;
+  }
+
+  /**
+   * Tempo-Grenze (config TEMPO): im Fenster a..b bewegt sich global hoechstens mit vhPerSec Scrollweg pro Sekunde.
+   * Ausserhalb des Fensters frei bis an den Rand, danach begrenzt. Liegt das Ziel schon hinter dem Fenster,
+   * holt die Szene mit catchUp mal dem Tempo auf. Nach einem Sprung (this._free) gilt keine Grenze.
+   */
+  _limitTempo(prev, next, dt) {
+    const lim = this._tempo;
+    if (!lim || this._free || !(dt > 0) || next === prev) return next;
+    const fwd = next > prev;
+    const beyond = fwd ? this.target > lim.b + 0.01 : this.target < lim.a - 0.01;
+    const step = (TEMPO.vhPerSec / Math.max(1, this._vhPerG)) * (beyond ? TEMPO.catchUp : 1) * dt;
+    if (fwd) {
+      if (prev >= lim.b || next <= lim.a) return next;
+      return Math.min(next, Math.max(prev, lim.a) + step);
+    }
+    if (prev <= lim.a || next >= lim.b) return next;
+    return Math.max(next, Math.min(prev, lim.b) - step);
   }
 
   /** Effektives vertikales FOV fuer das aktuelle Seitenverhaeltnis */
@@ -402,12 +439,15 @@ export class Director {
       if (!el) continue;
       const s = this.beats[b.name];
       const p = s.tp;
-      // Hochformat: Panels stehen fix unten (style.css). Eigene Fenster (BEATS[].textM), sonst bleibt der Text stehen,
+      // Hochformat: Panels stehen fix unten (story.css). Eigene Fenster (BEATS[].textM), sonst bleibt der Text stehen,
       // bis kurz vor dem naechsten Panel (kaum Bilder ohne Satz auf dem Handy)
       const t = this.portrait && b.textM ? b.textM : b.text;
       let fin;
       let fout;
-      if (t) {
+      if (b.noText) {
+        fin = 0;
+        fout = 0;
+      } else if (t) {
         fin = i === 0 ? 1 : smoothstep(t[0], t[1], p);
         fout = i === last && t[2] >= 1 ? 1 : 1 - smoothstep(t[2], t[3], p);
       } else {
@@ -443,8 +483,10 @@ export class Director {
     for (let i = 0; i < BEATS.length; i++) if (BEATS[i].name === name) def = BEATS[i];
     if (!r || !def || o <= 0.001) { sc.a = 0; return; }
     const s = this.beats[name];
-    // Hochformat: Panels stehen fix (ausser Ausklang), die Zone wandert nicht mit
-    const up = this.portrait && name !== 'outro' ? 0 : Math.max(0, p - s.pinOut) * r.sec;
+    // Panels stehen fix (Version 4, ausser Hero und Ausklang; im Hochformat auch der Hero): die Zone wandert nicht mit.
+    // Hero und Ausklang scrollen (Hero sofort, Ausklang nach der Klebedauer), die Zone wandert mit.
+    const fixed = name !== 'outro' && (this.portrait || name !== 'intro');
+    const up = fixed ? 0 : Math.max(0, p - s.pinOut) * r.sec;
     const padX = r.w * 0.08;
     const padY = r.h * 0.12;
     sc.x = (r.x + r.w / 2) / r.W;

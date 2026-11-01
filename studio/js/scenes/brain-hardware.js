@@ -1232,23 +1232,23 @@ export function createHardware(ctx, data, o) {
       U.uXray.value = xr;
       // Kapitel Kabel (ohne Kopf): leichte Kontur, damit der KI-Kern vor dem dunklen Raum lesbar bleibt
       U.uRimK.value = 0.45 * smoothstep(0.0, 0.2, cb.p);
-      // Runde 2: Beim Eintauchen verschwindet die Hardware ganz (brain@0.34 bis 0.46). Im Gehirn bleiben nur Neuronen,
+      // Runde 2: Beim Eintauchen verschwindet die Hardware ganz (Version 4: brain@0.19 bis 0.4). Im Gehirn bleiben nur Neuronen,
       // Impulse und Licht, keine Platinen oder Klammern direkt vor der Linse. Zurueck kommt sie erst in der Kabel-
       // Uebersicht (cables@0.02 bis 0.18), wenn die Kamera das Gehirn von aussen sieht.
-      const hide = inCables ? 1 - smoothstep(0.02, 0.18, cb.p) : smoothstep(0.34, 0.46, br.p);
+      const hide = inCables ? 1 - smoothstep(0.02, 0.18, cb.p) : smoothstep(0.19, 0.4, br.p);
       const hwA = st.weight * (1 - hide);
       U.uHwAlpha.value = hwA;
       mesh.visible = hwA > 0.002;
       glowMesh.visible = mesh.visible;
       // Nahe Hardware blendet zusaetzlich mit dem Abstand aus (Kabel-Uebersicht, Kamera dicht am Kopf)
-      const dive = smoothstep(0.35, 0.5, br.p) * (1 - smoothstep(0.85, 0.97, br.p));
+      const dive = smoothstep(0.2, 0.46, br.p) * (1 - smoothstep(0.85, 0.97, br.p));
       U.uHwNear.value.set(0.07 + 0.13 * dive, 0.26 + 0.42 * dive);
       U.uPcbOn.value = 0.25 + 0.75 * smoothstep(0.45, 0.95, zm.p);
       U.uSock.value = inCables ? 1 : smoothstep(0.55, 0.85, br.p);
       U.uRun.value = 0.4 + 0.6 * smoothstep(0.5, 1, zm.p);
 
       /* Luefter: Leerlauf 0.6 U/s, ab brain 0.5 schneller */
-      const rps = 0.6 + 0.6 * smoothstep(0.4, 0.6, br.p);
+      const rps = 0.6 + 0.6 * smoothstep(0.29, 0.6, br.p);
       fanAng = (fanAng + dt * rps * Math.PI * 2) % (Math.PI * 2);
       U.uFanCS.value.set(Math.cos(fanAng), Math.sin(fanAng));
 
