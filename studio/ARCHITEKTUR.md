@@ -10,9 +10,11 @@ Zuständigkeiten in `_src/README.md`). `index.html`, `impressum.html` und `daten
 Inhalte liegen in `js/site.js`, `js/ui.js` macht nur noch Preloader, Geschichte, HUD, Anker und Cursor. Die Kapitel der
 Geschichte stehen in `_src/pages/start.js`, der Kopf der Startseite in `_src/layouts/story.js`.
 
-**Startseite Version 4 (01.11.2026):** Die Geschichte hat fuenf Text-Stationen statt sieben Kapitel (Hero, Entlastung,
-Was KI kann, Verbindung, Start) und rund 590 vh Scrollweg statt 1080 vh. Das Kapitel Code (Helix und Website-Geruest,
-`dna*.js`) ist entfernt, der Git-Verlauf behaelt es. Der Flug ins Gehirn ist ein eigener Beat ohne Text und laeuft
+**Startseite Version 4 (01.11.2026):** Die Geschichte hat Hero und sechs Stationen 01 bis 06 (Entlastung, Was KI kann,
+Flug ins Gehirn ohne Text, Verbindung, Websites, Einstieg) und rund 780 vh Scrollweg statt 1080 vh. Das Kapitel Code
+(Helix aus Code, die sich zum Website-Geruest aufbaut, `dna*.js`) war in der ersten Fassung von Version 4 entfernt und ist
+seit dem 01.11.2026 wieder drin (Jonas: "den fand ich sehr gut"), kompakt mit 190 statt 210 vh und mit einem Anflug aus
+der Kabel-Uebersicht (Kapitel 4 und 5). Der Flug ins Gehirn ist ein eigener Beat ohne Text und laeuft
 langsamer (mehr Scrollweg und eine Tempo-Grenze, Kapitel 4). Die fuenf Knoten der Kabel-Szene sind echte HTML-Links
 ueber den 3D-Knoten (`js/nodes.js`, Kapitel 13). Das Android-Gesicht ist weicher (Kapitel 11), der Hintergrund hat einen
 Studio-Boden und wandernde Lichtflaechen (Kapitel 12). Unter der Geschichte stehen helle Teaser (Kapitel 9).
@@ -34,7 +36,9 @@ studio/
   js/nodes.js           Ohne three.js: die fuenf Werkzeug-Links ueber den 3D-Knoten (Kapitel 13)
   js/dev.js             Logik von dev.html
   js/fx/FxPass.js       Eigener Bild-Pass: chromatische Aberration, Vignette, Filmkorn, Blitz, Abblende, Abdunkeln
-  js/scenes/*.js        backdrop, particles, robot, brain, cables (je ein Szenen-Modul, Hilfsdateien <name>-*.js)
+  js/scenes/*.js        backdrop, particles, robot, brain, cables, dna (je ein Szenen-Modul, Hilfsdateien <name>-*.js)
+  js/scenes/dna*.js     Kapitel Code: dna.js Einstieg, -atlas (Zeichen-Textur), -code (Code der Straenge, Geruest),
+                        -build (Geometrie, Zeitplan der Zeichen), -shaders
   js/scenes/backdrop*.js Hintergrund hinter allem (Kapitel 12): backdrop.js Einstieg, -glsl (Shader), -noise (Rausch-Volumen)
   js/scenes/robot*.js   Android-Bueste (Kapitel 11): robot.js Einstieg, robot-mesh/-layout/-materials/-mech/-env/-geometry,
                         robot-mesh-worker.js (Catmull-Clark im Web Worker)
@@ -126,7 +130,9 @@ Wirft `update` einen Fehler, blendet der Runner die Szene aus und meldet es einm
 | `nodes.kalender` | (4.4, 2.2, -6.6) | |
 | `nodes.dokumente` | (-3.8, -2.0, -8.4) | |
 | `nodes.kunden` | (4.0, -1.6, -8.8) | |
-| `nodes.website` | (0, 0.5, -10.0) | Mittlerer Knoten (Link auf websites/) |
+| `nodes.website` | (0, 0.5, -10.0) | Mittlerer Knoten (Link auf websites/), dahinter beginnt die Helix |
+| `dna.start` / `dna.end` | (0, 0.5, -10.4) / (0, 0.5, -32) | Achse der Doppelhelix (entlang -Z), Radius 1.1, eine Windung pro 4.2 |
+| `wireframe.center` | (0, 0.5, -36) | Website-Gerüst am Ende der Helix, 5.6 x 3.4, Fläche zeigt nach +Z |
 
 Seitenansicht (Y nach oben, Z nach rechts = zur Startkamera):
 
@@ -155,19 +161,31 @@ Der Director misst die Abschnitte und rechnet Start/Ende in `global` um. Nominal
 
 | Beat | len (vh) | start | end | Text | Inhalt |
 | --- | --- | --- | --- | --- | --- |
-| intro | 60 | 0.0000 | 0.1017 | Hero (scrollt normal weg) | Partikel-Büste fertig geformt (Kopf, Fugen, Augenpartie, Rand der Hinterkopf-Öffnung scharf; Kabel fliessen weg, atmet, folgt der Maus), Titel, zwei Wege |
-| robot | 90 | 0.1017 | 0.2542 | 01 Entlastung (p 0.3 bis 0.97) | Partikel formen die Android-Büste (Hologramm, dann fest), Dreiviertelansicht, Studio-Boden |
-| zoom | 120 | 0.2542 | 0.4576 | 02 Was KI kann (p 0.02 bis 0.54) | Profil mit offenem Hinterkopf und Kabeln, Röntgen-Scan, Gehirn in der Hardware, Kamera kreist nach vorne rechts oben |
-| brain | 160 | 0.4576 | 0.7288 | keiner | Dreiviertelansicht des Gehirns, langsames Eintauchen (brain@0.12 bis 0.55), Flug durch und hinten hinaus |
-| cables | 110 | 0.7288 | 0.9153 | 03 Verbindung (p 0.16 bis 0.985) | Kabel werden gezogen, Übersicht von schräg oben, fünf Knoten als Links bis zum Schnitt |
-| outro | 150 | 0.9153 | 1.0000 | 04 Start (klebt) | Schnitt mit Lichtblitz, Roboter wieder ganz und ruhig, Kontakt |
+| intro | 60 | 0.0000 | 0.0769 | Hero (scrollt normal weg) | Partikel-Büste fertig geformt (Kopf, Fugen, Augenpartie, Rand der Hinterkopf-Öffnung scharf; Kabel fliessen weg, atmet, folgt der Maus), Titel, zwei Wege |
+| robot | 90 | 0.0769 | 0.1923 | 01 Entlastung (p 0.3 bis 0.97) | Partikel formen die Android-Büste (Hologramm, dann fest), Dreiviertelansicht, Studio-Boden |
+| zoom | 120 | 0.1923 | 0.3462 | 02 Was KI kann (p 0.02 bis 0.54) | Profil mit offenem Hinterkopf und Kabeln, Röntgen-Scan, Gehirn in der Hardware, Kamera kreist nach vorne rechts oben |
+| brain | 160 | 0.3462 | 0.5513 | keiner (03) | Dreiviertelansicht des Gehirns, langsames Eintauchen (brain@0.12 bis 0.55), Flug durch und hinten hinaus |
+| cables | 110 | 0.5513 | 0.6923 | 04 Verbindung (p 0.16 bis 0.985) | Kabel werden gezogen, Übersicht von schräg oben, fünf Knoten als Links bis zum Ende des Beats |
+| dna | 190 | 0.6923 | 0.9359 | 05 Websites (p 0.2 bis 0.62) | Anflug auf den Website-Knoten (bis dna@0.2), Helix aus Code von aussen, Eintauchen, Website-Gerüst, Angebotszeile (p 0.82 bis 0.985) |
+| outro | 150 | 0.9359 | 1.0000 | 06 Einstieg (klebt) | Schnitt mit Lichtblitz, Roboter wieder ganz und ruhig, Kontakt |
 
 Version 2 (Rückmeldung Art Director): Strecke von 1420 auf 1180 vh gekürzt. Version 4 (Testkunden und Jonas): 690 vh
-Abschnitte, also 590 vh Scrollweg bis zum Inhalt (der letzte Beat zählt nur mit len - 100). Im Hochformat sind die
-Abschnitte 28 % kürzer, der Ausklang nur im Teil über 100 vh (`.gl .chapter--outro`), zusammen rund 430 vh.
+Abschnitte, also 590 vh Scrollweg bis zum Inhalt (der letzte Beat zählt nur mit len - 100). Mit dem wieder eingebauten
+Kapitel Code (01.11.2026, 190 vh) sind es 880 vh Abschnitte und 780 vh Scrollweg. Im Hochformat sind die Abschnitte 28 %
+kürzer, der Ausklang nur im Teil über 100 vh (`.gl .chapter--outro`), zusammen rund 560 vh.
+
+Die globalen Breiten der Überblendungen (`BEAT_FADE` 0.015, `MODULE_FADE` 0.0115, `BACKDROP_FADE` 0.0265, `CUT_FADE`
+0.009) sind beim Wiedereinbau mit 590/780 skaliert: in vh gleich breit wie in der ersten Fassung von Version 4.
+
+**Kapitel Code (dna), Zeitachse.** Der Beat beginnt in der Kabel-Übersicht. Bis `DNA_FROM` (config.js, 0.2, rund 38 vh)
+fliegt die Kamera ohne Text hinunter auf den Website-Knoten (die Knoten-Links blenden dabei bis dna@0.035 aus, Kapitel
+13), der Website-Knoten wird hervorgehoben und öffnet sich zum Portal (`cables.js`). Ab dna@0.2 läuft die Szene `dna`
+mit ihrem Zeitplan aus Version 3 in `local` 0..1 (`dna.js`, Modul-Fenster dna@0.2 bis dna@1), also
+p = 0.2 + 0.8 x local: Helix von aussen mit Text, Eintauchen, die Helix reisst auf und baut das Gerüst (local 0.44 bis
+0.8, rund 55 vh), Ruhe mit Angebotszeile, Schnitt auf den Ausklang.
 
 Formel: `start = top / (storyHeight - vh)`, `end = (top + height) / (storyHeight - vh)`, der letzte Beat endet bei 1.
-`director.beat(name)` liefert `p` (0..1 im Beat, gedämpft) und `w` (Gewicht mit Überblendung `BEAT_FADE` = 0.02).
+`director.beat(name)` liefert `p` (0..1 im Beat, gedämpft) und `w` (Gewicht mit Überblendung `BEAT_FADE` = 0.015).
 
 ### Tempo-Grenze (Flug ins Gehirn)
 
@@ -191,12 +209,13 @@ In `MODULES` als `'beat@p'` definiert (p = Punkt im Beat). Nominal:
 | backdrop | intro@0 bis outro@1 | (immer aktiv, Gewicht 1, Kapitel 12) |
 | particles | intro@0 bis robot@0.7 | |
 | robot | robot@0 bis brain@0.6 | outro@0 bis outro@1 |
-| brain | zoom@0.3 bis cables@1 | |
-| cables | brain@0.7 bis cables@1 | |
+| brain | zoom@0.3 bis dna@0.1 | (bleibt im Anflug, das Gehirn steht dort noch unten rechts im Bild) |
+| cables | brain@0.7 bis dna@0.42 | (Website-Knoten als Portal, die Helix tritt aus seiner Faser) |
+| dna | dna@0.2 bis dna@1 | (`local` = Zeitplan aus Version 3, Kapitel 4) |
 
-- Ein Modul ist aktiv, solange eines seiner Fenster Gewicht > 0 hat (Rampe `MODULE_FADE` = 0.015 an beiden Enden).
-  Liegt ein Fensterrand auf einem Schnitt (`cut` in CAMERA_KEYS), ist er hart (`hardStart`, `hardEnd`): Kabel und
-  Gehirn verschwinden genau im Lichtblitz, die Büste erscheint genau dort (sonst stand sie in der Kabel-Übersicht).
+- Ein Modul ist aktiv, solange eines seiner Fenster Gewicht > 0 hat (Rampe `MODULE_FADE` = 0.0115 an beiden Enden).
+  Liegt ein Fensterrand auf einem Schnitt (`cut` in CAMERA_KEYS), ist er hart (`hardStart`, `hardEnd`): das Kapitel Code
+  verschwindet genau im Lichtblitz, die Büste erscheint genau dort (sonst stand sie im Website-Gerüst).
 - Für genaues Timing innerhalb der Geschichte lieber `ctx.director.beat('zoom').p` verwenden als `local`.
   Beispiel Roboter: Schale transparent machen mit `beat('zoom').p`, Ausklang mit `beat('outro').p`.
 - Fenster nur in `config.js` ändern und hier nachführen.
@@ -207,9 +226,9 @@ In `MODULES` als `'beat@p'` definiert (p = Punkt im Beat). Nominal:
 
 - Pro Schnitt-Abschnitt (Shot) je eine `CatmullRomCurve3` (centripetal) für Position und Blickziel.
 - Zeit -> Kurve über Bogenlänge und monotone kubische Interpolation: die Geschwindigkeit bleibt über Keyframes stetig, kein Ruckeln.
-- `cut: true` startet einen neuen Shot (harter Schnitt). Der Director liefert dafür `cutFade` (0..1, `CUT_FADE` 0.012 je Seite, etwa 7 vh).
+- `cut: true` startet einen neuen Shot (harter Schnitt). Der Director liefert dafür `cutFade` (0..1, `CUT_FADE` 0.009 je Seite, etwa 7 vh).
   Der Runner macht daraus einen kurzen Lichtblitz (`flash`, Belichtung, Bloom), keine Abblende zu Schwarz.
-  Zurzeit gibt es einen Schnitt: Ende Kabel-Übersicht (cables@1) -> Ausklang beim Roboter (outro@0).
+  Zurzeit gibt es einen Schnitt: fertiges Website-Gerüst (dna@1) -> Ausklang beim Roboter (outro@0), wie in Version 3.
 - `posM` / `lookM`: eigene Werte fürs Hochformat (Seitenverhältnis unter 0.85), abgestimmt für Handys (0.46 bis 0.59).
   Zusätzlich wird im Hochformat das FOV erweitert (`PORTRAIT`), damit horizontal genug Bild bleibt. Im Hochformat gilt
   mindestens der Faktor von 0.59 (`PORTRAIT.minPortrait` 2.0): Tablets im Hochformat (z. B. 768 x 1024) sind dadurch
@@ -241,7 +260,15 @@ der Mitte (Blickziel nach links versetzt); im Hochformat steht der Text unten, d
 | cables@0.12 | (-2.3, 1.75, -0.1) | (0.55, 0.78, -3.9) | 52 | | Aufstieg, Kalender-Knoten bleibt unter der Kopfzeile |
 | cables@0.36 | (-6.8, 5.94, 2.23) | (1.5, 0.5, -5) | 46 | look (1.5, -3, -5) | Übersicht schräg oben: Gehirn unten rechts, Kabel nach links, Text rechts |
 | cables@0.66 | (-7.3, 6.25, 1.9) | (1.65, 0.42, -5.15) | 45 | look (1.65, -3, -5.15) | ruhiges Driften: die Knoten-Links bleiben stehen (Kapitel 13) |
-| cables@1 | (-7.55, 6.3, 1.35) | (1.75, 0.38, -5.35) | 44.5 | look (1.75, -3, -5.35) | bis zum Schnitt in der Übersicht (Version 4: kein Flug in den Website-Knoten mehr) |
+| cables@1 | (-7.55, 6.3, 1.35) | (1.75, 0.38, -5.35) | 44.5 | look (1.75, -3, -5.35) | bis zum Ende des Beats in der Übersicht, die Knoten-Links bleiben bedienbar |
+| dna@0.1 | (-4.55, 3.3, -2.75) | (1, 0.95, -7.6) | 44 | look (0.9, -0.6, -7.8) | Anflug: hinunter, an E-Mail und Dokumente vorbei |
+| dna@0.2 | (-1.9, 1.05, -7.6) | (0.15, 0.5, -11.2) | 44 | pos (-1.2, 1.2, -7), look (0.1, -0.4, -11.5) | nah am Website-Knoten (V3: cables@1), ab hier Szene dna |
+| dna@0.28 | (-2.75, 0.95, -11) | (0.5, 0.45, -15.9) | 46 | pos (-2.1, 1.6, -9.6), look (0.35, -0.9, -15) | Helix von aussen (zTrack -9.9), Text links |
+| dna@0.368 | (-0.55, 0.62, -9.5) | (-1, 0.5, -16) | 50 | pos (-0.4, 0.75, -9.4), look (0, 0.1, -16) | vor dem Anfang der Helix, Eintauchen entlang der Achse (zTrack -10) |
+| dna@0.464 | (0.2, 0.56, -15) | (-1.55, 0.55, -20.5) | 50 | look (0, 0.5, -20.5) | Fluchtpunkt der Helix rechts, Text links |
+| dna@0.664 | (0.1, 0.48, -28) | (0, 0.33, -36) | 43 | | Gerüst entsteht, früh gross im Bild |
+| dna@0.792 | (0, 0.44, -29.25) | (0, 0.3, -36) | 41 | pos (0, 0.5, -28.85), look (0, -0.5, -36) | Gerüst fertig oben im Bild, darunter die Angebotszeile |
+| dna@1 | (0, 0.42, -29.45) | (0, 0.3, -36) | 41 | pos (0, 0.5, -29.05), look (0, -0.5, -36) | |
 | outro@0 (Schnitt) | (0.5, 0.05, 4.5) | (-0.22, -0.27, 0.03) | 34 | pos (0.5, 0.2, 6.6), look (0.01, -1.95, 0.09) | Gesicht nah, die Augen erwachen im Lichtblitz |
 | outro@1 | (3.7, -0.3, 7.9) | (-1.19, -0.75, 0.56) | 31 | pos (3.9, 0.2, 9.6), look (0.06, -3.2, 0.15) | ruhige Dreiviertelansicht leicht von unten, Büste rechts, Blick wandert zum Kontakt; Hochformat: Kopf kleiner gerahmt, oben |
 
@@ -254,15 +281,23 @@ sind automatisch richtig.
 
 `roll` (Grad) neigt die Kamera um die Blickachse.
 
+Hinweis Kapitel Code: `dna-build.js` liest die z-Werte der `dna@`-Keys (wann die Kamera welche Stelle der Helix passiert)
+und rechnet sie mit `DNA_FROM` in `local` um (local = (p - 0.2) / 0.8; Keys vor dna@0.2 zählen nicht). Die dna-Keys ab
+dna@0.2 sind die Keys aus Version 3 mit p = 0.2 + 0.8 x p(V3). Neue dna-Keys darum mit z auf der Linie der bestehenden
+setzen. Steht die Kamera ausserhalb der Helix (Ansicht von aussen), zählt statt pos.z der Wert `zTrack`.
+
 ### Text-Panels
 
 Version 4: Die Abschnitte sind kurz (60 bis 160 vh), ein klebendes Panel (100 vh) hätte kaum Klebedauer. Darum gilt:
 
 - **Hero** (intro, 60 vh): scrollt normal weg und blendet über `text` [0, 0, 0.3, 0.62] aus.
-- **Entlastung, Was KI kann, Verbindung**: Panel **fix** im Bild (`position: fixed`, Desktop und Hochformat), blendet nur
+- **Entlastung, Was KI kann, Verbindung, Websites**: Panel **fix** im Bild (`position: fixed`, Desktop und Hochformat), blendet nur
   über sein Fenster `BEATS[].text` (Hochformat `textM`): robot [0.3, 0.42, 0.86, 0.97] (Text, sobald die Büste Form
   annimmt), zoom [0.02, 0.12, 0.42, 0.54] (weg vor dem Scan über dem Gesicht), cables [0.16, 0.28, 0.9, 0.985] (sobald
-  die Übersicht steht, bis kurz vor dem Schnitt). Leichtes Mitwandern über `--p` (36 px), Einblenden über `--o`.
+  die Übersicht steht, bis kurz vor dem Anflug), dna [0.2, 0.27, 0.53, 0.62] (Hochformat [0.2, 0.27, 0.5, 0.58]: ab
+  dem Portal im Website-Knoten, wenn die Helix rechts steht, weg, bevor das Gerüst entsteht; im Hochformat früher, weil
+  die Helix dort ab dna@0.56 quer durch die Textzone aufreisst). Zwischen den Texten von Verbindung und Websites liegt
+  der Anflug ohne Text, sie überlappen nie. Leichtes Mitwandern über `--p` (36 px), Einblenden über `--o`.
 - **Flug ins Gehirn** (brain): kein Text (`noText`), im HTML ein `div.chapter--image` ohne Panel (Fallback: nur Bild).
 - **Ausklang** (outro, 150 vh): Panel klebt 50 vh und scrollt dann mit dem Inhalt weg.
 
@@ -271,9 +306,19 @@ Ohne eigenes Fenster gilt weiter: Einblenden bei p 0.02 bis 0.12, Ausblenden von
 0.72vh) }`, der Ausklang nur im Teil über 100 vh), die Panels stehen dort unten.
 
 **Überspringen:** `.story-skip` "Animation überspringen" (auf `#weiter`, den ersten Teaser) jetzt auch am Desktop: Pille unten
-rechts, links neben dem HUD, von Entlastung bis Verbindung (im Hero führen die zwei Wege an der Strecke vorbei, im
-Ausklang ist die Animation vorbei). Im Hochformat unten rechts unter dem Text-Panel. main.js setzt `html[data-beat]`.
-Die Angebotszeile des Kapitels Code (`#offer`, `ui.setOffer`) ist mit dem Kapitel entfernt.
+rechts, links neben dem HUD, von Entlastung bis Websites (im Hero führen die zwei Wege an der Strecke vorbei, im
+Ausklang ist die Animation vorbei). Ab dem Angebotsmoment (`html.offer-end`, dna-Fortschritt über 0.82, ohne obere Grenze) ist sie aus, damit sie
+nach der Angebotszeile nicht im Lichtblitz des Schnitts auftaucht. Die Angebotszeile selbst nimmt eingeblendet Klicks an
+(`.gl .chapter__offer.is-on { pointer-events: auto; }`, der Abschnitt darum hat `pointer-events: none`). Im Hochformat unten rechts
+unter dem Text-Panel. main.js setzt `html[data-beat]`. Die Pille springt weiterhin ans Ende der Geschichte (ohne
+Tempo-Grenze, Kapitel 4), das Kapitel Code läuft dabei einfach durch.
+
+**Angebotszeile (Kapitel Code):** `#offer` im Abschnitt `dna` (ausserhalb des Panels), fix unten in der Mitte, nur mit 3D.
+`ui.setOffer(p)` (main.js, jedes Bild) blendet sie bei dna-Fortschritt (Scroll, ungedämpft) 0.82 bis 0.985 ein, also
+wenn das Gerüst steht: "Ihr erster Entwurf ist kostenlos. Danach erhalten Sie eine Fixpreis-Offerte." mit Knopf
+"Kostenlosen Entwurf anfragen" (`kontakt/?thema=website`, wie die anderen Website-Knöpfe). Sonst hat der Knopf
+`tabindex="-1"` und gibt einen Fokus ab; im Fallback (`no-gl`, `ui.toStatic`) ist die Zeile nicht da. Im Hochformat
+eine Karte über die ganze Breite unten. Die Kamera-Keys dna@0.792 und dna@1 lassen darunter Platz.
 
 In unsichtbaren Panels haben Links und Buttons `tabindex="-1"` (kein Tab-Fokus), das setzt `ui.panel()`.
 Kein `inert`: Überschriften und Texte bleiben im Accessibility-Baum, Screenreader lesen alle Kapitel.
@@ -467,7 +512,7 @@ Version 4: Die Startseite entsteht aus `_src/pages/start.js` (Kapitel `CHAPTERS`
 (Kopf mit gl-Entscheid, Notausgang, Import-Map, modulepreload, HUD, Überspringen). Kopfzeile, Fusszeile, Menü, FAQ,
 Formular und Einblenden der hellen Inhalte gehören dem Fundament (`js/site.js`, `css/site.css`).
 
-- Story: `#story` mit 6 Abschnitten `[data-scene]` (Reihenfolge wie `BEATS`): fünf `<section class="chapter">` mit
+- Story: `#story` mit 7 Abschnitten `[data-scene]` (Reihenfolge wie `BEATS`): sechs `<section class="chapter">` mit
   `.chapter__panel > .chapter__text` und ein `div.chapter--image` für den Flug ins Gehirn (ohne Text, `aria-hidden`).
   Mit 3D (`html.gl`) sind die Abschnitte `--len` vh hoch; Panels siehe Kapitel 5 (Text-Panels).
 - Der Director setzt pro Abschnitt: `--p` (Fortschritt 0..1 nach Scroll, ungedämpft), `--o` (Sichtbarkeit), Klasse `.is-on`.
@@ -476,10 +521,13 @@ Formular und Einblenden der hellen Inhalte gehören dem Fundament (`js/site.js`,
 - Klassen auf `<html>`: `gl` oder `no-gl` (früh im Kopf entschieden: WebGL2, importmap, keine reduzierte Bewegung),
   `reduced`, `is-ready` (Preloader fertig), `is-content` (Inhaltsbereich erreicht, HUD aus), `ui-on` (ui.js läuft),
   `nodes-on` (Knoten-Links über der Szene, Kapitel 13), `data-beat` (aktueller Beat).
-- HUD unten rechts: `00/05` (Beats ab 00), fünf Teilstriche, Name des Beats (`BEATS[].label`).
-  Die Nummern der Text-Stationen (`kicker` in `_src/pages/start.js`) folgen derselben Zählung: 01 Entlastung, 02 Was KI
-  kann, 04 Verbindung, 05 Einstieg (03 ist der Flug ins Gehirn ohne Text). Abnahme 01.11.2026: vorher stand "03 Verbindung"
-  neben "04/05" im HUD.
+- HUD unten rechts: `00/06` (Beats ab 00, die Zahl hinter dem Schrägstrich rechnet `_src/layouts/story.js` aus
+  `CHAPTERS`), Teilstriche, Name des Beats (`BEATS[].label`).
+  **Regel:** Die Nummern der Text-Stationen (`kicker` in `_src/pages/start.js`) folgen derselben Zählung wie das HUD:
+  01 Entlastung, 02 Was KI kann, 04 Verbindung, 05 Websites, 06 Einstieg (03 ist der Flug ins Gehirn ohne Text, HUD
+  "Im Kern"). Im Fallback ohne WebGL fehlt die 03 darum bewusst: der Flug ist dort ein reines Bild (`aria-hidden`), ein
+  HUD gibt es nur mit 3D. Wer einen Beat einfügt oder entfernt, nummeriert alle folgenden Kicker neu. Abnahme 01.11.2026: vorher stand
+  "03 Verbindung" neben "04/05" im HUD; mit dem wieder eingebauten Kapitel Code wurde der Ausklang von 05 zu 06.
 - Weiches Scrollen: `scroll-behavior: smooth` nur ohne 3D (`html:not(.gl)`). Mit 3D verfälscht es die Messung von ScrollTrigger
   beim Refresh (Handy drehen). Anker-Links scrollen dort per JS weich (`ui.initAnchors`, Fokus geht ans Ziel).
 - Drehen des Handys: `ignoreMobileResize: true` bleibt (Adressleiste löst keinen Refresh aus), main.js misst bei jeder
@@ -490,7 +538,8 @@ Formular und Einblenden der hellen Inhalte gehören dem Fundament (`js/site.js`,
 - Fallback (`no-gl`, `no-js`, reduzierte Bewegung): kein Canvas, jeder Abschnitt ist mindestens bildschirmhoch und zeigt sein
   Posterbild (`.chapter__poster`, `assets/img/poster-<beat>.webp`, im Hochformat `poster-<beat>-m.webp`) mit Verlauf für
   die Lesbarkeit, das Bild-Kapitel brain 70 vh. Die Poster sind echte Renderings der Szenen (ohne UI und ohne Korn) und
-  werden nur im Fallback geladen. Die fünf Werkzeug-Links stehen dort als Pillen im Text.
+  werden nur im Fallback geladen. Die fünf Werkzeug-Links stehen dort als Pillen im Text. Das Kapitel Code hat sein
+  Poster `poster-dna(-m).webp` (Helix aus Code); die Angebotszeile gibt es im Fallback nicht.
 - Blende der Story-Panels: `--oo = clamp(0, (--o - 0.2) / 0.6, 1)` macht sie steil (Text ist voll da oder weg, nie lange
   halb transparent über dem Bild). Im Ausklang liegt die Deckkraft auf `.chapter__text` statt auf dem Panel: ein Vorfahre
   mit opacity unter 1 würde zur "Backdrop Root" und der Blur der Karte sähe das 3D-Bild nicht mehr.
@@ -522,7 +571,8 @@ python3 S/lead/convert_posters.py && node S/studio/og/render.js   # PNG -> WebP-
 node S/lead/techcheck.js S/lead/tech   # Tab-Reihenfolge, Kontextverlust, Handy-Menue, Formular-Timeout, ?glcheck
 ```
 
-Poster (Version 4, sechs Stationen): intro@0.06, robot@0.95, zoom@0.85, brain@0.3, cables@0.6, outro@0.7, OG-Hintergrund
+Poster (Version 4 mit Kapitel Code, sieben Abschnitte): intro@0.06, robot@0.95, zoom@0.85, brain@0.3, cables@0.6, dna@0.42,
+outro@0.7, OG-Hintergrund
 intro@0.06 (Partikel-Büste im Ruhezustand des Hero, 1200 x 630). Aufnahme ohne Kopfzeile, HUD, Panels und Knoten-Links
 (`--clean` blendet `.tool-links` und `.node-hits` mit aus).
 
@@ -549,7 +599,7 @@ CSS-Übergänge solange steht. `studio_capture.js` wartet darum bis 240 s auf je
 
 dev.html:
 
-- `?scene=backdrop|particles|robot|brain|cables|all` oder mehrere mit Komma (`scene=robot,brain` für den Röntgen-Zoom: die erste
+- `?scene=backdrop|particles|robot|brain|cables|dna|all` oder mehrere mit Komma (`scene=robot,brain` für den Röntgen-Zoom: die erste
   Szene bestimmt `local` und bleibt aktiv, die weiteren laufen in ihren Fenstern), `&local=0.4` (Startwert), `&at=zoom@0.4`
   (fester Punkt der Story), `&cam=orbit` (ziehen, Mausrad) oder `&cam=fix&pos=x,y,z&tgt=x,y,z&fov=30`, `&q=high`,
   `&post=0` (ohne Postprocessing), `&play` (läuft selbst), `&scroll=0` (nur Regler). Der Hintergrund (`backdrop`) läuft
@@ -725,7 +775,9 @@ ohne zusätzliche Rauschzugriffe (weiter 1 Draw Call):
 - **Studio-Boden** (robot, zoom, outro): dunkle, leicht spiegelnde Ebene auf y -3.5 (Unterkante der Büste) mit
   gespiegelten Lichtflächen, Lichtkegel um den Fuss des Motivs (`pool`, Mitte `glowAt`) und einer feinen Lichtkante am
   Übergang in die Hohlkehle. Gleicher Boden-Baustein wie die Punktraster-Ebene der Kabel-Szene, ohne Raster.
-- Entfernt mit dem Kapitel Code: Farbwelt `dna` und der Code-Regen im Tunnel (`uCode`).
+- Kapitel Code (wieder drin seit 01.11.2026): Farbwelt `dna` und der Code-Regen im Tunnel (`uCode`) aus Version 3,
+  dazu Lichtflächen in Türkis, Blau und Mint wie die anderen Farbwelten von Version 4 (kein Ember: der färbte das Grün
+  unter dem Gerüst oliv; kein Boden: die Kamera fliegt durch die Helix). Im Tunnel treten die Lichtflächen zurück (dna@0.3 bis 0.46), am Gerüst kommen sie wieder.
 
 
 Rückmeldung Version 2: "alles in dem klassischen schwarzen Hintergrund". Seit dem 30.10.2026 zeichnet ein einziges Modul den
@@ -754,6 +806,7 @@ Version 3 entfernt, das spart im Intro einen Vollbild-Pass).
 | zoom | Scan-Labor | #060f17 / #0d212c / #3a87a0 | wie Studio, dazu Messraster, Messkreis um den Kopf, Scanlinie | Raster ab zoom@0.4, Scanlinie läuft auf Höhe des Röntgen-Scans (gleiche Formel wie `robotScan`) |
 | brain | Biolumineszenz | #090518 / #1b0c33 / #7c36b0 | violetter Nebel, dessen Schwaden selbst leuchten (#6a2fd8 bis #b8338a, Ränder #2fb7b0), Sporen, Bokeh | leiser, solange die Kamera im Gehirn ist (brain@0.45 bis 0.98) |
 | cables | Glasfaser-Blau | #030916 / #0a1a33 / #2a63b8 | tiefe Ebene weit unten (y -9) mit Punktraster und Lichtpaketen (Version 4 kräftiger, 0.7), Bokeh, Sterne, Licht hinter dem Website-Knoten | |
+| dna | Code-Raum Grün-Türkis | #02100e / #05302a / #17a888 | leiser Code-Regen auf der Tunnelwand (Zylinder r 5.5 um die Helix-Achse), Lichtkern beim Gerüst (-z), Lichtflächen #5fe0c8 / #3a5fd8 / #2fb7b0 (kein Ember, der färbte das Grün oliv), wenig Bokeh und Sterne | Code ab dna@0.32, Lichtkern ab dna@0.56 (steigen mit dem Gerüst), Lichtflächen im Tunnel leiser |
 | outro | Morgenlicht | #07080a / #151210 / #e0a05a | Gold nur als Horizont und Gegenlicht hinter der rechten Schulter (horizonGlow 0.42, glowSize 1.15), leise Strahlen, wenig Goldstaub, oben kühl | Sonnenaufgang über outro@0 bis 0.8 (Horizont 0.4 -> 1) |
 | inhalt | Ruhe | #05080d / #0a0f16 / #2a1c12 | nur Verlauf und ein Rest Wärme, Muster auf 10 % (`detail` 0.1) | |
 
@@ -762,8 +815,8 @@ Version 3 entfernt, das spart im Intro einen Vollbild-Pass).
 meist ausserhalb des Bildes), `accentAt` (Akzent-Dunst). Weil der Halo an einem Punkt beim Motiv hängt, bleibt das Licht
 hinter der Büste, wenn die Kamera kreist. Kompositionsregel: helle Teile nur auf der Seite des Motivs, nie hinter der Textspalte.
 
-**Mischung** (ohne Allokationen pro Frame): Gewicht pro Beat mit weicher Kante `BACKDROP_FADE` = 0.035 global (rund 38 vh)
-um jede Beat-Grenze, als Partition der Eins. Am Schnitt (`director.cuts`, Ende cables -> outro) wechselt die Farbwelt hart,
+**Mischung** (ohne Allokationen pro Frame): Gewicht pro Beat mit weicher Kante `BACKDROP_FADE` = 0.0265 global (rund 21 vh)
+um jede Beat-Grenze, als Partition der Eins. Am Schnitt (`director.cuts`, Ende dna -> outro) wechselt die Farbwelt hart,
 versteckt im Lichtblitz des Runners. Im Inhaltsbereich mischt `director.content` (setzt main.js, gedämpft) zur Farbwelt
 `inhalt`; danach friert main.js das Bild ohnehin ein. Farben werden linear gemischt, Zahlen und Punkte ebenso; die Dynamik pro
 Beat wirkt als Faktor auf die Werte der jeweiligen Farbwelt.
@@ -788,6 +841,15 @@ RenderTarget rechnen und hochskalieren (weich genug, noch nicht nötig).
 **Ändern.** Stimmung einer Szene: nur `BACKDROPS` in config.js. Neue Bausteine: Uniform in `backdrop-glsl.js`, Schlüssel in
 `BASE`, `NUMS` oder `COLORS` von backdrop.js, Wert in den Farbwelten. Testen: `dev.html?scene=backdrop` (alle Farbwelten
 über den Regler), `dev.html?scene=all&at=brain@0.3`, Vergleich ohne Hintergrund `&bg=0`.
+
+**Poster Kapitel Code (01.11.2026, Wiedereinbau):** `poster-dna.webp` und `poster-dna-m.webp` mit dem jetzigen Stand
+neu aufgenommen: Helix aus Code im Tunnel bei dna@0.42 (Motiv rechts, links Platz für den Text), mit
+`studio-arbeit/v4/start-work/tools/shots.js --clean --nograin` (Desktop 1440 x 900, Hochformat `--vp=540x1170`), WebP
+Qualität 78 wie `convert_posters.py`. Bei der Abnahme (01.11.2026) nach dem Wechsel der Lichtfläche von Ember auf Mint
+nochmals aufgenommen, mit `studio-arbeit/v4-dna/abnahme/tools/shots_frames.js` (wartet nach dem Sprung eine feste Zahl
+gerenderter Bilder statt Sekunden; in SwiftShader dauert ein Bild 1 bis 2.5 s). dna@0.42 direkt nach dem Laden aufnehmen:
+die Drehung der Helix hängt an der Zeit, kurz nach dem Laden bleibt die linke Hälfte frei für den Text. Die Poster
+cables und outro passen weiter (Szenen dort unverändert, nur Lichtflächen und Impulse stehen zeitabhängig anders).
 
 **Poster (Version 4, 01.11.2026):** zwölf Poster (sechs Stationen, Desktop und Hochformat, `poster-dna*` gelöscht) und
 das OG-Bild neu gerendert: weicheres Gesicht, Lichtflächen und Studio-Boden, Kabel-Übersicht ohne Beschriftungen (im
@@ -822,9 +884,13 @@ Website → `websites/`. Grundsatz: ein Link-Satz je Darstellung, nie doppelt f�
 hinter das Panel in den Abschnitt (gleiche Lesereihenfolge; im Panel läge sie unter dessen Transform und Deckkraft) und
 steht fix über der Bühne (`z-index` 3). Jeder Link ist ein Punkt auf seinem Knoten (`transform`), die Trefferfläche ein
 Kreis mit Radius `--R` = max(24 px, 1.25 r), also mindestens 48 x 48 px, daneben die Beschriftung als Pille ("E-Mail ›",
-bei Zeigen oder Fokus mit Untertitel). Fokusring um den Knoten. Sichtbar ab cables@0.2 (voll ab 0.32) bis zum Schnitt und
-solange `vis` > 0; unsichtbare Links haben Deckkraft 0, keine Zeiger-Ereignisse und `tabindex="-1"` (bleiben im
-Accessibility-Baum). Ein Link, der den Fokus hat und unsichtbar wird, gibt ihn ab.
+bei Zeigen oder Fokus mit Untertitel). Fokusring um den Knoten. Sichtbar ab cables@0.2 (voll ab 0.32) bis zum Ende des
+Beats cables und solange `vis` > 0; mit dem Anflug ins Kapitel Code blenden sie von dna@0 bis 0.035 aus (`HIDE`).
+Unsichtbare Links haben Deckkraft 0, keine Zeiger-Ereignisse und `tabindex="-1"`; vor der Kabel-Szene bleiben sie im
+Accessibility-Baum. Ab dna@0.035 und im Inhaltsbereich sind die nav über der Bühne und die Tippflächen `inert` (kein
+Fokus, kein Klick, nicht im Accessibility-Baum), eine Hervorhebung wird zurückgesetzt. Ein Link, der den Fokus hat und
+unsichtbar wird, gibt ihn ab. Während des Anflugs wird der Website-Knoten hervorgehoben und öffnet sich zum Portal, die
+anderen treten zurück (`cables.js`, `uNodeA.w`, `uNodeB.z/w`).
 
 **Modus "pills"** (Hochformat, Fenster unter 1024 px): Die Links bleiben Pillen im Text-Panel (44 px hoch, Tab-Reihenfolge
 wie das Panel, `ui.setInteractive`). Sichtbare Knoten bekommen zusätzlich eine Tippfläche mit Namen (`.node-hits`,

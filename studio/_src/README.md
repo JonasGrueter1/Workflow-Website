@@ -171,12 +171,18 @@ Neue Seiten: Datei in `pages/` anlegen, Pfad in `data/nav.json` (Menü, Fusszeil
   schaltet `js/site.js` auf hell, Auslöser ist `data-light` am Element `#content`).
 - `js/ui.js` macht nur noch Geschichte, Preloader, HUD, Anker und Cursor. Navigation, Menü, FAQ, Formular und
   Einblenden liegen in `js/site.js`. `css/style.css` ist aufgeteilt: Geschichte in `css/story.css`, der Rest in `site.css`.
-- Die Kapitel und Texte stehen in `pages/start.js` (`CHAPTERS`, Namen wie `BEATS` in `js/config.js`). Fünf
-  Stationen: intro, robot, zoom, brain (ohne Text), cables, outro.
+- Die Kapitel und Texte stehen in `pages/start.js` (`CHAPTERS`, Namen wie `BEATS` in `js/config.js`). Hero und
+  sechs Stationen: intro, robot (01), zoom (02), brain (03, ohne Text), cables (04), dna (05 Websites: Code-Helix und
+  Website-Gerüst, seit 01.11.2026 wieder drin), outro (06). Die Nummern im Kicker passen zum HUD (`0X/06`, die Zahl
+  hinter dem Schrägstrich rechnet `layouts/story.js` aus `CHAPTERS`). Neue Station: Eintrag in `CHAPTERS` und `BEATS`,
+  Kicker-Nummern und ARCHITEKTUR.md Kapitel 9 nachführen.
+- Das Kapitel dna hat zusätzlich die Angebotszeile (`offer` in `CHAPTERS`, `#offer`): "Ihr erster Entwurf ist kostenlos."
+  mit Knopf auf `kontakt/?thema=website`. Nur mit 3D sichtbar (`js/ui.js` `setOffer`), der Knopf ist sonst `tabindex -1`.
 - Die fünf Werkzeuge sind im Kabel-Kapitel echte Links (`nav.tool-links`, `a[data-node]`). Am Desktop mit 3D sitzen
   sie über den Knoten (`js/nodes.js`), im Hochformat und ohne 3D sind es Pillen im Text.
 - Treffer im 3D-Modus: Die Abschnitte (`.gl .chapter`) und Panels nehmen keine Zeiger-Ereignisse an, nur die Links
-  und Knöpfe des aktiven Panels (`css/story.css`). Sonst landet ein Tipp im Hochformat auf dem nächsten Abschnitt.
+  und Knöpfe des aktiven Panels und der eingeblendete Angebotsknopf (`.chapter__offer.is-on`, `css/story.css`).
+  Sonst landet ein Tipp im Hochformat auf dem nächsten Abschnitt.
   Prüfen mit `/home/user/studio-arbeit/tools/tap_check.js` (echter Tipp mit WebGL).
 - Alte Anker (`#kontakt`, `#leistungen`, `#ablauf`, `#fragen`, `#faq-...` und weitere) leiten auf die neuen Seiten um
   (`layouts/story.js`, `REDIRECTS`). Alte Adressen `impressum.html` und `datenschutz.html` leiten weiter.

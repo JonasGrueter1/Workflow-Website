@@ -222,6 +222,12 @@ export class UI {
    */
   toStatic() {
     this._static = true;
+    // Angebotszeile gibt es nur mit 3D (im Fallback steht der Knopf nicht im Bild)
+    this._offerOn = false;
+    this._offerEnd = false;
+    this.root.classList.remove('offer-on', 'offer-end');
+    const offer = $('#offer');
+    if (offer) offer.classList.remove('is-on');
     const g = this.gsap;
     for (const sec of $$('.chapter')) {
       const p = this._parts(sec);
@@ -250,6 +256,35 @@ export class UI {
         g.fromTo(el, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' });
       },
     });
+  }
+
+  /**
+   * Angebotszeile unter dem fertigen Website-Geruest (Kapitel Code, Fortschritt p im Beat dna 0..1). Nur mit 3D: der
+   * Knopf ist sonst nicht fokussierbar (tabindex -1), damit er nicht unsichtbar im Fokus liegt.
+   */
+  setOffer(p, inContent) {
+    // "Animation ueberspringen" bleibt vom Angebotsmoment bis zum Ausklang weg (sonst taucht die Pille nach der
+    // Angebotszeile im Lichtblitz des Schnitts kurz auf). Im Ausklang blendet data-beat sie ohnehin aus.
+    const end = !inContent && p > 0.82;
+    if (end !== this._offerEnd) {
+      this._offerEnd = end;
+      this.root.classList.toggle('offer-end', end);
+    }
+    const on = end && p < 0.985;
+    if (on === this._offerOn) return;
+    this._offerOn = on;
+    const el = this._offer || (this._offer = $('#offer'));
+    if (!el) return;
+    el.classList.toggle('is-on', on);
+    this.root.classList.toggle('offer-on', on);
+    const a = el.querySelector('a');
+    if (a) {
+      if (on) a.removeAttribute('tabindex');
+      else {
+        a.setAttribute('tabindex', '-1');
+        if (document.activeElement === a) a.blur();
+      }
+    }
   }
 
   setStory(p, inContent) {

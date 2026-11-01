@@ -100,8 +100,8 @@ export class Runner {
       try { m.inst.update(time, dt, st.local, d.global, weight); } catch (e) { this.fail(m, e); }
     }
     blendLook(this.entries, undefined, this.look);
-    // Schnitt (Ende Kabel-Uebersicht -> Ausklang beim Roboter): kein Schwarz, sondern ein kurzer Lichtblitz. Im Licht
-    // steht die Android-Bueste, deren Augen danach erwachen.
+    // Schnitt (Ende Kapitel Code -> Ausklang beim Roboter): kein Schwarz, sondern ein kurzer Lichtblitz. Das fertige
+    // Website-Geruest blendet auf, im Licht steht die Android-Bueste, deren Augen danach erwachen.
     const c = d.cutFade;
     if (c > 0) {
       // kurzer, heller Peak (c^3): wirkt als Lichtblitz, nicht als milchiger Schleier

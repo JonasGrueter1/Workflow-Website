@@ -214,6 +214,7 @@ async function boot() {
     ui.setStory(director.global, contentDim > 0.35);
     director.pullScroll();
     director.update(dtRaw);
+    if (director.beats.dna) ui.setOffer(director.beats.dna.tp, contentDim > 0.35);
 
     // Im Inhaltsbereich ist das Canvas fast ganz abgedeckt: ein letztes Bild rendern, dann anhalten (spart Akku)
     if (background) {

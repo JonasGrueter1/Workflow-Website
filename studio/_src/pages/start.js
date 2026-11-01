@@ -13,8 +13,10 @@ exports.meta = {
 };
 
 // Text-Stationen der Geschichte. Fuer jeden Beat in config.js genau ein Eintrag (gleicher Name).
-// Version 4: fuenf Stationen (Hero, Entlastung, Was KI kann, Verbindung, Start). Der Beat brain hat keinen Text
-// (langsamer Flug ins Gehirn), im Fallback ist er ein reines Bild.
+// Version 4: Hero und sechs Stationen 01 bis 06 (Entlastung, Was KI kann, Flug ins Gehirn, Verbindung, Websites,
+// Einstieg). Die Nummern im Kicker folgen dem HUD (0X/06, ARCHITEKTUR.md Kapitel 9). Der Beat brain (03) hat keinen
+// Text (langsamer Flug ins Gehirn), im Fallback ist er ein reines Bild. Das Kapitel Code (dna, Helix und
+// Website-Geruest) ist seit 01.11.2026 wieder drin, mit der Angebotszeile unter dem fertigen Geruest (offer).
 const CHAPTERS = [
   {
     scene: 'intro', cls: 'chapter--intro', id: 'top',
@@ -40,7 +42,18 @@ const CHAPTERS = [
     tools: true,
   },
   {
-    scene: 'outro', cls: 'chapter--left chapter--outro', kicker: ['05', 'Einstieg'],
+    scene: 'dna', cls: 'chapter--left', kicker: ['05', 'Websites'],
+    title: 'Websites aus eigenem Code.',
+    text: 'Schnell geladen, auf jedem Handy gut lesbar, bei Google sauber beschrieben. Anfragen über Ihre Website landen auf Wunsch in derselben Liste wie Mail und WhatsApp.',
+    tags: 'Nach Mass · Eigener Code · Anfragen in einer Liste',
+    // Angebotszeile unter dem fertigen Website-Geruest: nur mit 3D (js/ui.js setOffer), Knopf sonst tabindex -1
+    offer: {
+      text: 'Ihr erster Entwurf ist kostenlos. Danach erhalten Sie eine Fixpreis-Offerte.',
+      label: 'Kostenlosen Entwurf anfragen', href: 'kontakt/?thema=website',
+    },
+  },
+  {
+    scene: 'outro', cls: 'chapter--left chapter--outro', kicker: ['06', 'Einstieg'],
     title: 'Klein anfangen, Nutzen messen, dann entscheiden.',
     text: 'Der KI-Check zum Fixpreis von {{preis_ki_check}} zeigt, wo KI in Ihrem Betrieb Zeit spart und was das kostet. Für eine neue Website erhalten Sie zuerst einen kostenlosen Entwurf.',
     outro: true,
@@ -104,11 +117,17 @@ function chapter(ctx, ch) {
     inner = `<div class="chapter__text">\n            ${parts.join('\n            ')}\n          </div>`;
   }
   const poster = ch.poster ? `<div class="chapter__poster" role="img" aria-label="${ch.poster}"></div>` : '<div class="chapter__poster"></div>';
+  // Angebotsmoment (Kapitel Code): ausserhalb des Panels, steht fix unter dem fertigen Geruest
+  const offer = ch.offer ? `
+        <div class="chapter__offer" id="offer">
+          <p>${ch.offer.text}</p>
+          <a class="btn" href="${ctx.url(ch.offer.href)}" tabindex="-1">${ch.offer.label} <span class="btn__arrow" aria-hidden="true"></span></a>
+        </div>` : '';
   return `<section class="chapter ${ch.cls}" data-scene="${ch.scene}"${ch.id ? ` id="${ch.id}"` : ''} aria-labelledby="${id}">
         ${poster}
         <div class="chapter__panel">
           ${inner}
-        </div>
+        </div>${offer}
       </section>`;
 }
 

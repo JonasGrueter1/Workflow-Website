@@ -1,12 +1,14 @@
 // Szene "cables": Aus dem Gehirn werden Glasfaserbuendel gezogen und mit fuenf Werkzeug-Knoten verbunden.
-// Fenster: brain@0.7 bis cables@1 (siehe config.js MODULES, danach Schnitt auf den Ausklang).
+// Fenster: brain@0.7 bis dna@0.42 (siehe config.js MODULES). Im Beat dna fliegt die Kamera in den Website-Knoten.
 //
-// Zeitachse u in Beat-Einheiten: -0.3 = brain@0.7, 0 = cables@0, 1 = cables@1 (Schnitt)
+// Zeitachse u in Beat-Einheiten: -0.3 = brain@0.7, 0 = cables@0, 1 = cables@1 = dna@0, 1 + p = dna@p
 //   -0.25..0.42  Kabel wachsen aus dem Hirnstamm (gestaffelt), leuchtende Spitze vorne
 //   -0.12..0.10  Knoten erscheinen als leise Ziele (Ring schliesst sich, Icon gedimmt)
 //    Verbindung  Knoten startet: Schockwelle, Licht in der Kugel
 //    danach      Lichtimpulse laufen zu den Knoten (Takt pro Kabel), jeder Treffer laesst den Knoten
 //                aufleuchten. Selten laeuft ein warmer Impuls zurueck zum Gehirn.
+//    1..1+DNA_FROM  Anflug (Beat dna): Fokus auf den Website-Knoten, die anderen treten zurueck, die Kamera fliegt
+//                hinein (Portal: Ringe weg, Kugel oeffnet sich), dahinter tritt die Helix (dna) aus der Faser
 //
 // Version 4: Die Knoten sind Links. Beschriftungen zeichnet die Szene nicht mehr selbst: sie meldet pro Bild die
 // Bildposition jedes Knotens (api.screen, ohne Allokation) und js/nodes.js setzt die HTML-Links darueber. Zeigt
@@ -19,6 +21,7 @@ import {
   buildMoteGeometry, smoothstep,
 } from './cables-paths.js';
 import { makeMaterials } from './cables-shaders.js';
+import { DNA_FROM } from '../config.js';
 
 export const NODE_LABELS = { email: 'E-Mail', website: 'Website', kalender: 'Kalender', dokumente: 'Dokumente', kunden: 'Kunden' };
 
@@ -197,6 +200,7 @@ export function create(ctx) {
     retOffset: i * 2.11 + 1.3,
   }));
   const tmpV = new THREE.Vector3();
+  const camPos = new THREE.Vector3();
   const nodePos = U.uNodePos.value;
   // Knoten werden von hinten nach vorne gezeichnet (ein Draw Call, vormultipliziertes Alpha)
   const idxAttr = nodeGeo.geometry.getAttribute('aIdx');
@@ -224,8 +228,10 @@ export function create(ctx) {
   function timeline(global) {
     const bb = director.beat('brain');
     const bc = director.beat('cables');
+    const bd = director.beat('dna');
     if (global < bc.start) return (global - bc.start) / Math.max(1e-6, bb.end - bb.start);
-    return (global - bc.start) / Math.max(1e-6, bc.end - bc.start);
+    if (global < bd.start) return (global - bc.start) / Math.max(1e-6, bc.end - bc.start);
+    return 1 + (global - bd.start) / Math.max(1e-6, bd.end - bd.start);
   }
 
   // Punkt auf der Mittellinie bei Bogenlaenge s (inkl. Schweben/Schwingen wie im Shader)
@@ -269,6 +275,9 @@ export function create(ctx) {
       U.uTrunk.value = smoothstep(-0.06, 0.12, u);
       U.uFog.value = ctx.scene.fog ? ctx.scene.fog.density : 0.03;
       camera.updateMatrixWorld();
+      camPos.setFromMatrixPosition(camera.matrixWorld);
+      // Anflug auf den Website-Knoten (Beat dna bis DNA_FROM): Fokus dort, die anderen Knoten treten zurueck
+      const focus = smoothstep(1.01, 1 + DNA_FROM * 0.85, u);
 
       measureText(ctx.size.width, ctx.size.height);
       // Hervorhebung (Link gezeigt oder fokussiert): weich ein und aus
@@ -331,10 +340,15 @@ export function create(ctx) {
           : 0;
         // Hervorhebung: Knoten leuchtet (Rand, Halo, Icon), die anderen treten etwas zurueck
         const glowHi = hi[i] * st.on * (0.55 + 0.15 * Math.sin(time * 5.0 + i));
-        const dimO = (anyHi - hi[i]) * 0.55;
+        const isWeb = names[i] === 'website';
+        const dimO = Math.max((anyHi - hi[i]) * 0.55, isWeb ? 0 : focus);
+        // Portal: die Kamera fliegt in den Website-Knoten (Ringe weg, Kugel oeffnet sich), ganz nah blendet er aus
+        const dist = camPos.distanceTo(nodePos[i]);
+        const portal = isWeb ? 1 - smoothstep(0.7, 3.2, dist) : 0;
+        const inside = smoothstep(0.32, 0.6, dist);
         // w = Hervorhebung: das Icon unter der Maus (oder mit Fokus) wird hell und scharf gezeichnet
-        U.uNodeA.value[i].set(appear * nodeHeaderFade(i), st.on, Math.min(1.4, flash + glowHi), hi[i]);
-        U.uNodeB.value[i].set(shockAge, shockAmp, 0, dimO);
+        U.uNodeA.value[i].set(appear * inside * nodeHeaderFade(i), st.on, Math.min(1.4, flash + glowHi), Math.max(hi[i], isWeb ? focus : 0));
+        U.uNodeB.value[i].set(shockAge, shockAmp, portal, dimO);
 
         // Spitze
         const tipI = gx > 0 && gx < 1 ? smoothstep(0, 0.04, gx) * (1 - smoothstep(0.9, 1, gx)) : 0;
