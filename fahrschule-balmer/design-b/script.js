@@ -41,9 +41,27 @@
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
     reveal.forEach(function (el) { io.observe(el); });
+    /* Sicherheitsnetz: was beim Laden schon oberhalb liegt (Sprung per Anker), sofort zeigen */
+    window.addEventListener('load', function () {
+      reveal.forEach(function (el) {
+        if (el.getBoundingClientRect().bottom < 0) { el.classList.add('ist-da'); io.unobserve(el); }
+      });
+    });
   } else {
     reveal.forEach(function (el) { el.classList.add('ist-da'); });
   }
+
+  /* Sanftes Scrollen zu Ankern auf der Seite (Links mit data-soon übernimmt die Vorschau-Leiste) */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a || a.hasAttribute('data-soon') || a.classList.contains('skip')) return;
+    var id = a.getAttribute('href').slice(1);
+    var ziel = id && document.getElementById(id);
+    if (!ziel) return;
+    e.preventDefault();
+    ziel.scrollIntoView({ behavior: fx() ? 'smooth' : 'auto', block: 'start' });
+    if (history.replaceState) history.replaceState(null, '', '#' + id);
+  });
 
   /* Zähler im Datenblatt-Abschnitt: zählen beim ersten Sichtbarwerden hoch */
   var zaehler = document.querySelectorAll('[data-zaehler]');

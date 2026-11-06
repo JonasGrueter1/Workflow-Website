@@ -303,6 +303,19 @@ button { font: inherit; color: inherit; }
 @media (min-width: 1360px) {
   .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 58%); }
 }
+/* Laptops: alle drei Hero-Knöpfe auf einer Zeile halten */
+@media (min-width: 1100px) and (max-width: 1439.98px) {
+  .hero-knoepfe { gap: 7px; }
+  .hero-knoepfe .knopf { font-size: 15px; gap: 7px; }
+  .hero-knoepfe .knopf-dunkel { padding: 0 17px; }
+  .hero-knoepfe .knopf-linie { padding: 0 13px; }
+}
+@media (min-width: 1100px) and (max-width: 1199.98px) {
+  .hero-knoepfe { gap: 6px; }
+  .hero-knoepfe .knopf { font-size: 14.5px; gap: 6px; }
+  .hero-knoepfe .knopf-dunkel { padding: 0 15px; }
+  .hero-knoepfe .knopf-linie { padding: 0 12px; }
+}
 
 /* Hero-Auftritt (nur mit JS, sonst sofort sichtbar) */
 .js .hero::before { animation: a-flaeche .8s cubic-bezier(.7, 0, .2, 1) both; }

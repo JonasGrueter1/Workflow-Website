@@ -533,10 +533,9 @@ html.fx .tage-box.ist-da .we-hinweis { opacity: 1; }
 html.fx .vt-liste .vt { transition-delay: calc(var(--i, 0) * 70ms); }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
 }
-@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+/* Sanftes Scrollen zu Ankern übernimmt script.js (nur bei Klicks, nicht bei programmatischem Scrollen) */
 
 /* ================= Responsive ================= */
 @media (max-width: 1080px) {

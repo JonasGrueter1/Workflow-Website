@@ -314,7 +314,7 @@ html.js .menu.offen .menu-haupt li { animation: menuRein .5s var(--ease) both; a
   .hero-bild img { object-position: 50% 60%; filter: saturate(.9) brightness(.9); }
   .hero-bild::after {
     background:
-      linear-gradient(180deg, rgb(15 15 16 / 72%) 0%, rgb(15 15 16 / 25%) 26%, rgb(15 15 16 / 0) 44%, rgb(15 15 16 / 10%) 62%, rgb(15 15 16 / 78%) 86%, var(--schwarz) 100%),
+      linear-gradient(180deg, rgb(15 15 16 / 72%) 0%, rgb(15 15 16 / 40%) 28%, rgb(15 15 16 / 16%) 48%, rgb(15 15 16 / 10%) 62%, rgb(15 15 16 / 78%) 86%, var(--schwarz) 100%),
       linear-gradient(90deg, rgb(15 15 16 / 60%) 0%, rgb(15 15 16 / 18%) 42%, rgb(15 15 16 / 0) 62%);
   }
   .hero-inhalt {
@@ -436,7 +436,9 @@ html.js .menu.offen .menu-haupt li { animation: menuRein .5s var(--ease) both; a
     padding: 0; margin-bottom: 40vh;
     background: var(--schwarz);
   }
-  .kapitel:last-child { margin-bottom: 24vh; }
+  /* Letztes Bild bleibt kurz stehen, ohne schwarze Lücke danach (Abstandhalter statt margin) */
+  .kapitel:last-child { margin-bottom: 0; }
+  .stapel::after { content: ""; display: block; height: 24vh; }
   .kapitel + .kapitel::before { display: none; }
   .k-buehne {
     position: absolute; inset: 0; overflow: hidden;
@@ -799,9 +801,12 @@ html.js .menu.offen .menu-haupt li { animation: menuRein .5s var(--ease) both; a
 .fuss-liste a:hover { color: var(--weiss); text-decoration: underline; text-underline-offset: 4px; }
 .fuss-unten {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px;
-  margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--linie);
+  position: relative;
+  margin-top: 48px; padding-top: 22px;
   font-size: 14px; color: var(--muted);
 }
+/* Trennlinie nur so breit wie der Inhalt, nicht über die Seitenränder */
+.fuss-unten::before { content: ""; position: absolute; top: 0; left: var(--gut); right: var(--gut); border-top: 1px solid var(--linie); }
 .fuss-recht { display: flex; gap: 20px; }
 .fuss-recht a { color: var(--muted); text-decoration: none; display: inline-flex; min-height: 32px; align-items: center; }
 .fuss-recht a:hover { color: var(--weiss); }
@@ -894,6 +899,7 @@ html.js .schritte { --weg: 0; }
 }
 @media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
   .kapitel, .kapitel + .kapitel { position: relative; margin-bottom: 0; }
+  .stapel::after { display: none; }
   .k-buehne { transform: none !important; border-radius: 0 !important; }
   .k-dunkel { display: none !important; }
 }

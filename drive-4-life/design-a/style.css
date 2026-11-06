@@ -646,6 +646,10 @@ button { font: inherit; color: inherit; }
 .kontakt-mini a { display: flex; align-items: center; gap: 12px; min-height: 48px; color: var(--tinte); font-weight: 700; text-decoration: none; border-top: 1px solid var(--linie); }
 .kontakt-mini a:hover { color: var(--blau); }
 .kontakt-mini .i { color: var(--blau); }
+/* Dejan: Kontakt unten in der grossen Karte, füllt die Spalte neben Sandra und der WhatsApp-Karte */
+.person-gross { display: flex; flex-direction: column; }
+.kontakt-mini-dejan { margin-top: auto; padding-top: 24px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
+@media (max-width: 560px) { .kontakt-mini-dejan { grid-template-columns: 1fr; } }
 @media (max-width: 900px) { .team-raster { grid-template-columns: 1fr; grid-template-rows: none; } .person-gross { grid-row: auto; } }
 @media (max-width: 560px) { .weiterbildung { grid-template-columns: 1fr; } .person { border-radius: var(--r-lg); } }
 
