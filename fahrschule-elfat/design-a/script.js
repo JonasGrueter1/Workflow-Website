@@ -26,13 +26,15 @@
   });
 
   /* Hero: Ampel schaltet einmal Rot, Rot und Gelb, Grün. Danach zeichnet sich die Autolinie. */
-  var rot = document.querySelector('.licht-rot');
-  var gelb = document.querySelector('.licht-gelb');
-  var gruen = document.querySelector('.licht-gruen');
+  /* Zwei Ampeln: gross neben dem Text (Desktop, Tablet) und klein neben dem Titel (Handy) */
+  function licht(farbe, an) {
+    var l = document.querySelectorAll('.licht-' + farbe);
+    for (var n = 0; n < l.length; n++) l[n].classList.toggle('an', an);
+  }
   var lg = document.querySelectorAll('.lg');
 
   function endzustand() {
-    rot.classList.remove('an'); gelb.classList.remove('an'); gruen.classList.add('an');
+    licht('rot', false); licht('gelb', false); licht('gruen', true);
     for (var i = 0; i < lg.length; i++) lg[i].classList.add('sichtbar', 'an');
     hero.classList.add('los', 'fahrt');
   }
@@ -46,19 +48,20 @@
       if (gestartet) return;
       gestartet = true;
       var schritte = [
-        [350, function () { rot.classList.add('an'); lg[0].classList.add('sichtbar', 'an'); }],
-        [1050, function () { gelb.classList.add('an'); lg[1].classList.add('sichtbar', 'an'); }],
-        [1750, function () { rot.classList.remove('an'); gelb.classList.remove('an'); gruen.classList.add('an'); lg[2].classList.add('sichtbar', 'an'); }],
+        [350, function () { licht('rot', true); lg[0].classList.add('sichtbar', 'an'); }],
+        [1050, function () { licht('gelb', true); lg[1].classList.add('sichtbar', 'an'); }],
+        [1750, function () { licht('rot', false); licht('gelb', false); licht('gruen', true); lg[2].classList.add('sichtbar', 'an'); }],
         [1950, function () { hero.classList.add('fahrt'); }]
       ];
       schritte.forEach(function (s) { setTimeout(s[1], s[0]); });
     };
-    var ampel = document.getElementById('ampel');
     if ('IntersectionObserver' in window) {
+      /* Beobachtet beide Ampeln; die ausgeblendete schneidet nie, die sichtbare startet die Schaltung */
       var ioAmpel = new IntersectionObserver(function (eintraege) {
-        if (eintraege[0].isIntersecting) { schalten(); ioAmpel.disconnect(); }
+        eintraege.forEach(function (e) { if (e.isIntersecting) { schalten(); ioAmpel.disconnect(); } });
       }, { threshold: 0.3 });
-      ioAmpel.observe(ampel);
+      ioAmpel.observe(document.querySelector('.ampel'));
+      ioAmpel.observe(document.querySelector('.mini-ampel'));
       setTimeout(schalten, 3500); /* Sicherheitsnetz */
     } else {
       schalten();

@@ -3,47 +3,91 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Designvorschläge | Neue Website Fahrschule Kurmann</title>
-  <meta name="description" content="Zwei Designvorschläge für die neue Website der Fahrschule Kurmann.">
+  <title>Designvorschläge | Neue Website Fahrschule Elfat</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website der Fahrschule Elfat in Wetzikon.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#bc2038">
+  <meta name="theme-color" content="#1C50A4">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/shared/basis.css">
   <style>
+    /* Farben der Fahrschule Elfat: Blau aus dem L-Schild im Logo, Ampel Rot, Gelb, Grün als kleine Akzente */
+    :root {
+      --ink: #1e2430;
+      --ink-2: #353d4c;
+      --muted: #4e5869;
+      --line: #dfe5ef;
+      --bg: #f3f6fb;
+      --soft: #e8eef8;
+      --red: #1c50a4;
+      --red-dark: #143e82;
+      --red-soft: #e3ecf8;
+      --blau: #1c50a4;
+      --tief: #12357a;
+      --hellblau: #409cd0;
+      --ampel-rot: #c02024;
+      --ampel-gelb: #ece824;
+      --ampel-gruen: #24a080;
+      --gelb: #ffd700;
+      --shadow: 0 1px 2px rgb(30 36 48 / 5%), 0 10px 30px rgb(28 80 164 / 8%);
+    }
+    .top-inner { padding-top: 8px; padding-bottom: 8px; }
+    .top-brand img { width: 176px; }
+    .kicker::before { width: 8px; height: 8px; border-radius: 50%; margin-right: 24px; background: var(--ampel-rot); box-shadow: 12px 0 0 var(--ampel-gelb), 24px 0 0 var(--ampel-gruen); }
+
     .hero { padding: 64px 0 44px; max-width: 760px; }
     .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
     .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
 
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
     .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
-    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 800; font-size: .95rem; }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; color: #fff; font-weight: 800; font-size: .95rem; }
+    .steps li:nth-child(1) span { background: var(--ampel-rot); }
+    .steps li:nth-child(2) span { background: var(--ampel-gelb); color: var(--ink); }
+    .steps li:nth-child(3) span { background: #1a7f65; }
     .steps strong { display: block; }
     .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
 
     .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
-    .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
-    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(22 22 26 / 10%); }
-    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(22 22 26 / 30%); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; }
+    .option-a .shots { background: linear-gradient(135deg, #f7f9fd, #e3eaf5); }
+    .option-b .shots { background: linear-gradient(135deg, #2361c0, var(--tief)); }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; background: var(--white); box-shadow: 0 -2px 20px rgb(30 36 48 / 12%); }
+    .option-b .shot-desk { background: var(--blau); box-shadow: 0 -2px 24px rgb(0 0 0 / 28%); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; background: var(--white); box-shadow: 0 10px 30px rgb(30 36 48 / 30%); }
+    .option-b .shot-mob { border-color: #0b1f4a; background: var(--blau); box-shadow: 0 10px 30px rgb(0 0 0 / 40%); }
     .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
-    .option-tag { color: var(--red); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option-tag { display: inline-flex; align-items: center; gap: 10px; color: var(--blau); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option-tag::before { content: ""; flex: none; }
+    .option-a .option-tag::before { width: 8px; height: 8px; margin-right: 24px; border-radius: 50%; background: var(--ampel-rot); box-shadow: 12px 0 0 var(--ampel-gelb), 24px 0 0 var(--ampel-gruen); }
+    .option-b .option-tag::before { width: 16px; height: 16px; border-radius: 3px; background: linear-gradient(#fff, #fff) no-repeat 5px 3px / 2.5px 10px, linear-gradient(#fff, #fff) no-repeat 5px 10.5px / 7px 2.5px, var(--blau); }
     .option h2 { font-size: 1.75rem; margin-top: -8px; }
     .option p { color: var(--ink-2); }
     .option .btn { align-self: flex-start; margin-top: auto; }
+    .option-a .chips li { background: var(--red-soft); color: var(--tief); }
+    .option-b .chips li { background: var(--gelb); color: var(--tief); }
+    .btn-a { background: var(--blau); color: #fff; }
+    .btn-a:hover { background: var(--red-dark); color: #fff; }
+    .btn-b { background: var(--tief); color: #fff; }
+    .btn-b:hover { background: #0b245a; color: #fff; }
 
-    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #cfced6; color: var(--ink-2); font-size: .975rem; }
-    .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #c3cede; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--blau); width: 22px; height: 22px; margin-top: 2px; }
 
-    .next { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px; border-radius: var(--r-lg); background: var(--ink); color: #fff; }
+    .next { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px; border-radius: var(--r-lg); background: var(--tief) linear-gradient(120deg, var(--blau), var(--tief)); color: #fff; }
     .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
-    .next p { color: rgb(255 255 255 / 72%); }
+    .next p { color: rgb(255 255 255 / 84%); max-width: 620px; }
+    .next .btn { background: var(--gelb); color: var(--tief); }
+    .next .btn:hover { background: #ffe24d; color: var(--tief); }
+    .next :focus-visible { outline-color: var(--gelb); }
 
     @media (max-width: 860px) {
       .steps, .options { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
+      .top-brand img { width: 138px; }
       .hero { padding: 40px 0 28px; }
       .option-body { padding: 22px 20px 24px; }
       .shots { padding: 16px 16px 0; }
@@ -63,7 +107,7 @@
   <header class="top">
     <div class="wrap top-inner">
       <a class="top-brand" href="./">
-        <img src="assets/img/logo.png" alt="Fahrschule Kurmann" width="450" height="124">
+        <img src="assets/img/logo-uebersicht.webp" alt="Fahrschule Elfat" width="440" height="164">
         <span>Neue Website</span>
       </a>
       <nav class="top-links" aria-label="Designvorschläge">
@@ -78,7 +122,7 @@
     <div class="hero">
       <p class="kicker">Designvorschläge</p>
       <h1>Zwei Designs für Ihre neue Website</h1>
-      <p>Ich habe für die Startseite der Fahrschule Kurmann zwei unterschiedliche Designs entworfen. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Handy. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign und die gewünschten Funktionen.</p>
+      <p>Ich habe für die Startseite der Fahrschule Elfat in Wetzikon zwei unterschiedliche Designs entworfen. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
     </div>
 
     <ol class="steps">
@@ -88,53 +132,53 @@
     </ol>
 
     <div class="options">
-      <article class="option">
+      <article class="option option-a">
         <a class="shots" href="design-a/" aria-label="Design A ansehen">
           <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
-          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Handy">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design A</span>
-          <h2>Klar und freundlich</h2>
-          <p>Hell, warm und übersichtlich. Runde Formen, viel Weissraum und das Rot aus Ihrem Logo als Akzent. Wirkt nahbar und schafft Vertrauen, auch bei Eltern.</p>
-          <ul class="chips"><li>Hell</li><li>Freundlich</li><li>Übersichtlich</li></ul>
-          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Ampel</h2>
+          <p>Hell, klar und sehr gut lesbar: Die Ampel aus Ihrem Logo schaltet zu Beginn einmal von Rot über Gelb auf Grün. Ihre drei Farben ordnen danach die drei Schritte mit Preis, vom Nothelferkurs über den VKU bis zu den Fahrlektionen, dazu Gratis-Administration, Empfehlungsprämie und Sie persönlich.</p>
+          <ul class="chips"><li>Hell</li><li>Ampel aus dem Logo</li><li>Drei Schritte</li></ul>
+          <a class="btn btn-a" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
 
-      <article class="option">
+      <article class="option option-b">
         <a class="shots" href="design-b/" aria-label="Design B ansehen">
           <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
-          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Handy">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
         </a>
         <div class="option-body">
           <span class="option-tag">Design B</span>
-          <h2>Sportlich und markant</h2>
-          <p>Dunkel, kraftvoll und modern. Grosse Schrift, ein Foto über die ganze Breite und Strassenmarkierungen als Erkennungszeichen. Wirkt dynamisch und spricht junge Fahrschüler an.</p>
-          <ul class="chips"><li>Dunkel</li><li>Dynamisch</li><li>Auffällig</li></ul>
-          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2>Vier Sprachen</h2>
+          <p>Im kräftigen Blau Ihres L-Schilds: Die Begrüssung wechselt einmal durch Ihre vier Unterrichtssprachen und bleibt auf Deutsch stehen, darunter zieht sich die Autolinie aus Ihrem Logo. Danach folgen Ihre drei Preise als grosse Zahlen, die Sprachen als Kacheln, ein Laufband mit allen Standorten und die Empfehlungsprämie.</p>
+          <ul class="chips"><li>L-Schild-Blau</li><li>Vier Sprachen</li><li>Grosse Preise</li></ul>
+          <a class="btn btn-b" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </article>
     </div>
 
     <p class="note">
       <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
-      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Auto oder Preise werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Preise und Fotos stammen von Ihrer bisherigen Website.</span>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Ausbildungskosten, VKU oder Nothelferkurs werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Preise, Standorte, Ihr Logo und Ihr Foto stammen von Ihrer bisherigen Website, die Erreichbarkeit aus Ihrem Telefonbucheintrag. Weil gerade keine Kursdaten ausgeschrieben sind, steht bei VKU und Nothelferkurs «Termine auf Anfrage».</span>
     </p>
 
     <div class="next">
       <div>
         <h2>Gefällt Ihnen eines der Designs?</h2>
-        <p>In der Wunschliste wählen Sie Design und Funktionen, der Preis rechnet automatisch mit.</p>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
       </div>
-      <a class="btn btn-red" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+      <a class="btn" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
     </div>
   </main>
 
   <footer class="foot">
     <div class="wrap foot-inner">
-      <span>Ein Vorschlag von Jonas Grüter Webdesign</span>
-      <span>Oktober 2026</span>
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026</span>
     </div>
   </footer>
 </body>

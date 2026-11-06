@@ -78,6 +78,14 @@
     <div class="wrap hero-in">
       <div class="hero-text">
         <p class="kicker auftritt" style="--d:0ms"><span class="l-schild" aria-hidden="true">L</span>Fahrschule Elfat · Wetzikon</p>
+        <div class="mini-ampel auftritt" style="--d:60ms" aria-hidden="true">
+          <div class="ampel-gehaeuse">
+            <span class="licht licht-rot"></span>
+            <span class="licht licht-gelb"></span>
+            <span class="licht licht-gruen"></span>
+          </div>
+          <span class="ampel-mast"></span>
+        </div>
         <h1 id="hero-titel" class="auftritt" style="--d:90ms">Fahren lernen in Wetzikon und im ganzen Kanton Zürich.</h1>
         <p class="lead auftritt" style="--d:180ms">Nothelferkurs, Verkehrskunde und Fahrlektionen aus einer Hand, bei Elfat Zuberi. Auf Deutsch, Englisch, Albanisch und Serbokroatisch.</p>
         <div class="hero-knoepfe auftritt" style="--d:270ms" id="hero-knoepfe">
@@ -110,6 +118,13 @@
       </div>
     </div>
     <svg class="autolinie" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="autolinie-verlauf" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#409CD0"/>
+          <stop offset=".78" stop-color="#409CD0"/>
+          <stop offset="1" stop-color="#409CD0" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
       <path pathLength="1" d="M4 118 C 6 100, 10 92, 26 90 L 190 86 C 240 82, 280 54, 350 40 C 410 28, 550 22, 630 30 C 690 36, 720 60, 762 76 C 800 86, 900 89, 1000 90 L 1196 90"/>
     </svg>
   </section>
@@ -131,7 +146,7 @@
             <svg class="i karte-icon" aria-hidden="true"><use href="#i-heart"/></svg>
           </div>
           <h3>Nothelferkurs</h3>
-          <p>Inklusive Ausweis. Kursorte Wetzikon (nähe Bahnhof) und Zürich (Puls 5).</p>
+          <p>Inklusive Ausweis. Kursorte Wetzikon (Nähe Bahnhof) und Zürich (Puls 5).</p>
           <p class="karte-preis"><span>CHF</span> 70.–</p>
           <div class="karte-aktion">
             <a class="btn btn-blau" href="https://wa.me/41794020045?text=Hallo%20Elfat%2C%20ich%20m%C3%B6chte%20mich%20f%C3%BCr%20den%20Nothelferkurs%20anmelden.%20Wann%20ist%20der%20n%C3%A4chste%20Termin%3F" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Termin anfragen</a>
@@ -145,7 +160,7 @@
             <svg class="i karte-icon" aria-hidden="true"><use href="#i-tafel"/></svg>
           </div>
           <h3>Verkehrskunde (VKU)</h3>
-          <p>Obligatorisch für die Prüfung. Kursorte Wetzikon (nähe Bahnhof) und Zürich (Puls 5).</p>
+          <p>Obligatorisch für die Prüfung. Kursorte Wetzikon (Nähe Bahnhof) und Zürich (Puls 5).</p>
           <p class="karte-preis"><span>CHF</span> 120.–</p>
           <div class="karte-aktion">
             <a class="btn btn-blau" href="https://wa.me/41794020045?text=Hallo%20Elfat%2C%20ich%20m%C3%B6chte%20mich%20f%C3%BCr%20den%20VKU%20anmelden.%20Wann%20ist%20der%20n%C3%A4chste%20Termin%3F" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Termin anfragen</a>
@@ -174,7 +189,7 @@
           <h3>VKU und Nothelferkurs: Termine auf Anfrage</h3>
           <p>Die nächsten Kursdaten erfährst du direkt bei Elfat. Schreib per WhatsApp oder schick eine Anfrage.</p>
           <ul class="termine-info">
-            <li><svg class="i"><use href="#i-pin"/></svg>Kursorte: Wetzikon (nähe Bahnhof) und Zürich (Puls 5)</li>
+            <li><svg class="i"><use href="#i-pin"/></svg>Kursorte: Wetzikon (Nähe Bahnhof) und Zürich (Puls 5)</li>
             <li><svg class="i"><use href="#i-muenze"/></svg>Bezahlung bar oder mit Twint</li>
             <li><svg class="i"><use href="#i-uhr"/></svg>Abmeldung spätestens 5 Arbeitstage vor Kursstart</li>
           </ul>
@@ -204,9 +219,9 @@
           </thead>
           <tbody>
             <tr><th scope="row"><span class="zelle"><span class="punkt p-rot" aria-hidden="true"></span><span>Nothelferkurs <small>inkl. Ausweis</small></span></span></th><td>CHF 70.–</td></tr>
-            <tr><th scope="row"><span class="zelle"><span class="punkt p-gelb" aria-hidden="true"></span><span>Verkehrskundeunterricht (VKU)</span></span></th><td>CHF 120.–</td></tr>
-            <tr><th scope="row"><span class="zelle"><span class="punkt p-gruen" aria-hidden="true"></span><span>Fahrlektionen <small>à 45 Minuten</small></span></span></th><td><small>ab</small> CHF 85.–</td></tr>
-            <tr class="zeile-gratis"><th scope="row"><span class="zelle"><span class="punkt p-leer" aria-hidden="true"></span><span>Einmaliger Administrations- und Versicherungsbeitrag</span></span></th><td><span class="etikett-gratis">Gratis</span></td></tr>
+            <tr><th scope="row"><span class="zelle"><span class="punkt p-gelb" aria-hidden="true"></span><span>Verkehrskunde&shy;unterricht (VKU)</span></span></th><td>CHF 120.–</td></tr>
+            <tr><th scope="row"><span class="zelle"><span class="punkt p-gruen" aria-hidden="true"></span><span>Fahrlektionen <small>à 45 Minuten</small></span></span></th><td><small>ab</small> <span class="nw">CHF 85.–</span></td></tr>
+            <tr class="zeile-gratis"><th scope="row"><span class="zelle"><span class="punkt p-leer" aria-hidden="true"></span><span>Einmaliger Administrations- und Versicherungs&shy;beitrag</span></span></th><td><span class="etikett-gratis">Gratis</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -324,7 +339,7 @@
         <li>
           <div class="kontakt-zeile">
             <span class="kz-icon" aria-hidden="true"><svg class="i"><use href="#i-pin"/></svg></span>
-            <span><small>Adresse</small><strong>Frohbergstrasse 54, 8620 Wetzikon</strong></span>
+            <span><small>Adresse</small><strong>Frohbergstrasse 54, <span class="nw">8620 Wetzikon</span></strong></span>
           </div>
         </li>
       </ul>
@@ -357,7 +372,7 @@
       <p class="fuss-titel">Kontakt</p>
       <a href="tel:+41794020045">079 402 00 45</a>
       <a href="mailto:info@fahrschule-elfat.ch">info@fahrschule-elfat.ch</a>
-      <span>Frohbergstrasse 54, 8620 Wetzikon</span>
+      <span class="fuss-adresse">Frohbergstrasse 54<br>8620 Wetzikon</span>
       <a class="fuss-fb" href="https://www.facebook.com/profile.php?id=100092580276066" target="_blank" rel="noopener"><svg class="i"><use href="#i-fb"/></svg>Facebook</a>
     </div>
   </div>

@@ -81,22 +81,14 @@
     <!-- 1 Hero -->
     <section class="hero" aria-labelledby="hero-titel">
       <div class="wrap hero-in">
-        <div class="hero-oben" data-h style="--d:0">
-          <p class="kicker kicker-hell"><span class="lschild" aria-hidden="true">L</span>Fahrschule in Wetzikon ZH</p>
-          <ol class="sprachwahl" aria-hidden="true">
-            <li class="is-on" data-sprache="0"><span>DE</span>Deutsch</li>
-            <li data-sprache="1"><span>EN</span>English</li>
-            <li data-sprache="2"><span>SQ</span>Shqip</li>
-            <li data-sprache="3"><span>BKS</span>Srpskohrvatski</li>
-          </ol>
-        </div>
+        <p class="kicker kicker-hell" data-h style="--d:0"><span class="lschild" aria-hidden="true">L</span>Fahrschule in Wetzikon ZH</p>
 
         <p class="gruss" aria-hidden="true">
           <span class="gruss-maske">
-            <span class="gruss-wort is-on" lang="de">Willkommen.</span>
-            <span class="gruss-wort" lang="en">Welcome.</span>
-            <span class="gruss-wort" lang="sq">Mirë se vini.</span>
-            <span class="gruss-wort" lang="sh">Dobrodošli.</span>
+            <span class="gruss-wort is-on" lang="de">Willkommen<span class="punkt">.</span></span>
+            <span class="gruss-wort" lang="en">Welcome<span class="punkt">.</span></span>
+            <span class="gruss-wort" lang="sq">Mirë se vini<span class="punkt">.</span></span>
+            <span class="gruss-wort" lang="sh">Dobrodošli<span class="punkt">.</span></span>
           </span>
         </p>
         <p class="sr-only">Willkommen in vier Sprachen: Deutsch, Englisch, Albanisch, Serbokroatisch.</p>
@@ -110,6 +102,15 @@
           <a class="knopf knopf-umriss knopf-gross" href="tel:+41794020045" aria-label="Anrufen, 079 402 00 45">
             <svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen<span class="knopf-nr">079 402 00 45</span>
           </a>
+        </div>
+        <div class="hero-seite" data-h style="--d:2">
+          <ol class="sprachwahl" aria-hidden="true">
+            <li class="is-on" data-sprache="0"><span>DE</span>Deutsch</li>
+            <li data-sprache="1"><span>EN</span>English</li>
+            <li data-sprache="2"><span>SQ</span>Shqip</li>
+            <li data-sprache="3"><span>BKS</span>Srpskohrvatski</li>
+          </ol>
+          <p class="hero-zeit"><svg class="i" aria-hidden="true"><use href="#i-uhr"/></svg><span><small>Erreichbar</small>Mo bis Sa 07.00 bis 21.00 Uhr<br>Sonntag per WhatsApp</span></p>
         </div>
       </div>
 
@@ -163,7 +164,10 @@
             <span class="haken" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12l5 5l10 -10"/></svg></span>
             <span>Einmaliger Administrations- und Versicherungsbeitrag: <strong>gratis</strong>.</span>
           </p>
-          <a class="knopf knopf-linie" href="#" data-soon="Ausbildungskosten">Alle Ausbildungskosten<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          <div class="gratis-knoepfe">
+            <a class="knopf knopf-blau" href="https://wa.me/41794020045?text=Hallo%20Elfat%2C%20ich%20m%C3%B6chte%20eine%20Fahrlektion%20anfragen." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>Fahrlektion anfragen</a>
+            <a class="knopf knopf-linie" href="#" data-soon="Ausbildungskosten">Alle Ausbildungskosten<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          </div>
         </div>
       </div>
     </section>
@@ -315,7 +319,7 @@
     <!-- 7 Über mich -->
     <section class="ueber" id="ueber" aria-labelledby="ueber-titel">
       <div class="wrap ueber-in" data-r>
-        <img class="ueber-bild" src="../assets/img/b-elfat.webp" width="320" height="320" alt="Elfat Zuberi, Fahrlehrer der Fahrschule Elfat" loading="lazy" decoding="async">
+        <img class="ueber-bild" src="../assets/img/b-elfat.webp" width="320" height="320" alt="Elfat Zuberi, Fahrlehrer der Fahrschule Elfat" decoding="async">
         <p class="kicker"><span class="lschild" aria-hidden="true">L</span>Über mich</p>
         <h2 id="ueber-titel">Hallo, ich bin Elfat.</h2>
         <figure class="zitat">
@@ -375,7 +379,7 @@
       </nav>
       <div class="fuss-kontakt">
         <p class="fuss-titel">Kontakt</p>
-        <p><a href="tel:+41794020045">079 402 00 45</a><br><a href="mailto:info@fahrschule-elfat.ch">info@fahrschule-elfat.ch</a></p>
+        <p><a href="tel:+41794020045">079 402 00 45</a><a href="mailto:info@fahrschule-elfat.ch">info@fahrschule-elfat.ch</a></p>
       </div>
     </div>
     <div class="wrap fuss-unten">
