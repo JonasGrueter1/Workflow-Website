@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Fahrschule Mühlemann Pfäffikon ZH: Fahrstunden Handschaltung und Automat</title>
+  <meta name="description" content="Fahrschule Mühlemann in Pfäffikon ZH, seit 2007: Fahrstunden mit Handschaltung oder Automat im Audi A3, VKU im eigenen Theorielokal, Nothelferkurs, WAB-Kurse. Treffpunkt Bahnhof Pfäffikon. 079 678 94 49.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/a-radio-canada-big.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/img/a-see.webp" as="image" type="image/webp">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="a">
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons, teilweise vereinfacht -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/><path d="M11 13l9 -9"/><path d="M15 4h5v5"/></symbol>
+    <symbol id="i-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14v7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19.5 13.572l-7.5 7.428l-2.896 -2.868m-6.117 -8.104a5 5 0 0 1 9.013 -3.022a5 5 0 1 1 7.5 6.572"/><path d="M3 13h2l2 3l2 -6l1 3h3"/></symbol>
+    <symbol id="i-board" viewBox="0 0 24 24"><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1"/><path d="M11 16a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6v13"/><path d="M12 6v13"/><path d="M21 6v13"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
+    <symbol id="i-train" viewBox="0 0 24 24"><path d="M21 13c0 -3.87 -3.37 -7 -10 -7h-8"/><path d="M3 15h16a2 2 0 0 0 2 -2"/><path d="M3 6v5h17.5"/><path d="M3 10v4"/><path d="M8 11v-5"/><path d="M13 11v-4.5"/><path d="M3 19h18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 9h1"/><path d="M9 13h6"/><path d="M9 17h6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-radar" viewBox="0 0 24 24"><path d="M21 12h-8a1 1 0 1 0 -1 1v8a9 9 0 0 0 9 -9"/><path d="M16 9a5 5 0 1 0 -7 7"/><path d="M20.486 9a9 9 0 1 0 -11.482 11.495"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 10h14l-4 -4"/><path d="M17 14h-14l4 4"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16.5 7.5v.01"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"/></symbol>
+  </svg>
+
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="top" id="top">
+    <div class="wrap top-in">
+      <a class="brand" href="./" aria-label="Fahrschule Mühlemann, Startseite">
+        <img src="../assets/img/a-logo.webp" width="512" height="200" alt="Fahrschule Mühlemann">
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul class="nav-anker">
+          <li><a href="#fahrzeuge">Fahrzeuge</a></li>
+          <li><a href="#preise">Preise</a></li>
+          <li><a href="#weg">Der Weg</a></li>
+          <li><a href="#fahrlehrer">Fahrlehrer</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+        <ul class="nav-seiten" aria-label="Unterseiten">
+          <li><a href="#" data-soon="Ihr Fahrlehrer">Ihr Fahrlehrer</a></li>
+          <li><a href="#" data-soon="Fahrzeuge">Fahrzeuge</a></li>
+          <li><a href="#" data-soon="Der Weg zum Führerschein">Der Weg zum Führerschein</a></li>
+          <li><a href="#" data-soon="Angebot / Preise">Angebot / Preise</a></li>
+          <li><a href="#" data-soon="WAB-Kurs">WAB-Kurs</a></li>
+          <li><a href="#" data-soon="Anmeldung / Kontakt">Anmeldung / Kontakt</a></li>
+          <li><a href="#" data-soon="Formulare / Partner">Formulare / Partner</a></li>
+        </ul>
+      </nav>
+      <div class="top-act">
+        <a class="btn btn-line btn-sm top-wa" href="https://wa.me/41796789449" target="_blank" rel="noopener" aria-label="WhatsApp an Stefan Mühlemann schreiben"><svg class="i i-wa" aria-hidden="true"><use href="#i-wa"/></svg><span class="lbl">WhatsApp</span></a>
+        <a class="btn btn-pri btn-sm top-tel" href="tel:+41796789449" aria-label="Stefan Mühlemann anrufen, 079 678 94 49"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span class="lbl">079 678 94 49</span></a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen"><svg class="i i-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="i i-shut" aria-hidden="true"><use href="#i-close"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="inhalt">
+    <!-- Hero: Text in zwei Spalten, darunter das Diptychon Sommer und Winter -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-top">
+        <div class="hero-l">
+          <p class="kicker rise" style="--d:60ms"><span><span class="k-name">Fahrschule Mühlemann · </span>Pfäffikon ZH · seit 2007</span></p>
+          <h1 class="h1 rise" id="hero-title" style="--d:160ms">Fahren lernen in Pfäffikon&nbsp;ZH, mit <span class="u">Freude<svg class="u-line" viewBox="0 0 220 20" preserveAspectRatio="none" aria-hidden="true"><defs><mask id="u-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="220" height="20"><path class="u-reveal" d="M3 12 C 70 15, 150 12, 217 4" pathLength="1"/></mask></defs><path class="u-dash" d="M3 12 C 70 15, 150 12, 217 4" mask="url(#u-mask)"/></svg></span> und Sicherheit.</h1>
+        </div>
+        <div class="hero-r">
+          <p class="lead rise" style="--d:300ms">Fahrstunden mit Handschaltung oder Automat bei Stefan Mühlemann, gelernter Automechaniker und WAB-Instruktor. Treffpunkt Bahnhof Pfäffikon.</p>
+          <div class="hero-cta rise" style="--d:420ms">
+            <a class="btn btn-pri" href="tel:+41796789449"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
+            <a class="btn btn-line" href="https://wa.me/41796789449" target="_blank" rel="noopener"><svg class="i i-wa" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+            <a class="tlink" href="#" data-soon="Anmeldung / Kontakt">Online anmelden<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="wrap dip">
+        <figure class="dip-item">
+          <div class="dip-frame"><img src="../assets/img/a-see.webp" width="876" height="450" alt="Stefan Mühlemann lehnt im Sommer am weissen Fahrschul-Audi, dahinter der Pfäffikersee"></div>
+          <figcaption><span class="dot" aria-hidden="true"></span>Sommer am Pfäffikersee</figcaption>
+        </figure>
+        <figure class="dip-item">
+          <div class="dip-frame"><img src="../assets/img/a-schnee.webp" width="876" height="450" alt="Stefan Mühlemann steht im Schnee neben dem Fahrschul-Audi, im Hintergrund Pfäffikon"></div>
+          <figcaption><span class="dot dot-w" aria-hidden="true"></span>Winter über Pfäffikon</figcaption>
+        </figure>
+      </div>
+      <div class="wrap">
+        <ul class="facts">
+          <li class="rv"><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg><span><strong>Seit Januar 2007</strong> eigene Fahrschule in Pfäffikon ZH</span></li>
+          <li class="rv"><svg class="i" aria-hidden="true"><use href="#i-swap"/></svg><span><strong>Zwei Audi A3</strong> mit gleichem Cockpit, Hand oder Automat</span></li>
+          <li class="rv"><svg class="i" aria-hidden="true"><use href="#i-board"/></svg><span><strong>Eigenes Theorielokal</strong> für den Verkehrskundeunterricht</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Handschaltung oder Automat: Schalter -->
+    <section class="sec sec-see" id="fahrzeuge" aria-labelledby="fz-title">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="kicker">Fahrzeuge</p>
+          <h2 id="fz-title">Handschaltung oder Automat? Beides im gleichen Cockpit.</h2>
+          <p class="sec-lead">Ich unterrichte mit zwei Audi A3 Sportback. Sie entscheiden, womit Sie lernen.</p>
+        </div>
+
+        <div class="switch rv" role="tablist" aria-label="Fahrzeug wählen" data-active="hand">
+          <span class="switch-pill" aria-hidden="true"></span>
+          <button class="switch-btn" type="button" role="tab" id="tab-hand" aria-selected="true" aria-controls="car-hand">Handschaltung</button>
+          <button class="switch-btn" type="button" role="tab" id="tab-auto" aria-selected="false" aria-controls="car-auto" tabindex="-1">Automat</button>
+        </div>
+
+        <div class="cars">
+          <article class="car is-active" id="car-hand" aria-labelledby="car-hand-title">
+            <div class="car-media">
+              <img src="../assets/img/a-hand.webp" width="800" height="500" alt="Der weisse Audi A3 mit Handschaltung auf einem Übungsplatz mit Pylonen" loading="lazy">
+            </div>
+            <div class="car-data">
+              <p class="car-tag">Handschaltung</p>
+              <h3 id="car-hand-title">Audi A3 Sportback 1.4 TFSI <span class="nw">S-Line</span></h3>
+              <dl class="specs">
+                <div><dt>Getriebe</dt><dd>6-Gang manuell</dd></div>
+                <div><dt>Leistung</dt><dd>150 PS</dd></div>
+                <div><dt>Hubraum</dt><dd>1.4 Liter</dd></div>
+                <div><dt>Jahrgang</dt><dd>2017</dd></div>
+              </dl>
+              <p class="car-quote">«Ideal für Neulenkerinnen und Neulenker, da es auch den einen oder anderen Fehler in der Bedienung verzeiht.»</p>
+              <ul class="assist" aria-label="Stärken">
+                <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Gute Rundumsicht</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Nicht zu gross</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Bequem für Gross und Klein</li>
+              </ul>
+              <p class="car-note">Mit Kupplung und Schaltung umgehen zu können, lohnt sich. Man weiss nie, ob man es noch braucht: bei der Arbeit, in den Ferien oder in einem Notfall.</p>
+            </div>
+          </article>
+
+          <article class="car" id="car-auto" aria-labelledby="car-auto-title">
+            <div class="car-media">
+              <img src="../assets/img/a-automat.webp" width="685" height="428" alt="Der weisse Audi A3 quattro mit Automat in der Garage, mit blauer Mühlemann-Beschriftung" loading="lazy">
+              <img class="car-inset" src="../assets/img/a-schalthebel.webp" width="360" height="360" alt="Wählhebel des S tronic Automatikgetriebes" loading="lazy">
+            </div>
+            <div class="car-data">
+              <p class="car-tag">Automat</p>
+              <h3 id="car-auto-title">Audi A3 Sportback 40 TFSI quattro <span class="nw">S-Line</span></h3>
+              <dl class="specs">
+                <div><dt>Getriebe</dt><dd>S tronic (DSG)</dd></div>
+                <div><dt>Leistung</dt><dd>190 PS, Allrad</dd></div>
+                <div><dt>Hubraum</dt><dd>2.0 Liter</dd></div>
+                <div><dt>Jahrgang</dt><dd>2020</dd></div>
+              </dl>
+              <p class="car-quote">«Das ist mein neues Schmuckstück. Spass ist garantiert!»</p>
+              <ul class="assist" aria-label="Assistenzsysteme">
+                <li><svg class="i" aria-hidden="true"><use href="#i-radar"/></svg>Side assist (toter Winkel)</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-radar"/></svg>Lane assist (Spur halten)</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-radar"/></svg>Abstandstempomat</li>
+              </ul>
+              <p class="car-note">Den Automateneintrag (78) gibt es seit Februar 2019 nicht mehr. Wer nur Automat fahren will, kann von Anfang an damit beginnen.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="same rv">
+          <span class="same-ic" aria-hidden="true"><svg class="i"><use href="#i-swap"/></svg></span>
+          <p><strong>Beide Autos sind in Form, Cockpit und Armaturen gleich.</strong> Wer zwischen Handschaltung und Automat wechselt, fühlt sich sofort vertraut und verliert keine Zeit mit Umgewöhnen.</p>
+          <a class="tlink" href="#" data-soon="Fahrzeuge">Fahrzeuge<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Angebot und Preise -->
+    <section class="sec sec-sand" id="preise" aria-labelledby="preise-title">
+      <div class="wrap preise-grid">
+        <div class="preise-l">
+          <div class="sec-head rv">
+            <p class="kicker">Angebot</p>
+            <h2 id="preise-title">Angebot und Preise</h2>
+            <p class="sec-lead">Alles für die Kategorie B aus einer Hand, vom Nothelferkurs bis zur Prüfung.</p>
+          </div>
+          <ul class="offers">
+            <li class="offer rv">
+              <span class="offer-ic" aria-hidden="true"><svg class="i"><use href="#i-wheel"/></svg></span>
+              <h3>Fahrstunden</h3>
+              <p>Mit Handschaltung oder Automat, je 45 Minuten. Treffpunkt Bahnhof Pfäffikon beim Migrolino.</p>
+            </li>
+            <li class="offer rv">
+              <span class="offer-ic" aria-hidden="true"><svg class="i"><use href="#i-board"/></svg></span>
+              <h3>Verkehrskunde (VKU)</h3>
+              <p>Obligatorisch für die Prüfung, im eigenen Theorielokal an der Barzloostrasse&nbsp;9. Anmeldung nötig.</p>
+            </li>
+            <li class="offer rv">
+              <span class="offer-ic" aria-hidden="true"><svg class="i"><use href="#i-book"/></svg></span>
+              <h3>Theorie</h3>
+              <p>Selbststudium mit der theorie24 VIP-Card am PC oder Smartphone. Bei Unklarheiten gibt es eine Einzeltheorie.</p>
+            </li>
+            <li class="offer rv">
+              <span class="offer-ic" aria-hidden="true"><svg class="i"><use href="#i-heart"/></svg></span>
+              <h3>Nothelferkurs</h3>
+              <p>Notfälle richtig einschätzen, Herz-Lungen-Wiederbelebung und Verhalten bei einem Verkehrsunfall.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="preise-r">
+          <div class="price-card rv">
+            <div class="price-head">
+              <h3>Preise Kategorie B</h3>
+              <span class="price-cur">in CHF</span>
+            </div>
+            <dl class="prices">
+              <div class="row" style="--i:0"><dt>Einzellektion <small>45 Minuten</small></dt><dd>89.–</dd></div>
+              <div class="row row-hi" style="--i:1"><dt>Abonnement 10 Lektionen <small>450 Minuten</small><span class="save">CHF 40 günstiger als 10 Einzellektionen</span></dt><dd>850.–</dd></div>
+              <div class="row" style="--i:2"><dt>Einmaliger Versicherungsbeitrag</dt><dd>120.–</dd></div>
+              <div class="row" style="--i:3"><dt>Verkehrskundeunterricht (VKU)</dt><dd>210.–</dd></div>
+              <div class="row" style="--i:4"><dt>Einzeltheorie <small>60 Minuten</small></dt><dd>60.–</dd></div>
+              <div class="row" style="--i:5"><dt>Nothelferkurs</dt><dd>85.–</dd></div>
+              <div class="row" style="--i:6"><dt>theorie24 VIP-Card <small>2 Monate</small></dt><dd>30.–</dd></div>
+              <div class="row" style="--i:7"><dt>WAB-Kurs <small>Transportschule AG</small></dt><dd><span class="ab">ab</span> 290.00</dd></div>
+            </dl>
+            <a class="tlink" href="#" data-soon="Angebot / Preise">Angebot / Preise<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Der Weg zum Führerschein -->
+    <section class="sec" id="weg" aria-labelledby="weg-title">
+      <div class="wrap weg-grid">
+        <div class="weg-l">
+          <div class="sec-head rv">
+            <p class="kicker">In sieben Schritten</p>
+            <h2 id="weg-title">Der Weg zum Führerschein</h2>
+            <p class="sec-lead">Den Lernfahrausweis der Kategorie B gibt es ab 17 Jahren. Wer ihn vor dem 20. Geburtstag erhält, fährt mindestens zwölf Monate mit Lernfahrausweis.</p>
+          </div>
+          <div class="steps-wrap" id="steps">
+          <span class="steps-track" aria-hidden="true"><span class="steps-fill"></span></span>
+          <ol class="steps">
+            <li class="step"><span class="step-no" aria-hidden="true">1</span><div class="step-tx"><h3>Nothelferkurs</h3><p>10 Lektionen, sechs Jahre gültig. Die Bescheinigung brauchen Sie spätestens für die Anmeldung zur Theorieprüfung.</p></div></li>
+            <li class="step"><span class="step-no" aria-hidden="true">2</span><div class="step-tx"><h3>Theorieprüfung</h3><p>Gesuch um den Lernfahrausweis beim Strassenverkehrsamt einreichen und die Theorieprüfung ablegen. Sie bleibt unbeschränkt gültig.</p></div></li>
+            <li class="step"><span class="step-no" aria-hidden="true">3</span><div class="step-tx"><h3>Verkehrskunde (VKU)</h3><p>Mit dem Lernfahrausweis besuchen Sie den VKU, möglichst früh. Nur wer ihn besucht hat, wird zur praktischen Prüfung zugelassen.</p></div></li>
+            <li class="step"><span class="step-no" aria-hidden="true">4</span><div class="step-tx"><h3>Praktische Ausbildung</h3><p>Von Anfang an den richtigen Umgang mit dem Fahrzeug lernen, mit einem Fahrlehrer, der auch schwierige Situationen entschärfen kann.</p></div></li>
+            <li class="step"><span class="step-no" aria-hidden="true">5</span><div class="step-tx"><h3>Begleitperson</h3><p>Bringen Sie Ihre Begleitperson regelmässig in den Fahrunterricht mit. So sind privates Üben und Fahrstunden aufeinander abgestimmt.</p></div></li>
+            <li class="step"><span class="step-no" aria-hidden="true">6</span><div class="step-tx"><h3>Praktische Prüfung</h3><p>Zur Prüfung melde ich Sie an. Danach erhalten Sie den Führerausweis auf Probe für drei Jahre.</p></div></li>
+            <li class="step"><span class="step-no" aria-hidden="true">7</span><div class="step-tx"><h3>Weiterbildung (WAB)</h3><p>Innerhalb von 12 Monaten besuchen Sie den obligatorischen Weiterbildungskurs, auch bei mir in Pfäffikon ZH.</p></div></li>
+          </ol>
+          </div>
+          <a class="tlink" href="#" data-soon="Der Weg zum Führerschein">Der Weg zum Führerschein<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+
+        <aside class="weg-r" aria-labelledby="form-title">
+          <figure class="weg-photo rv">
+            <img src="../assets/img/a-tablet.webp" width="876" height="450" alt="Stefan Mühlemann erklärt einer Fahrschülerin im Auto etwas auf dem Tablet" loading="lazy">
+          </figure>
+          <div class="form-card rv">
+            <span class="form-ic" aria-hidden="true"><svg class="i"><use href="#i-file"/></svg></span>
+            <h3 id="form-title">Formulare</h3>
+            <p>Das Gesuch für den Lernfahrausweis und alle Merkblätter finden Sie beim Strassenverkehrsamt des Kantons Zürich.</p>
+            <a class="btn btn-pri btn-block" href="https://www.zh.ch/de/sicherheitsdirektion/strassenverkehrsamt.html" target="_blank" rel="noopener">Formulare beim Strassenverkehrsamt<svg class="i" aria-hidden="true"><use href="#i-ext"/></svg><span class="sr">(öffnet in neuem Fenster)</span></a>
+            <a class="tlink" href="#" data-soon="Formulare / Partner">Formulare / Partner<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Ihr Fahrlehrer -->
+    <section class="sec sec-see" id="fahrlehrer" aria-labelledby="fl-title">
+      <div class="wrap fl-grid">
+        <div class="fl-media">
+          <figure class="fl-photo rv"><img src="../assets/img/a-portrait.webp" width="533" height="666" alt="Porträt von Stefan Mühlemann, lachend" loading="lazy"></figure>
+          <figure class="fl-photo2 rv">
+            <img src="../assets/img/a-motor.webp" width="876" height="450" alt="Stefan Mühlemann erklärt einer Fahrschülerin den Motorraum" loading="lazy">
+            <figcaption>Der gelernte Automechaniker erklärt auch, was unter der Haube passiert.</figcaption>
+          </figure>
+        </div>
+        <div class="fl-text">
+          <div class="rv">
+            <p class="kicker">Ihr Fahrlehrer</p>
+            <h2 id="fl-title">Stefan Mühlemann</h2>
+            <p class="fl-role">Staatlich geprüfter Fahrlehrer und WAB-Instruktor</p>
+          </div>
+          <p class="rv">Die Begeisterung für Autos und das Fahren war stets ein Teil meines Lebens. Automechaniker zu werden, war darum ein logischer Schritt.</p>
+          <blockquote class="fl-quote rv"><p>Ich wollte aber mehr, vor allem mehr mit Menschen zusammenarbeiten.</p></blockquote>
+          <p class="rv">In den Fahrstunden ist mir wichtig, dass Sie sich wohl fühlen und Spass beim Lernen haben. Die Qualität der Ausbildung steht dabei immer im Vordergrund.</p>
+          <ol class="tl">
+            <li class="rv"><span class="tl-y">2002</span><span class="tl-t">Lehrabschluss als Automechaniker, danach vier Jahre in zwei Garagen (SAAB, HONDA)</span></li>
+            <li class="rv"><span class="tl-y">2007</span><span class="tl-t">Ausbildung zum Fahrlehrer abgeschlossen, seither eigene Fahrschule in Pfäffikon ZH</span></li>
+            <li class="rv"><span class="tl-y">2022</span><span class="tl-t">Weiterbildung zum WAB-Instruktor, seit November 2022 WAB-Kurse an der Transportschule</span></li>
+          </ol>
+          <p class="fl-small rv">Jedes Jahr bilde ich mich weiter: Psychologie, Unterrichtsmethodik, rechtliche Kenntnisse, Fahrtechnik, Verkehrssinnbildung und umweltschonendes Fahren. Meinen Ausgleich finde ich beim Surfen, im Training und in der Fotografie.</p>
+          <a class="tlink rv" href="#" data-soon="Ihr Fahrlehrer">Ihr Fahrlehrer<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WAB-Kurse -->
+    <section class="sec sec-wab" aria-labelledby="wab-title">
+      <div class="wrap">
+        <div class="wab-card rv">
+          <div class="wab-text">
+            <p class="kicker kicker-light">Nach der Prüfung</p>
+            <h2 id="wab-title">WAB-Kurse in Pfäffikon&nbsp;ZH, bei mir als Instruktor</h2>
+            <p>Den obligatorischen Weiterbildungskurs besuchen Sie innerhalb von 12 Monaten nach der Prüfung. Ich bin Instruktor bei der Transportschule AG in Pfäffikon ZH, die Kurse finden von Montag bis Sonntag statt. Mitbringen: Führerausweis und ein eigenes Fahrzeug in betriebssicherem Zustand, ein Mietfahrzeug ist möglich.</p>
+          </div>
+          <div class="wab-side">
+            <p class="wab-price"><span>ab CHF</span>290.00</p>
+            <p class="wab-sub">Kurse der Transportschule AG</p>
+            <a class="btn btn-white" href="#" data-soon="WAB-Kurs">Zum WAB-Kurs<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Treffpunkt und Einzugsgebiet -->
+    <section class="sec sec-see" id="treffpunkt" aria-labelledby="tp-title">
+      <div class="wrap tp-grid">
+        <div class="tp-l rv">
+          <p class="kicker">Treffpunkt</p>
+          <h2 id="tp-title">Los geht es am Bahnhof Pfäffikon.</h2>
+          <ul class="places">
+            <li><span class="pl-ic" aria-hidden="true"><svg class="i"><use href="#i-train"/></svg></span><span><strong>Treffpunkt Fahrstunden</strong>Bahnhof Pfäffikon, beim Migrolino</span></li>
+            <li><span class="pl-ic" aria-hidden="true"><svg class="i"><use href="#i-board"/></svg></span><span><strong>Theorielokal</strong>Barzloostrasse 9, Pfäffikon ZH</span></li>
+            <li><span class="pl-ic" aria-hidden="true"><svg class="i"><use href="#i-pin"/></svg></span><span><strong>Adresse</strong>Schulstrasse 15, 8330 Pfäffikon ZH</span></li>
+          </ul>
+          <p class="tp-note">Falls es mir möglich ist, hole ich Sie auch im Umkreis von Pfäffikon ab.</p>
+        </div>
+        <div class="area rv">
+          <figure class="area-photo"><img src="../assets/img/a-landstrasse.webp" width="876" height="450" alt="Der Fahrschul-Audi auf einer Landstrasse im Grünen, im Hintergrund ein See" loading="lazy"></figure>
+          <div class="area-body">
+          <h3>Unterwegs in</h3>
+          <ul class="chips">
+            <li style="--i:0">Pfäffikon ZH</li><li style="--i:1">Hittnau</li><li style="--i:2">Fehraltorf</li><li style="--i:3">Russikon</li><li style="--i:4">Weisslingen</li><li style="--i:5">Illnau-Effretikon</li><li style="--i:6">Uster</li><li style="--i:7">Volketswil</li><li style="--i:8">Wetzikon</li><li style="--i:9">Grüt</li><li style="--i:10">Gossau</li><li style="--i:11">Hinwil</li><li style="--i:12">Bäretswil</li><li style="--i:13">Bauma</li><li style="--i:14">Saland</li>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section class="kontakt" id="kontakt" aria-labelledby="k-title">
+      <div class="wrap k-grid">
+        <div class="k-text rv">
+          <p class="kicker kicker-light">Kontakt</p>
+          <h2 id="k-title">Ich freue mich, Sie auf Ihrem Weg zum Führerschein zu begleiten.</h2>
+          <p class="k-lead">Termine nach Vereinbarung. Rufen Sie an, schreiben Sie eine WhatsApp-Nachricht oder eine E-Mail.</p>
+          <ul class="k-links">
+            <li><a href="tel:+41796789449"><span class="k-ic" aria-hidden="true"><svg class="i"><use href="#i-phone"/></svg></span><span><small>Telefon</small>079 678 94 49</span></a></li>
+            <li><a href="https://wa.me/41796789449" target="_blank" rel="noopener"><span class="k-ic" aria-hidden="true"><svg class="i"><use href="#i-wa"/></svg></span><span><small>WhatsApp</small>Nachricht schreiben</span></a></li>
+            <li><a href="mailto:info@fahrschule-muehlemann.ch"><span class="k-ic" aria-hidden="true"><svg class="i"><use href="#i-mail"/></svg></span><span><small>E-Mail</small>info@fahrschule-muehlemann.ch</span></a></li>
+          </ul>
+          <div class="k-cta">
+            <a class="btn btn-white" href="#" data-soon="Anmeldung / Kontakt">Online anmelden<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <p class="k-sign">Stefan Mühlemann</p>
+          </div>
+        </div>
+        <figure class="k-photo rv">
+          <img src="../assets/img/a-steuer.webp" width="532" height="532" alt="Stefan Mühlemann sitzt lachend am Steuer des Fahrschulautos" loading="lazy">
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div class="foot-brand">
+        <img src="../assets/img/a-logo.webp" width="512" height="200" alt="Fahrschule Mühlemann" loading="lazy">
+        <p>Stefan Mühlemann<br>Staatlich geprüfter Fahrlehrer<br>Schulstrasse 15, 8330 Pfäffikon ZH</p>
+        <p>Theorielokal: Barzloostrasse 9, Pfäffikon ZH</p>
+      </div>
+      <div class="foot-col">
+        <h2>Kontakt</h2>
+        <ul>
+          <li><a href="tel:+41796789449">079 678 94 49</a></li>
+          <li><a href="https://wa.me/41796789449" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:info@fahrschule-muehlemann.ch">info@fahrschule-muehlemann.ch</a></li>
+        </ul>
+        <div class="social">
+          <a href="https://www.facebook.com/FahrschuleMuehlemann/" target="_blank" rel="noopener" aria-label="Fahrschule Mühlemann auf Facebook"><svg class="i" aria-hidden="true"><use href="#i-fb"/></svg></a>
+          <a href="https://www.instagram.com/fahrschule_muehlemann/" target="_blank" rel="noopener" aria-label="Fahrschule Mühlemann auf Instagram"><svg class="i" aria-hidden="true"><use href="#i-insta"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h2>Ausbildung</h2>
+        <ul>
+          <li><a href="#" data-soon="Der Weg zum Führerschein">Der Weg zum Führerschein</a></li>
+          <li><a href="#" data-soon="Angebot / Preise">Angebot / Preise</a></li>
+          <li><a href="#" data-soon="WAB-Kurs">WAB-Kurs</a></li>
+          <li><a href="#" data-soon="Anmeldung / Kontakt">Anmeldung / Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h2>Über mich</h2>
+        <ul>
+          <li><a href="#" data-soon="Ihr Fahrlehrer">Ihr Fahrlehrer</a></li>
+          <li><a href="#" data-soon="Fahrzeuge">Fahrzeuge</a></li>
+          <li><a href="#" data-soon="Formulare / Partner">Formulare / Partner</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap foot-bottom">
+      <p>© 2026 Fahrschule Mühlemann <span aria-hidden="true">·</span> Mitglied im Zürcher Fahrlehrer Verband</p>
+      <p class="foot-legal"><a href="#" data-soon="AGB">AGB</a><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
+    </div>
+  </footer>
+
+  <!-- Aktionsleiste mobil -->
+  <div class="mbar" aria-label="Schnellkontakt">
+    <a class="btn btn-pri" href="tel:+41796789449"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
+    <a class="btn btn-line" href="https://wa.me/41796789449" target="_blank" rel="noopener"><svg class="i i-wa" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+  </div>
+</body>
+</html>

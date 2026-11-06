@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website Fahrschule Balmer Performance Drive</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website der Fahrschule Balmer Performance Drive in Regensdorf.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2F2E2E">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    /* Farben der Fahrschule Balmer: Gelb aus dem Logo, Anthrazit wie Kopf und Fusszeile der Website, warmes Hellgrau */
+    :root {
+      --ink: #2f2e2e;
+      --ink-2: #474545;
+      --muted: #5e5c5c;
+      --line: #e2dfdf;
+      --bg: #f5f4f2;
+      --soft: #ecebe8;
+      --red: #2f2e2e;
+      --red-dark: #151414;
+      --red-soft: #fff6b3;
+      --gelb: #ffe948;
+      --gelb-knopf: #ffda1f;
+      --shadow: 0 1px 2px rgb(47 46 46 / 5%), 0 10px 30px rgb(47 46 46 / 8%);
+    }
+    .top { background: var(--ink); border-bottom: 0; }
+    .top-inner { padding-top: 10px; padding-bottom: 10px; }
+    .top-brand img { width: 190px; }
+    .top-brand span { border-left-color: rgb(255 255 255 / 18%); color: #b2b3b3; }
+    .top-links a { color: rgb(255 255 255 / 82%); }
+    .top-links a:hover { background: rgb(255 255 255 / 10%); color: #fff; }
+    .top :focus-visible { outline-color: var(--gelb); }
+    .kicker::before { width: 26px; height: 4px; background: var(--gelb-knopf); }
+
+    .hero { padding: 64px 0 44px; max-width: 760px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--gelb); color: var(--ink); font-weight: 800; font-size: .95rem; }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; background: #f2f0f0; }
+    .option-a .shots { background: linear-gradient(135deg, #f8f7f4, #e9e6e1); }
+    .option-b .shots { background: linear-gradient(135deg, #4a4b4e, #2f2e2e); }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(47 46 46 / 14%); background: var(--white); }
+    .option-b .shot-desk { background: #1f1e1e; box-shadow: 0 -2px 24px rgb(0 0 0 / 35%); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(47 46 46 / 30%); background: var(--white); }
+    .option-b .shot-mob { border-color: #111; background: #1f1e1e; box-shadow: 0 10px 30px rgb(0 0 0 / 45%); }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option-tag::before { content: ""; width: 12px; height: 12px; border-radius: 3px; }
+    .option-a .option-tag::before { background: var(--gelb); box-shadow: inset 0 0 0 1.5px #e6cd1a; }
+    .option-b .option-tag::before { background: #1f1e1e; box-shadow: inset 0 -3px 0 var(--gelb); }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+    .option-a .chips li { background: #fff6b3; color: var(--ink); }
+    .option-b .chips li { background: var(--ink); color: var(--gelb); }
+    .btn-a { background: var(--gelb-knopf); color: var(--ink); }
+    .btn-a:hover { background: #f2c900; color: var(--ink); }
+    .btn-b { background: #1f1e1e; color: var(--gelb); }
+    .btn-b:hover { background: #000; color: var(--gelb); }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #cfcbc8; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--ink); width: 22px; height: 22px; margin-top: 2px; }
+
+    .next { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px; border-radius: var(--r-lg); background: var(--ink); color: #fff; }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .next p { color: rgb(255 255 255 / 78%); max-width: 620px; }
+    .next .btn { background: var(--gelb-knopf); color: var(--ink); }
+    .next .btn:hover { background: var(--gelb); color: var(--ink); }
+    .next :focus-visible { outline-color: var(--gelb); }
+
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .top-brand img { width: 150px; }
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .shot-mob { right: 16px; }
+      .next { padding: 26px 22px; }
+      .next .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./">
+        <img src="assets/img/logo-band.webp" alt="Fahrschule Balmer Performance Drive" width="400" height="78">
+        <span>Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite der Fahrschule Balmer Performance Drive in Regensdorf zwei unterschiedliche Designs entworfen. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Ohne Zusatzkosten</h2>
+          <p>Hell und aufgeräumt mit kräftigem Gelb: Ihr Logo auf einem anthrazitfarbenen Band, darunter eine gelbe Fläche mit dem Titel und Ihr Mercedes A35 randlos im Bild. Drei grosse Nullen zeigen, was bei Ihnen nicht dazukommt: keine Administrationskosten, keine Versicherungsgebühren, kein Zuschlag am Wochenende. Dazu klare Preiskarten, Ihre Vorstellung und alle fünf Kundenstimmen. Übersichtlich und vertrauenswürdig, auch für Eltern.</p>
+          <ul class="chips"><li>Hell</li><li>Drei Nullen</li><li>Klare Preise</li></ul>
+          <a class="btn btn-a" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Performance Drive</h2>
+          <p>Dunkles Anthrazit wie Ihr matter A35, gelbe Linien wie die Beschriftung und breite Titel im Stil Ihres Logos. Unter dem Titel zeichnet sich der gelbe Schwung aus «Performance Drive». Danach folgen ein Datenblatt wie in einer Autobroschüre, die Wochenleiste von Montag bis Sonntag, ein Paket-Wähler und grosse Kundenstimmen. Modern und sportlich für junge Fahrschülerinnen und Fahrschüler.</p>
+          <ul class="chips"><li>Dunkel</li><li>Datenblatt</li><li>Paket-Wähler</li></ul>
+          <a class="btn btn-b" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Vorteile, Preise &amp; Special oder Kontakt werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Preise, Kundenstimmen, Logo und das Foto Ihres Mercedes stammen von Ihrer bisherigen Website. Der WhatsApp-Knopf öffnet in den Entwürfen einen Chat mit Ihrer Natelnummer. Falls Sie WhatsApp nicht nutzen, lasse ich ihn weg.</span>
+    </p>
+
+    <div class="next">
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026</span>
+    </div>
+  </footer>
+</body>
+</html>

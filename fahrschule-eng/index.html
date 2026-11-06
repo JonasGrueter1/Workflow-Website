@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website Fahrschule Eng</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website der Fahrschule Eng in Liestal.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1B22D6">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    /* Farben der Fahrschule Eng: L-Schild-Blau, Marineblau der Autobeschriftung, kühles Lavendelgrau */
+    :root {
+      --ink: #0e1033;
+      --ink-2: #33364f;
+      --muted: #575b74;
+      --line: #e1e3ef;
+      --bg: #f4f5fb;
+      --soft: #eaecf8;
+      --red: #1b22d6;
+      --red-dark: #1218a8;
+      --red-soft: #eceefe;
+      --shadow: 0 1px 2px rgb(14 16 51 / 5%), 0 10px 30px rgb(14 16 51 / 8%);
+    }
+    .top-brand { gap: 12px; }
+    .top-brand .lschild { width: 34px; height: 34px; flex: none; }
+    .top-brand img { width: 100px; }
+    .top-inner { padding-top: 8px; padding-bottom: 8px; }
+
+    .hero { padding: 64px 0 44px; max-width: 760px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--red); color: #fff; font-weight: 800; font-size: .95rem; }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
+    .option-b .shots { background: #e6e7f5; }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(14 16 51 / 12%); background: var(--white); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(14 16 51 / 30%); background: var(--white); }
+    .option-b .shot-mob { border-color: #04052e; }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+    .option-a .option-tag { color: #1b22d6; }
+    .option-a .chips li { background: #eceefe; color: #1b22d6; }
+    .btn-a { background: #1b22d6; color: #fff; }
+    .btn-a:hover { background: #1218a8; color: #fff; }
+    .option-b .option-tag { color: #000078; }
+    .option-b .chips li { background: #e6e7f5; color: #04052e; }
+    .btn-b { background: #04052e; color: #fff; }
+    .btn-b:hover { background: #000078; color: #fff; }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #c9cce0; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
+
+    .next { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px; border-radius: var(--r-lg); background: #000078; color: #fff; }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .next p { color: rgb(255 255 255 / 78%); max-width: 620px; }
+    .next .btn { background: #fff; color: #000078; }
+    .next .btn:hover { background: #eceefe; color: #000078; }
+
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .shot-mob { right: 16px; }
+      .next { padding: 26px 22px; }
+      .next .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./">
+        <svg class="lschild" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#1b22d6"/><rect x="3" y="3" width="26" height="26" rx="4.5" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M11 8h4.4v12.2H22V24H11z" fill="#fff"/></svg>
+        <img src="assets/img/logo.png" alt="Fahrschule Eng" width="356" height="157">
+        <span>Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite der Fahrschule Eng in Liestal zwei unterschiedliche Designs entworfen. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Alles aus einer Hand</h2>
+          <p>Hell und freundlich: Ihr weisses Fahrschulauto im Bild, dazu gleich die Karte mit dem nächsten Kurs. Drei klare Preise, die Kursdaten als Termin-Karten, der Weg zum Führerschein in fünf Schritten und der kurze Weg vom Bahnhof zum Kurslokal. Übersichtlich und vertrauenswürdig, auch für Eltern.</p>
+          <ul class="chips"><li>Hell</li><li>Kursdaten im Blick</li><li>Klare Preise</li></ul>
+          <a class="btn btn-a" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Zweite Generation</h2>
+          <p>Kräftig im Blau Ihres L-Schilds: Zur Begrüssung dreht sich ein grosses L-Schild, danach führt eine Laufbahn von der Gründung 1995 über Automechaniker und Polizei zum Fahrlehrer von heute. Die drei Preise stehen als grosse Zahlen auf Nachtblau, dazu ein klarer Kursplan. Modern und markant für junge Fahrschülerinnen und Fahrschüler.</p>
+          <ul class="chips"><li>L-Schild-Blau</li><li>Familiengeschichte</li><li>Modern</li></ul>
+          <a class="btn btn-b" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Team, Nothelfer, VKU oder Preise werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Preise, Kursdaten und Fotos stammen von Ihrer bisherigen Website. Was dort als Bild steht, zum Beispiel die Preistabelle, ist in den Entwürfen echter Text.</span>
+    </p>
+
+    <div class="next">
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026</span>
+    </div>
+  </footer>
+</body>
+</html>
