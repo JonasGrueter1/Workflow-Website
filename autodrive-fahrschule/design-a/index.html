@@ -8,6 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#FAF8F5">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="preload" href="../assets/fonts/a-source-serif-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/a-reddit-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
@@ -17,7 +18,7 @@
   <script src="../assets/shared/vorschau.js" defer></script>
 </head>
 <body data-vorschau="a">
-  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons, teilweise vereinfacht -->
+  <!-- Icons: nach Tabler Icons (MIT), teilweise vereinfacht -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
     <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></symbol>
@@ -25,7 +26,7 @@
     <symbol id="i-insta" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16.5 7.5v.01"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
     <symbol id="i-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14v7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
-    <symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4"/><path d="M15 19l2 2l4 -4"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4"/><path d="M15 19l2 2l4 -4"/></symbol>
     <symbol id="i-clip" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"/><path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/><path d="M9 14l2 2l4 -4"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></symbol>
     <symbol id="i-id" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></symbol>
@@ -33,11 +34,11 @@
     <symbol id="i-route" viewBox="0 0 24 24"><path d="M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/><path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
-    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-12a1 1 0 0 1 1 -1z"/><path d="M15 5h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-12a1 1 0 0 1 1 -1z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14"/><path d="M16 5v14"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4v16l13 -8z"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
-    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M3 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M10 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M3 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M10 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1 -2 2h-12"/></symbol>
     <symbol id="i-msg" viewBox="0 0 24 24"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/></symbol>
   </svg>
 
   <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -54,8 +55,8 @@
         <a href="#treffpunkt">Treffpunkt</a>
       </nav>
       <div class="top-act">
-        <a class="btn btn-line btn-sm top-wa" href="https://wa.me/41794360777" target="_blank" rel="noopener" aria-label="WhatsApp an Thomas Waelti schreiben"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span class="lbl">WhatsApp</span></a>
-        <a class="btn btn-pri btn-sm top-tel" href="tel:+41794360777" aria-label="Thomas Waelti anrufen, 079 436 07 77"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span class="lbl">079 436 07 77</span></a>
+        <a class="btn btn-line btn-sm" href="https://wa.me/41794360777" target="_blank" rel="noopener" aria-label="WhatsApp an Thomas Waelti schreiben"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span class="lbl">WhatsApp</span></a>
+        <a class="btn btn-pri btn-sm" href="tel:+41794360777" aria-label="Thomas Waelti anrufen, 079 436 07 77"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span class="lbl">079 436 07 77</span></a>
       </div>
     </div>
   </header>
@@ -64,47 +65,50 @@
 
     <!-- Startbereich -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <svg class="hero-road" viewBox="0 0 1440 380" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-        <defs>
-          <linearGradient id="road-fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="380">
-            <stop offset="0" stop-color="#0E4F5D" stop-opacity="0"/>
-            <stop offset=".6" stop-color="#0E4F5D" stop-opacity=".7"/>
-            <stop offset="1" stop-color="#0E4F5D" stop-opacity="1"/>
-          </linearGradient>
-        </defs>
-        <g class="rd-g">
-          <path class="rd rd-1" d="M120 380 L404 0" pathLength="1"/>
-          <path class="rd rd-2" d="M1320 380 L1036 0" pathLength="1"/>
-          <path class="rd rd-3" d="M60 380 L374 0" pathLength="1"/>
-          <path class="rd rd-4" d="M1380 380 L1066 0" pathLength="1"/>
-        </g>
-        <g class="rd-mitte">
-          <path d="M717.6 380 L722.4 380 L721.9 344 L718.1 344 Z"/>
-          <path d="M718.4 326 L721.6 326 L721.3 300 L718.7 300 Z"/>
+      <svg class="hero-road" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <path class="rl rl-a" d="M150 360 L640 40" pathLength="1"/>
+        <path class="rl rl-b" d="M1290 360 L800 40" pathLength="1"/>
+        <path class="rl rl-c" d="M-40 360 L600 40" pathLength="1"/>
+        <path class="rl rl-d" d="M1480 360 L840 40" pathLength="1"/>
+        <g class="rl-mid">
+          <path d="M715 360 L725 360 L723.6 318 L716.4 318 Z"/>
+          <path d="M716.9 290 L723.1 290 L722.2 262 L717.8 262 Z"/>
+          <path d="M718.3 240 L721.7 240 L721.2 222 L718.8 222 Z"/>
         </g>
       </svg>
+
+      <div class="seal" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <defs><path id="seal-path" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0"/></defs>
+          <circle class="seal-ring" cx="100" cy="100" r="96"/>
+          <circle class="seal-ring2" cx="100" cy="100" r="58"/>
+          <g class="seal-spin"><text class="seal-txt"><textPath href="#seal-path" startOffset="0" textLength="458" lengthAdjust="spacing">AUTODRIVE FAHRSCHULE · WINTERTHUR · KAT. B ·</textPath></text></g>
+          <text class="seal-seit" x="100" y="88" text-anchor="middle">seit</text>
+          <text class="seal-jahr" x="100" y="122" text-anchor="middle">1993</text>
+        </svg>
+      </div>
+
       <div class="wrap hero-in">
-        <p class="kicker rise" style="--d:0ms"><span class="seit">Seit 1993</span><span class="k-txt"><span class="k-long">Autodrive Fahrschule · </span>Winterthur</span></p>
+        <p class="kicker h-in" style="--d:0ms"><span class="seit">Seit 1993</span><span class="k-txt"><span class="k-long">Autodrive Fahrschule · </span>Winterthur</span></p>
         <h1 class="h1" id="hero-title">
-          <span class="w" style="--d:120ms">Der</span>
-          <span class="weg"><span class="w" style="--d:180ms">direkte</span> <span class="w" style="--d:240ms">Weg</span><svg class="arc" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 C 80 6, 200 4, 296 13" pathLength="1"/></svg></span>
-          <span class="w" style="--d:300ms">zu</span>
-          <span class="w" style="--d:360ms">deinem</span>
-          <span class="w" style="--d:420ms">Führerschein.</span>
+          <span class="w" style="--d:110ms">Der</span>
+          <span class="weg"><span class="w" style="--d:170ms">direkte</span> <span class="w" style="--d:230ms">Weg</span><svg class="arc" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 15 C 80 5, 205 3, 296 12" pathLength="1"/></svg></span>
+          <span class="w" style="--d:290ms">zu</span>
+          <span class="w" style="--d:350ms">deinem</span>
+          <span class="w" style="--d:410ms">Führerschein.</span>
         </h1>
-        <p class="lead rise" style="--d:560ms">Fahrstunden mit Handschaltung oder Automat bei Thomas Waelti, staatlich geprüfter Fahrlehrer. Treffpunkt immer beim Salzhaus, nahe HB Winterthur.</p>
-        <div class="hero-cta rise" id="hero-cta" style="--d:680ms">
+        <p class="lead h-in" style="--d:560ms">Fahrstunden mit Handschaltung oder Automat bei Thomas Waelti, staatlich geprüfter Fahrlehrer. Treffpunkt immer beim Salzhaus, nahe HB Winterthur.</p>
+        <div class="hero-cta h-in" id="hero-cta" style="--d:680ms">
           <a class="btn btn-pri btn-lg" href="tel:+41794360777"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen<span class="btn-num">079 436 07 77</span></a>
-          <a class="btn btn-line btn-lg" href="https://wa.me/41794360777" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp<span class="lang"> schreiben</span></span></a>
+          <a class="btn btn-line btn-lg" href="https://wa.me/41794360777" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp<span class="lang">&nbsp;schreiben</span></a>
         </div>
-        <a class="textlink rise" style="--d:760ms" href="#" data-soon="Probelektion">Probelektion anfragen<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <div class="hero-meta rise" style="--d:860ms">
+        <a class="textlink h-in" style="--d:760ms" href="#" data-soon="Probelektion">Probelektion anfragen<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="hero-meta h-in" style="--d:860ms">
           <div class="sig">
             <img src="../assets/img/a-thomas.webp" width="252" height="252" alt="Thomas Waelti">
             <p><strong>Thomas Waelti</strong><span>Fahrlehrer in Winterthur seit&nbsp;1993</span></p>
           </div>
-          <a class="hero-aktion" href="#aktion"><span class="ha-tag">Aktion für Neue</span><span class="ha-txt">Die ersten 5 Lektionen ab CHF 60</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="hero-aktion" href="#aktion"><span class="ha-tag">Aktion für Neue</span><span class="ha-txt">Die ersten 5 Lektionen ab CHF&nbsp;60</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </section>
@@ -112,36 +116,36 @@
     <!-- Zitat-Bühne -->
     <section class="stage" id="stage" aria-roledescription="Karussell" aria-label="Stimmen aus dem Feedback">
       <div class="wrap stage-in">
-        <span class="qmark" aria-hidden="true">“</span>
+        <svg class="qmark" viewBox="0 0 64 48" aria-hidden="true"><path d="M27 4C14 9 5 18 5 31c0 8 5 13 11 13c6 0 10-4 10-10c0-6-4-10-9-10c-1 0-2 0-3 1c1-7 7-13 15-17zM59 4C46 9 37 18 37 31c0 8 5 13 11 13c6 0 10-4 10-10c0-6-4-10-9-10c-1 0-2 0-3 1c1-7 7-13 15-17z"/></svg>
         <div class="quotes" id="quotes">
-          <figure class="q is-active" id="q1" role="group" aria-roledescription="Stimme" aria-label="1 von 5">
+          <figure class="q is-active" id="q1">
             <blockquote><p>Thomas ist die Ruhe in Person und geduldig, auch wenns beim Einparkieren mal länger dauern sollte.</p></blockquote>
             <figcaption>Aus dem Feedback</figcaption>
           </figure>
-          <figure class="q" id="q2" role="group" aria-roledescription="Stimme" aria-label="2 von 5">
+          <figure class="q" id="q2">
             <blockquote><p>Er hat mich super auf die Prüfung vorbereitet. Beim ersten Mal bestanden.</p></blockquote>
             <figcaption>Sarah Stulz</figcaption>
           </figure>
-          <figure class="q" id="q3" role="group" aria-roledescription="Stimme" aria-label="3 von 5">
+          <figure class="q" id="q3">
             <blockquote><p>Ist immer pünktlich und sagt nie eine Fahrstunde ab.</p></blockquote>
             <figcaption>Marcel</figcaption>
           </figure>
-          <figure class="q" id="q4" role="group" aria-roledescription="Stimme" aria-label="4 von 5">
+          <figure class="q" id="q4">
             <blockquote><p>Thomas kennt sich absolut gut aus in jeder Ecke von Winterthur und weiss genau, wo die Knackpunkte für Schüler liegen könnten.</p></blockquote>
             <figcaption>Aus dem Feedback</figcaption>
           </figure>
-          <figure class="q" id="q5" role="group" aria-roledescription="Stimme" aria-label="5 von 5">
+          <figure class="q" id="q5">
             <blockquote><p>Als Fahrschülerin 40+ habe ich die geduldige und motivierende Art von Thomas sehr geschätzt.</p></blockquote>
             <figcaption>Aus dem Feedback</figcaption>
           </figure>
         </div>
-        <div class="stage-ctrl" id="stage-ctrl">
+        <div class="stage-ctrl" id="stage-ctrl" hidden>
           <div class="dots" role="group" aria-label="Stimme wählen">
-            <button type="button" class="dot" aria-controls="q1" aria-label="Stimme 1 zeigen" aria-pressed="true"><span></span></button>
-            <button type="button" class="dot" aria-controls="q2" aria-label="Stimme 2 zeigen" aria-pressed="false"><span></span></button>
-            <button type="button" class="dot" aria-controls="q3" aria-label="Stimme 3 zeigen" aria-pressed="false"><span></span></button>
-            <button type="button" class="dot" aria-controls="q4" aria-label="Stimme 4 zeigen" aria-pressed="false"><span></span></button>
-            <button type="button" class="dot" aria-controls="q5" aria-label="Stimme 5 zeigen" aria-pressed="false"><span></span></button>
+            <button type="button" class="dot" aria-controls="q1" aria-label="Stimme 1 zeigen" aria-pressed="true"><span class="dot-bar"><span></span></span></button>
+            <button type="button" class="dot" aria-controls="q2" aria-label="Stimme 2 zeigen" aria-pressed="false"><span class="dot-bar"><span></span></span></button>
+            <button type="button" class="dot" aria-controls="q3" aria-label="Stimme 3 zeigen" aria-pressed="false"><span class="dot-bar"><span></span></span></button>
+            <button type="button" class="dot" aria-controls="q4" aria-label="Stimme 4 zeigen" aria-pressed="false"><span class="dot-bar"><span></span></span></button>
+            <button type="button" class="dot" aria-controls="q5" aria-label="Stimme 5 zeigen" aria-pressed="false"><span class="dot-bar"><span></span></span></button>
           </div>
           <button type="button" class="pause" id="pause" aria-label="Wechsel anhalten"><svg class="i i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i i-play" aria-hidden="true"><use href="#i-play"/></svg><span class="pause-lbl">Anhalten</span></button>
         </div>
@@ -152,17 +156,23 @@
     <section class="facts" aria-label="Auf einen Blick">
       <div class="wrap facts-grid">
         <div class="fact rv">
-          <p class="fact-k">Gegründet</p>
-          <p class="fact-v"><span class="u">1993</span></p>
+          <div class="fact-top"><p class="fact-k">Gegründet</p></div>
+          <p class="fact-v"><span class="jahr">1993</span></p>
           <p class="fact-t">Abschluss als staatlich geprüfter Fahrlehrer und im gleichen Jahr Gründung der Autodrive Fahrschule in Winterthur.</p>
         </div>
         <div class="fact rv">
-          <p class="fact-k">Fahrstunden</p>
-          <p class="fact-v"><svg class="clock" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><path class="tick" d="M20 5v3M35 20h-3M20 35v-3M5 20h3"/><path class="hand-h" d="M20 20v-8"/><path class="hand" d="M20 20h9"/><circle class="hub" cx="20" cy="20" r="1.8"/></svg>7 bis 21 Uhr</p>
-          <p class="fact-t">Täglich, am Samstag bis 12 Uhr. Intensiv-Fahrstunden mit mehreren Lektionen pro Woche sind möglich.</p>
+          <div class="fact-top"><p class="fact-k">Fahrstunden</p></div>
+          <p class="fact-v"><svg class="clock" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><path class="tick" d="M20 5.5v2.5M34.5 20H32M20 34.5V32M5.5 20H8"/><path class="hand-h" d="M20 20V12.5"/><path class="hand" d="M20 20h9.5"/><circle class="hub" cx="20" cy="20" r="1.9"/></svg><span>7 bis 21 Uhr</span></p>
+          <p class="fact-t">Fahrstunden täglich, am Samstag bis 12 Uhr. Intensiv-Fahrstunden mit mehreren Lektionen pro Woche sind möglich.</p>
         </div>
         <div class="fact rv">
-          <p class="fact-k">Getriebe</p>
+          <div class="fact-top">
+            <p class="fact-k">Getriebe</p>
+            <div class="getriebe" aria-hidden="true">
+              <svg class="gt-h" viewBox="0 0 52 40"><path d="M8 7v26M26 7v26M44 7v26M8 20h36"/><circle cx="8" cy="7" r="2.6"/><circle cx="26" cy="7" r="2.6"/><circle cx="44" cy="7" r="2.6"/><circle cx="8" cy="33" r="2.6"/><circle cx="26" cy="33" r="2.6"/><circle cx="44" cy="33" r="2.6"/><circle class="knauf" cx="26" cy="20" r="5"/></svg>
+              <span class="gt-auto"><span>P</span><span>R</span><span>N</span><span class="on">D</span></span>
+            </div>
+          </div>
           <p class="fact-v fact-v-sm">Handschaltung oder Automat</p>
           <p class="fact-t">Du wählst. Seit 2019 gibt es keinen Automateneintrag mehr im Ausweis.</p>
         </div>
@@ -174,7 +184,7 @@
       <div class="wrap">
         <div class="aktion rv">
           <div class="aktion-txt">
-            <p class="tag">Aktion für Neue</p>
+            <p class="tag"><span class="tag-dot" aria-hidden="true"></span>Aktion für Neue</p>
             <h2 id="aktion-title">Die ersten 5 Lektionen 20&nbsp;% günstiger.</h2>
             <p>Gilt für Neuanmeldungen auf die reguläre Fahrausbildung. Die Pauschale von CHF 130 fällt erst nach der zweiten Lektion an.</p>
             <a class="btn btn-pri" href="#" data-soon="Probelektion">Probelektion anfragen<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -182,13 +192,13 @@
           <div class="aktion-preise">
             <div class="pf">
               <p class="pf-dauer">45 Minuten</p>
-              <p class="pf-preis"><span class="pf-neu"><span class="cur">CHF</span>60</span><span class="pf-alt">statt <s>75</s></span></p>
-              <p class="pf-pro">pro Lektion</p>
+              <p class="pf-preis"><span class="pf-neu"><span class="cur">CHF</span>60</span></p>
+              <p class="pf-alt">statt <span class="alt"><span class="sr">CHF </span>75<span class="strich" aria-hidden="true"></span></span> pro Lektion</p>
             </div>
             <div class="pf">
               <p class="pf-dauer">60 Minuten</p>
-              <p class="pf-preis"><span class="pf-neu"><span class="cur">CHF</span>80</span><span class="pf-alt">statt <s>100</s></span></p>
-              <p class="pf-pro">pro Lektion</p>
+              <p class="pf-preis"><span class="pf-neu"><span class="cur">CHF</span>80</span></p>
+              <p class="pf-alt">statt <span class="alt"><span class="sr">CHF </span>100<span class="strich" aria-hidden="true"></span></span> pro Lektion</p>
             </div>
           </div>
         </div>
@@ -198,19 +208,22 @@
     <!-- Angebot -->
     <section class="sec angebot" id="angebot" aria-labelledby="angebot-title">
       <div class="wrap">
-        <header class="sec-head rv">
-          <p class="eyebrow">Angebot</p>
-          <h2 id="angebot-title">Ich unterstütze dich, bis du den Führerschein in den Händen hältst.</h2>
+        <header class="sec-head sec-head-split rv">
+          <div>
+            <p class="eyebrow">Angebot</p>
+            <h2 id="angebot-title">Ich unterstütze dich, bis du den Führerschein in den Händen hältst.</h2>
+          </div>
+          <p class="sec-lead">Ob reguläre Fahrausbildung oder angeordnete Kontrollfahrt: Du lernst direkt im Prüfgebiet, im Raum Winterthur.</p>
         </header>
         <div class="cards">
           <article class="card rv">
             <span class="card-ic" aria-hidden="true"><svg class="i"><use href="#i-wheel"/></svg></span>
-            <h3>Fahrstunde Kat. B</h3>
-            <p>Im VW Golf mit Handschaltung oder Automat. Jede Lektion wird deinem Können angepasst, es wird niemals hektisch oder laut.</p>
+            <h3>Fahrstunde Kat.&nbsp;B</h3>
+            <p>Im VW Golf mit Handschaltung oder Automat. Die Lektion wird immer deinem Können angepasst. Es wird niemals hektisch oder laut.</p>
             <a class="more" href="#" data-soon="Angebot">Mehr zur Fahrstunde<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
           <article class="card rv">
-            <span class="card-ic" aria-hidden="true"><svg class="i"><use href="#i-user"/></svg></span>
+            <span class="card-ic" aria-hidden="true"><svg class="i"><use href="#i-hand"/></svg></span>
             <h3>Probelektion</h3>
             <p>Lerne deinen Fahrlehrer kennen und stell alle Fragen, die dir wichtig sind. Danach entscheidest du in aller Ruhe, wie du weiter vorgehen willst.</p>
             <a class="more" href="#" data-soon="Probelektion">Probelektion anfragen<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -224,32 +237,32 @@
           <article class="card rv">
             <span class="card-ic" aria-hidden="true"><svg class="i"><use href="#i-refresh"/></svg></span>
             <h3>Refresh-Fahrstunde</h3>
-            <p>Wer länger nicht mehr selbst gefahren ist, fühlt sich schnell unsicher. In einer oder mehreren Refresh-Fahrstunden werden Defizite erkannt und korrigiert.</p>
+            <p>Für alle, die länger nicht mehr selbst gefahren sind. In einer oder mehreren Refresh-Fahrstunden werden Defizite erkannt und korrigiert.</p>
             <a class="more" href="#" data-soon="Angebot">Mehr zum Refresh<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
         </div>
 
-        <article class="steps rv" aria-labelledby="steps-title">
+        <article class="steps rv" id="lernfahrausweis" aria-labelledby="steps-title">
           <div class="steps-head">
-            <span class="card-ic" aria-hidden="true"><svg class="i"><use href="#i-id"/></svg></span>
+            <span class="card-ic card-ic-inv" aria-hidden="true"><svg class="i"><use href="#i-id"/></svg></span>
             <div>
               <h3 id="steps-title">Lernfahrausweis in 8 Schritten</h3>
               <p>Die Autodrive Fahrschule begleitet und unterstützt dich von der Theorieprüfung bis zum Führerausweis.</p>
             </div>
           </div>
           <ol class="steps-list">
-            <li><span class="n">1</span>Nothelferkurs</li>
-            <li><span class="n">2</span>Lernfahrgesuch</li>
-            <li><span class="n">3</span>Theorieprüfung</li>
-            <li><span class="n">4</span>Lernfahrausweis</li>
-            <li class="mit"><span class="n">5</span>Praktische Ausbildung</li>
-            <li><span class="n">6</span>Verkehrskundekurs</li>
-            <li class="mit"><span class="n">7</span>Praktische Prüfung</li>
-            <li><span class="n">8</span>WAB-Kurse</li>
+            <li style="--i:0"><span class="n">1</span>Nothelferkurs</li>
+            <li style="--i:1"><span class="n">2</span>Lernfahrgesuch</li>
+            <li style="--i:2"><span class="n">3</span>Theorieprüfung</li>
+            <li style="--i:3"><span class="n">4</span>Lernfahrausweis</li>
+            <li style="--i:4" class="mit"><span class="n">5</span>Praktische Ausbildung</li>
+            <li style="--i:5"><span class="n">6</span>Verkehrskundekurs</li>
+            <li style="--i:6" class="mit"><span class="n">7</span>Praktische Prüfung</li>
+            <li style="--i:7"><span class="n">8</span>WAB-Kurse</li>
           </ol>
           <div class="steps-foot">
-            <p class="legend"><span class="n n-mini" aria-hidden="true"></span>mit Thomas Waelti im Fahrschulauto</p>
-            <a class="more" href="#" data-soon="Lernfahrausweis">Lernfahrausweis im Detail<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <p class="legend"><span class="legend-dot" aria-hidden="true"></span>mit Thomas Waelti im Fahrschulauto</p>
+            <a class="more more-inv" href="#" data-soon="Lernfahrausweis">Lernfahrausweis im Detail<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
         </article>
       </div>
@@ -261,13 +274,14 @@
         <div class="preise-intro rv">
           <p class="eyebrow">Preise</p>
           <h2 id="preise-title">Faire Preise, klar aufgelistet.</h2>
-          <p class="preise-zitat">«Zu einer preiswerten Ausbildung trägt nicht allein der Preis pro Lektion bei. Wichtiger ist die Anzahl der Lektionen, die für eine erfolgreiche Führerprüfung nötig sind.»</p>
-          <ul class="pay" aria-label="Zahlungsarten">
+          <blockquote class="preise-zitat"><p>Zu einer preiswerten Ausbildung trägt nicht allein der Preis pro Lektion bei. Wichtiger ist die Anzahl der Lektionen, die für eine erfolgreiche Führerprüfung nötig sind.</p></blockquote>
+          <p class="pay-k">Bezahlen mit</p>
+          <ul class="pay">
             <li>Bar</li>
             <li>TWINT</li>
             <li>E-Banking</li>
           </ul>
-          <p class="small">Abo: Fahrstunden en bloc vorbeziehen, Anzahl frei wählbar. Nicht bezogene Stunden werden rückvergütet.</p>
+          <p class="small"><strong>Abo:</strong> Fahrstunden en bloc vorbeziehen, Anzahl frei wählbar. Nicht bezogene Stunden werden rückvergütet.</p>
         </div>
         <div class="tabelle rv">
           <table>
@@ -289,7 +303,7 @@
                 <td>CHF 60 / 80</td>
               </tr>
               <tr>
-                <th scope="row">Pauschale für Administration und Versicherung<span>Einmalig, fällt erst nach der zweiten Lektion an</span></th>
+                <th scope="row">Administrations- und Versicherungspauschale<span>Einmalig, fällt erst nach der zweiten Lektion an</span></th>
                 <td>CHF 130</td>
               </tr>
               <tr>
@@ -318,33 +332,26 @@
     <section class="sec stimmen" id="stimmen" aria-labelledby="stimmen-title">
       <div class="wrap">
         <header class="sec-head sec-head-c rv">
-          <p class="eyebrow">Stimmen</p>
+          <p class="eyebrow eyebrow-c">Stimmen</p>
           <h2 id="stimmen-title">Das sagen meine Fahrschülerinnen und Fahrschüler.</h2>
+          <p class="sec-lead">Viele hundert Fahrschülerinnen und Fahrschüler haben mit meiner Hilfe die praktische Führerprüfung bestanden.</p>
         </header>
         <div class="mauer">
           <figure class="st rv">
             <blockquote><p>Die Ausbildung bei Thomas war einfach hervorragend. Man lernt sehr schnell und sehr präzise. [...] Vor der Prüfung fährt man in alle Prüfungsgebiete und erhält dadurch ein sehr gutes Gefühl für die Prüfung.</p></blockquote>
             <figcaption>Rachel</figcaption>
           </figure>
-          <figure class="st st-mundart rv">
-            <blockquote><p>Ganz grosses Dankeschön a de Thomas vo de Autodrive Fahrschuel! Hett alles super &amp; logisch erklärt. Sehr geduldig und immer locker druf. [...] Dank sinere Hilf bim 1. Mal bestande!</p></blockquote>
-            <figcaption>Aus dem Feedback, auf Mundart</figcaption>
-          </figure>
-          <figure class="st rv">
-            <blockquote><p>Mit Abstand der beste Fahrlehrer weit und breit! [...] Sowohl meine Schwester als auch ich haben die Autoprüfung beim 1. Mal bestanden, dies durch die exzellente Vorbereitung.</p></blockquote>
-            <figcaption>Aus dem Feedback</figcaption>
-          </figure>
-          <figure class="st st-kurz rv">
+          <figure class="st st-petrol rv">
             <blockquote><p>Nur zu empfehlen, extrem cooler Typ und ein super Fahrlehrer.</p></blockquote>
             <figcaption>Fabio Andronic</figcaption>
-          </figure>
-          <figure class="st st-kurz2 rv">
-            <blockquote><p>Sehr freundlich und immer geduldig.</p></blockquote>
-            <figcaption>Jasminka Braun</figcaption>
           </figure>
           <figure class="st rv">
             <blockquote><p>Top-Fahrschule mit ausgezeichneter Prüfungsvorbereitung. Thomas zeichnet sich durch seine geduldige Art und sein geschultes Auge aus.</p></blockquote>
             <figcaption>I. Novak</figcaption>
+          </figure>
+          <figure class="st st-mundart rv">
+            <blockquote><p>Ganz grosses Dankeschön a de Thomas vo de Autodrive Fahrschuel! Hett alles super &amp; logisch erklärt. Sehr geduldig und immer locker druf. [...] Dank sinere Hilf bim 1. Mal bestande!</p></blockquote>
+            <figcaption>Aus dem Feedback, auf Mundart</figcaption>
           </figure>
           <figure class="st rv">
             <blockquote><p>Er hat mit sehr viel Geduld und gutem Anschauungsmaterial immer wieder meine Fragen beantwortet.</p></blockquote>
@@ -353,6 +360,10 @@
           <figure class="st rv">
             <blockquote><p>Er merkt genau, wo es Verbesserungspotential gibt [...]. Geht auf den Schüler ein und man kommt zügig vorwärts.</p></blockquote>
             <figcaption>Marcel</figcaption>
+          </figure>
+          <figure class="st rv">
+            <blockquote><p>Mit Abstand der beste Fahrlehrer weit und breit! [...] Sowohl meine Schwester als auch ich haben die Autoprüfung beim 1. Mal bestanden, dies durch die exzellente Vorbereitung.</p></blockquote>
+            <figcaption>Aus dem Feedback</figcaption>
           </figure>
         </div>
         <div class="stimmen-foot rv">
@@ -368,21 +379,21 @@
     <!-- Dein Fahrlehrer -->
     <section class="sec lehrer" id="fahrlehrer" aria-labelledby="lehrer-title">
       <div class="wrap lehrer-grid">
-        <header class="lehrer-head rv">
-          <p class="eyebrow">Dein Fahrlehrer</p>
-          <h2 id="lehrer-title">Wir alle haben eine Leidenschaft für etwas. Das hier ist meine!</h2>
-        </header>
         <div class="lehrer-bild rv">
-          <img src="../assets/img/a-thomas.webp" width="252" height="252" alt="Thomas Waelti, Fahrlehrer der Autodrive Fahrschule" loading="lazy">
+          <div class="portrait">
+            <img src="../assets/img/a-thomas.webp" width="252" height="252" alt="Thomas Waelti, Fahrlehrer der Autodrive Fahrschule" loading="lazy">
+          </div>
           <ol class="zeit" aria-label="Werdegang">
-            <li><span class="jahr">1991</span>Zulassung zur Ausbildung als staatlich geprüfter Fahrlehrer</li>
-            <li><span class="jahr">1993</span>Abschluss und Zertifizierung, Gründung der Autodrive Fahrschule</li>
+            <li><span class="zeit-j">1991</span>Zulassung zur Ausbildung als staatlich geprüfter Fahrlehrer</li>
+            <li><span class="zeit-j">1993</span>Abschluss und Zertifizierung, im gleichen Jahr Gründung der Autodrive Fahrschule</li>
+            <li><span class="zeit-j">Jedes Jahr</span>Weiterbildungen in Psychologie und Pädagogik, Verkehrsrecht und Fahrzeugtechnik</li>
           </ol>
         </div>
         <div class="lehrer-txt rv">
-          <p>Mein Name ist Thomas Waelti. Ich bin staatlich geprüfter Fahrlehrer und gebe seit 1993 Fahrunterricht in Winterthur. Ich liebe meine Arbeit, daraus mache ich kein Geheimnis. In dieser Zeit habe ich viel Wissen gesammelt und Erfahrung aufgebaut. Dieses Know-how kommt dir zugute.</p>
-          <p>Ich gebe mir grosse Mühe, dass du dich während dem Fahrunterricht wohl fühlst. Denn nur in einer entspannten Umgebung lässt es sich gut und effizient lernen.</p>
-          <p class="weiter">Jedes Jahr besuche ich Weiterbildungen in Psychologie und Pädagogik des Fahrunterrichts, Unterrichtsmethodik, Strassenverkehrsrecht, Fahrzeugtechnik und Fahrdynamik.</p>
+          <p class="eyebrow">Dein Fahrlehrer</p>
+          <h2 id="lehrer-title">Wir alle haben eine Leidenschaft für etwas. Das hier ist meine!</h2>
+          <p>Mein Name ist Thomas Waelti. Ich bin staatlich geprüfter Fahrlehrer und gebe seit 1993 Fahrunterricht in Winterthur. Ich liebe meine Arbeit, daraus mache ich kein Geheimnis. In dieser Zeit habe ich viel Wissen gesammelt und Erfahrung aufgebaut. Dieses Know-how kommt dir nun zugute.</p>
+          <p>Mir ist bewusst, dass die Anmeldung meist eine gewisse Überwindung braucht. Hast du das geschafft, läuft der Rest fast automatisch. Ich gebe mir grosse Mühe, dass du dich während dem Fahrunterricht wohl fühlst. Denn nur in einer entspannten Umgebung lässt es sich gut und effizient lernen.</p>
           <div class="herz">
             <p class="herz-t">Das liegt mir besonders am Herzen</p>
             <ul>
@@ -406,23 +417,23 @@
         </header>
         <div class="akk rv">
           <details open>
-            <summary><span class="n">1</span>Nutze private Fahrmöglichkeiten<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+            <summary><span class="n">1</span><span class="s-t">Nutze private Fahrmöglichkeiten</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary>
             <p>Hast du privat Fahrmöglichkeiten? Nutze sie. Je mehr, desto besser! Denn jeder Kilometer zählt.</p>
           </details>
           <details>
-            <summary><span class="n">2</span>Kombiniere privat und Fahrschule<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+            <summary><span class="n">2</span><span class="s-t">Kombiniere privat und Fahrschule</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary>
             <p>In der Fahrschule lernst du Wichtiges, das du beim privaten Fahren gleich ausprobieren und dir antrainieren kannst.</p>
           </details>
           <details>
-            <summary><span class="n">3</span>Melde dich frühzeitig an<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+            <summary><span class="n">3</span><span class="s-t">Melde dich frühzeitig an</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary>
             <p>Am besten mehrere Wochen vor der Anmeldung zur Prüfung. So erfährst du früh, was du alles wissen und können musst.</p>
           </details>
           <details>
-            <summary><span class="n">4</span>Vermeide lange Pausen<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+            <summary><span class="n">4</span><span class="s-t">Vermeide lange Pausen</span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary>
             <p>Bei langen Pausen bekommst du verzögert Routine und Wichtiges geht vergessen.</p>
           </details>
           <div class="akk-extra">
-            <svg class="i" aria-hidden="true"><use href="#i-gear"/></svg>
+            <span class="akk-ic" aria-hidden="true"><svg class="i"><use href="#i-bulb"/></svg></span>
             <p><strong>Handschalter oder Automat?</strong> Überleg dir das vor der ersten Stunde. Fahren lernen mit Automat ist einfacher, geht schneller und ist die Zukunft.</p>
           </div>
         </div>
@@ -433,34 +444,44 @@
     <section class="kontakt" id="treffpunkt" aria-labelledby="kontakt-title">
       <div class="wrap">
         <header class="sec-head rv">
-          <p class="eyebrow">Treffpunkt und Kontakt</p>
+          <p class="eyebrow eyebrow-inv">Treffpunkt und Kontakt</p>
           <h2 id="kontakt-title">Nimm mit mir Kontakt auf. Ich freue mich auf dich!</h2>
         </header>
         <div class="kontakt-grid">
           <div class="ort rv">
-            <span class="ort-ic" aria-hidden="true"><svg class="i"><use href="#i-pin"/></svg></span>
-            <h3>Treffpunkt Salzhaus</h3>
-            <p>Die Fahrstunde starten wir auf dem Parkplatz vor dem Salzhaus an der unteren Vogelsangstrasse 6/7, nahe HB Winterthur.</p>
-            <ul class="ort-list">
-              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Immer am gleichen Ort</li>
-              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Du lernst direkt im Prüfgebiet, im Raum Winterthur</li>
-            </ul>
-            <p class="zeiten"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Fahrstunden täglich 7.00 bis 21.00 Uhr, Samstag bis 12.00 Uhr</p>
-            <a class="btn btn-light" href="https://www.google.com/maps/search/?api=1&amp;query=47.4975%2C8.7223" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg>Route planen</a>
+            <div class="ort-plan" aria-hidden="true">
+              <svg viewBox="0 0 520 200" preserveAspectRatio="xMidYMid slice">
+                <g class="plan-raster"><path d="M0 40h520M0 80h520M0 120h520M0 160h520M60 0v200M140 0v200M220 0v200M300 0v200M380 0v200M460 0v200"/></g>
+                <path class="plan-weg" d="M-10 158 C 80 158, 130 104, 220 106 S 330 128, 318 98" pathLength="1"/>
+                <circle class="plan-puls" cx="318" cy="96" r="18"/>
+                <use class="plan-pin" href="#i-pin" x="302" y="70" width="32" height="32"/>
+                <text class="plan-lbl" x="344" y="92">Salzhaus</text>
+              </svg>
+            </div>
+            <div class="ort-body">
+              <h3>Treffpunkt Salzhaus</h3>
+              <p>Die Fahrstunde starten wir auf dem Parkplatz vor dem Salzhaus an der unteren Vogelsangstrasse 6/7, nahe HB Winterthur.</p>
+              <ul class="ort-list">
+                <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Immer am gleichen Ort</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Du lernst direkt im Prüfgebiet, im Raum Winterthur</li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Fahrstunden täglich 7.00 bis 21.00 Uhr, Samstag bis 12.00 Uhr</li>
+              </ul>
+              <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=47.4975%2C8.7223" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg>Route planen</a>
+            </div>
           </div>
           <div class="kanal rv">
             <p class="kanal-k">Telefon, SMS und WhatsApp</p>
             <a class="gross-tel" href="tel:+41794360777">079 436 07 77</a>
             <div class="kanal-btns">
               <a class="btn btn-weiss" href="tel:+41794360777"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
-              <a class="btn btn-light" href="https://wa.me/41794360777" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
-              <a class="btn btn-light" href="mailto:info@autodrive-fahrschule.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
+              <a class="btn btn-ghost" href="https://wa.me/41794360777" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+              <a class="btn btn-ghost" href="mailto:info@autodrive-fahrschule.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
             </div>
             <p class="kanal-hinweis">Telefonisch am besten über Mittag von ca. 12.00 bis 13.30 Uhr oder abends ab ca. 19.00 Uhr. E-Mail, SMS, WhatsApp und Formular gehen immer.</p>
             <ul class="kanal-list">
               <li><a href="mailto:info@autodrive-fahrschule.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>info@autodrive-fahrschule.ch</a></li>
               <li><a href="https://www.instagram.com/autodrive_fahrschule/" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-insta"/></svg>autodrive_fahrschule</a></li>
-              <li><a href="#" data-soon="Kontakt"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>Zum Kontaktformular</a></li>
+              <li><a href="#" data-soon="Kontakt"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>Zum Kontaktformular</a></li>
             </ul>
           </div>
         </div>
@@ -505,13 +526,13 @@
     <div class="wrap">
       <div class="foot-bottom">
         <p>© 2026 Autodrive Fahrschule, Thomas Waelti, Winterthur</p>
-        <p><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
+        <p class="foot-legal"><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
       </div>
     </div>
   </footer>
 
-  <!-- Aktionsleiste unten (schmale Bildschirme) -->
-  <div class="dock" aria-label="Schnellkontakt" role="region">
+  <!-- Aktionsleiste unten (Handy) -->
+  <div class="dock" role="region" aria-label="Schnellkontakt">
     <a class="btn btn-pri" href="tel:+41794360777"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
     <a class="btn btn-line" href="https://wa.me/41794360777" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
   </div>

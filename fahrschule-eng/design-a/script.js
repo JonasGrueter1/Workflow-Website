@@ -1,115 +1,108 @@
-/* Fahrschule Eng, Design A: Kopf, Menü, Einblenden, Aktionsleiste */
+/* Fahrschule Eng, Design A: Menü, Kopfzeile, Einblendungen, Weg-Linie, Aktionsleiste */
 (function () {
   'use strict';
   window.engA = true;
 
   var root = document.documentElement;
   var fx = root.classList.contains('fx');
-  var hasIO = 'IntersectionObserver' in window;
+  var kopf = document.querySelector('.kopf');
 
-  /* ---------- Kopf: feine Linie, sobald gescrollt ---------- */
-  var kopf = document.getElementById('kopf');
-  var kopfTick = false;
-  function kopfPruefen() {
-    kopfTick = false;
-    if (kopf) kopf.classList.toggle('ist-gescrollt', window.scrollY > 8);
-  }
-  window.addEventListener('scroll', function () {
-    if (!kopfTick) { kopfTick = true; requestAnimationFrame(kopfPruefen); }
-  }, { passive: true });
-  kopfPruefen();
+  /* Kopfzeile: feine Linie nach dem ersten Scrollen */
+  function kopfLinie() { kopf.classList.toggle('ist-gescrollt', window.scrollY > 8); }
+  kopfLinie();
+  window.addEventListener('scroll', kopfLinie, { passive: true });
 
-  /* ---------- Menü auf schmalen Bildschirmen ---------- */
+  /* Menü am Handy */
   var knopf = document.querySelector('.menu-knopf');
-  var nav = document.getElementById('nav');
-  function menu(auf) {
-    if (!knopf || !nav) return;
-    knopf.setAttribute('aria-expanded', auf ? 'true' : 'false');
-    nav.classList.toggle('ist-offen', auf);
+  var menu = document.getElementById('menu');
+  function menuZu() {
+    knopf.setAttribute('aria-expanded', 'false');
+    knopf.setAttribute('aria-label', 'Menü öffnen');
+    menu.hidden = true;
   }
-  if (knopf && nav) {
-    knopf.addEventListener('click', function () { menu(knopf.getAttribute('aria-expanded') !== 'true'); });
-    nav.addEventListener('click', function (e) { if (e.target.closest('a')) menu(false); });
+  if (knopf && menu) {
+    knopf.addEventListener('click', function () {
+      var offen = knopf.getAttribute('aria-expanded') === 'true';
+      if (offen) { menuZu(); return; }
+      knopf.setAttribute('aria-expanded', 'true');
+      knopf.setAttribute('aria-label', 'Menü schliessen');
+      menu.hidden = false;
+    });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) menuZu(); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && knopf.getAttribute('aria-expanded') === 'true') { menu(false); knopf.focus(); }
+      if (e.key === 'Escape' && !menu.hidden) { menuZu(); knopf.focus(); }
     });
-    document.addEventListener('click', function (e) {
-      if (knopf.getAttribute('aria-expanded') === 'true' && !e.target.closest('.kopf')) menu(false);
-    });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 900 && !menu.hidden) menuZu(); });
   }
 
-  /* ---------- Anker-Links: sanft scrollen ---------- */
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href^="#"]');
-    if (!a || a.hasAttribute('data-soon')) return;
-    var id = a.getAttribute('href').slice(1);
-    var ziel = id && document.getElementById(id);
-    if (!ziel) return;
-    e.preventDefault();
-    ziel.scrollIntoView({ behavior: fx ? 'smooth' : 'auto', block: 'start' });
-    if (history.replaceState) history.replaceState(null, '', '#' + id);
-  });
-
-  /* ---------- Einblenden beim Scrollen ---------- */
-  var ziele = Array.prototype.slice.call(document.querySelectorAll('.rv, .weg'));
-  function zeigen(el) {
-    el.classList.add('ist-da');
-    if (!el.classList.contains('rv')) return;
-    var fertig = function (e) {
-      if (e.target !== el || e.propertyName !== 'opacity') return;
-      el.classList.add('rv-fertig');
-      el.removeEventListener('transitionend', fertig);
-    };
-    el.addEventListener('transitionend', fertig);
-  }
-  if (fx && hasIO) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { zeigen(en.target); io.unobserve(en.target); }
+  /* Einblenden beim Scrollen */
+  var rv = [].slice.call(document.querySelectorAll('.rv'));
+  if (fx && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-    ziele.forEach(function (el) { io.observe(el); });
-    /* Sicherheitsnetz bei schnellem Scrollen oder Sprüngen: alles oberhalb des Bildschirmrands zeigen */
-    var offen = ziele.slice(), netzTick = false;
-    var netz = function () {
-      netzTick = false;
-      var h = window.innerHeight;
-      offen = offen.filter(function (el) {
-        if (el.classList.contains('ist-da')) return false;
-        if (el.getBoundingClientRect().top < h * 0.96) { zeigen(el); io.unobserve(el); return false; }
-        return true;
-      });
-      if (!offen.length) window.removeEventListener('scroll', netzPlanen);
-    };
-    var netzPlanen = function () { if (!netzTick) { netzTick = true; requestAnimationFrame(netz); } };
-    window.addEventListener('scroll', netzPlanen, { passive: true });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+    rv.forEach(function (el) { io.observe(el); });
   } else {
-    ziele.forEach(function (el) { el.classList.add('ist-da', 'rv-fertig'); });
+    rv.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* ---------- Aktionsleiste: erst, wenn die Hero-Knöpfe aus dem Bild sind ---------- */
-  var aktion = document.getElementById('aktion');
-  var cta = document.getElementById('hero-cta');
-  if (aktion) {
-    if (hasIO && cta) {
-      var sichtbarCta = true, amEnde = false;
-      var setzen = function () { aktion.classList.toggle('ist-sichtbar', !sichtbarCta && !amEnde); };
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          sichtbarCta = en.isIntersecting || en.boundingClientRect.top > 0;
-        });
-        setzen();
-      }).observe(cta);
-      /* Im Kontaktbereich stehen die gleichen Knöpfe gross: Leiste dort ausblenden */
-      var kontakt = document.querySelector('.kontakt-knoepfe');
-      if (kontakt) {
-        new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) { amEnde = en.isIntersecting; });
-          setzen();
-        }).observe(kontakt);
-      }
+  /* Der Weg zum Führerschein: Linie zeichnet sich mit dem Scrollen, Kreise füllen sich */
+  var weg = document.querySelector('.weg');
+  if (weg) {
+    var schritte = [].slice.call(weg.querySelectorAll('.schritt'));
+    var stand = fx ? 0 : 1;
+    var ende = function () {
+      var letzter = schritte[schritte.length - 1];
+      if (letzter) weg.style.setProperty('--ende', Math.max(0, letzter.offsetHeight - 26) + 'px');
+    };
+    var zeichne = function () {
+      var r = weg.getBoundingClientRect();
+      var vh = window.innerHeight || 800;
+      var p = (vh * 0.78 - r.top) / (r.height * 0.85 + vh * 0.12);
+      p = Math.max(0, Math.min(1, p));
+      if (p > stand) stand = p; /* nur vorwärts, die Linie bleibt gezeichnet */
+      weg.style.setProperty('--p', stand.toFixed(3));
+      schritte.forEach(function (s, i) {
+        var schwelle = schritte.length > 1 ? i / (schritte.length - 1) : 0;
+        if (stand >= schwelle - 0.02) s.classList.add('an');
+      });
+    };
+    ende();
+    window.addEventListener('resize', ende);
+    if (fx) {
+      var geplant = false;
+      var tick = function () { geplant = false; zeichne(); };
+      window.addEventListener('scroll', function () { if (!geplant) { geplant = true; requestAnimationFrame(tick); } }, { passive: true });
+      window.addEventListener('resize', zeichne);
+      zeichne();
     } else {
-      aktion.classList.add('ist-sichtbar');
+      weg.style.setProperty('--p', '1');
+      schritte.forEach(function (s) { s.classList.add('an'); });
     }
+  }
+
+  /* Aktionsleiste am Handy: erscheint, sobald die Knöpfe im Hero aus dem Bild sind */
+  var aktion = document.querySelector('.aktion');
+  var heroCta = document.querySelector('.hero-cta');
+  var kontakt = document.getElementById('kontakt');
+  if (aktion && heroCta && 'IntersectionObserver' in window) {
+    /* ausgeblendet, solange die Knöpfe im Hero oder der Kontaktbereich zu sehen sind */
+    var heroWeg = false, kontaktDa = false;
+    var setze = function () { aktion.classList.toggle('zeigen', heroWeg && !kontaktDa); };
+    new IntersectionObserver(function (eintraege) {
+      var e = eintraege[0];
+      heroWeg = !e.isIntersecting && e.boundingClientRect.top < 0;
+      setze();
+    }).observe(heroCta);
+    if (kontakt) {
+      new IntersectionObserver(function (eintraege) {
+        kontaktDa = eintraege[0].isIntersecting;
+        setze();
+      }, { rootMargin: '0px 0px -35% 0px' }).observe(kontakt);
+    }
+  } else if (aktion) {
+    aktion.classList.add('zeigen');
   }
 })();

@@ -16,8 +16,8 @@
     (function (d) {
       d.classList.add('js');
       try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('fx'); } catch (e) {}
-      /* Sicherheitsnetz: Lädt script.js nicht, wird alles ohne Animation gezeigt */
-      setTimeout(function () { if (!window.engA) { d.classList.remove('fx'); d.classList.remove('js'); } }, 2500);
+      /* Sicherheitsnetz: Lädt script.js nicht, wird alles sofort und ohne Animation gezeigt */
+      setTimeout(function () { if (!window.engA) { d.classList.remove('fx', 'js'); } }, 2500);
     })(document.documentElement);
   </script>
   <script src="script.js" defer></script>
@@ -40,384 +40,370 @@
 <body data-vorschau="a">
   <a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
-  <!-- Icons: eigene Zeichnung im Stil von Tabler Icons (MIT) -->
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-    <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6l8.5 -6"/></symbol>
-    <symbol id="i-pfeil" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6 -6M13 6l6 6"/></symbol>
-    <symbol id="i-herz" viewBox="0 0 24 24"><path d="M19.5 13.6l-7.5 7.4l-7.5 -7.4a5 5 0 1 1 7.5 -6.6a5 5 0 1 1 7.5 6.6"/><path d="M3.5 12h3.5l2 -3l3 6l2 -3h6.5"/></symbol>
-    <symbol id="i-tafel" viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="13" rx="2"/><path d="M8 20.5l2 -4M16 20.5l-2 -4M12 6.8l3.2 5.6h-6.4z"/></symbol>
-    <symbol id="i-lenkrad" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 14v7M10 11.5l-6.6 -2M14 11.5l6.6 -2"/></symbol>
-    <symbol id="i-kalender" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M4 11h16"/></symbol>
-    <symbol id="i-pin" viewBox="0 0 24 24"><circle cx="12" cy="11" r="3"/><path d="M17.66 16.66l-4.25 4.24a2 2 0 0 1 -2.82 0l-4.25 -4.24a8 8 0 1 1 11.32 0z"/></symbol>
-    <symbol id="i-geher" viewBox="0 0 24 24"><circle cx="13" cy="4" r="1.4"/><path d="M7 21l3 -4M16 21l-2 -4l-3 -3l1 -6M6 12l2 -3l4 -1l3 3l3 1"/></symbol>
-    <symbol id="i-haus" viewBox="0 0 24 24"><path d="M5 12h-2l9 -9l9 9h-2M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M12 17.5l-2.4 -2.3a1.6 1.6 0 1 1 2.4 -2.1a1.6 1.6 0 1 1 2.4 2.1z"/></symbol>
-    <symbol id="i-schaltung" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8M12 8v8M19 8v2a2 2 0 0 1 -2 2h-12"/></symbol>
-    <symbol id="i-bahn" viewBox="0 0 24 24"><rect x="5.5" y="3" width="13" height="14" rx="3.5"/><path d="M5.5 11h13M9 21l1.5 -4M15 21l-1.5 -4M9.5 14h.01M14.5 14h.01"/></symbol>
-    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5-2.5l5 2v4a2 2 0 0 1-2 2a16 16 0 0 1-15-15a2 2 0 0 1 2-2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6l8.5-6"/></symbol>
+    <symbol id="i-pfeil" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6M13 6l6 6"/></symbol>
+    <symbol id="i-herz" viewBox="0 0 24 24"><path d="M19.5 13.6l-7.5 7.4l-2.9-2.9M3.4 10.3a5 5 0 0 1 8.6-5.3a5 5 0 1 1 7.5 6.6"/><path d="M2.5 13h3.5l2-3l2.5 6l1.5-3h3"/></symbol>
+    <symbol id="i-tafel" viewBox="0 0 24 24"><path d="M3 4h18M4 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4M12 16v4M9 20h6"/><path d="M12 7l3.2 5.2H8.8z"/></symbol>
+    <symbol id="i-lenkrad" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 14v7M10 12l-6.7-2M14 12l6.7-2"/></symbol>
+    <symbol id="i-kal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M4 11h16"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><circle cx="12" cy="11" r="3"/><path d="M17.7 16.7l-4.3 4.2a2 2 0 0 1-2.8 0l-4.3-4.2a8 8 0 1 1 11.4 0z"/></symbol>
+    <symbol id="i-geh" viewBox="0 0 24 24"><circle cx="13" cy="4" r="1.2"/><path d="M7 21l3-4M16 21l-2-4l-3-3l1-6M6 12l2-3l4-1l3 3l3 1"/></symbol>
     <symbol id="i-uhr" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></symbol>
-    <symbol id="i-ausweis" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2"/><path d="M14.5 9.5h3M14.5 13h3M6.5 16h5"/></symbol>
-    <symbol id="i-geld" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 12h.01M17.5 12h.01"/></symbol>
+    <symbol id="i-haus" viewBox="0 0 24 24"><path d="M5 12H3l9-9l9 9h-2M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/></symbol>
+    <symbol id="i-zug" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 10h12M9.5 13.5h.01M14.5 13.5h.01M8 21l2-4M16 21l-2-4"/></symbol>
+    <symbol id="i-gang" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8M12 8v8M19 8v2a2 2 0 0 1-2 2H5"/></symbol>
+    <symbol id="i-geld" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 9.5h.01M17.5 14.5h.01"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></symbol>
-    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5"/></symbol>
+    <symbol id="i-ausweis" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2"/><path d="M14 9.5h3.5M14 13h3.5M6.5 16h4.5"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M11 19h5.5a3.5 3.5 0 0 0 0-7h-8a3.5 3.5 0 0 1 0-7H13"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
-    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6l-12 12M6 6l12 12"/></symbol>
-    <symbol id="i-l" viewBox="0 0 28 28"><rect class="l-feld" width="28" height="28" rx="6"/><rect class="l-rand" x="2.6" y="2.6" width="22.8" height="22.8" rx="4"/><path class="l-buchstabe" d="M9.6 7h3.9v10.6h5.6V21H9.6z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-l" viewBox="0 0 40 48"><rect x="1" y="1" width="38" height="46" rx="7" fill="#1B22D6" stroke="none"/><rect x="4.5" y="4.5" width="31" height="39" rx="4" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M13.5 11.5h6.2v19.6h9.4v5.9H13.5z" fill="#fff" stroke="none"/></symbol>
   </svg>
 
-  <header class="kopf" id="kopf">
-    <div class="wrap kopf-innen">
-      <a class="marke" href="#inhalt" aria-label="Fahrschule Eng, zum Seitenanfang">
-        <span class="marke-schild"><svg viewBox="0 0 28 28" aria-hidden="true"><use href="#i-l"/></svg></span>
-        <img src="../assets/img/a-wortmarke.webp" width="356" height="157" alt="Fahrschule Eng">
+  <header class="kopf" id="top">
+    <div class="wrap kopf-in">
+      <a class="marke" href="#top" aria-label="Fahrschule Eng, zum Seitenanfang">
+        <span class="marke-l" aria-hidden="true"><svg viewBox="0 0 40 48"><use href="#i-l"/></svg></span>
+        <img src="../assets/img/a-wortmarke.webp" width="352" height="153" alt="Fahrschule Eng">
       </a>
-      <nav class="nav" id="nav" aria-label="Hauptnavigation">
-        <ul>
-          <li><a href="#angebot">Angebot</a></li>
-          <li><a href="#kurse">Kurse</a></li>
-          <li><a href="#team">Team</a></li>
-          <li><a href="#kurslokal">Kurslokal</a></li>
-          <li class="nav-mobil"><a href="#kontakt">Kontakt</a></li>
-        </ul>
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="#angebot">Angebot</a>
+        <a href="#kurse">Kurse</a>
+        <a href="#team">Team</a>
+        <a href="#kurslokal">Kurslokal</a>
       </nav>
-      <a class="btn btn-blau kopf-tel" href="tel:+41763387799"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg><span class="kopf-tel-text">076 338 77 99</span><span class="sr">Anrufen</span></a>
-      <button class="menu-knopf" type="button" aria-expanded="false" aria-controls="nav"><svg class="i i-auf" aria-hidden="true"><use href="#i-menu"/></svg><svg class="i i-zu" aria-hidden="true"><use href="#i-x"/></svg><span class="sr">Menü</span></button>
+      <a class="btn btn-blau kopf-tel" href="tel:+41763387799"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg><span>076 338 77 99</span></a>
+      <a class="rund kopf-tel-m" href="tel:+41763387799" aria-label="Anrufen: 076 338 77 99"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></a>
+      <button class="rund menu-knopf" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+        <svg class="ic ic-menu" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="ic ic-x" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <div class="menu" id="menu" hidden>
+      <div class="wrap">
+        <nav class="menu-nav" aria-label="Menü">
+          <a href="#angebot">Angebot und Preise</a>
+          <a href="#kurse">Nächste Kurse</a>
+          <a href="#weg">Der Weg zum Führerschein</a>
+          <a href="#team">Team</a>
+          <a href="#kurslokal">Kurslokal</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+        <div class="menu-kontakt">
+          <a class="btn btn-blau" href="tel:+41763387799"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg>076 338 77 99</a>
+          <a class="btn btn-rand" href="mailto:pateng@gmx.ch"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>pateng@gmx.ch</a>
+        </div>
+      </div>
     </div>
   </header>
 
   <main id="inhalt">
-    <!-- 1 Hero -->
-    <section class="hero" aria-labelledby="titel">
-      <div class="wrap hero-raster">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="h1">
+      <div class="wrap hero-in">
         <div class="hero-text">
-          <p class="kicker auf" style="--i:0">Fahrschule Eng · Liestal · seit 1995</p>
-          <h1 id="titel">
-            <span class="z auf" style="--i:1">Sicher und</span>
-            <span class="z auf" style="--i:2"><em>entspannt</em> zum</span>
-            <span class="z auf" style="--i:3">Führerschein.</span>
-          </h1>
-          <p class="lead auf" style="--i:4">Nothelferkurs, Verkehrskunde und Fahrstunden auf Automat und Schaltgetriebe. Alles aus einer Hand, im Kurslokal drei Gehminuten vom Bahnhof Liestal.</p>
-          <div class="hero-cta auf" style="--i:5" id="hero-cta">
-            <a class="btn btn-blau btn-gross" href="tel:+41763387799"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen: 076 338 77 99</a>
-            <a class="btn btn-umriss btn-gross" href="mailto:pateng@gmx.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
+          <p class="kicker h-in" style="--d:0"><span><span class="nur-gross">Fahrschule Eng · </span>Liestal · seit 1995</span></p>
+          <h1 id="h1"><span class="h-zeile h-in" style="--d:1">Sicher und</span> <span class="h-zeile h-in" style="--d:2"><em class="unter">entspannt</em> zum</span> <span class="h-zeile h-in" style="--d:3">Führerschein.</span></h1>
+          <p class="lead h-in" style="--d:4">Nothelferkurs, Verkehrskunde und Fahrstunden auf Automat und Schaltgetriebe. Alles aus einer Hand, im Kurslokal drei Gehminuten vom Bahnhof Liestal.</p>
+          <div class="hero-cta h-in" style="--d:5">
+            <a class="btn btn-blau btn-gross" href="tel:+41763387799"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen: 076 338 77 99</a>
+            <a class="btn btn-rand btn-gross" href="mailto:pateng@gmx.ch"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
           </div>
-          <a class="hero-person auf" style="--i:6" href="#team">
-            <img src="../assets/img/a-patrick.webp" width="128" height="128" alt="">
-            <span><strong>Patrick Eng</strong> Ihr Fahrlehrer und WAB-Moderator</span>
-          </a>
+          <div class="person h-in" style="--d:6">
+            <img src="../assets/img/a-patrick.webp" width="160" height="160" alt="Patrick Eng" loading="eager">
+            <p><strong>Patrick Eng</strong><span>Ihr Fahrlehrer, in zweiter Generation</span></p>
+          </div>
         </div>
 
         <div class="hero-bild">
-          <div class="buehne" aria-hidden="true"></div>
-          <figure class="bildkarte">
-            <img src="../assets/img/a-auto.webp" srcset="../assets/img/a-auto-640.webp 640w, ../assets/img/a-auto.webp 946w" sizes="(min-width: 1024px) 600px, calc(100vw - 32px)" width="946" height="410" alt="Das weisse Fahrschulauto mit der blauen Aufschrift Fahrschule Eng und dem L-Schild, Seitenansicht" fetchpriority="high">
-          </figure>
-          <a class="naechster" href="#kurse">
-            <span class="naechster-kicker"><span class="punkt" aria-hidden="true"></span>Nächste Kurse in Liestal<svg class="i naechster-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg></span>
-            <span class="n-zeile">
-              <span class="n-kal" aria-hidden="true"><b>04</b><b>05</b><i>Dez</i></span>
-              <span class="n-text"><strong>Nothelferkurs</strong><span>Fr 04. und Sa 05. Dezember 2026</span></span>
+          <div class="foto">
+            <div class="buehne" aria-hidden="true"><span class="buehne-linie"></span></div>
+            <figure class="auto">
+              <img src="../assets/img/a-auto.webp" srcset="../assets/img/a-auto-640.webp 640w, ../assets/img/a-auto.webp 941w" sizes="(min-width: 1024px) 560px, 88vw" width="941" height="408" alt="Das weisse Fahrschulauto mit der blauen Beschriftung Fahrschule Eng und dem L-Schild" fetchpriority="high">
+            </figure>
+          </div>
+          <a class="termin" href="#kurse">
+            <span class="termin-kopf"><span class="punkt" aria-hidden="true"></span>Nächster Kurs<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></span>
+            <span class="termin-mitte">
+              <span class="mini-kal" aria-hidden="true"><span class="mini-monat">Dez</span><span class="mini-tage">04 05</span></span>
+              <span class="termin-was"><span class="termin-titel">Nothelferkurs</span><span class="termin-datum">Fr 04. und Sa 05. Dezember</span></span>
             </span>
-            <span class="n-zeile">
-              <span class="n-kal" aria-hidden="true"><b>18</b><b>19</b><i>Dez</i></span>
-              <span class="n-text"><strong>Verkehrskunde (VKU)</strong><span>Fr 18. und Sa 19. Dezember 2026</span></span>
-            </span>
+            <span class="termin-fuss"><strong>CHF 130.–</strong> inkl. Ausweis</span>
+            <span class="termin-danach">Danach: Verkehrskunde am 18. und 19. Dezember</span>
           </a>
         </div>
       </div>
 
-      <!-- 2 Vertrauensleiste -->
       <div class="wrap">
         <ul class="vertrauen rv">
-          <li><span class="v-icon"><svg class="i" aria-hidden="true"><use href="#i-haus"/></svg></span><span><strong>Seit 1995</strong>Familienbetrieb, 2. Generation</span></li>
-          <li><span class="v-icon"><svg class="i" aria-hidden="true"><use href="#i-schaltung"/></svg></span><span><strong>Automat und Schaltung</strong>Fahrstunden Kategorie B</span></li>
-          <li><span class="v-icon"><svg class="i" aria-hidden="true"><use href="#i-bahn"/></svg></span><span><strong>3 Min. vom Bahnhof</strong>Kurslokal Restaurant Falken</span></li>
-          <li><span class="v-icon"><svg class="i" aria-hidden="true"><use href="#i-kalender"/></svg></span><span><strong>Online anmelden</strong>Für Nothelferkurs und VKU</span></li>
+          <li><span class="v-ic"><svg class="ic" aria-hidden="true"><use href="#i-haus"/></svg></span><p><strong>Familienbetrieb seit 1995</strong><span>Heute in zweiter Generation</span></p></li>
+          <li><span class="v-ic"><svg class="ic" aria-hidden="true"><use href="#i-gang"/></svg></span><p><strong>Automat und Schaltgetriebe</strong><span>Fahrstunden Kategorie B</span></p></li>
+          <li><span class="v-ic"><svg class="ic" aria-hidden="true"><use href="#i-zug"/></svg></span><p><strong>3 Min. vom Bahnhof</strong><span>Kurslokal Restaurant Falken</span></p></li>
+          <li><span class="v-ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><p><strong>Alles aus einer Hand</strong><span>Nothelfer, VKU und Fahrstunden</span></p></li>
         </ul>
       </div>
     </section>
 
-    <!-- 3 Angebot und Preise -->
-    <section class="band band-flaeche" id="angebot" aria-labelledby="angebot-titel">
+    <!-- Angebot und Preise -->
+    <section class="abschnitt flaeche" id="angebot" aria-labelledby="h-angebot">
       <div class="wrap">
-        <div class="kopfzeile kopfzeile-mitte rv">
+        <div class="titel-block rv">
           <p class="kicker">Angebot und Preise</p>
-          <h2 id="angebot-titel">Drei Bausteine, drei klare Preise.</h2>
-          <p class="einleitung">Nothelferkurs, Verkehrskunde und Fahrstunden: Die drei Bausteine bis zur Prüfung bekommen Sie bei der Fahrschule Eng aus einer Hand.</p>
+          <h2 id="h-angebot">Drei Bausteine, drei klare Preise.</h2>
+          <p class="intro">Vom Nothelferkurs bis zur letzten Fahrstunde vor der Prüfung: Bei der Fahrschule Eng bekommen Sie alles aus einer Hand.</p>
         </div>
 
-        <div class="klammer rv" aria-hidden="true"><span class="klammer-linie"></span><span class="klammer-text">Alles aus einer Hand</span></div>
-        <div class="bausteine">
-          <article class="baustein rv" style="--d:0">
-            <div class="b-kopf">
-              <span class="b-icon"><svg class="i" aria-hidden="true"><use href="#i-herz"/></svg></span>
-              <span class="b-nr" aria-hidden="true">01</span>
-            </div>
+        <div class="klammer rv" aria-hidden="true"><span>Alles aus einer Hand</span></div>
+
+        <div class="kacheln">
+          <article class="kachel rv" style="--i:0">
+            <div class="kachel-kopf"><span class="k-ic"><svg class="ic" aria-hidden="true"><use href="#i-herz"/></svg></span><span class="k-nr">01</span></div>
             <h3>Nothelferkurs</h3>
-            <p>Freitagabend und Samstag, gültig für den Lernfahrausweis.</p>
-            <p class="b-preis"><span class="maske"><span><small>CHF</small> 130.–</span></span><span class="b-einheit">inkl. Ausweis</span></p>
-            <a class="mehr" href="#" data-soon="Nothelfer">Mehr zum Nothelferkurs<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            <p class="k-text">Freitagabend und Samstag, gültig für den Lernfahrausweis.</p>
+            <p class="preis"><span class="chf">CHF</span><span class="maske"><span class="betrag">130.–</span></span><span class="zusatz">inkl. Ausweis</span></p>
+            <a class="mehr" href="#" data-soon="Nothelfer">Mehr zum Nothelferkurs<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </article>
-          <article class="baustein rv" style="--d:1">
-            <div class="b-kopf">
-              <span class="b-icon"><svg class="i" aria-hidden="true"><use href="#i-tafel"/></svg></span>
-              <span class="b-nr" aria-hidden="true">02</span>
-            </div>
+          <article class="kachel rv" style="--i:1">
+            <div class="kachel-kopf"><span class="k-ic"><svg class="ic" aria-hidden="true"><use href="#i-tafel"/></svg></span><span class="k-nr">02</span></div>
             <h3>Verkehrskunde (VKU)</h3>
-            <p>Bei uns ist der VKU sehr interessant und nicht langweilig.</p>
-            <p class="b-preis"><span class="maske"><span><small>CHF</small> 160.–</span></span><span class="b-einheit">2 Kursteile à 4 Std.</span></p>
-            <a class="mehr" href="#" data-soon="VKU">Mehr zur Verkehrskunde<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            <p class="k-text">Bei uns ist der VKU sehr interessant und nicht langweilig.</p>
+            <p class="preis"><span class="chf">CHF</span><span class="maske"><span class="betrag">160.–</span></span><span class="zusatz">2 Kursteile à 4 Std.</span></p>
+            <a class="mehr" href="#" data-soon="VKU">Mehr zur Verkehrskunde<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </article>
-          <article class="baustein rv" style="--d:2">
-            <div class="b-kopf">
-              <span class="b-icon"><svg class="i" aria-hidden="true"><use href="#i-lenkrad"/></svg></span>
-              <span class="b-nr" aria-hidden="true">03</span>
-            </div>
+          <article class="kachel rv" style="--i:2">
+            <div class="kachel-kopf"><span class="k-ic"><svg class="ic" aria-hidden="true"><use href="#i-lenkrad"/></svg></span><span class="k-nr">03</span></div>
             <h3>Fahrstunden</h3>
-            <p>Auf Automat oder Schaltgetriebe, direkt bei Ihrem Fahrlehrer buchen.</p>
-            <p class="b-preis"><span class="maske"><span><small>CHF</small> 90.–</span></span><span class="b-einheit">pro Lektion</span></p>
-            <a class="mehr" href="tel:+41763387799"><span>Fahrstunde buchen: <span class="nw">076 338 77 99</span></span><svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            <p class="k-text">Auf Automat oder Schaltgetriebe, direkt bei Ihrem Fahrlehrer buchen.</p>
+            <p class="preis"><span class="chf">CHF</span><span class="maske"><span class="betrag">90.–</span></span><span class="zusatz">pro Lektion</span></p>
+            <a class="mehr" href="tel:+41763387799">Fahrstunde buchen: 076 338 77 99<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </article>
         </div>
 
-        <p class="unterzeile rv"><span class="u-text"><svg class="i" aria-hidden="true"><use href="#i-geld"/></svg>Das Kursgeld bezahlen Sie am ersten Kurstag bar.</span><a class="mehr" href="#" data-soon="Preise">Alle Preise<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
+        <p class="hinweis rv"><svg class="ic" aria-hidden="true"><use href="#i-geld"/></svg>Das Kursgeld bezahlen Sie am ersten Kurstag bar. <a href="#" data-soon="Preise">Alle Preise<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
       </div>
     </section>
 
-    <!-- 4 Nächste Kurse -->
-    <section class="band" id="kurse" aria-labelledby="kurse-titel">
+    <!-- Nächste Kurse -->
+    <section class="abschnitt" id="kurse" aria-labelledby="h-kurse">
       <div class="wrap">
-        <div class="kopfzeile kopfzeile-zeile rv">
+        <div class="titel-zeile rv">
           <div>
             <p class="kicker">Kursdaten</p>
-            <h2 id="kurse-titel">Die nächsten Kurse in Liestal</h2>
+            <h2 id="h-kurse">Die nächsten Kurse in Liestal</h2>
           </div>
-          <p class="einleitung">Alle Kurse finden im grossen Saal im 1. Stock des Restaurants Falken statt, Rheinstrasse 21.</p>
+          <p class="intro">Alle Kurse finden im grossen Saal im 1. Stock des Restaurants Falken statt, Rheinstrasse 21.</p>
         </div>
 
         <div class="termine">
-          <article class="termin rv" style="--d:0">
+          <article class="kurs rv" style="--i:0">
             <div class="kal" aria-hidden="true">
               <span class="kal-monat">Dez</span>
-              <span class="kal-tage"><span class="kal-tag" style="--k:0">04</span><span class="kal-tag" style="--k:1">05</span></span>
+              <span class="kal-tage"><span class="kal-z">04</span><span class="kal-z">05</span></span>
               <span class="kal-jahr">2026</span>
             </div>
-            <div class="termin-text">
-              <p class="termin-art">Nothelferkurs</p>
-              <h3>Freitag 04. und Samstag 05.&nbsp;Dezember&nbsp;2026</h3>
-              <ul class="termin-liste">
-                <li><svg class="i" aria-hidden="true"><use href="#i-uhr"/></svg><span><strong>Fr 04.12.</strong> 19.00 bis 22.00 Uhr</span></li>
-                <li><svg class="i" aria-hidden="true"><use href="#i-uhr"/></svg><span><strong>Sa 05.12.</strong> 08.00 bis 16.00 Uhr, Mittagspause 12.00 bis 13.00 Uhr</span></li>
-                <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span>Restaurant Falken, 1. Stock, Liestal</span></li>
-              </ul>
-              <div class="termin-fuss">
-                <p class="termin-preis">CHF 130.–<small>inkl. Ausweis</small></p>
-                <a class="btn btn-blau" href="#" data-soon="Anmeldung Nothelferkurs">Zur Anmeldung<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
-              </div>
-              <a class="mehr mehr-klein" href="#" data-soon="Nothelfer">Mehr zum Nothelferkurs<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            <div class="kurs-kopf">
+              <p class="kurs-art">Nothelferkurs</p>
+              <h3>Freitag 04. und Samstag 05. Dezember 2026</h3>
             </div>
+            <div class="kurs-text">
+              <ul class="kurs-daten">
+                <li><svg class="ic" aria-hidden="true"><use href="#i-uhr"/></svg><span><strong>Fr 04.12.</strong> 19.00 bis 22.00 Uhr</span></li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-uhr"/></svg><span><strong>Sa 05.12.</strong> 08.00 bis 16.00 Uhr, Mittagspause 12.00 bis 13.00 Uhr</span></li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span>Restaurant Falken, 1. Stock, Liestal</span></li>
+              </ul>
+            </div>
+            <div class="kurs-fuss">
+              <p class="kurs-preis"><strong>CHF 130.–</strong><span>inkl. Ausweis</span></p>
+              <a class="btn btn-blau" href="#" data-soon="Nothelfer">Zur Anmeldung<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            </div>
+            <a class="kurs-mehr" href="#" data-soon="Nothelfer">Mehr zum Nothelferkurs<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </article>
 
-          <article class="termin rv" style="--d:1">
+          <article class="kurs rv" style="--i:1">
             <div class="kal" aria-hidden="true">
               <span class="kal-monat">Dez</span>
-              <span class="kal-tage"><span class="kal-tag" style="--k:0">18</span><span class="kal-tag" style="--k:1">19</span></span>
+              <span class="kal-tage"><span class="kal-z">18</span><span class="kal-z">19</span></span>
               <span class="kal-jahr">2026</span>
             </div>
-            <div class="termin-text">
-              <p class="termin-art">Verkehrskunde (VKU)</p>
-              <h3>Freitag 18. und Samstag 19.&nbsp;Dezember&nbsp;2026</h3>
-              <ul class="termin-liste">
-                <li><svg class="i" aria-hidden="true"><use href="#i-uhr"/></svg><span><strong>Fr 18.12.</strong> 18.00 bis 22.00 Uhr</span></li>
-                <li><svg class="i" aria-hidden="true"><use href="#i-uhr"/></svg><span><strong>Sa 19.12.</strong> 08.00 bis 12.00 Uhr</span></li>
-                <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span>Restaurant Falken, 1. Stock, Liestal</span></li>
-              </ul>
-              <p class="hinweis"><svg class="i" aria-hidden="true"><use href="#i-ausweis"/></svg>Gültiger Lernfahrausweis nötig</p>
-              <div class="termin-fuss">
-                <p class="termin-preis">CHF 160.–<small>2 Kursteile à 4 Std.</small></p>
-                <a class="btn btn-blau" href="#" data-soon="Anmeldung VKU">Zur Anmeldung<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
-              </div>
-              <a class="mehr mehr-klein" href="#" data-soon="VKU">Mehr zur Verkehrskunde<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            <div class="kurs-kopf">
+              <p class="kurs-art">Verkehrskunde (VKU)</p>
+              <h3>Freitag 18. und Samstag 19. Dezember 2026</h3>
             </div>
+            <div class="kurs-text">
+              <ul class="kurs-daten">
+                <li><svg class="ic" aria-hidden="true"><use href="#i-uhr"/></svg><span><strong>Fr 18.12.</strong> 18.00 bis 22.00 Uhr</span></li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-uhr"/></svg><span><strong>Sa 19.12.</strong> 08.00 bis 12.00 Uhr</span></li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span>Restaurant Falken, 1. Stock, Liestal</span></li>
+              </ul>
+              <p class="marke-klein"><svg class="ic" aria-hidden="true"><use href="#i-ausweis"/></svg>Nur mit gültigem Lernfahrausweis</p>
+            </div>
+            <div class="kurs-fuss">
+              <p class="kurs-preis"><strong>CHF 160.–</strong><span>2 Kursteile à 4 Std.</span></p>
+              <a class="btn btn-blau" href="#" data-soon="VKU">Zur Anmeldung<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            </div>
+            <a class="kurs-mehr" href="#" data-soon="VKU">Mehr zur Verkehrskunde<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </article>
         </div>
 
-        <ul class="gutzuwissen rv">
-          <li><svg class="i" aria-hidden="true"><use href="#i-geld"/></svg>Kursgeld am ersten Kurstag bar</li>
-          <li><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>Abmeldung schriftlich bis 10 Tage vor Kursbeginn kostenlos</li>
-          <li><svg class="i" aria-hidden="true"><use href="#i-info"/></svg>Kurssprache Deutsch</li>
+        <ul class="fakten rv">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-geld"/></svg>Kursgeld am ersten Kurstag bar</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>Abmeldung bis 10 Tage vor Kursbeginn kostenlos</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg>Kurssprache Deutsch</li>
           <li><a href="#" data-soon="AGB">Alle Bedingungen in den AGB</a></li>
         </ul>
       </div>
     </section>
 
-    <!-- 5 Der Weg zum Führerschein -->
-    <section class="band band-flaeche" id="weg" aria-labelledby="weg-titel">
+    <!-- Der Weg zum Führerschein -->
+    <section class="abschnitt flaeche" id="weg" aria-labelledby="h-weg">
       <div class="wrap">
-        <div class="kopfzeile kopfzeile-mitte rv">
+        <div class="titel-block mitte rv">
           <p class="kicker">In fünf Schritten</p>
-          <h2 id="weg-titel">Der Weg zum Führerschein</h2>
-          <p class="einleitung">Nothelferkurs, Fahrstunden und Verkehrskunde machen Sie direkt bei uns. Zur Prüfung melden wir Sie an.</p>
+          <h2 id="h-weg">Der Weg zum Führerschein</h2>
+          <p class="intro">Nothelferkurs, Fahrstunden und Verkehrskunde machen Sie direkt bei uns. Zur Prüfung melden wir Sie an.</p>
         </div>
 
-        <ol class="weg">
-          <li class="schritt ist-bei-uns" style="--s:0">
+        <ol class="weg" style="--p:1">
+          <li class="schritt bei-uns">
             <span class="s-nr">1</span>
-            <span class="s-marke">bei uns</span>
+            <span class="s-marke">Bei uns</span>
             <h3>Nothelferkurs</h3>
-            <p>Der erste Schritt, bei uns an einem Freitagabend und Samstag.</p>
+            <p>Der erste Schritt, an einem Freitagabend und Samstag.</p>
           </li>
-          <li class="schritt" style="--s:1">
+          <li class="schritt">
             <span class="s-nr">2</span>
-            <span class="s-marke s-marke-amt">beim Amt</span>
+            <span class="s-marke">Beim Amt</span>
             <h3>Lernfahrausweis</h3>
             <p>Gesuch beim Strassenverkehrsamt einreichen und die Theorieprüfung bestehen.</p>
           </li>
-          <li class="schritt ist-bei-uns" style="--s:2">
+          <li class="schritt bei-uns">
             <span class="s-nr">3</span>
-            <span class="s-marke">bei uns</span>
+            <span class="s-marke">Bei uns</span>
             <h3>Fahrstunden</h3>
             <p>Direkt bei unserem Fahrlehrer buchen, auf Automat oder Schaltgetriebe.</p>
           </li>
-          <li class="schritt ist-bei-uns" style="--s:3">
+          <li class="schritt bei-uns">
             <span class="s-nr">4</span>
-            <span class="s-marke">bei uns</span>
+            <span class="s-marke">Bei uns</span>
             <h3>Verkehrskunde</h3>
             <p>So bald wie möglich besuchen, sie hilft Ihnen beim Fahren sehr.</p>
           </li>
-          <li class="schritt" style="--s:4">
+          <li class="schritt">
             <span class="s-nr">5</span>
-            <span class="s-marke s-marke-amt">wir melden an</span>
+            <span class="s-marke">Wir melden Sie an</span>
             <h3>Prüfung</h3>
             <p>Sobald Sie prüfungsreif sind, melden wir Sie zur praktischen Prüfung an. Danach gilt der Ausweis 3 Jahre auf Probe.</p>
           </li>
         </ol>
 
-        <p class="weg-link rv"><a class="mehr" href="#" data-soon="Der Weg zum Führerschein">Der Weg im Detail<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
+        <p class="mitte-link rv"><a class="mehr" href="#" data-soon="Der Weg zum Führerschein">Der Weg im Detail<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
       </div>
     </section>
 
-    <!-- 6 Team -->
-    <section class="band" id="team" aria-labelledby="team-titel">
-      <div class="wrap team-raster">
+    <!-- Team -->
+    <section class="abschnitt" id="team" aria-labelledby="h-team">
+      <div class="wrap team">
+        <div class="team-kopf rv">
+          <p class="kicker">Team</p>
+          <h2 id="h-team">Ein Familienbetrieb in zweiter Generation.</h2>
+        </div>
         <aside class="profil rv" aria-label="Patrick Eng">
-          <img class="profil-bild" src="../assets/img/a-patrick.webp" width="128" height="128" alt="Porträt von Patrick Eng">
+          <img src="../assets/img/a-patrick.webp" width="160" height="160" alt="Porträt von Patrick Eng" loading="lazy">
           <p class="profil-name">Patrick Eng</p>
           <p class="profil-rolle">Fahrlehrer und WAB-Moderator</p>
-          <p class="profil-label" id="werdegang">Werdegang</p>
-          <ul class="profil-chips" aria-labelledby="werdegang">
+          <ul class="stationen" aria-label="Werdegang">
             <li>Automechaniker</li>
             <li>Fahrlehrer</li>
             <li>Polizist</li>
             <li>WAB-Moderator</li>
           </ul>
-          <a class="profil-tel" href="tel:+41763387799"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>076 338 77 99</a>
+          <a class="profil-tel" href="tel:+41763387799"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg>076 338 77 99</a>
         </aside>
-
         <div class="team-text">
-          <div class="rv">
-            <p class="kicker">Team</p>
-            <h2 id="team-titel">Ein Familienbetrieb in zweiter Generation.</h2>
-          </div>
           <blockquote class="zitat rv">
             <p>Unsere Fahrschule wurde 1995 von meinem Vater Roger Eng gegründet. Nach meiner Ausbildung zum Automechaniker entschied ich mich für eine weitere Qualifikation als Fahrlehrer. Einige Jahre danach absolvierte ich die Polizeischule der Basler Polizei. Anschliessend war ich sowohl als Polizist als auch als Fahrlehrer tätig.</p>
             <footer>Patrick Eng</footer>
           </blockquote>
-          <div class="kollegin rv">
-            <span class="monogramm" aria-hidden="true">CD</span>
-            <p><strong>Céline Dürr</strong> Nothelfer-Instruktorin. Sie erteilt bei uns die Nothelferkurse.</p>
+          <div class="celine rv">
+            <span class="mono" aria-hidden="true">CD</span>
+            <p><strong>Céline Dürr</strong><span>Nothelfer-Instruktorin. Sie erteilt bei uns die Nothelferkurse.</span></p>
           </div>
-          <p class="rv"><a class="mehr" href="#" data-soon="Team">Zum Team<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
+          <p class="rv"><a class="mehr" href="#" data-soon="Team">Zum Team<svg class="ic pf" aria-hidden="true"><use href="#i-pfeil"/></svg></a></p>
         </div>
       </div>
     </section>
 
-    <!-- 7 Kurslokal -->
-    <section class="band band-flaeche" id="kurslokal" aria-labelledby="lokal-titel">
-      <div class="wrap lokal-raster">
+    <!-- Kurslokal -->
+    <section class="abschnitt flaeche" id="kurslokal" aria-labelledby="h-lokal">
+      <div class="wrap lokal">
         <figure class="lokal-bild rv">
-          <img src="../assets/img/a-falken.webp" width="452" height="308" decoding="async" alt="Das Haus des Restaurants Falken an der Rheinstrasse 21 in Liestal">
-          <figcaption><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Restaurant Falken, Liestal</figcaption>
+          <img src="../assets/img/a-falken.webp" width="480" height="312" alt="Das Haus des Restaurants Falken an der Rheinstrasse 21 in Liestal" loading="lazy">
+          <figcaption><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Restaurant Falken, Liestal</figcaption>
         </figure>
         <div class="lokal-text">
           <div class="rv">
             <p class="kicker">Kurslokal</p>
-            <h2 id="lokal-titel">Drei Gehminuten vom Bahnhof.</h2>
+            <h2 id="h-lokal">Drei Gehminuten vom Bahnhof.</h2>
+            <p class="adresse"><strong>Restaurant Falken, 1. Stock, grosser Saal</strong><span>Rheinstrasse 21, 4410 Liestal</span></p>
+            <p>Der Eingang zum Saal befindet sich hinter dem Haus. Alle Kurse finden hier statt.</p>
           </div>
-          <address class="adresse rv">
-            <strong>Restaurant Falken, 1. Stock, grosser Saal</strong>
-            Rheinstrasse 21, 4410 Liestal
-          </address>
-          <p class="rv">Der Eingang zum Saal befindet sich hinter dem Haus. Alle Kurse finden hier statt.</p>
-
-          <div class="wegleiste rv" role="img" aria-label="Vom Bahnhof Liestal zur Rheinstrasse 21: rund 3 Minuten zu Fuss">
-            <div class="wl-ort">
-              <span class="wl-pin"><svg class="i" aria-hidden="true"><use href="#i-bahn"/></svg></span>
-              <span class="wl-name">Bahnhof Liestal</span>
-            </div>
-            <div class="wl-strecke" aria-hidden="true">
+          <div class="wegleiste rv" role="img" aria-label="Vom Bahnhof Liestal in 3 Gehminuten zur Rheinstrasse 21">
+            <span class="wl-punkt wl-start"><span class="wl-ic"><svg class="ic" aria-hidden="true"><use href="#i-zug"/></svg></span><span class="wl-name">Bahnhof Liestal</span></span>
+            <span class="wl-spur" aria-hidden="true">
               <span class="wl-punkte"></span>
               <span class="wl-deckel"></span>
-              <span class="wl-traeger"><span class="wl-geher"><svg class="i"><use href="#i-geher"/></svg></span></span>
-              <span class="wl-zeit">3 Min.</span>
-            </div>
-            <div class="wl-ort">
-              <span class="wl-pin wl-pin-ziel"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span>
-              <span class="wl-name">Rheinstrasse 21</span>
-            </div>
+              <span class="wl-schiene"><span class="wl-geher"><svg class="ic" aria-hidden="true"><use href="#i-geh"/></svg><span class="wl-min">3 Min.</span></span></span>
+            </span>
+            <span class="wl-punkt wl-ziel"><span class="wl-ic"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span><span class="wl-name">Rheinstrasse 21</span></span>
           </div>
-
-          <p class="rv"><a class="btn btn-umriss" href="https://www.google.com/maps/search/?api=1&amp;query=Rheinstrasse+21%2C+4410+Liestal" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg>Route planen</a></p>
+          <p class="rv"><a class="btn btn-rand" href="https://www.google.com/maps/search/?api=1&amp;query=Rheinstrasse+21%2C+4410+Liestal" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>Route planen</a></p>
         </div>
       </div>
     </section>
 
-    <!-- 8 Kontakt -->
-    <section class="kontakt" id="kontakt" aria-labelledby="kontakt-titel">
-      <svg class="kontakt-deko" viewBox="0 0 28 28" aria-hidden="true"><use href="#i-l"/></svg>
-      <div class="wrap kontakt-raster">
+    <!-- Kontakt -->
+    <section class="kontakt" id="kontakt" aria-labelledby="h-kontakt">
+      <div class="wrap kontakt-in">
         <div class="kontakt-text rv">
-          <p class="kicker kicker-hell">Kontakt</p>
-          <h2 id="kontakt-titel">Fragen oder Fahrstunde buchen?</h2>
-          <p>Sie haben eine Frage an uns? Sehr gerne beantworten wir sie. Fahrstunden buchen Sie direkt bei Patrick Eng.</p>
-          <a class="kontakt-nummer" href="tel:+41763387799">076 338 77 99</a>
+          <p class="kicker">Kontakt</p>
+          <h2 id="h-kontakt">Fragen oder Fahrstunde buchen?</h2>
+          <p>Sie haben eine Frage? Sehr gerne beantworten wir sie. Fahrstunden buchen Sie direkt bei Patrick Eng.</p>
+          <a class="gross-nr" href="tel:+41763387799">076 338 77 99</a>
           <div class="kontakt-knoepfe">
-            <a class="btn btn-weiss btn-gross" href="tel:+41763387799"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Jetzt anrufen</a>
-            <a class="btn btn-umriss-hell btn-gross" href="mailto:pateng@gmx.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
+            <a class="btn btn-weiss btn-gross" href="tel:+41763387799"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg>Jetzt anrufen</a>
+            <a class="btn btn-glas btn-gross" href="mailto:pateng@gmx.ch"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben</a>
           </div>
         </div>
         <ul class="kontakt-karte rv">
-          <li>
-            <span class="kk-icon"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg></span>
-            <span><span class="kk-label">Natel</span><a href="tel:+41763387799">076 338 77 99</a></span>
-          </li>
-          <li>
-            <span class="kk-icon"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
-            <span><span class="kk-label">E-Mail</span><a href="mailto:pateng@gmx.ch">pateng@gmx.ch</a></span>
-          </li>
-          <li>
-            <span class="kk-icon"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span>
-            <span><span class="kk-label">Kurslokal</span>Restaurant Falken, <span class="nw">Rheinstrasse 21,</span> <span class="nw">4410 Liestal</span></span>
-          </li>
+          <li><span class="kk-ic"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><p><span>Natel</span><a href="tel:+41763387799">076 338 77 99</a></p></li>
+          <li><span class="kk-ic"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg></span><p><span>E-Mail</span><a href="mailto:pateng@gmx.ch">pateng@gmx.ch</a></p></li>
+          <li><span class="kk-ic"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span><p><span>Kurslokal</span>Restaurant Falken, Rheinstrasse 21, 4410 Liestal</p></li>
         </ul>
       </div>
     </section>
   </main>
 
-  <!-- 9 Fusszeile -->
   <footer class="fuss">
-    <div class="wrap fuss-raster">
+    <div class="wrap fuss-in">
       <div class="fuss-marke">
-        <img src="../assets/img/a-wortmarke.webp" width="356" height="157" alt="Fahrschule Eng">
+        <img src="../assets/img/a-wortmarke.webp" width="352" height="153" alt="Fahrschule Eng" loading="lazy">
         <p>Sicher und entspannt zum Führerschein. Familienbetrieb in Liestal seit 1995.</p>
       </div>
-      <div class="fuss-spalte">
+      <div>
         <p class="fuss-titel">Kontakt</p>
-        <p><a href="tel:+41763387799">076 338 77 99</a><br><a href="mailto:pateng@gmx.ch">pateng@gmx.ch</a><br>Fahrschule Eng, 4410 Liestal</p>
+        <ul class="fuss-liste">
+          <li><a href="tel:+41763387799">076 338 77 99</a></li>
+          <li><a href="mailto:pateng@gmx.ch">pateng@gmx.ch</a></li>
+          <li>Fahrschule Eng, 4410 Liestal</li>
+        </ul>
       </div>
-      <nav class="fuss-spalte" aria-label="Seiten">
+      <div>
         <p class="fuss-titel">Seiten</p>
-        <ul>
+        <ul class="fuss-liste zwei">
           <li><a href="#" data-soon="Team">Team</a></li>
           <li><a href="#" data-soon="Der Weg zum Führerschein">Der Weg zum Führerschein</a></li>
           <li><a href="#" data-soon="Nothelfer">Nothelfer</a></li>
@@ -426,7 +412,7 @@
           <li><a href="#" data-soon="AGB">AGB</a></li>
           <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
         </ul>
-      </nav>
+      </div>
     </div>
     <div class="wrap fuss-unten">
       <p>© 2026 Fahrschule Eng, Liestal</p>
@@ -434,10 +420,9 @@
     </div>
   </footer>
 
-  <!-- 10 Aktionsleiste mobil -->
-  <div class="aktion" id="aktion" aria-label="Schnellkontakt">
-    <a class="btn btn-blau" href="tel:+41763387799"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen</a>
-    <a class="btn btn-umriss" href="mailto:pateng@gmx.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
+  <div class="aktion" aria-label="Schnellkontakt">
+    <a class="btn btn-blau" href="tel:+41763387799"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen</a>
+    <a class="btn btn-rand" href="mailto:pateng@gmx.ch"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>
   </div>
 </body>
 </html>

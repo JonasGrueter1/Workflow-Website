@@ -235,7 +235,9 @@ html:not(.js) .linie { display: none; }
 
 /* Team */
 .team { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-top: 32px; padding-bottom: 120px; }
-.team-karte { display: flex; align-items: center; gap: 16px; padding: 14px 24px 14px 14px; border-radius: 999px; border: 1px solid var(--linie); }
+.team-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.team-label { color: var(--muted); font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.team-karte { display: flex; align-items: center; gap: 16px; padding: 14px 24px 14px 14px; border-radius: 999px; border: 1px solid var(--linie); background: #fff; }
 .monogramm { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--eis); color: var(--ultramarin); font-family: var(--display); font-weight: 800; font-size: 1.0625rem; flex: none; }
 .team-karte p { color: var(--muted); font-size: 1rem; line-height: 1.4; }
 .team-karte b { display: block; color: var(--tinte); font-weight: 700; }
@@ -284,6 +286,12 @@ html:not(.js) .linie { display: none; }
 .ort { display: flex; flex-direction: column; color: var(--muted); line-height: 1.5; padding-top: 3px; }
 .ort b { color: var(--tinte); font-weight: 600; }
 .plan-aktion { text-align: right !important; padding-right: 0 !important; }
+@media (hover: hover) and (min-width: 1101px) {
+  .plan tbody tr { transition: background-color .3s; }
+  .plan tbody tr:hover { background: linear-gradient(90deg, rgb(238 240 255 / 0%), var(--eis) 12%, var(--eis) 88%, rgb(238 240 255 / 0%)); }
+  .plan tbody tr:hover .plan-icon { background: var(--ultramarin); color: #fff; }
+  .plan-icon { transition: background-color .3s, color .3s; }
+}
 .plan-aktion .btn { min-width: 132px; }
 .text-link { display: block; margin-top: 10px; color: var(--ultramarin); font-size: .9375rem; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .text-link:hover { text-decoration-thickness: 2px; }
@@ -356,6 +364,10 @@ html:not(.js) .linie { display: none; }
 .kontakt-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px 72px; align-items: end; }
 .kontakt h2 { margin-bottom: 22px; max-width: 10em; }
 .kontakt-lead { color: var(--hellblau); font-size: 1.1875rem; max-width: 26em; }
+.kontakt-person { display: inline-flex; align-items: center; gap: 14px; margin-top: 30px; padding: 8px 22px 8px 8px; border-radius: 999px; background: rgb(255 255 255 / 9%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 16%); line-height: 1.35; }
+.kontakt-person img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #fff; }
+.kontakt-person span { display: flex; flex-direction: column; color: var(--hellblau); font-size: .9375rem; }
+.kontakt-person b { color: #fff; font-size: 1rem; font-weight: 700; }
 .gross-tel { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(2.75rem, 6.4vw, 5.25rem); line-height: 1; letter-spacing: -0.03em; text-decoration: none; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .gross-tel:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 8px; }
 .gross-tel-label { display: block; margin-bottom: 10px; font-family: var(--text); font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--hellblau); }
@@ -406,12 +418,19 @@ html:not(.js) .linie { display: none; }
   .station-heute .station-text::before { display: none; }
   .linie { height: 4px; }
   html.fx .team { margin-top: calc(24px - (100vh - var(--kopf) - 620px) / 2); }
+  /* Hero etwas kompakter, damit das Fahrschulauto im ersten Bild mehr zu sehen ist */
+  .hero { padding-top: calc(var(--kopf) + 30px); }
+  .hero-in { min-height: 0; }
+  .hero-unten { margin-top: 26px; }
+}
+@media (min-width: 1280px) {
+  .station-text { left: -150px; width: 300px; }
 }
 
 /* ---------- Tablet ---------- */
 @media (max-width: 1023px) {
   :root { --kopf: 68px; }
-  .hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, .6fr); }
+  .hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, .6fr); min-height: 0; }
   .geschichte-kopf, .kurse-kopf, .preise-kopf, .kontakt-in { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .kurse-sub, .preise-sub { justify-self: start; }
   .preise-kopf .label { grid-column: auto; }
@@ -445,6 +464,35 @@ html:not(.js) .linie { display: none; }
   .schild-seite { padding: 11px; }
   .schild-feld { border-radius: 15px; }
   .hero-unten { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 28px; }
+  .hero .knoepfe .btn { flex: 1 1 auto; }
+  .kontakt-in .knoepfe .btn { flex: 1 1 0; }
+}
+
+/* ---------- Kursplan als Karten (Tablet und Mobil) ---------- */
+@media (max-width: 1100px) {
+  .plan thead { display: none; }
+  .plan, .plan tbody, .plan tr, .plan td, .plan tbody th { display: block; width: 100%; }
+  .plan tr { margin-bottom: 16px; padding: 22px 20px 20px; border-radius: 20px; border: 1px solid var(--linie); background: #fff; box-shadow: 0 20px 40px -30px rgb(14 16 51 / 30%); }
+  .plan tbody th { padding: 0 0 16px; border-bottom: 1px solid var(--linie); width: auto; }
+  .plan td { padding: 14px 0; border-bottom: 1px solid var(--linie); }
+  .plan td::before { content: attr(data-label); display: block; margin-bottom: 6px; color: var(--muted); font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .termine li { grid-template-columns: 118px minmax(0, 1fr); gap: 10px; }
+  .plan td.plan-aktion { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 16px 0 0 !important; border-bottom: 0; text-align: left !important; }
+  .plan td.plan-aktion::before { display: none; }
+  .plan-aktion .text-link { display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 6px; }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .plan tbody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .plan tr { display: flex; flex-direction: column; margin-bottom: 0; padding: 26px 26px 22px; }
+  .plan td.plan-aktion { margin-top: auto; }
+  .preis h3 { min-height: 2.1em; }
+}
+/* Fakten zu den Fahrstunden als Zeilen, sobald die Spalte schmal wird */
+@media (max-width: 1180px) {
+  .fakten { grid-template-columns: minmax(0, 1fr); }
+  .fakten div, .fakten div + div { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-left: 0; border-bottom: 1px solid #cfd3f2; }
+  .fakten dt { margin: 3px 0 0; }
+  .fakten dd { text-align: right; }
 }
 
 /* ---------- Mobil ---------- */
@@ -515,6 +563,8 @@ html:not(.js) .linie { display: none; }
   .punkt-foto { width: 56px; height: 56px; left: -2px; }
   .team { padding-bottom: 88px; }
   .team-karte { border-radius: 20px; }
+  .team-links { gap: 10px; }
+  .kontakt-person { margin-top: 24px; }
 
   .preise { padding: 88px 0 80px; }
   .preise-kopf { margin-bottom: 36px; }
@@ -530,25 +580,11 @@ html:not(.js) .linie { display: none; }
   .kurse { padding: 88px 0; }
   .kurse-kopf { margin-bottom: 28px; }
   .kurse-sub { font-size: 1.0625rem; }
-  .plan thead { display: none; }
-  .plan, .plan tbody, .plan tr, .plan td, .plan tbody th { display: block; width: 100%; }
-  .plan tr { margin-bottom: 16px; padding: 22px 20px 20px; border-radius: 20px; border: 1px solid var(--linie); background: #fff; box-shadow: 0 20px 40px -30px rgb(14 16 51 / 30%); }
-  .plan tbody th { padding: 0 0 16px; border-bottom: 1px solid var(--linie); width: auto; }
-  .plan td { padding: 14px 0; border-bottom: 1px solid var(--linie); }
-  .plan td::before { content: attr(data-label); display: block; margin-bottom: 6px; color: var(--muted); font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-  .termine li { grid-template-columns: 118px minmax(0, 1fr); gap: 10px; }
-  .plan td.plan-aktion { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 16px 0 0 !important; border-bottom: 0; text-align: left !important; }
-  .plan td.plan-aktion::before { display: none; }
-  .plan-aktion .text-link { display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 6px; }
   .plan-kurs b { font-size: 1.25rem; }
   .kurse-fuss { grid-template-columns: minmax(0, 1fr); margin-top: 32px; }
 
   .fahrstunden { padding: 88px 0; }
   .fahrstunden-text > p { font-size: 1.0625rem; }
-  .fakten { grid-template-columns: minmax(0, 1fr); }
-  .fakten div, .fakten div + div { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-left: 0; border-bottom: 1px solid #cfd3f2; }
-  .fakten dt { margin: 3px 0 0; }
-  .fakten dd { text-align: right; }
   .weg { padding: 24px 20px; border-radius: 20px; }
   .weg h3 { font-size: 1.375rem; }
   .weg-liste li { grid-template-columns: 40px minmax(0, 1fr); gap: 14px; }
