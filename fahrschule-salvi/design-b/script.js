@@ -42,6 +42,16 @@
     window.addEventListener('resize', function () { if (window.innerWidth >= 1100) menueSetzen(false); });
   }
 
+  /* Aktionsleiste am Handy: erst zeigen, wenn die Knöpfe im Hero aus dem Bild sind */
+  var aktion = document.querySelector('.aktion');
+  var heroKnoepfe = document.querySelector('.hero-knoepfe');
+  if (aktion && heroKnoepfe && 'IntersectionObserver' in window) {
+    aktion.classList.add('ist-weg');
+    new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) { aktion.classList.toggle('ist-weg', e.isIntersecting); });
+    }, { threshold: 0 }).observe(heroKnoepfe);
+  }
+
   /* Reihenfolge für gestaffelte Animationen */
   document.querySelectorAll('[data-reihe]').forEach(function (liste) {
     Array.prototype.forEach.call(liste.children, function (el, i) { el.style.setProperty('--i', i); });

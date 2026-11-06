@@ -854,8 +854,8 @@ body.menue-auf .aktion { display: none; }
 .aktion a .i { width: 18px; height: 18px; color: var(--hellblau); }
 .aktion a:active { background: rgb(255 255 255 / 8%); }
 .aktion .aktion-cta { background: var(--knopf); }
-.fx .aktion { animation: aktionRein .6s var(--ease-out) 1.2s both; }
-@keyframes aktionRein { from { opacity: 0; transform: translateY(20px); } }
+.aktion { transition: transform .35s var(--ease-out), opacity .3s, visibility 0s; }
+html.js .aktion.ist-weg { transform: translateY(20px); opacity: 0; visibility: hidden; pointer-events: none; transition: transform .3s var(--ease-out), opacity .25s, visibility 0s .3s; }
 @media (min-width: 760px) { .aktion { display: none; } }
 @media (max-width: 759px) { body .vz-toast { bottom: calc(146px + env(safe-area-inset-bottom)); } }
 @media (max-width: 359px) { .aktion a { font-size: 13.5px; gap: 5px; } .aktion a .i { width: 16px; height: 16px; } }

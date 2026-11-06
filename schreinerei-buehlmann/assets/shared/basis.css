@@ -1,4 +1,4 @@
-/* Übersicht und Wunschliste: neutrales Grund-Design für die Präsentation */
+/* Übersicht und Wunschliste: Grund-Design für die Präsentation, Schreinerei HB Design (Rot aus dem Logo, warmes Kalkweiss, Petrol) */
 
 @font-face {
   font-family: "Manrope";
@@ -13,22 +13,36 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* Schriften der Wortmarke HB Design (dieselben Dateien wie Design A) */
+@font-face {
+  font-family: "HB Figtree";
+  src: url("../fonts/a-figtree-italic800-latin.woff2") format("woff2");
+  font-weight: 800; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "HB Young Serif";
+  src: url("../fonts/a-youngserif-latin.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
 :root {
-  --ink: #16161a;
-  --ink-2: #3b3b42;
-  --muted: #6b6b74;
-  --line: #e5e4e8;
-  --bg: #f6f6f8;
+  --ink: #1f2326;
+  --ink-2: #3e4447;
+  --muted: #5e6468;
+  --line: #e4e0d9;
+  --bg: #f5f3ef;
   --white: #fff;
-  --soft: #efeff3;
-  --red: #bc2038;
-  --red-dark: #9a1a2e;
-  --red-soft: #fbedef;
+  --soft: #eeeae3;
+  --red: #c40a2a;
+  --red-dark: #9e0821;
+  --red-soft: #fbeaec;
+  --petrol: #4c6e75;
+  --eiche: #c89b6d;
   --green: #1f7a4a;
   --green-soft: #e8f5ee;
   --r-lg: 22px;
   --r: 14px;
-  --shadow: 0 1px 2px rgb(22 22 26 / 5%), 0 10px 30px rgb(22 22 26 / 7%);
+  --shadow: 0 1px 2px rgb(31 35 38 / 5%), 0 10px 30px rgb(31 35 38 / 7%);
   --wrap: 1160px;
   --gut: 24px;
 }
@@ -54,8 +68,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .top { background: var(--white); border-bottom: 1px solid var(--line); }
 .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 72px; flex-wrap: wrap; }
 .top-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); }
-.top-brand img { width: 118px; }
-.top-brand span { padding-left: 14px; border-left: 1px solid var(--line); font-size: .9rem; font-weight: 700; color: var(--muted); }
+.top-brand .top-tag { padding-left: 14px; border-left: 1px solid var(--line); font-size: .9rem; font-weight: 700; color: var(--muted); }
+
+/* Wortmarke HB Design: rotes HB, Design in Petrol, Inhaber darunter */
+.wordmark { display: inline-flex; flex-direction: column; color: var(--ink); line-height: 1; }
+.wm-line { display: flex; align-items: baseline; gap: 6px; }
+.wm-hb { font: italic 800 1.875rem/1 "HB Figtree", ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.01em; color: var(--red); }
+.wm-design { font: 400 1.4375rem/1 "HB Young Serif", Georgia, serif; color: var(--petrol); }
+.wm-sub { margin-top: 5px; font-size: .625rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .top-links { display: flex; gap: 6px; flex-wrap: wrap; }
 .top-links a { padding: 8px 14px; border-radius: 999px; color: var(--ink-2); font-weight: 600; font-size: .925rem; text-decoration: none; }
 .top-links a:hover { background: var(--soft); color: var(--ink); }
@@ -76,8 +96,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .btn-line:hover { border-color: var(--ink); color: var(--ink); }
 .btn-block { width: 100%; }
 
-.kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; color: var(--red); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.kicker::before { content: ""; width: 22px; height: 3px; border-radius: 3px; background: currentColor; }
+.kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; color: var(--petrol); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.kicker::before { content: ""; width: 22px; height: 3px; border-radius: 3px; background: var(--red); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li { padding: 5px 12px; border-radius: 999px; background: var(--soft); font-size: .85rem; font-weight: 700; color: var(--ink-2); }
 
@@ -88,7 +108,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 640px) {
   :root { --gut: 16px; }
   body { font-size: 1rem; }
-  .top-brand span { display: none; }
+  .top-brand .top-tag { display: none; }
 }
 
 @media print {
