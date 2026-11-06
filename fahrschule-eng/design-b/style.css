@@ -1,0 +1,706 @@
+/* Fahrschule Eng, Design B «Zweite Generation» */
+
+@font-face {
+  font-family: "Funnel Display";
+  src: url("../assets/fonts/b-funneldisplay-latin.woff2") format("woff2");
+  font-weight: 600 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Funnel Sans";
+  src: url("../assets/fonts/b-funnelsans-latin.woff2") format("woff2");
+  font-weight: 400 700; font-style: normal; font-display: swap;
+}
+
+:root {
+  --ultramarin: #1A20C8;
+  --ultramarin-tief: #1116a3;
+  --lschild: #0B07FE;
+  --nacht: #04052E;
+  --nacht-2: #0b0d45;
+  --hellblau: #C9CCFF;
+  --nebel: #A9ACD6;
+  --papier: #fff;
+  --eis: #EEF0FF;
+  --eis-2: #dfe2ff;
+  --tinte: #0E1033;
+  --muted: #4A4E6B;
+  --linie: #DCDEEE;
+  --rot: #E0102B;
+  --display: "Funnel Display", "Funnel Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --text: "Funnel Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --wrap: 1200px;
+  --gut: 24px;
+  --kopf: 76px;
+  --r: 18px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--kopf) + 12px); }
+body {
+  margin: 0; background: var(--papier); color: var(--tinte);
+  font: 400 18px/1.6 var(--text);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; hyphens: manual; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+figure, blockquote { margin: 0; }
+address { font-style: normal; }
+:focus-visible { outline: 3px solid var(--lschild); outline-offset: 3px; border-radius: 8px; }
+.hero :focus-visible, .kontakt :focus-visible, .preise :focus-visible, .fuss :focus-visible, .kopf :focus-visible { outline-color: #fff; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.i { width: 1.2em; height: 1.2em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { width: 100%; max-width: calc(var(--wrap) + 2 * var(--gut)); margin: 0 auto; padding: 0 var(--gut); }
+
+.skip { position: fixed; left: 12px; top: -60px; z-index: 300; padding: 10px 16px; border-radius: 10px; background: #fff; color: var(--tinte); font-weight: 700; text-decoration: none; }
+.skip:focus { top: 12px; }
+
+/* Knöpfe */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+  min-height: 48px; padding: .8em 1.3em; border-radius: 999px; border: 2px solid transparent;
+  font: 600 1rem/1.2 var(--text); text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color .25s, color .25s, border-color .25s, transform .25s var(--ease), box-shadow .25s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(.98); }
+.btn-gross { min-height: 56px; padding: .9em 1.5em; font-size: 1.0625rem; }
+.btn-klein { min-height: 44px; padding: .55em 1.05em; font-size: .9375rem; }
+.btn-weiss { background: #fff; color: var(--ultramarin); box-shadow: 0 10px 30px rgb(4 5 46 / 22%); }
+.btn-weiss:hover { background: var(--eis); }
+.btn-umriss { border-color: rgb(255 255 255 / 55%); color: #fff; }
+.btn-umriss:hover { border-color: #fff; background: rgb(255 255 255 / 8%); }
+.btn-blau { background: var(--ultramarin); color: #fff; }
+.btn-blau:hover { background: var(--ultramarin-tief); box-shadow: 0 10px 26px rgb(26 32 200 / 28%); }
+.btn-umriss-blau { border-color: var(--ultramarin); color: var(--ultramarin); }
+.btn-umriss-blau:hover { background: var(--ultramarin); color: #fff; }
+.btn-nr { padding-left: .7em; margin-left: .15em; border-left: 1px solid currentColor; font-variant-numeric: tabular-nums; opacity: .8; }
+.i-klein { width: 1em; height: 1em; opacity: .7; }
+
+.pfeil-link {
+  display: inline-flex; align-items: center; gap: .5em; min-height: 44px;
+  font-weight: 600; text-decoration: none; color: #fff;
+  border-bottom: 0;
+}
+.pfeil-link .i { transition: transform .25s var(--ease); }
+.pfeil-link:hover .i { transform: translateX(4px); }
+.pfeil-link-blau { color: var(--ultramarin); }
+
+.label {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px;
+  color: var(--ultramarin); font: 600 .8125rem/1 var(--text); letter-spacing: .14em; text-transform: uppercase;
+}
+.label::before { content: ""; width: 18px; height: 18px; border-radius: 5px; background: var(--ultramarin); box-shadow: inset 0 0 0 4px var(--ultramarin), inset 0 0 0 9px #fff; flex: none; }
+.label-hell { color: var(--hellblau); }
+.label-hell::before { background: #fff; box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 9px var(--ultramarin); }
+.preise .label-hell::before { box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 9px var(--nacht); }
+
+h2 { font-size: clamp(2rem, 4.1vw, 3.375rem); text-wrap: balance; }
+.nw { white-space: nowrap; }
+
+/* Kopf */
+.kopf {
+  position: fixed; inset: 0 0 auto; z-index: 100; height: var(--kopf);
+  color: #fff; transition: background-color .35s, box-shadow .35s;
+}
+.kopf.is-fest { background: var(--ultramarin); box-shadow: 0 1px 0 rgb(255 255 255 / 10%), 0 14px 40px rgb(4 5 46 / 22%); }
+.kopf-in { display: flex; align-items: center; gap: 28px; height: 100%; }
+.marke { display: block; flex: none; }
+.marke img { width: 112px; height: auto; }
+.kopf-nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.kopf-nav > a { padding: 10px 14px; border-radius: 999px; font-weight: 500; font-size: .9688rem; text-decoration: none; color: rgb(255 255 255 / 88%); transition: background-color .2s, color .2s; }
+.kopf-nav > a:hover { background: rgb(255 255 255 / 12%); color: #fff; }
+.nav-seiten { display: none; }
+.kopf-aktion { display: flex; align-items: center; gap: 10px; }
+.kopf-tel { font-variant-numeric: tabular-nums; box-shadow: none; }
+.menu-knopf { display: none; }
+
+/* Hero */
+.hero {
+  position: relative; isolation: isolate;
+  background: var(--ultramarin); color: #fff;
+  padding-top: calc(var(--kopf) + 44px);
+  overflow-x: clip;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background:
+    radial-gradient(60% 70% at 78% 38%, rgb(80 92 255 / 55%), transparent 70%),
+    radial-gradient(80% 60% at 10% 110%, rgb(4 5 46 / 45%), transparent 70%),
+    linear-gradient(180deg, #1b21cf 0%, var(--ultramarin) 55%, #171cb8 100%);
+}
+.hero-licht {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(rgb(255 255 255 / 16%) 1px, transparent 1.2px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(55% 60% at 75% 40%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(55% 60% at 75% 40%, #000 0%, transparent 75%);
+}
+.hero-in { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); align-items: center; gap: 32px; min-height: min(62vh, 600px); }
+.kicker { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 26px; color: var(--hellblau); font: 600 .875rem/1 var(--text); letter-spacing: .16em; text-transform: uppercase; }
+.kicker-punkt { width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 5px rgb(255 255 255 / 16%); }
+.hero h1 { font-size: clamp(2.375rem, 6.9vw, 6.125rem); line-height: .98; letter-spacing: -0.035em; margin-bottom: 28px; }
+.zeile { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.zeile > span { display: block; }
+.lead { max-width: 31em; text-wrap: pretty; margin-bottom: 34px; color: var(--hellblau); font-size: 1.25rem; line-height: 1.55; }
+.knoepfe { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* L-Schild */
+.schild-buehne { position: relative; justify-self: center; width: min(100%, 460px); aspect-ratio: 1; display: grid; place-items: center; perspective: 900px; }
+.ring { position: absolute; inset: -6%; width: 112%; height: 112%; overflow: visible; }
+.ring circle { fill: none; }
+.ring-fein { stroke: rgb(255 255 255 / 10%); stroke-width: 1.5; }
+.ring-strich { stroke: rgb(255 255 255 / 30%); stroke-width: 4; stroke-dasharray: 22 16; stroke-linecap: butt; }
+.ring-zeichner { fill: none; stroke: #fff; stroke-width: 14; stroke-dasharray: 1 1; stroke-dashoffset: 0; transform: rotate(-90deg); transform-origin: 260px 260px; }
+.schild-schatten { position: absolute; left: 50%; bottom: 5%; width: 60%; height: 8%; border-radius: 50%; transform: translateX(-50%); background: radial-gradient(closest-side, rgb(4 5 46 / 60%), transparent); filter: blur(6px); }
+.schild-parallax, .schild-kipp, .schild-schwebe { transform-style: preserve-3d; }
+.schild-parallax { transform: translate3d(0, var(--py, 0px), 0) rotateY(var(--sy, 0deg)); will-change: transform; }
+.schild-kipp { transform: rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg)); transition: transform .6s var(--ease-out); }
+.schild {
+  --b: 290px; --h: 352px;
+  position: relative; width: var(--b); height: var(--h);
+  transform-style: preserve-3d; transform: rotateZ(-6deg);
+}
+.schild-seite, .schild-kante { position: absolute; inset: 0; border-radius: 34px; }
+.schild-seite { backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 16px; }
+.schild-vorne { transform: translateZ(3px); background: linear-gradient(160deg, #fff 0%, #f1f2fb 100%); box-shadow: inset 0 -3px 0 rgb(14 16 51 / 8%), inset 0 2px 0 #fff; }
+.schild-hinten { transform: rotateY(180deg) translateZ(3px); background: linear-gradient(160deg, #fff, #e7e9f6); }
+.schild-kante { background: #cfd2e6; }
+.k1 { transform: translateZ(1.5px); } .k2 { transform: translateZ(0); } .k3 { transform: translateZ(-1.5px); } .k4 { transform: translateZ(-3px); background: #b9bdd8; }
+.schild-feld { position: relative; height: 100%; border-radius: 22px; overflow: hidden; display: grid; place-items: center; }
+.schild-vorne .schild-feld { background: linear-gradient(155deg, #3a37ff 0%, var(--lschild) 42%, #0805c9 100%); box-shadow: inset 0 0 0 1px rgb(0 0 0 / 12%); }
+.schild-hinten .schild-feld { background: transparent; box-shadow: inset 0 0 0 3px #d4d7ec; }
+.schild-feld svg { width: 78%; height: auto; }
+.schild-vorne .schild-feld svg path { fill: #fff; }
+.schild-hinten .schild-feld svg path { fill: var(--lschild); opacity: .9; }
+.schild-glanz { position: absolute; inset: -40% -60%; background: linear-gradient(115deg, transparent 38%, rgb(255 255 255 / 36%) 48%, rgb(255 255 255 / 0%) 58%); transform: translateX(-60%); pointer-events: none; }
+.schild-vorne .schild-feld::after { content: ""; position: absolute; inset: 0; background: linear-gradient(170deg, rgb(255 255 255 / 22%) 0%, rgb(255 255 255 / 0%) 38%); pointer-events: none; }
+
+/* Hero unten: nächste Kurse und Autokarte */
+.hero-unten { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; align-items: start; margin-top: 36px; }
+.naechste { align-self: start; padding: 24px 0 40px; border-top: 1px solid rgb(255 255 255 / 22%); max-width: 430px; }
+.naechste-titel { margin-bottom: 14px; color: var(--hellblau); font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.naechste li { display: flex; flex-direction: column; gap: 2px; padding: 10px 0; }
+.naechste li + li { border-top: 1px solid rgb(255 255 255 / 12%); }
+.naechste-kurs { font-weight: 600; }
+.naechste-datum { color: var(--hellblau); font-variant-numeric: tabular-nums; }
+.naechste .pfeil-link { margin-top: 6px; }
+.auto-karte {
+  margin-bottom: -130px; padding: 10px; border-radius: 26px; background: #fff;
+  box-shadow: 0 1px 2px rgb(4 5 46 / 10%), 0 12px 24px -8px rgb(4 5 46 / 22%), 0 36px 64px -28px rgb(4 5 46 / 38%), 0 0 0 1px rgb(14 16 51 / 5%);
+  max-width: 720px; justify-self: end; width: 100%;
+}
+.auto-karte img { width: 100%; border-radius: 18px; aspect-ratio: 944 / 410; object-fit: cover; }
+.auto-karte figcaption { display: flex; justify-content: space-between; gap: 16px; padding: 12px 10px 4px; color: var(--muted); font-size: .875rem; font-weight: 500; }
+.auto-karte figcaption span:first-child { color: var(--tinte); font-weight: 600; }
+
+/* Geschichte */
+.geschichte { padding: 215px 0 0; }
+.geschichte-kopf { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: start; }
+.geschichte h2 { max-width: 11em; }
+.werdegang { position: relative; padding: 6px 0 0 30px; border-left: 4px solid var(--ultramarin); margin-top: 38px; }
+.werdegang p { font-size: 1.1875rem; line-height: 1.65; color: var(--tinte); text-wrap: pretty; }
+.werdegang footer { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
+.werdegang footer img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+.werdegang footer span { display: flex; flex-direction: column; color: var(--muted); font-size: .9375rem; line-height: 1.35; }
+.werdegang footer b { color: var(--tinte); font-weight: 700; font-size: 1rem; }
+
+/* Laufbahn */
+.laufbahn { position: relative; margin-top: 72px; }
+.laufbahn-panel { position: relative; padding: 34px 44px 40px; border-radius: 32px; background: var(--eis); overflow: hidden; }
+.laufbahn-zeile { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 16px; border-bottom: 1px solid #cfd3f2; color: var(--muted); font-size: .875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.zaehler { font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.zaehler b { color: var(--ultramarin); font-weight: 700; }
+.stationen { position: relative; z-index: 1; }
+.station-nr { display: block; margin-bottom: 6px; color: var(--ultramarin); font-size: .8125rem; font-weight: 700; letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+.station-titel { font-size: 1.625rem; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 8px; text-wrap: balance; }
+.station-jahr { font-size: 2.5rem; color: var(--ultramarin); }
+.station-text p { color: var(--muted); font-size: 1.0313rem; line-height: 1.5; text-wrap: pretty; }
+.punkt { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid #c3c7f0; transition: border-color .4s, background-color .4s, transform .4s var(--ease-out); }
+.station.is-an .punkt { border-color: var(--ultramarin); background: var(--ultramarin); box-shadow: 0 0 0 7px rgb(26 32 200 / 14%); }
+.punkt-foto { width: 104px; height: 104px; padding: 4px; background: #fff; border-width: 3px; overflow: hidden; }
+.punkt-foto img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.station.is-an .punkt-foto { background: #fff; }
+html:not(.js) .punkt { border-color: var(--ultramarin); background: var(--ultramarin); }
+html:not(.js) .punkt-foto { background: #fff; }
+html:not(.js) .linie { display: none; }
+.linie { position: absolute; background: #cfd3f2; border-radius: 4px; }
+.linie-voll { position: absolute; inset: 0; border-radius: inherit; background: var(--ultramarin); transform-origin: 0 50%; }
+
+/* Team */
+.team { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-top: 32px; padding-bottom: 120px; }
+.team-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.team-label { color: var(--muted); font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.team-karte { display: flex; align-items: center; gap: 16px; padding: 14px 24px 14px 14px; border-radius: 999px; border: 1px solid var(--linie); background: #fff; }
+.monogramm { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--eis); color: var(--ultramarin); font-family: var(--display); font-weight: 800; font-size: 1.0625rem; flex: none; }
+.team-karte p { color: var(--muted); font-size: 1rem; line-height: 1.4; }
+.team-karte b { display: block; color: var(--tinte); font-weight: 700; }
+
+/* Preise */
+.preise { position: relative; overflow: hidden; padding: 120px 0 110px; background: var(--nacht); color: #fff; }
+.preise::before { content: ""; position: absolute; inset: 0; background: radial-gradient(50% 60% at 85% 0%, rgb(26 32 200 / 45%), transparent 70%), radial-gradient(40% 50% at 0% 100%, rgb(26 32 200 / 25%), transparent 70%); pointer-events: none; }
+.preise .wrap { position: relative; }
+.preise-kopf { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 64px; align-items: end; margin-bottom: 56px; }
+.preise-kopf .label { grid-column: 1 / -1; justify-self: start; }
+.preise-sub { color: var(--nebel); font-size: 1.25rem; max-width: 24em; justify-self: end; }
+.preis-liste { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgb(255 255 255 / 16%); }
+.preis { padding: 34px 36px 8px 0; }
+.preis + .preis { padding-left: 36px; border-left: 1px solid rgb(255 255 255 / 16%); }
+.preis h3 { font-family: var(--text); font-weight: 600; font-size: 1.125rem; letter-spacing: 0; color: #fff; }
+.betrag { display: flex; align-items: flex-start; margin: 18px 0 12px; font-family: var(--display); font-weight: 800; line-height: .9; font-variant-numeric: tabular-nums; }
+.chf { margin: .5em .4em 0 0; font-family: var(--text); font-size: 1.125rem; font-weight: 600; color: var(--nebel); letter-spacing: .04em; }
+.ziffern { display: inline-flex; font-size: clamp(5rem, 10.4vw, 9.5rem); letter-spacing: -0.04em; }
+.z { display: inline-block; overflow: hidden; padding: 0 .01em .04em; margin-bottom: -.04em; }
+.z > span { display: block; }
+.rest { align-self: flex-end; margin: 0 0 .12em .06em; font-size: clamp(2.25rem, 4.2vw, 3.75rem); color: var(--nebel); letter-spacing: -0.02em; }
+.preis-info { color: var(--nebel); font-size: 1rem; }
+.preise-fuss { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; margin-top: 48px; padding-top: 22px; border-top: 1px solid rgb(255 255 255 / 16%); color: var(--nebel); font-size: 1rem; }
+.preise-links { display: flex; gap: 28px; }
+
+/* Kursplan */
+.kurse { padding: 120px 0; }
+.kurse-kopf { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px 64px; align-items: end; margin-bottom: 48px; }
+.kurse-sub { color: var(--muted); font-size: 1.125rem; max-width: 28em; justify-self: end; }
+.plan { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.plan thead th { padding: 0 16px 14px; text-align: left; color: var(--muted); font-size: .8125rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; border-bottom: 2px solid var(--tinte); }
+.plan thead th:first-child { padding-left: 0; }
+.plan tbody th, .plan td { padding: 28px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--linie); }
+.plan tbody th { padding-left: 0; font-weight: 400; width: 34%; }
+.plan-kopf { display: flex; gap: 16px; align-items: flex-start; }
+.plan-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: var(--eis); color: var(--ultramarin); flex: none; }
+.plan-icon .i { width: 26px; height: 26px; }
+.plan-kurs { display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
+.plan-kurs b { font-family: var(--display); font-weight: 700; font-size: 1.375rem; letter-spacing: -0.01em; line-height: 1.15; }
+.plan-kurs span { color: var(--muted); font-size: .9375rem; }
+.termine li { display: grid; grid-template-columns: 136px minmax(0, 1fr); gap: 16px; padding: 3px 0; line-height: 1.5; }
+.termine li + li { margin-top: 8px; }
+.tag { font-weight: 600; }
+.zeit { font-weight: 500; }
+.zeit small { display: block; color: var(--muted); font-size: .8125rem; font-weight: 400; }
+.ort { display: flex; flex-direction: column; color: var(--muted); line-height: 1.5; padding-top: 3px; }
+.ort b { color: var(--tinte); font-weight: 600; }
+.plan-aktion { text-align: right !important; padding-right: 0 !important; }
+@media (hover: hover) and (min-width: 1101px) {
+  .plan tbody tr { transition: background-color .3s; }
+  .plan tbody tr:hover { background: linear-gradient(90deg, rgb(238 240 255 / 0%), var(--eis) 12%, var(--eis) 88%, rgb(238 240 255 / 0%)); }
+  .plan tbody tr:hover .plan-icon { background: var(--ultramarin); color: #fff; }
+  .plan-icon { transition: background-color .3s, color .3s; }
+}
+.plan-aktion .btn { min-width: 132px; }
+.text-link { display: block; margin-top: 10px; color: var(--ultramarin); font-size: .9375rem; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.text-link:hover { text-decoration-thickness: 2px; }
+.kurse-fuss { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px 64px; margin-top: 48px; align-items: start; }
+.vku-zitat p { position: relative; padding-left: 28px; font-family: var(--display); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 2.125rem); line-height: 1.2; letter-spacing: -0.015em; color: var(--ultramarin); }
+.vku-zitat p::before { content: ""; position: absolute; left: 0; top: .15em; bottom: .15em; width: 5px; border-radius: 4px; background: var(--ultramarin); }
+.hinweise li { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; color: var(--muted); font-size: 1rem; }
+.hinweise li + li { border-top: 1px solid var(--linie); }
+.hinweise .i { color: var(--ultramarin); margin-top: 2px; }
+
+/* Fahrstunden */
+.fahrstunden { padding: 120px 0; background: var(--eis); }
+.fahrstunden-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+.fahrstunden-text { position: sticky; top: calc(var(--kopf) + 40px); }
+.fahrstunden-text h2 { margin-bottom: 22px; }
+.fahrstunden-lead { max-width: 28em; color: var(--muted); font-size: 1.1875rem; margin-bottom: 30px; }
+.fakten { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 0 0 34px; border-top: 1px solid #cfd3f2; }
+.fakten div { padding: 16px 16px 0 0; }
+.fakten div + div { padding-left: 16px; border-left: 1px solid #cfd3f2; }
+.fakten dt { color: var(--muted); font-size: .8125rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
+.fakten dd { margin: 0; font-weight: 600; line-height: 1.35; }
+.weg { padding: 36px; border-radius: 24px; background: #fff; box-shadow: 0 30px 60px -30px rgb(14 16 51 / 25%); }
+.weg h3 { font-size: 1.625rem; letter-spacing: -0.015em; margin-bottom: 18px; }
+.weg-liste { counter-reset: weg; margin-bottom: 12px; }
+.weg-liste li { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 16px; padding: 16px 0; }
+.weg-liste li + li { border-top: 1px solid var(--linie); }
+.weg-nr { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; border: 2px solid var(--ultramarin); color: var(--ultramarin); font-family: var(--display); font-weight: 800; font-size: 1.125rem; }
+.weg-liste li:has(.weg-marke) .weg-nr { background: var(--ultramarin); color: #fff; }
+.weg-liste b { display: block; font-weight: 700; font-size: 1.0625rem; margin-bottom: 2px; }
+.weg-liste p { color: var(--muted); font-size: .9688rem; line-height: 1.5; }
+.weg-marke { align-self: start; margin-top: 8px; padding: 4px 10px; border-radius: 999px; background: var(--eis); color: var(--ultramarin); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+
+/* Kurslokal */
+.lokal { padding: 130px 0 120px; }
+.lokal-in { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 72px; align-items: center; }
+.lokal-bilder { position: relative; padding-bottom: 90px; }
+.lokal-haus img, .lokal-eingang img { border-radius: 20px; width: 100%; }
+.lokal-haus { width: 86%; }
+.lokal-haus img { aspect-ratio: 482 / 294; object-fit: cover; box-shadow: 0 30px 60px -30px rgb(14 16 51 / 35%); }
+.lokal-eingang { position: absolute; right: 0; bottom: 0; width: 46%; padding: 8px; border-radius: 26px; background: #fff; box-shadow: 0 30px 60px -24px rgb(14 16 51 / 35%); }
+.lokal-eingang img { border-radius: 18px; aspect-ratio: 349 / 204; object-fit: cover; }
+.lokal-text h2 { margin-bottom: 26px; }
+.lokal-text address { margin-bottom: 24px; font-size: 1.1875rem; line-height: 1.5; }
+.lokal-text address b { display: block; font-weight: 700; }
+.lokal-fakten { margin-bottom: 30px; border-top: 1px solid var(--linie); }
+.lokal-fakten li { display: flex; gap: 14px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--linie); color: var(--muted); font-size: 1rem; }
+.lokal-fakten .i { color: var(--ultramarin); width: 22px; height: 22px; }
+
+/* Bekannte Gesichter */
+.bekannt { padding: 0 0 120px; }
+.bekannt-in { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 64px; align-items: center; padding-top: 44px; }
+.bekannt-in::before { content: ""; position: absolute; top: 0; left: var(--gut); right: var(--gut); height: 1px; background: var(--linie); }
+.bekannt-titel { font-family: var(--text); font-weight: 600; font-size: 1.125rem; line-height: 1.4; letter-spacing: 0; color: var(--muted); max-width: 16em; }
+.namen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.namen li { display: flex; flex-direction: column; gap: 4px; }
+.namen b { font-family: var(--display); font-weight: 700; font-size: clamp(1.3125rem, 1.9vw, 1.625rem); letter-spacing: -0.015em; line-height: 1.1; }
+.namen span { color: var(--muted); font-size: .9375rem; }
+
+/* Kontakt */
+.kontakt { position: relative; overflow: hidden; isolation: isolate; padding: 130px 0; background: var(--ultramarin); color: #fff; }
+.kontakt::before { content: ""; position: absolute; inset: 0; z-index: -2; background: radial-gradient(60% 80% at 100% 0%, rgb(80 92 255 / 55%), transparent 70%), radial-gradient(50% 60% at 0% 100%, rgb(4 5 46 / 35%), transparent 70%); }
+.kontakt-ring {
+  position: absolute; z-index: -1; right: -160px; top: 50%; width: 640px; height: 640px; transform: translateY(-50%);
+  /* Nur der äussere Bogen ist sichtbar, hinter Text und Knöpfen blendet der Ring aus */
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 62%);
+  mask-image: linear-gradient(90deg, transparent 30%, #000 62%);
+}
+.kontakt-ring circle { fill: none; stroke: rgb(255 255 255 / 18%); stroke-width: 4; stroke-dasharray: 22 16; }
+.kontakt-ring circle.fein { stroke: rgb(255 255 255 / 9%); stroke-width: 1.5; stroke-dasharray: none; }
+.kontakt-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px 72px; align-items: end; }
+.kontakt h2 { margin-bottom: 22px; max-width: 10em; }
+.kontakt-lead { color: var(--hellblau); font-size: 1.1875rem; max-width: 26em; }
+.kontakt-person { display: inline-flex; align-items: center; gap: 14px; margin-top: 30px; padding: 8px 22px 8px 8px; border-radius: 999px; background: rgb(255 255 255 / 9%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 16%); line-height: 1.35; }
+.kontakt-person img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #fff; }
+.kontakt-person span { display: flex; flex-direction: column; color: var(--hellblau); font-size: .9375rem; }
+.kontakt-person b { color: #fff; font-size: 1rem; font-weight: 700; }
+.gross-tel { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(2.75rem, 6.4vw, 5.25rem); line-height: 1; letter-spacing: -0.03em; text-decoration: none; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gross-tel:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 8px; }
+.gross-tel-label { display: block; margin-bottom: 10px; font-family: var(--text); font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--hellblau); }
+.gross-mail { display: inline-flex; align-items: center; gap: 12px; margin-top: 22px; font-size: 1.375rem; font-weight: 600; text-decoration: none; min-height: 44px; }
+.gross-mail:hover { text-decoration: underline; text-underline-offset: 5px; }
+.kontakt-ort { display: flex; gap: 12px; align-items: flex-start; margin: 14px 0 32px; color: var(--hellblau); font-size: 1rem; }
+.kontakt-ort .i { margin-top: 3px; }
+
+/* Fusszeile */
+.fuss { padding: 72px 0 32px; background: var(--nacht); color: var(--nebel); font-size: 1rem; }
+.fuss a { color: #fff; text-decoration: none; }
+.fuss a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.fuss-in { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; padding-bottom: 48px; }
+.fuss-marke img { width: 132px; margin-bottom: 18px; }
+.fuss-marke p { max-width: 22em; }
+.fuss-titel { margin-bottom: 14px; color: #fff; font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.fuss-spalte p + p { margin-top: 12px; }
+.fuss-spalte li + li { margin-top: 6px; }
+.fuss-spalte ul { columns: 2; column-gap: 24px; }
+.fuss-spalte ul li { break-inside: avoid; }
+.fuss-spalte li a { display: inline-block; padding: 3px 0; }
+.fuss-unten { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 24px; font-size: .875rem; }
+.fuss-unten::before { content: ""; position: absolute; top: 0; left: var(--gut); right: var(--gut); height: 1px; background: rgb(255 255 255 / 12%); }
+.fuss-unten a { margin-left: 20px; }
+
+/* Aktionsleiste mobil */
+.aktion { display: none; }
+
+/* ---------- Laufbahn: Desktop mit fixer Bühne ---------- */
+@media (min-width: 1024px) {
+  /* Bühne: Abstand zum Zitat bleibt bei jeder Fensterhöhe gleich (Panel ca. 620 px hoch) */
+  .laufbahn { margin-top: min(32px, calc(32px - (100vh - var(--kopf) - 620px) / 2)); }
+  html.fx .laufbahn { height: 210vh; }
+  html.fx .laufbahn-buehne { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: var(--kopf); }
+  html:not(.fx) .laufbahn { margin-top: 56px; }
+  .laufbahn-in { position: relative; width: 100%; }
+  .stationen { height: 500px; }
+  .station { position: absolute; top: 50%; left: calc(116px + var(--p) * (100% - 232px) / 5); width: 0; height: 0; }
+  .punkt { left: -11px; top: -11px; }
+  .punkt-foto { left: -52px; top: -52px; }
+  .station-text { position: absolute; left: -128px; width: 256px; text-align: center; }
+  .station:nth-child(odd) .station-text { bottom: 38px; }
+  .station:nth-child(even) .station-text { top: 38px; }
+  .station-heute .station-text { top: 70px !important; }
+  /* Station 5 steht direkt neben dem Porträt: Text schmaler, damit er den Bildrand nicht berührt */
+  .station:nth-child(5) .station-text p { max-width: 196px; margin-inline: auto; }
+  .station-text::before { content: ""; position: absolute; left: 50%; width: 1px; height: 14px; background: #c3c7f0; }
+  .station:nth-child(odd) .station-text::before { bottom: -26px; }
+  .station:nth-child(even) .station-text::before { top: -26px; }
+  .station-heute .station-text::before { display: none; }
+  .linie { height: 4px; }
+  html.fx .team { margin-top: calc(24px - (100vh - var(--kopf) - 620px) / 2); }
+  /* Hero etwas kompakter, damit das Fahrschulauto im ersten Bild mehr zu sehen ist */
+  .hero { padding-top: calc(var(--kopf) + 30px); }
+  .hero-in { min-height: 0; }
+  .hero-unten { margin-top: 26px; }
+}
+@media (min-width: 1280px) {
+  .station-text { left: -150px; width: 300px; }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1023px) {
+  :root { --kopf: 68px; }
+  .hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, .6fr); min-height: 0; }
+  .geschichte-kopf, .kurse-kopf, .preise-kopf, .kontakt-in { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .kurse-sub, .preise-sub { justify-self: start; }
+  .preise-kopf .label { grid-column: auto; }
+  .laufbahn { margin-top: 56px; }
+  .laufbahn-zeile { margin-bottom: 30px; }
+  .laufbahn-panel { padding: 26px 28px 32px; border-radius: 26px; }
+  .stationen { padding-left: 0; }
+  .station { position: relative; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 18px; padding-bottom: 34px; }
+  .station:last-child { padding-bottom: 0; }
+  .punkt { position: relative; left: 18px; top: 4px; }
+  .punkt-foto { left: 0; top: -8px; width: 62px; height: 62px; margin-left: -2px; padding: 3px; }
+  .station-heute .station-text { padding-top: 6px; }
+  .station-text { max-width: 34em; }
+  .linie { width: 4px; }
+  .linie-voll { transform-origin: 50% 0; }
+  .laufbahn-in { position: relative; }
+  .fahrstunden-in, .lokal-in { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .fahrstunden-text { position: static; }
+  .lokal-bilder { max-width: 640px; }
+  .bekannt-in { grid-template-columns: minmax(0, 1fr); }
+  .fuss-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .fuss-marke { grid-column: 1 / -1; }
+  .kopf-nav > a { padding: 10px 10px; }
+}
+
+@media (max-width: 1023px) and (min-width: 761px) {
+  .kopf-nav > a[href="#fahrstunden"] { display: none; }
+  .schild-buehne { width: min(100%, 320px); }
+  .schild { --b: 190px; --h: 231px; }
+  .schild-seite, .schild-kante { border-radius: 24px; }
+  .schild-seite { padding: 11px; }
+  .schild-feld { border-radius: 15px; }
+  .hero-unten { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 28px; }
+  .hero .knoepfe .btn { flex: 1 1 auto; }
+  .kontakt-in .knoepfe .btn { flex: 1 1 0; }
+}
+
+/* ---------- Kursplan als Karten (Tablet und Mobil) ---------- */
+@media (max-width: 1100px) {
+  .plan thead { display: none; }
+  .plan, .plan tbody, .plan tr, .plan td, .plan tbody th { display: block; width: 100%; }
+  .plan tr { margin-bottom: 16px; padding: 22px 20px 20px; border-radius: 20px; border: 1px solid var(--linie); background: #fff; box-shadow: 0 20px 40px -30px rgb(14 16 51 / 30%); }
+  .plan tbody th { padding: 0 0 16px; border-bottom: 1px solid var(--linie); width: auto; }
+  .plan td { padding: 14px 0; border-bottom: 1px solid var(--linie); }
+  .plan td::before { content: attr(data-label); display: block; margin-bottom: 6px; color: var(--muted); font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .termine li { grid-template-columns: 118px minmax(0, 1fr); gap: 10px; }
+  .plan td.plan-aktion { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 16px 0 0 !important; border-bottom: 0; text-align: left !important; }
+  .plan td.plan-aktion::before { display: none; }
+  .plan-aktion .text-link { display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 6px; }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .plan tbody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .plan tr { display: flex; flex-direction: column; margin-bottom: 0; padding: 26px 26px 22px; }
+  .plan td.plan-aktion { margin-top: auto; }
+  .preis h3 { min-height: 2.1em; }
+}
+/* Fakten zu den Fahrstunden als Zeilen, sobald die Spalte schmal wird */
+@media (max-width: 1180px) {
+  .fakten { grid-template-columns: minmax(0, 1fr); }
+  .fakten div, .fakten div + div { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-left: 0; border-bottom: 1px solid #cfd3f2; }
+  .fakten dt { margin: 3px 0 0; }
+  .fakten dd { text-align: right; }
+}
+
+/* ---------- Mobil ---------- */
+@media (max-width: 760px) {
+  :root { --gut: 20px; --kopf: 64px; }
+  body { font-size: 17px; }
+  h2 { font-size: clamp(1.875rem, 8.4vw, 2.5rem); }
+  .label { margin-bottom: 14px; }
+
+  .marke img { width: 92px; }
+  .kopf-in { gap: 12px; }
+  .kopf-tel { width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: 50%; }
+  .kopf-nr { display: none; }
+  .menu-knopf {
+    display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1.5px solid rgb(255 255 255 / 45%); border-radius: 50%;
+    background: transparent; color: #fff; cursor: pointer;
+  }
+  .menu-knopf .i-zu { display: none; }
+  .menu-knopf[aria-expanded="true"] .i-auf { display: none; }
+  .menu-knopf[aria-expanded="true"] .i-zu { display: block; }
+  .kopf-aktion { margin-left: auto; }
+  .kopf-nav { display: none; }
+  html:not(.js) .menu-knopf { display: none; }
+  .kopf-nav.is-offen {
+    position: fixed; left: 0; right: 0; top: var(--kopf); display: flex; flex-direction: column; align-items: stretch; gap: 0;
+    max-height: calc(100vh - var(--kopf)); overflow-y: auto;
+    padding: 8px var(--gut) 28px; background: var(--ultramarin); box-shadow: 0 30px 50px rgb(4 5 46 / 35%);
+  }
+  .kopf.menu-offen { background: var(--ultramarin); }
+  .kopf-nav.is-offen > a { padding: 15px 0; border-radius: 0; border-bottom: 1px solid rgb(255 255 255 / 14%); font-family: var(--display); font-size: 1.5rem; font-weight: 700; color: #fff; }
+  .kopf-nav.is-offen > a:hover { background: none; }
+  .kopf-nav.is-offen .nav-seiten { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 20px; }
+  .nav-label { width: 100%; margin-bottom: 4px; color: var(--hellblau); font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+  .nav-seiten a { padding: 10px 14px; border-radius: 999px; border: 1px solid rgb(255 255 255 / 30%); font-size: .9375rem; font-weight: 500; text-decoration: none; }
+
+  .hero { padding-top: calc(var(--kopf) + 14px); }
+  /* Kicker und L-Schild teilen sich die erste Zeile, der Titel beginnt frei darunter */
+  .hero-in { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 0 8px; min-height: 0; }
+  .hero-text { display: contents; }
+  .kicker { grid-column: 1; grid-row: 1; align-self: end; margin: 0 0 6px; font-size: .75rem; letter-spacing: .14em; }
+  .hero h1, .lead, .knoepfe { grid-column: 1 / -1; }
+  .hero h1 { font-size: clamp(2.25rem, 10.6vw, 3.25rem); margin: 18px 0 20px; position: relative; z-index: 1; }
+  .lead { font-size: 1.0625rem; margin-bottom: 26px; }
+  .knoepfe { flex-direction: column; align-items: stretch; }
+  .knoepfe .btn { width: 100%; }
+  .schild-buehne { grid-column: 2; grid-row: 1; justify-self: end; width: 112px; margin: 0 -8px -4px 0; }
+  .schild { --b: 72px; --h: 88px; }
+  .schild-seite, .schild-kante { border-radius: 12px; }
+  .schild-seite { padding: 5px; }
+  .schild-feld { border-radius: 8px; }
+  .ring-strich { stroke-width: 7; stroke-dasharray: 26 22; }
+  .ring-fein { stroke-width: 3; }
+  .hero-unten { display: flex; flex-direction: column; gap: 8px; margin-top: 34px; }
+  .naechste { align-self: stretch; max-width: none; margin-bottom: 14px; padding: 18px 18px 8px; border: 1px solid rgb(255 255 255 / 18%); border-radius: 20px; background: rgb(255 255 255 / 6%); }
+  .naechste .pfeil-link { margin-top: 0; }
+  .auto-karte { margin-bottom: -84px; padding: 6px; border-radius: 20px; box-shadow: 0 1px 2px rgb(4 5 46 / 10%), 0 10px 20px -8px rgb(4 5 46 / 22%), 0 24px 40px -24px rgb(4 5 46 / 30%), 0 0 0 1px rgb(14 16 51 / 5%); }
+  .auto-karte img { border-radius: 15px; }
+  .auto-karte figcaption { padding: 10px 8px 4px; font-size: .8125rem; }
+
+  .geschichte { padding-top: 150px; }
+  .werdegang { margin-top: 0; padding-left: 20px; }
+  .werdegang p { font-size: 1.0625rem; }
+  .station-titel { font-size: 1.3125rem; }
+  .station-jahr { font-size: 1.875rem; }
+  .laufbahn-panel { padding: 22px 18px 28px; border-radius: 22px; }
+  .station { grid-template-columns: 48px minmax(0, 1fr); gap: 14px; }
+  .punkt { left: 13px; }
+  .punkt-foto { width: 56px; height: 56px; left: -2px; }
+  .team { padding-bottom: 88px; }
+  .team-karte { border-radius: 20px; }
+  .team-links { gap: 10px; }
+  .kontakt-person { margin-top: 24px; }
+
+  .preise { padding: 88px 0 80px; }
+  .preise-kopf { margin-bottom: 36px; }
+  .preise-sub { font-size: 1.0625rem; }
+  .preis-liste { grid-template-columns: minmax(0, 1fr); }
+  .preis, .preis + .preis { padding: 24px 0 22px; border-left: 0; }
+  .preis + .preis { border-top: 1px solid rgb(255 255 255 / 16%); }
+  .betrag { margin: 8px 0 6px; }
+  .ziffern { font-size: clamp(4.25rem, 22vw, 6rem); }
+  .preise-fuss { margin-top: 24px; }
+  .preise-links { gap: 20px; }
+
+  .kurse { padding: 88px 0; }
+  .kurse-kopf { margin-bottom: 28px; }
+  .kurse-sub { font-size: 1.0625rem; }
+  .plan-kurs b { font-size: 1.25rem; }
+  .kurse-fuss { grid-template-columns: minmax(0, 1fr); margin-top: 32px; }
+
+  .fahrstunden { padding: 88px 0; }
+  .fahrstunden-text > p { font-size: 1.0625rem; }
+  .weg { padding: 24px 20px; border-radius: 20px; }
+  .weg h3 { font-size: 1.375rem; }
+  .weg-liste li { grid-template-columns: 40px minmax(0, 1fr); gap: 14px; }
+  .weg-nr { width: 36px; height: 36px; font-size: 1rem; }
+  .weg-marke { grid-column: 2; justify-self: start; margin-top: -4px; }
+
+  .lokal { padding: 88px 0; }
+  .lokal-in { gap: 36px; }
+  .lokal-bilder { padding-bottom: 56px; }
+  .lokal-haus { width: 90%; }
+  .lokal-eingang { width: 52%; padding: 5px; border-radius: 18px; }
+  .lokal-eingang img { border-radius: 13px; }
+  .lokal-text .btn { width: 100%; }
+
+  .bekannt { padding-bottom: 88px; }
+  .namen { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .namen li { flex-direction: row; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--linie); }
+
+  .kontakt { padding: 88px 0; }
+  .kontakt-ring { width: 420px; height: 420px; right: -250px; top: 18%; }
+  .gross-tel { font-size: clamp(2.5rem, 12.4vw, 3.5rem); }
+  .gross-mail { font-size: 1.1875rem; }
+
+  /* Platz für Aktionsleiste und Vorschau-Leiste, in der Farbe der Fusszeile */
+  .fuss { padding: 56px 0 calc(168px + env(safe-area-inset-bottom)); }
+  .fuss-in { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .fuss-unten a { margin: 0 20px 0 0; }
+
+  .aktion {
+    position: fixed; z-index: 90; left: 12px; right: 12px; bottom: calc(76px + env(safe-area-inset-bottom));
+    display: flex; gap: 6px; padding: 6px; border-radius: 999px; background: #fff;
+    border: 1.5px solid var(--ultramarin); box-shadow: 0 16px 40px rgb(4 5 46 / 28%);
+    transform: translateY(16px); opacity: 0; visibility: hidden; pointer-events: none;
+    transition: transform .35s var(--ease-out), opacity .3s, visibility 0s linear .35s;
+  }
+  .aktion.is-sichtbar { transform: none; opacity: 1; visibility: visible; pointer-events: auto; transition: transform .35s var(--ease-out), opacity .3s, visibility 0s; }
+  html:not(.js) .aktion { transform: none; opacity: 1; visibility: visible; pointer-events: auto; }
+  .aktion a { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; border-radius: 999px; font-weight: 600; text-decoration: none; }
+  .aktion-tel { background: var(--ultramarin); color: #fff; }
+  .aktion-mail { color: var(--ultramarin); }
+}
+
+@media (max-width: 360px) {
+  .hero h1 { font-size: 2.125rem; }
+  .schild-buehne { width: 104px; margin-right: -12px; }
+  .schild { --b: 66px; --h: 80px; }
+  .kicker { font-size: .6875rem; letter-spacing: .12em; }
+  .btn-nr { display: none; }
+  .gross-tel { font-size: 2.25rem; }
+}
+
+/* ---------- Animationen (nur mit JS und ohne reduzierte Bewegung) ---------- */
+html.fx .auf { opacity: 0; transform: translateY(18px); animation: auf .7s var(--ease-out) forwards; animation-delay: calc(.15s + var(--i, 0) * .09s); }
+html.fx .zeile > span { transform: translateY(108%); animation: zeile .8s var(--ease-out) forwards; animation-delay: calc(.12s + var(--i, 0) * .09s); }
+@keyframes auf { to { opacity: 1; transform: none; } }
+@keyframes zeile { to { transform: none; } }
+
+html.fx .schild { animation: drehen 1.3s cubic-bezier(.3, .1, .2, 1) .35s both; }
+@keyframes drehen {
+  from { transform: rotateZ(-6deg) rotateY(180deg) scale(.86); }
+  to { transform: rotateZ(-6deg) rotateY(0deg) scale(1); }
+}
+html.fx .schild-glanz { animation: glanz 1.4s var(--ease) 1.5s forwards; }
+@keyframes glanz { to { transform: translateX(60%); } }
+html.fx .schild-schwebe { animation: schweben 6s ease-in-out 1.7s 3; }
+html.fx .schild-schatten { animation: schatten 6s ease-in-out 1.7s 3; }
+@keyframes schweben { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes schatten { 0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; } 50% { transform: translateX(-50%) scale(.9); opacity: .75; } }
+html.fx .ring-zeichner { stroke-dashoffset: 1; animation: ring 1.6s var(--ease-out) .5s forwards; }
+@keyframes ring { to { stroke-dashoffset: 0; } }
+html.fx .ring-fein { opacity: 0; animation: einblenden 1.2s ease .9s forwards; }
+@keyframes einblenden { to { opacity: 1; } }
+
+html.fx .auto-karte { opacity: 0; transform: translateY(48px); animation: auf 1s var(--ease-out) .75s forwards; }
+
+/* Scroll-Reveals */
+html.fx .rv { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); transition-delay: calc(var(--d, 0) * 80ms); }
+html.fx .rv.is-in { opacity: 1; transform: none; }
+
+/* Laufbahn */
+html.fx .station-text { opacity: 0; transform: translateY(12px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }
+html.fx .station:nth-child(odd) .station-text { transform: translateY(-12px); }
+html.fx .station.is-an .station-text { opacity: 1; transform: none; }
+html.fx .station .punkt { transform: scale(.6); }
+html.fx .station.is-an .punkt { transform: none; }
+html.fx .linie-voll { transform: scaleX(var(--fortschritt, 0)); }
+@media (max-width: 1023px) {
+  html.fx .linie-voll { transform: scaleY(var(--fortschritt, 0)); }
+  html.fx .station:nth-child(odd) .station-text { transform: translateY(12px); }
+}
+
+/* Preise: Ziffern rollen einmal ein */
+html.fx .z > span { transform: translateY(104%); transition: transform .9s var(--ease-out); }
+html.fx .preis.is-in .z > span { transform: none; }
+html.fx .preis.is-in .z:nth-child(2) > span { transition-delay: .08s; }
+html.fx .preis.is-in .z:nth-child(3) > span { transition-delay: .16s; }
+html.fx .preis:nth-child(2).is-in .z > span { transition-delay: .12s; }
+html.fx .preis:nth-child(2).is-in .z:nth-child(2) > span { transition-delay: .2s; }
+html.fx .preis:nth-child(2).is-in .z:nth-child(3) > span { transition-delay: .28s; }
+html.fx .preis:nth-child(3).is-in .z > span { transition-delay: .24s; }
+html.fx .preis:nth-child(3).is-in .z:nth-child(2) > span { transition-delay: .32s; }
+html.fx .preis h3, html.fx .preis .chf, html.fx .preis .rest, html.fx .preis-info { opacity: 0; transition: opacity .8s ease .3s; }
+html.fx .preis.is-in h3, html.fx .preis.is-in .chf, html.fx .preis.is-in .rest, html.fx .preis.is-in .preis-info { opacity: 1; }
+
+/* Kursplan-Zeilen */
+html.fx .plan-zeile { opacity: 0; transform: translateX(-16px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); transition-delay: calc(var(--d, 0) * 120ms); }
+html.fx .plan-zeile.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+@media print {
+  .kopf, .aktion { display: none; }
+  .hero { padding-top: 40px; }
+}
