@@ -93,32 +93,37 @@
                  sizes="(min-width: 1000px) 56vw, 100vw" width="1600" height="1200" fetchpriority="high"
                  alt="Raumhohe Schrankwand in Rot mit Griffstangen und offener Garderobennische, gebaut von HB Design">
             <svg class="plan" viewBox="0 0 1600 1200" aria-hidden="true" focusable="false">
+              <g class="z-flaechen">
+                <path class="z-front" d="M444 -28 L1376 186 L1388 857 L576 1316 Z"/>
+                <path class="z-seite" d="M444 -28 L356 25 L276 108 L388 1095 L576 1316 Z"/>
+                <path class="z-nische" d="M1182 376 L1367 378 L1374 862 L1203 961 Z"/>
+              </g>
               <g class="z-umriss">
-                <path pathLength="1" d="M444 -28 L1376 186 L1388 857 L576 1316 Z"/>
-                <path pathLength="1" d="M444 -28 L356 25 L276 108 L388 1095 L576 1316"/>
+                <path class="zl" pathLength="1" d="M444 -28 L1376 186 L1388 857 L576 1316 Z"/>
+                <path class="zl" pathLength="1" d="M444 -28 L356 25 L276 108 L388 1095 L576 1316"/>
               </g>
               <g class="z-fugen">
-                <path pathLength="1" style="--k:0" d="M342 39 L465 1191"/>
-                <path pathLength="1" style="--k:1" d="M705 32 L793 1190"/>
-                <path pathLength="1" style="--k:2" d="M901 77 L961 1096"/>
-                <path pathLength="1" style="--k:3" d="M1053 112 L1092 1023"/>
-                <path pathLength="1" style="--k:4" d="M1173 140 L1203 961"/>
-                <path pathLength="1" style="--k:5" d="M1268 161 L1278 376"/>
-                <path pathLength="1" style="--k:6" d="M1182 376 L1367 378 L1374 862"/>
+                <path class="zl" pathLength="1" style="--k:0" d="M342 39 L465 1191"/>
+                <path class="zl" pathLength="1" style="--k:1" d="M705 32 L793 1190"/>
+                <path class="zl" pathLength="1" style="--k:2" d="M901 77 L961 1096"/>
+                <path class="zl" pathLength="1" style="--k:3" d="M1053 112 L1092 1023"/>
+                <path class="zl" pathLength="1" style="--k:4" d="M1173 140 L1203 961"/>
+                <path class="zl" pathLength="1" style="--k:5" d="M1268 161 L1278 376"/>
+                <path class="zl" pathLength="1" style="--k:6" d="M1182 376 L1367 378 L1374 862"/>
               </g>
               <g class="z-griffe">
-                <path pathLength="1" style="--k:0" d="M389 638 L410 851"/>
-                <path pathLength="1" style="--k:1" d="M739 618 L751 843"/>
-                <path pathLength="1" style="--k:2" d="M779 613 L791 832"/>
-                <path pathLength="1" style="--k:3" d="M1072 568 L1076 743"/>
-                <path pathLength="1" style="--k:4" d="M1096 565 L1099 735"/>
+                <path class="zl" pathLength="1" style="--k:0" d="M389 638 L410 851"/>
+                <path class="zl" pathLength="1" style="--k:1" d="M739 618 L751 843"/>
+                <path class="zl" pathLength="1" style="--k:2" d="M779 613 L791 832"/>
+                <path class="zl" pathLength="1" style="--k:3" d="M1072 568 L1076 743"/>
+                <path class="zl" pathLength="1" style="--k:4" d="M1096 565 L1099 735"/>
               </g>
               <g class="z-mass">
                 <path class="z-hilf" d="M1394 186 L1500 186 M1406 857 L1500 857"/>
-                <path pathLength="1" d="M918.9 231.3 L459 125.5"/>
-                <path pathLength="1" d="M918.9 231.3 L1378.7 337"/>
-                <path pathLength="1" d="M1470 521.5 L1470 186"/>
-                <path pathLength="1" d="M1470 521.5 L1470 857"/>
+                <path class="zl" pathLength="1" d="M918.9 231.3 L459 125.5"/>
+                <path class="zl" pathLength="1" d="M918.9 231.3 L1378.7 337"/>
+                <path class="zl" pathLength="1" d="M1470 521.5 L1470 186"/>
+                <path class="zl" pathLength="1" d="M1470 521.5 L1470 857"/>
                 <path class="z-pfeil" d="M459 125.5 L478.6 138.2 L482.2 122.6 Z M1378.7 337 L1355.5 339.9 L1359.1 324.3 Z M1470 186 L1462 210 L1478 210 Z M1470 857 L1462 833 L1478 833 Z"/>
                 <text class="z-text" x="922.5" y="213" text-anchor="middle" transform="rotate(12.95 922.5 213)">MASS NACH IHREM RAUM</text>
                 <text class="z-text" x="1446" y="521.5" text-anchor="middle" transform="rotate(-90 1446 521.5)">RAUMHOCH</text>
@@ -147,8 +152,8 @@
             </a>
           </div>
           <dl class="fakten hero-auf" style="--i:5">
-            <div><dt>Werkstatt</dt><dd>Eigene, am Ziegeleihof in Hochdorf</dd></div>
-            <div><dt>Für wen</dt><dd>Private und Gewerbe</dd></div>
+            <div><dt>Eigene Werkstatt</dt><dd>Am Ziegeleihof in Hochdorf</dd></div>
+            <div><dt>Kundschaft</dt><dd>Private und Gewerbe</dd></div>
             <div><dt>Beratung</dt><dd>Gern bei Ihnen vor Ort</dd></div>
           </dl>
         </div>
@@ -420,7 +425,7 @@
     </div>
   </footer>
 
-  <!-- Aktionsleiste am Handy -->
+  <!-- Aktionsleiste mobil -->
   <div class="aktion" aria-label="Schnellkontakt" role="region">
     <a class="knopf knopf-rot" href="tel:+41419102172"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen</a>
     <a class="knopf knopf-linie" href="mailto:hb.design@bluewin.ch?subject=Offertanfrage"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail</a>

@@ -1,3 +1,4 @@
+/* Wunschliste Schreinerei HB Design: Farben kommen aus ../assets/shared/basis.css (Rot aus dem Logo, Kalkweiss, Petrol) */
 /* Wunschliste */
 
 .intro { max-width: 720px; padding: 56px 0 36px; }
@@ -9,7 +10,7 @@
 /* Blöcke */
 .block { margin-bottom: 20px; padding: 30px; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); }
 .block-head { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 22px; }
-.block-no { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 800; }
+.block-no { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 50%; background: var(--petrol); color: #fff; font-weight: 800; }
 .block-head h2 { font-size: 1.375rem; margin: 4px 0 4px; }
 .block-head p { color: var(--muted); font-size: .975rem; }
 
@@ -21,35 +22,35 @@
   border-radius: var(--r); border: 2px solid var(--line); background: var(--white);
   transition: border-color .2s, box-shadow .2s;
 }
-.design-pick:hover { border-color: #c9c8cf; }
+.design-pick:hover { border-color: #cdc6bb; }
 .design-pick input { position: absolute; opacity: 0; pointer-events: none; }
 .design-pick img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
 .design-text { display: block; padding: 14px 52px 16px 16px; }
 .design-text strong { display: block; font-size: 1.125rem; }
 .design-text span { color: var(--muted); font-size: .925rem; }
-.radio { position: absolute; right: 16px; bottom: 22px; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #c9c8cf; background: #fff; transition: border-color .2s, box-shadow .2s; }
+.radio { position: absolute; right: 16px; bottom: 22px; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #cdc6bb; background: #fff; transition: border-color .2s, box-shadow .2s; }
 .design-pick:has(input:checked) { border-color: var(--red); box-shadow: 0 0 0 4px var(--red-soft); }
 .design-pick input:checked ~ .radio { border-color: var(--red); box-shadow: inset 0 0 0 5px #fff; background: var(--red); }
 .design-pick:has(input:focus-visible) { outline: 3px solid var(--red); outline-offset: 3px; }
 .design-view {
   position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 12px; border-radius: 999px; background: rgb(22 22 26 / 86%); color: #fff;
+  padding: 7px 12px; border-radius: 999px; background: rgb(31 35 38 / 88%); color: #fff;
   font-size: .85rem; font-weight: 700; text-decoration: none;
 }
 .design-view:hover { background: var(--red); color: #fff; }
 
 /* Optionen */
-.opts { display: grid; gap: 10px; }
+.opts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .opt {
   position: relative; display: flex; align-items: center; gap: 14px; cursor: pointer;
   padding: 14px 16px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--white);
   transition: border-color .2s, background-color .2s;
 }
-.opt:hover { border-color: #c9c8cf; }
+.opt:hover { border-color: #cdc6bb; }
 .opt input { position: absolute; opacity: 0; pointer-events: none; }
 .opt-box {
   display: grid; place-items: center; width: 24px; height: 24px; flex: none;
-  border-radius: 7px; border: 2px solid #c9c8cf; background: #fff; transition: background-color .2s, border-color .2s;
+  border-radius: 7px; border: 2px solid #cdc6bb; background: #fff; transition: background-color .2s, border-color .2s;
 }
 .opt-box-round { border-radius: 50%; }
 .opt input:checked ~ .opt-box {
@@ -57,10 +58,10 @@
   background: var(--red) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l9 -10'/%3E%3C/svg%3E") no-repeat center / 14px;
 }
 .opt input[type="radio"]:checked ~ .opt-box { background: var(--red); box-shadow: inset 0 0 0 5px #fff; }
-.opt:has(input:checked) { border-color: var(--red); background: #fffafb; }
+.opt:has(input:checked) { border-color: var(--red); background: #fdf7f6; }
 .opt:has(input:focus-visible) { outline: 3px solid var(--red); outline-offset: 2px; }
 .opt-text { flex: 1; min-width: 0; }
-.opt-text strong { display: block; font-size: 1rem; }
+.opt-text strong { display: block; font-size: 1rem; overflow-wrap: break-word; hyphens: auto; }
 .opt-text small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
 .opt .cost { white-space: nowrap; font-weight: 800; font-variant-numeric: tabular-nums; }
 .opt-mix { margin-top: 12px; }
@@ -87,10 +88,10 @@
 }
 .field select {
   -webkit-appearance: none; appearance: none; padding-right: 42px; cursor: pointer;
-  background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316161a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6l6 -6'/%3E%3C/svg%3E") no-repeat right 14px center / 18px;
+  background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f2326' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6l6 -6'/%3E%3C/svg%3E") no-repeat right 14px center / 18px;
 }
 .field textarea { resize: vertical; min-height: 110px; }
-.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--red); background-color: #fff; box-shadow: 0 0 0 4px rgb(188 32 56 / 12%); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--red); background-color: #fff; box-shadow: 0 0 0 4px rgb(196 10 42 / 12%); }
 .field.has-error input { border-color: var(--red); background: var(--red-soft); }
 .field-error { color: var(--red); font-size: .85rem; font-weight: 700; }
 .mini { display: flex; align-items: center; gap: 10px; font-weight: 500 !important; font-size: .975rem !important; cursor: pointer; }
@@ -99,14 +100,14 @@
 /* Zusammenfassung */
 .summary {
   position: sticky; top: 20px; padding: 28px; border-radius: var(--r-lg);
-  background: var(--ink); color: #fff; box-shadow: 0 24px 60px rgb(22 22 26 / 22%);
+  background: var(--ink); color: #fff; box-shadow: 0 24px 60px rgb(31 35 38 / 22%);
 }
 .summary h2 { font-size: 1.375rem; margin-bottom: 16px; }
 .sum-lines div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid rgb(255 255 255 / 12%); font-size: .975rem; }
 .sum-lines dt { color: rgb(255 255 255 / 70%); }
 .sum-lines dt span { color: rgb(255 255 255 / 45%); }
 .sum-lines dd { margin: 0; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
-.sum-design { color: #ff8a9b; }
+.sum-design { color: #f2a7b2; }
 .sum-design.is-set { color: #fff; }
 .sum-total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-top: 16px; border-top: 1px solid rgb(255 255 255 / 22%); }
 .sum-total span { font-weight: 700; }
@@ -129,7 +130,7 @@
 .mbar { display: none; }
 
 @media (max-width: 960px) {
-  .layout { grid-template-columns: 1fr; }
+  .layout { grid-template-columns: minmax(0, 1fr); }
   .summary { position: static; }
   .mbar {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
@@ -162,4 +163,14 @@
   .sum-design, .sum-design.is-set { color: var(--ink); }
   .design-view { display: none; }
   .opt:not(:has(input:checked)) { display: none; }
+}
+
+/* Sehr schmale Smartphones: Preis unter den Text, damit lange Wörter wie «Lichtschachtabdeckungen» Platz haben */
+@media (max-width: 380px) {
+  .opt { flex-wrap: wrap; row-gap: 4px; }
+  .opt .cost { width: 100%; padding-left: 36px; }
+  .mbar { gap: 8px; }
+  .mbar span { white-space: nowrap; font-size: .9rem; }
+  .mbar strong { font-size: 1.05rem; margin-left: 4px; }
+  .mbar .btn { white-space: nowrap; padding: .65em .95em; }
 }
