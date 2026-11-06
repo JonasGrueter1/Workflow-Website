@@ -146,6 +146,25 @@
       }
     }
   }
+  /* Kapitel-Zähler (Desktop): sichtbar, solange die Bildgeschichte läuft */
+  var stapel = document.querySelector('.stapel');
+  var zaehler = document.querySelector('.k-zaehler');
+  var striche = zaehler ? zaehler.querySelectorAll('span') : [];
+  var zAktiv = -1;
+  function zaehlerUpdate(vh) {
+    if (!zaehler || !mqDesk.matches) return;
+    var r = stapel.getBoundingClientRect();
+    zaehler.classList.toggle('sichtbar', r.top < vh * 0.5 && r.bottom > vh * 0.6);
+    var a = 0;
+    for (var i = 0; i < kapitel.length; i++) {
+      if (kapitel[i].getBoundingClientRect().top < vh * 0.5) a = i;
+    }
+    if (a !== zAktiv) {
+      zAktiv = a;
+      for (var j = 0; j < striche.length; j++) striche[j].classList.toggle('aktiv', j === a);
+    }
+  }
+
   function stapelReset() {
     kapitel.forEach(function (k) { k.style.removeProperty('--p'); k.__p = undefined; });
   }
@@ -212,6 +231,7 @@
     kopfUpdate(y);
     woerterUpdate(vh);
     stapelUpdate(vh);
+    zaehlerUpdate(vh);
     wegUpdate(vh);
     navUpdate(vh);
   }

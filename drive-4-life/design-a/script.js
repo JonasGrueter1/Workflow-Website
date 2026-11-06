@@ -29,6 +29,19 @@
     if (knopf.getAttribute('aria-expanded') === 'true' && !e.target.closest('.kopf')) menu(false);
   });
 
+  /* Weiches Scrollen nur für Anker-Links (nicht global, damit Skripte normal scrollen) */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a || a.hasAttribute('data-soon')) return;
+    var id = a.getAttribute('href');
+    if (id.length < 2) return;
+    var ziel = document.querySelector(id);
+    if (!ziel) return;
+    e.preventDefault();
+    ziel.scrollIntoView({ behavior: reduziert ? 'auto' : 'smooth', block: 'start' });
+    if (history.replaceState) history.replaceState(null, '', id);
+  });
+
   /* Preise: Reiter nach ARIA-Muster */
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.reiter-knopf'));
   var marke = document.querySelector('.reiter-marke');

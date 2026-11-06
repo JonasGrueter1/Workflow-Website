@@ -115,8 +115,8 @@
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--red); background-color: #fff; box-shadow: 0 0 0 4px rgb(0 95 173 / 14%); }
 .field.has-error input { border-color: var(--fehler); background: #fdecec; }
 .field-error { color: var(--fehler); font-size: .85rem; font-weight: 700; }
-.mini { display: flex; align-items: center; gap: 10px; font-weight: 500 !important; font-size: .975rem !important; cursor: pointer; }
-.mini input { width: 18px; height: 18px; accent-color: var(--red); }
+.mini { display: flex; align-items: flex-start; gap: 10px; font-weight: 500 !important; font-size: .975rem !important; cursor: pointer; }
+.mini input { width: 18px; height: 18px; flex: none; margin: 3px 0 0; accent-color: var(--red); }
 
 /* Zusammenfassung */
 .summary {

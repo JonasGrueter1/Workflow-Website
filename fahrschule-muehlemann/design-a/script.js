@@ -1,147 +1,147 @@
-/* Fahrschule Mühlemann, Design A: Kopf, Menü, Schalter Handschaltung/Automat, Einblenden, Weg-Linie */
+/* Fahrschule Mühlemann, Design A: Kopf, Menü, Auftritt, Schalter, Weg-Linie */
 (function () {
   'use strict';
-
   var root = document.documentElement;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Kopf: Schatten nach den ersten Pixeln */
-  var top = document.getElementById('top');
-  var setTop = function () { top.classList.toggle('is-scrolled', window.scrollY > 8); };
+  /* Hero-Auftritt nach dem ersten Bild */
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () { root.classList.add('ist-geladen'); });
+  });
 
-  /* Menü (mobil und Tablet) */
-  var btn = document.querySelector('.menu-btn');
-  var nav = document.getElementById('nav');
-  var setMenu = function (open) {
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    btn.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
-    nav.classList.toggle('is-open', open);
-    root.classList.toggle('menu-open', open);
-  };
-  if (btn && nav) {
-    btn.addEventListener('click', function () { setMenu(btn.getAttribute('aria-expanded') !== 'true'); });
-    nav.addEventListener('click', function (e) {
-      var a = e.target.closest('a');
-      if (a && a.getAttribute('href').charAt(0) === '#' && a.getAttribute('href').length > 1) setMenu(false);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && nav.classList.contains('is-open')) { setMenu(false); btn.focus(); }
-    });
-    document.addEventListener('click', function (e) {
-      if (nav.classList.contains('is-open') && !nav.contains(e.target) && !btn.contains(e.target)) setMenu(false);
+  /* Kopf: Linie beim Scrollen, Aktionsleiste ab dem zweiten Bildschirm */
+  var kopf = document.getElementById('kopf');
+  var leiste = document.getElementById('aktionsleiste');
+  var weg = document.getElementById('schritte');
+  var linie = null;
+  var schritte = [];
+  if (weg) {
+    linie = document.createElement('span');
+    linie.className = 'weg-fortschritt';
+    linie.setAttribute('aria-hidden', 'true');
+    weg.insertBefore(linie, weg.firstChild);
+    schritte = Array.prototype.slice.call(weg.querySelectorAll('.schritt'));
+  }
+
+  function wegAktualisieren() {
+    if (!weg || !linie) return;
+    var r = weg.getBoundingClientRect();
+    var marke = window.innerHeight * 0.62;
+    var start = r.top + 22;
+    var hoehe = Math.max(1, r.height - 52);
+    var p = reduced ? 1 : Math.min(1, Math.max(0, (marke - start) / hoehe));
+    linie.style.setProperty('--p', p.toFixed(4));
+    var ende = start + p * hoehe;
+    schritte.forEach(function (s) {
+      var nr = s.querySelector('.nr');
+      var nrR = nr.getBoundingClientRect();
+      s.classList.toggle('ist-erreicht', reduced || (p > 0.001 && nrR.top + nrR.height / 2 <= ende + 1));
     });
   }
 
-  /* Sanftes Scrollen nur für Anker im Seitenkopf und in der Seite */
+  var geplant = false;
+  function beimScrollen() {
+    if (geplant) return;
+    geplant = true;
+    requestAnimationFrame(function () {
+      geplant = false;
+      var y = window.scrollY || window.pageYOffset;
+      if (kopf) kopf.classList.toggle('ist-gescrollt', y > 8);
+      if (leiste) leiste.classList.toggle('ist-sichtbar', y > window.innerHeight * 0.45);
+      wegAktualisieren();
+      nachholen();
+    });
+  }
+
+  /* Scroll-Reveals: IntersectionObserver plus Nachholen für übersprungene Elemente */
+  var offen = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  function zeigen(el) { el.classList.add('ist-da'); }
+  function nachholen() {
+    if (!offen.length) return;
+    var h = window.innerHeight;
+    offen = offen.filter(function (el) {
+      if (el.getBoundingClientRect().top < h * 0.94) { zeigen(el); return false; }
+      return true;
+    });
+  }
+  if (reduced || !('IntersectionObserver' in window)) {
+    offen.forEach(zeigen);
+    offen = [];
+  } else {
+    var io = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (e.isIntersecting) {
+          zeigen(e.target);
+          io.unobserve(e.target);
+          offen = offen.filter(function (x) { return x !== e.target; });
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    offen.forEach(function (el) { io.observe(el); });
+  }
+
+  window.addEventListener('scroll', beimScrollen, { passive: true });
+  window.addEventListener('resize', beimScrollen);
+  beimScrollen();
+
+  /* Handy-Menü */
+  var knopf = document.querySelector('.rund-menu');
+  var nav = document.getElementById('nav');
+  function menu(auf) {
+    if (!knopf || !nav) return;
+    knopf.setAttribute('aria-expanded', auf ? 'true' : 'false');
+    knopf.setAttribute('aria-label', auf ? 'Menü schliessen' : 'Menü öffnen');
+    nav.classList.toggle('ist-offen', auf);
+  }
+  if (knopf && nav) {
+    knopf.addEventListener('click', function () { menu(knopf.getAttribute('aria-expanded') !== 'true'); });
+    nav.addEventListener('click', function (e) { if (e.target.closest('a')) menu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menu(false); });
+    document.addEventListener('click', function (e) {
+      if (knopf.getAttribute('aria-expanded') === 'true' && !e.target.closest('.kopf')) menu(false);
+    });
+  }
+
+  /* Sanftes Scrollen zu Ankern (nur per Klick, damit Skripte und Prüfwerkzeuge direkt springen) */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');
     if (!a || a.hasAttribute('data-soon')) return;
     var id = a.getAttribute('href').slice(1);
-    var el = id && document.getElementById(id);
-    if (!el) return;
+    var ziel = id ? document.getElementById(id) : null;
+    if (!ziel) return;
     e.preventDefault();
-    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    ziel.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     if (history.replaceState) history.replaceState(null, '', '#' + id);
-    if (id === 'inhalt') { el.setAttribute('tabindex', '-1'); el.focus({ preventScroll: true }); }
   });
 
   /* Schalter Handschaltung oder Automat (ARIA-Tabs) */
-  var sw = document.querySelector('.switch');
-  if (sw) {
-    var tabs = [].slice.call(sw.querySelectorAll('[role="tab"]'));
-    var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
-    panels.forEach(function (p, i) {
-      p.setAttribute('role', 'tabpanel');
-      p.setAttribute('aria-labelledby', tabs[i].id);
-      p.setAttribute('tabindex', '0');
-      if (i !== 0) p.setAttribute('aria-hidden', 'true');
-    });
-    var select = function (idx, focus) {
-      tabs.forEach(function (t, i) {
-        var on = i === idx;
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
-        t.setAttribute('tabindex', on ? '0' : '-1');
-        panels[i].classList.toggle('is-active', on);
-        panels[i].setAttribute('aria-hidden', on ? 'false' : 'true');
+  var schalter = document.querySelector('.schalter');
+  if (schalter) {
+    var tabs = Array.prototype.slice.call(schalter.querySelectorAll('[role="tab"]'));
+    var waehlen = function (i, fokus) {
+      schalter.setAttribute('data-aktiv', String(i));
+      tabs.forEach(function (t, k) {
+        var an = k === i;
+        t.setAttribute('aria-selected', an ? 'true' : 'false');
+        t.tabIndex = an ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) {
+          panel.classList.toggle('is-aktiv', an);
+          if (an) panel.removeAttribute('aria-hidden'); else panel.setAttribute('aria-hidden', 'true');
+        }
       });
-      sw.setAttribute('data-active', idx === 0 ? 'hand' : 'auto');
-      if (focus) tabs[idx].focus();
+      if (fokus) tabs[i].focus();
     };
     tabs.forEach(function (t, i) {
-      t.addEventListener('click', function () { select(i, false); });
+      t.addEventListener('click', function () { waehlen(i, false); });
       t.addEventListener('keydown', function (e) {
-        var n = null;
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % tabs.length;
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + tabs.length) % tabs.length;
-        if (e.key === 'Home') n = 0;
-        if (e.key === 'End') n = tabs.length - 1;
-        if (n !== null) { e.preventDefault(); select(n, true); }
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          waehlen((i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length, true);
+        } else if (e.key === 'Home') { e.preventDefault(); waehlen(0, true); }
+        else if (e.key === 'End') { e.preventDefault(); waehlen(tabs.length - 1, true); }
       });
     });
+    waehlen(0, false);
   }
-
-  /* Einblenden beim Scrollen, gestaffelt */
-  var items = [].slice.call(document.querySelectorAll('.rv'));
-  if ('IntersectionObserver' in window && !reduce) {
-    root.classList.add('io');
-    var io = new IntersectionObserver(function (entries) {
-      var batch = entries.filter(function (e) { return e.isIntersecting; });
-      batch.forEach(function (entry, i) {
-        var el = entry.target;
-        el.style.setProperty('--rd', Math.min(i, 5) * 80 + 'ms');
-        el.classList.add('is-in');
-        io.unobserve(el);
-        setTimeout(function () { el.style.setProperty('--rd', '0ms'); }, 1400);
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
-    items.forEach(function (el) { io.observe(el); });
-  } else {
-    items.forEach(function (el) { el.classList.add('is-in'); });
-  }
-
-  /* Weg zum Führerschein: Linie wächst mit dem Scrollen, Punkte füllen sich */
-  var wrap = document.getElementById('steps');
-  var fill = wrap ? wrap.querySelector('.steps-fill') : null;
-  var track = wrap ? wrap.querySelector('.steps-track') : null;
-  var steps = wrap ? [].slice.call(wrap.querySelectorAll('.step')) : [];
-  var updateSteps = function () {
-    if (!wrap || !fill) return;
-    if (reduce) {
-      fill.style.transform = 'scaleY(1)';
-      steps.forEach(function (s) { s.classList.add('is-on'); });
-      return;
-    }
-    var tr = track.getBoundingClientRect();
-    var line = window.innerHeight * 0.62;
-    var p = (line - tr.top) / Math.max(1, tr.height);
-    p = Math.max(0, Math.min(1, p));
-    fill.style.transform = 'scaleY(' + p.toFixed(4) + ')';
-    steps.forEach(function (s) {
-      var dot = s.querySelector('.step-no').getBoundingClientRect();
-      s.classList.toggle('is-on', dot.top + dot.height / 2 <= line + 2);
-    });
-  };
-
-  /* Aktionsleiste unten (mobil): erst sichtbar, wenn die Knöpfe im Hero aus dem Bild sind */
-  var mbar = document.querySelector('.mbar');
-  var heroCta = document.querySelector('.hero-cta');
-  if (mbar && heroCta && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      var e = entries[0];
-      mbar.classList.toggle('is-shown', !e.isIntersecting && e.boundingClientRect.top < 0);
-    }, { threshold: 0 }).observe(heroCta);
-  } else if (mbar) {
-    mbar.classList.add('is-shown');
-  }
-
-  var ticking = false;
-  var onScroll = function () {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { setTop(); updateSteps(); ticking = false; });
-  };
-  setTop();
-  updateSteps();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
 })();

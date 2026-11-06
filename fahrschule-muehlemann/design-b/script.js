@@ -1,100 +1,134 @@
-/* Fahrschule Mühlemann, Design B «Porträt» */
+/* Fahrschule Mühlemann, Design B «Porträt»: Hero-Auftritt, Scroll-Reveals, Parallaxe, Menü */
 (function () {
   'use strict';
+  window.mbBereit = true;
 
-  var root = document.documentElement;
-  window.bPortraet = true;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var doc = document;
+  var root = doc.documentElement;
+  var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Hero-Auftritt erst, wenn die Schrift bereit ist (höchstens 700 ms warten) */
-  var bereit = function () { root.classList.add('bereit'); };
-  if (document.fonts && document.fonts.ready && !reduce) {
-    var t = setTimeout(bereit, 700);
-    document.fonts.ready.then(function () { clearTimeout(t); requestAnimationFrame(bereit); });
-  } else {
-    bereit();
+  /* Hero-Auftritt: erst wenn die Schriften da sind, damit nichts springt */
+  var gestartet = false;
+  function heroStart() {
+    if (gestartet) return;
+    gestartet = true;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { root.classList.add('ist-bereit'); });
+    });
+    setTimeout(function () { root.classList.add('hero-fertig'); }, 2400);
   }
-  /* Sicherheitsnetz: nie unsichtbar bleiben */
-  setTimeout(bereit, 1600);
-
-  /* Einblenden beim Scrollen */
-  var items = document.querySelectorAll('[data-reveal]');
-  if ('IntersectionObserver' in window && !reduce) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('ist-sichtbar'); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-    items.forEach(function (el) { io.observe(el); });
+  if (ruhig) {
+    root.classList.add('ist-bereit', 'hero-fertig');
   } else {
-    items.forEach(function (el) { el.classList.add('ist-sichtbar'); });
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(heroStart);
+    setTimeout(heroStart, 650);
   }
 
-  /* Sanftes Scrollen zu den Abschnitten (nur bei Klick, nicht für Skripte) */
-  document.addEventListener('click', function (e) {
+  /* Scroll-Reveals: alles, was den unteren Rand erreicht hat (oder schon darüber liegt), wird sichtbar */
+  var offen = [].slice.call(doc.querySelectorAll('.rv, .rv-bild'));
+  function zeigen() {
+    if (!offen.length) return;
+    var grenze = window.innerHeight * 0.9;
+    offen = offen.filter(function (el) {
+      if (el.getBoundingClientRect().top < grenze) { el.classList.add('ist-da'); return false; }
+      return true;
+    });
+  }
+  if (ruhig) {
+    offen.forEach(function (el) { el.classList.add('ist-da'); });
+    offen = [];
+  }
+
+  /* Parallaxe der Fahrzeugbilder (nur Desktop, nur transform) */
+  var plxMq = window.matchMedia('(min-width: 900px)');
+  var plx = [].slice.call(doc.querySelectorAll('.plx'));
+  function parallaxe() {
+    if (ruhig || !plxMq.matches) return;
+    var vh = window.innerHeight;
+    plx.forEach(function (img) {
+      var r = img.parentNode.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > vh + 100) return;
+      var p = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+      p = Math.max(-1, Math.min(1, p));
+      img.style.transform = 'translate3d(0,' + (p * 20).toFixed(1) + 'px,0)';
+    });
+  }
+  plxMq.addEventListener && plxMq.addEventListener('change', function () {
+    if (!plxMq.matches) plx.forEach(function (img) { img.style.transform = ''; });
+  });
+
+  /* Aktiver Anker in der Navigation */
+  var navLinks = [].slice.call(doc.querySelectorAll('.nav a[href^="#"]'));
+  var ziele = navLinks.map(function (a) { return doc.querySelector(a.getAttribute('href')); });
+  function aktiv() {
+    var mitte = window.innerHeight * 0.35, treffer = -1;
+    ziele.forEach(function (sec, i) {
+      if (!sec) return;
+      var r = sec.getBoundingClientRect();
+      if (r.top <= mitte && r.bottom > mitte) treffer = i;
+    });
+    navLinks.forEach(function (a, i) { a.classList.toggle('ist-aktiv', i === treffer); });
+  }
+
+  var geplant = false;
+  function tick() {
+    geplant = false;
+    zeigen();
+    parallaxe();
+    aktiv();
+  }
+  function planen() {
+    if (!geplant) { geplant = true; requestAnimationFrame(tick); }
+  }
+  window.addEventListener('scroll', planen, { passive: true });
+  window.addEventListener('resize', planen);
+  window.addEventListener('load', planen);
+  tick();
+
+  /* Sanftes Scrollen zu Ankern (per JS, damit programmatisches Scrollen sofort reagiert) */
+  doc.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');
     if (!a || a.hasAttribute('data-soon')) return;
-    var id = a.getAttribute('href').slice(1);
-    var ziel = id && document.getElementById(id);
+    var id = a.getAttribute('href');
+    if (id.length < 2) return;
+    var ziel = doc.querySelector(id);
     if (!ziel) return;
     e.preventDefault();
-    ziel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    if (history.replaceState) history.replaceState(null, '', '#' + id);
-    if (id === 'inhalt') ziel.setAttribute('tabindex', '-1');
+    ziel.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
+    if (history.replaceState) history.replaceState(null, '', id);
+    if (id === '#inhalt') { ziel.setAttribute('tabindex', '-1'); ziel.focus({ preventScroll: true }); }
   });
 
-  /* Menü am Handy */
-  var kopf = document.getElementById('kopf');
-  var btn = kopf.querySelector('.rund-menu');
-  var menu = document.getElementById('menu');
-  var setMenu = function (offen) {
-    btn.setAttribute('aria-expanded', offen ? 'true' : 'false');
-    btn.setAttribute('aria-label', offen ? 'Menü schliessen' : 'Menü öffnen');
-    kopf.classList.toggle('menu-offen', offen);
-    menu.hidden = !offen;
-  };
-  btn.addEventListener('click', function () { setMenu(menu.hidden); });
-  menu.addEventListener('click', function (e) {
-    var a = e.target.closest('a');
-    if (a && a.getAttribute('href').charAt(0) === '#' && a.getAttribute('href').length > 1) setMenu(false);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !menu.hidden) { setMenu(false); btn.focus(); }
-  });
-
-  /* Aktionsleiste erst zeigen, wenn die Hero-Knöpfe aus dem Bild sind */
-  var leiste = document.querySelector('.leiste');
-  var heroKnoepfe = document.querySelector('.hero .knoepfe');
-  if (leiste && heroKnoepfe && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      var e = entries[0];
-      leiste.classList.toggle('ist-sichtbar', !e.isIntersecting && e.boundingClientRect.top < 0);
-    }).observe(heroKnoepfe);
-  } else if (leiste) {
-    leiste.classList.add('ist-sichtbar');
-  }
-
-  /* Dezente Parallaxe der zwei Autos (nur Desktop, nur transform) */
-  var par = [].slice.call(document.querySelectorAll('[data-parallax]'));
-  var desk = window.matchMedia('(min-width: 900px)');
-  if (par.length && !reduce) {
-    var ticking = false;
-    var update = function () {
-      ticking = false;
-      var vh = window.innerHeight;
-      par.forEach(function (img) {
-        if (!desk.matches) { img.style.transform = ''; return; }
-        var r = img.parentNode.getBoundingClientRect();
-        if (r.bottom < -100 || r.top > vh + 100) return;
-        var p = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
-        p = Math.max(-1, Math.min(1, p));
-        var y = p * 20 * parseFloat(img.getAttribute('data-parallax'));
-        img.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0) scale(1.08)';
-      });
+  /* Menü */
+  var knopf = doc.querySelector('.menu-knopf');
+  var menu = doc.getElementById('menu');
+  if (knopf && menu) {
+    var schliessen = function (fokus) {
+      knopf.setAttribute('aria-expanded', 'false');
+      knopf.setAttribute('aria-label', 'Menü öffnen');
+      menu.classList.remove('ist-offen');
+      doc.body.classList.remove('menu-auf');
+      setTimeout(function () { if (knopf.getAttribute('aria-expanded') === 'false') menu.hidden = true; }, ruhig ? 0 : 300);
+      if (fokus) knopf.focus();
     };
-    var onScroll = function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
+    var oeffnen = function () {
+      menu.hidden = false;
+      knopf.setAttribute('aria-expanded', 'true');
+      knopf.setAttribute('aria-label', 'Menü schliessen');
+      doc.body.classList.add('menu-auf');
+      requestAnimationFrame(function () { requestAnimationFrame(function () { menu.classList.add('ist-offen'); }); });
+      var erster = menu.querySelector('a');
+      if (erster) erster.focus({ preventScroll: true });
+    };
+    knopf.addEventListener('click', function () {
+      if (knopf.getAttribute('aria-expanded') === 'true') schliessen(false); else oeffnen();
+    });
+    menu.addEventListener('click', function (e) {
+      var a = e.target.closest('a');
+      if (a && a.getAttribute('href').charAt(0) === '#' && !a.hasAttribute('data-soon')) schliessen(false);
+    });
+    doc.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && knopf.getAttribute('aria-expanded') === 'true') schliessen(true);
+    });
   }
 })();

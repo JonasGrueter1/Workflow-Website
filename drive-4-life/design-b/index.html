@@ -96,10 +96,10 @@
 
   <!-- 1 Hero -->
   <section class="hero" aria-labelledby="hero-titel">
-    <div class="hero-bild" aria-hidden="true">
+    <div class="hero-bild">
       <picture>
         <source media="(min-width: 1024px)" srcset="../assets/img/b-hero-1680.webp" width="1680" height="955">
-        <img src="../assets/img/b-hero-m.webp" width="1080" height="1080" alt="" fetchpriority="high" decoding="async">
+        <img src="../assets/img/b-hero-m.webp" width="1080" height="1080" alt="Weisser VW Golf GTD von Drive 4 Life mit Logo, unter Pinien am Wasser" fetchpriority="high" decoding="async">
       </picture>
     </div>
     <div class="hero-inhalt wrap" id="inhalt">
@@ -108,7 +108,7 @@
           <span class="plakette-icon" aria-hidden="true"><svg class="i"><use href="#i-lenkrad"/></svg></span>
           <span class="plakette-text"><strong>Sehr guter Fahrlehrer 2026</strong><small>Bewertet von Fahrschülerinnen und Fahrschülern</small></span>
         </a>
-        <p class="kicker">Drive 4 Life Fahrschule · Wallisellen</p>
+        <p class="kicker"><span class="kicker-marke">Drive 4 Life </span>Fahrschule · Wallisellen</p>
         <h1 class="hero-titel" id="hero-titel">
           <span class="zeile"><span style="--i:0">Fahre fürs Leben,</span></span>
           <span class="zeile"><span style="--i:1">nicht für die Prüfung.</span></span>
@@ -120,7 +120,7 @@
           <a class="btn btn-weiss" href="https://wa.me/41763224408?text=Hallo%20Dejan%2C%20ich%20m%C3%B6chte%20eine%20kostenlose%20Probelektion%20anfragen." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>Gratis Probelektion</a>
           <a class="btn btn-umriss hero-tel" href="tel:+41763224408" aria-label="Anrufen: 076 322 44 08"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg><span class="hero-tel-text">Anrufen</span></a>
         </div>
-        <p class="hero-notiz">Kostenlose Probelektion: 50 Minuten, Kategorie B.</p>
+        <p class="hero-notiz">Kostenlose Probelektion: 50 Minuten, Kategorie&nbsp;B.</p>
       </div>
     </div>
   </section>
@@ -148,6 +148,7 @@
   </section>
 
   <div class="stapel">
+    <div class="k-zaehler" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
     <article class="kapitel" aria-labelledby="k1-t">
       <div class="k-buehne">
         <div class="k-bild">
@@ -250,7 +251,7 @@
         <aside class="probe" data-rv aria-label="Kostenlose Probelektion">
           <p class="probe-label">Probelektion</p>
           <p class="probe-preis"><span>CHF</span>0</p>
-          <p class="probe-text">50 Minuten, nur Kategorie B.</p>
+          <p class="probe-text">50 Minuten, nur Kategorie&nbsp;B.</p>
           <a class="probe-link" href="https://wa.me/41763224408?text=Hallo%20Dejan%2C%20ich%20m%C3%B6chte%20eine%20kostenlose%20Probelektion%20anfragen." target="_blank" rel="noopener">Per WhatsApp anfragen<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
         </aside>
       </div>
@@ -391,7 +392,7 @@
             <span class="mono" aria-hidden="true">SR</span>
             <div><h3>Sandra Rajic</h3><p>Nothilfe-Instruktorin</p></div>
           </div>
-          <p class="person-text">Sandra gehört als Nothilfe-Instruktorin zum Team von Drive 4 Life. Für den Nothilfekurs erreichst du sie direkt.</p>
+          <p class="person-text">Sandra gehört als Nothilfe-Instruktorin zum Team von <span class="nw">Drive 4 Life</span>. Für den Nothilfekurs erreichst du sie direkt.</p>
           <p class="person-kontakt"><a href="tel:+41764454290"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>076 445 42 90</a><a href="mailto:sandra@drive4life.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>sandra@drive4life.ch</a></p>
           <a class="pfeil-link" href="#" data-soon="Dein Fahrlehrer">Mehr über deinen Fahrlehrer<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
         </article>
@@ -413,8 +414,10 @@
           </li>
           <li class="auto-info" data-rv>
             <span class="auto-info-icon" aria-hidden="true"><svg class="i"><use href="#i-auto"/></svg></span>
-            <p class="auto-name"><strong>BMW X1</strong><span>Jahrgang 2020</span></p>
-            <p class="auto-info-text">Drei Fahrschulautos, Kategorie B wahlweise mit Automat oder Schaltgetriebe. Eine Lektion dauert 50 Minuten.</p>
+            <div>
+              <p class="auto-name"><strong>BMW X1</strong><span>Jahrgang 2020</span></p>
+              <p class="auto-info-text">Drei Fahrschulautos, Kategorie B wahlweise mit Automat oder Schaltgetriebe. Eine Lektion dauert 50 Minuten.</p>
+            </div>
           </li>
         </ul>
       </div>

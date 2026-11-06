@@ -35,7 +35,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--kopf-h) + 12px); }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--kopf-h) + 12px); }
 body {
   margin: 0;
   background: var(--weiss);
@@ -772,7 +772,6 @@ button { font: inherit; color: inherit; }
 @media (max-width: 640px) { .js .weg::before { transform: scaleY(0); } }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .js .reveal, .js .zeitleiste .zl-punkt { opacity: 1; transform: none; }
   .js .zeitleiste::before, .js .weg::before { transform: none; }
