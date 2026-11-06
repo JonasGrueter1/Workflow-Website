@@ -696,6 +696,11 @@ button { font: inherit; color: inherit; }
   .preise-tabelle tbody th { font-size: 15.5px; padding-right: 12px; }
   .preise-tabelle tbody td { font-size: 17px; }
 }
+@media (max-width: 419.98px) {
+  /* Nummer über dem Titel, damit «Refresh-Fahrstunde» auf einer Zeile bleibt */
+  .az { grid-template-columns: minmax(0, 1fr) 44px; row-gap: 4px; }
+  .az-nr { grid-column: 1 / -1; padding-top: 0; }
+}
 @media (min-width: 420px) {
   .marke-ort { display: inline; }
 }
@@ -719,6 +724,7 @@ button { font: inherit; color: inherit; }
   .weg-kopf { position: sticky; top: calc(var(--kopf-h) + 48px); align-self: start; }
   .angebot-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 72px; }
   .angebot-kopf { position: sticky; top: calc(var(--kopf-h) + 48px); align-self: start; }
+  .angebot-infos { grid-column: 2; margin-top: -44px; }
   .az { grid-template-columns: 64px minmax(0, 1fr) 48px; gap: 18px; padding: 30px 12px 30px 0; }
   .az-pfeil { width: 48px; height: 48px; }
   .preise-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 72px; align-items: start; }

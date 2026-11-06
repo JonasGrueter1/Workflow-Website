@@ -19,6 +19,8 @@
       d.classList.add('js');
       try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('fx'); } catch (e) {}
       /* Sicherheitsnetz: Startet script.js nicht, wird alles ohne Animation gezeigt */
+      /* ist-touch: Smartphone oder Tablet, dort SMS statt E-Mail anbieten */
+      try { if ((navigator.maxTouchPoints > 0 && window.matchMedia('(max-width: 1024px)').matches) || window.matchMedia('(pointer: coarse)').matches) d.classList.add('ist-touch'); } catch (e) {}
       setTimeout(function () { if (!window.mellingerB) { d.classList.remove('fx'); } }, 2500);
     })(document.documentElement);
   </script>
@@ -75,7 +77,7 @@
         <a href="#kontakt">Kontakt</a>
         <div class="kopf-nav-kontakt">
           <a class="btn btn-blau" href="https://wa.me/41762828288" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp schreiben</span></a>
-          <a class="btn btn-rand nur-touch" href="sms:+41762828288"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg><span>SMS senden</span></a>
+          <a class="btn btn-rand nur-touch" href="tel:+41762828288" data-sms="+41762828288"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg><span>SMS senden</span></a>
           <a class="btn btn-rand" href="mailto:fahrschulemelliger@gmail.com"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span>E-Mail schreiben</span></a>
         </div>
       </nav>
@@ -119,7 +121,7 @@
             <a class="btn btn-blau btn-gross" href="https://wa.me/41762828288" target="_blank" rel="noopener">
               <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp schreiben</span>
             </a>
-            <a class="btn btn-rand btn-gross nur-touch" href="sms:+41762828288">
+            <a class="btn btn-rand btn-gross nur-touch" href="tel:+41762828288" data-sms="+41762828288">
               <svg class="i" aria-hidden="true"><use href="#i-sms"/></svg><span>SMS senden</span>
             </a>
             <a class="btn btn-rand btn-gross nur-maus" href="mailto:fahrschulemelliger@gmail.com">
@@ -360,9 +362,9 @@
             </a>
           </li>
           <li class="zeigen">
-            <a class="kachel" href="sms:+41762828288">
+            <a class="kachel" href="tel:+41762828288" data-sms="+41762828288">
               <span class="kachel-icon"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg></span>
-              <span class="kachel-titel">SMS</span>
+              <span class="kachel-titel"><span class="nur-touch">SMS</span><span class="nur-maus">SMS oder Anruf</span></span>
               <span class="kachel-wert">076 282 82 88</span>
               <svg class="i kachel-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg>
             </a>
@@ -404,7 +406,7 @@
       <div class="fuss-spalte">
         <p class="fuss-titel">Schreib mir</p>
         <a href="https://wa.me/41762828288" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="sms:+41762828288">SMS</a>
+        <a class="nur-touch" href="tel:+41762828288" data-sms="+41762828288">SMS</a>
         <a href="mailto:fahrschulemelliger@gmail.com">fahrschulemelliger@gmail.com</a>
         <a href="tel:+41762828288">076 282 82 88</a>
       </div>
@@ -418,7 +420,7 @@
   <!-- Aktionsleiste mobil -->
   <nav class="aktion" aria-label="Schnellkontakt">
     <a class="aktion-wa" href="https://wa.me/41762828288" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
-    <a class="aktion-sms nur-touch" href="sms:+41762828288"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg>SMS</a>
+    <a class="aktion-sms nur-touch" href="tel:+41762828288" data-sms="+41762828288"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg>SMS</a>
     <a class="aktion-rund" href="mailto:fahrschulemelliger@gmail.com" aria-label="E-Mail an fahrschulemelliger@gmail.com"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></a>
     <a class="aktion-rund aktion-tel" href="tel:+41762828288" aria-label="Anrufen: 076 282 82 88"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg></a>
   </nav>

@@ -86,6 +86,8 @@ strong { font-weight: 600; }
   .nur-touch { display: inline-flex !important; }
   .nur-maus { display: none !important; }
 }
+.ist-touch .nur-touch { display: inline-flex !important; }
+.ist-touch .nur-maus { display: none !important; }
 
 /* ---------- Typo-Bausteine ---------- */
 .kicker {
@@ -195,11 +197,14 @@ strong { font-weight: 600; }
   .kopf-cta .btn-klein { padding: 0 14px; }
   .kopf-cta .nur-maus { display: none !important; }
 }
+/* Bis 409 px nur das WhatsApp-Symbol, damit die Wortmarke frei bleibt */
+@media (max-width: 409px) {
+  .kopf-cta .btn-klein span { display: none; }
+  .kopf-cta .btn-klein { width: 44px; padding: 0; }
+}
 @media (max-width: 374px) {
   .marke-name { font-size: 19px; letter-spacing: .04em; }
   .marke-zusatz { font-size: 10.5px; }
-  .kopf-cta .btn-klein span { display: none; }
-  .kopf-cta .btn-klein { width: 44px; padding: 0; }
 }
 
 /* ---------- 1. Hero ---------- */
@@ -508,8 +513,10 @@ strong { font-weight: 600; }
 .fuss-titel { margin-bottom: 8px; font: 600 12px/1 var(--text); letter-spacing: .16em; text-transform: uppercase; color: var(--tafel-muted); }
 .fuss-spalte a { display: block; padding: 10px 0; color: var(--tafel-text); text-decoration: none; overflow-wrap: anywhere; }
 .fuss-spalte a:hover { color: var(--akzent); }
-.fuss-unten { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--navy-linie); font-size: 14px; }
+.fuss-unten { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 44px; font-size: 14px; }
+.fuss-unten::before { content: ""; flex: 0 0 100%; height: 1px; margin-bottom: 10px; background: var(--navy-linie); }
 .fuss-unten a { display: inline-block; padding: 10px 0; color: var(--tafel-muted); text-decoration: none; margin-right: 20px; }
+.fuss-unten a:last-child { margin-right: 0; }
 .fuss-unten a:hover { color: #fff; }
 
 /* ---------- Aktionsleiste mobil ---------- */

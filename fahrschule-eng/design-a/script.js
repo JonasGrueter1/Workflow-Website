@@ -19,6 +19,7 @@
     knopf.setAttribute('aria-expanded', 'false');
     knopf.setAttribute('aria-label', 'Menü öffnen');
     menu.hidden = true;
+    kopf.classList.remove('menu-auf');
   }
   if (knopf && menu) {
     knopf.addEventListener('click', function () {
@@ -27,6 +28,11 @@
       knopf.setAttribute('aria-expanded', 'true');
       knopf.setAttribute('aria-label', 'Menü schliessen');
       menu.hidden = false;
+      kopf.classList.add('menu-auf');
+    });
+    /* Tippen neben das Menü (abgedunkelte Fläche) schliesst es */
+    document.addEventListener('click', function (e) {
+      if (!menu.hidden && !e.target.closest('.menu') && !e.target.closest('.menu-knopf')) menuZu();
     });
     menu.addEventListener('click', function (e) { if (e.target.closest('a')) menuZu(); });
     document.addEventListener('keydown', function (e) {

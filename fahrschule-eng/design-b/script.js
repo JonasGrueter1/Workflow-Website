@@ -152,11 +152,22 @@
   /* Aktionsleiste mobil: erst sichtbar, wenn die Hero-Knöpfe aus dem Bild sind */
   var aktion = document.getElementById('aktion');
   var heroKnoepfe = document.getElementById('hero-knoepfe');
+  var kontakt = document.getElementById('kontakt');
   if (aktion && heroKnoepfe && 'IntersectionObserver' in window) {
+    /* ausgeblendet, solange die Hero-Knöpfe oder der Kontaktbereich mit eigenen Knöpfen zu sehen sind */
+    var heroWeg = false, kontaktDa = false;
+    var setzeAktion = function () { aktion.classList.toggle('is-sichtbar', heroWeg && !kontaktDa); };
     new IntersectionObserver(function (e) {
       var r = e[0].boundingClientRect;
-      aktion.classList.toggle('is-sichtbar', !e[0].isIntersecting && r.bottom < 0);
+      heroWeg = !e[0].isIntersecting && r.bottom < 0;
+      setzeAktion();
     }).observe(heroKnoepfe);
+    if (kontakt) {
+      new IntersectionObserver(function (e) {
+        kontaktDa = e[0].isIntersecting;
+        setzeAktion();
+      }, { rootMargin: '0px 0px -35% 0px' }).observe(kontakt);
+    }
   } else if (aktion) {
     aktion.classList.add('is-sichtbar');
   }

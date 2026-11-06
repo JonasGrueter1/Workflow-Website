@@ -127,7 +127,7 @@ p, li, blockquote, figcaption, td, th { hyphens: manual; -webkit-hyphens: manual
 /* ---------- Kopf ---------- */
 .top {
   position: sticky; top: 0; z-index: 800;
-  background: rgb(255 255 255 / 88%);
+  background: rgb(255 255 255 / 95%);
   backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px);
   border-bottom: 1px solid transparent;
   transition: border-color .3s, box-shadow .3s;

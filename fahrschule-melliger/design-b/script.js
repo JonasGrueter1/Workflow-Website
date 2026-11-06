@@ -43,6 +43,19 @@
     window.addEventListener('resize', function () { if (window.innerWidth >= 1180) menue(false); });
   }
 
+  /* SMS: Ohne JavaScript öffnen diese Links das Telefon. Auf Smartphone und Tablet
+     öffnet sich direkt die Nachrichten-App, am Computer bleibt es beim Anruf-Link. */
+  function istTouch() {
+    if (root.classList.contains('ist-touch')) return true;
+    try { return window.matchMedia('(hover: none) and (pointer: coarse)').matches; } catch (e) { return false; }
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-sms]');
+    if (!a || !istTouch()) return;
+    e.preventDefault();
+    window.location.href = 'sms:' + a.getAttribute('data-sms');
+  });
+
   /* Sanftes Scrollen nur bei Klicks auf Anker (nicht per CSS, damit Skripte sofort springen) */
   var ruhig = false;
   try { ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}

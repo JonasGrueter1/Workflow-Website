@@ -412,6 +412,8 @@ html:not(.js) .linie { display: none; }
   .station:nth-child(odd) .station-text { bottom: 38px; }
   .station:nth-child(even) .station-text { top: 38px; }
   .station-heute .station-text { top: 70px !important; }
+  /* Station 5 steht direkt neben dem Porträt: Text schmaler, damit er den Bildrand nicht berührt */
+  .station:nth-child(5) .station-text p { max-width: 196px; margin-inline: auto; }
   .station-text::before { content: ""; position: absolute; left: 50%; width: 1px; height: 14px; background: #c3c7f0; }
   .station:nth-child(odd) .station-text::before { bottom: -26px; }
   .station:nth-child(even) .station-text::before { top: -26px; }

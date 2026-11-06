@@ -161,7 +161,7 @@
     dock.classList.add('is-off');
     new IntersectionObserver(function (e) {
       dock.classList.toggle('is-off', e[0].isIntersecting || e[0].boundingClientRect.top > 0);
-    }, { threshold: 0 }).observe(heroCta);
+    }, { threshold: 0, rootMargin: '-72px 0px 0px 0px' }).observe(heroCta); /* Kopfzeile abziehen */
   }
 
   /* Anker: weich scrollen */

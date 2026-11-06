@@ -69,7 +69,7 @@
     new IntersectionObserver(function (entries) {
       var e = entries[0];
       aktion.classList.toggle('zeigen', !e.isIntersecting && e.boundingClientRect.top < 0);
-    }).observe(heroCta);
+    }, { rootMargin: '-80px 0px 0px 0px' }).observe(heroCta); /* Kopfzeile abziehen: Knöpfe hinter dem Kopf gelten als weg */
   } else {
     aktion.classList.add('zeigen');
   }
