@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#FFFFFF">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preload" href="../assets/fonts/a-commissioner-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="../assets/img/a-tiguan-mobil.webp" media="(max-width: 700px)">
-  <link rel="preload" as="image" href="../assets/img/a-tiguan.webp" imagesrcset="../assets/img/a-tiguan-1000.webp 1000w, ../assets/img/a-tiguan.webp 1600w" imagesizes="(max-width: 1344px) 100vw, 1280px" media="(min-width: 701px)">
+  <link rel="preload" as="image" href="../assets/img/a-hero-m-800.webp" imagesrcset="../assets/img/a-hero-m-800.webp 800w, ../assets/img/a-hero-m-1200.webp 1200w" imagesizes="100vw" media="(max-width: 700px)">
+  <link rel="preload" as="image" href="../assets/img/a-hero-1600.webp" imagesrcset="../assets/img/a-hero-1000.webp 1000w, ../assets/img/a-hero-1600.webp 1600w, ../assets/img/a-hero-2200.webp 2200w" imagesizes="(max-width: 1340px) calc(100vw - 64px), 1280px" media="(min-width: 701px)">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>
@@ -34,14 +34,15 @@
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06"/><path d="M15 19l2 2l4 -4"/></symbol>
     <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z"/><path d="M12 8l0 13"/><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5"/></symbol>
-    <symbol id="i-award" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0"/><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889"/><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889"/></symbol>
     <symbol id="i-aid" viewBox="0 0 24 24"><path d="M8 8v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"/><path d="M4 10a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M10 14h4"/><path d="M12 12v4"/></symbol>
     <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 9l1 0"/><path d="M9 13l6 0"/><path d="M9 17l6 0"/></symbol>
     <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6l0 13"/><path d="M12 6l0 13"/><path d="M21 6l0 13"/></symbol>
     <symbol id="i-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14l0 7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
     <symbol id="i-school" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"/></symbol>
     <symbol id="i-route" viewBox="0 0 24 24"><path d="M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/><path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5"/></symbol>
-    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12"/><path d="M20 12v4h-4a2 2 0 0 1 0 -4h4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></symbol>
   </svg>
 
   <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -49,9 +50,9 @@
   <header class="kopf" id="kopf">
     <div class="wrap kopf-in">
       <a class="marke" href="#top" aria-label="Drive 4 Life Fahrschule, zum Seitenanfang">
-        <img src="../assets/img/a-logo.webp" width="400" height="159" alt="Drive 4 Life Fahrschule">
+        <img src="../assets/img/a-logo.webp" width="440" height="175" alt="Drive 4 Life Fahrschule">
       </a>
-      <nav class="nav" aria-label="Hauptnavigation">
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
         <ul>
           <li><a href="#angebot">Angebot</a></li>
           <li><a href="#preise">Preise</a></li>
@@ -59,432 +60,467 @@
           <li><a href="#weg">Weg zum Ausweis</a></li>
           <li><a href="#team">Team</a></li>
         </ul>
+        <div class="nav-kontakt">
+          <a class="btn btn-blau" href="https://wa.me/41763224408" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp an Dejan</a>
+          <a class="btn btn-umriss" href="tel:+41763224408"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>076 322 44 08</a>
+        </div>
       </nav>
       <div class="kopf-cta">
-        <a class="btn btn-umriss kopf-wa" href="https://wa.me/41763224408" target="_blank" rel="noopener" aria-label="WhatsApp an Dejan Rajic">
-          <svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg><span class="kopf-txt">WhatsApp</span>
+        <a class="btn btn-umriss btn-klein kopf-wa" href="https://wa.me/41763224408" target="_blank" rel="noopener" aria-label="WhatsApp an Dejan Rajic">
+          <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span>
         </a>
-        <a class="btn btn-blau kopf-tel" href="tel:+41763224408" aria-label="Anrufen: 076 322 44 08">
-          <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span class="kopf-txt">076 322 44 08</span>
+        <a class="btn btn-blau btn-klein kopf-tel" href="tel:+41763224408" aria-label="Anrufen: 076 322 44 08">
+          <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span>076 322 44 08</span>
         </a>
-        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
-          <svg class="ic ic-open" aria-hidden="true"><use href="#i-menu"/></svg>
-          <svg class="ic ic-close" aria-hidden="true"><use href="#i-x"/></svg>
+        <button class="menu-knopf" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen">
+          <svg class="i i-auf" aria-hidden="true"><use href="#i-menu"/></svg>
+          <svg class="i i-zu" aria-hidden="true"><use href="#i-x"/></svg>
         </button>
-      </div>
-    </div>
-    <div class="menu" id="menu">
-      <div class="wrap">
-        <ul class="menu-anker">
-          <li><a href="#angebot">Angebot</a></li>
-          <li><a href="#preise">Preise</a></li>
-          <li><a href="#auszeichnungen">Auszeichnungen</a></li>
-          <li><a href="#weg">Weg zum Ausweis</a></li>
-          <li><a href="#team">Team</a></li>
-          <li><a href="#kontakt">Kontakt</a></li>
-        </ul>
-        <p class="menu-label">Weitere Seiten</p>
-        <ul class="menu-seiten">
-          <li><a href="#" data-soon="Dein Fahrlehrer">Dein Fahrlehrer</a></li>
-          <li><a href="#" data-soon="Der Weg zum Führerausweis">Der Weg zum Führerausweis</a></li>
-          <li><a href="#" data-soon="Preise">Preise</a></li>
-          <li><a href="#" data-soon="Galerie">Galerie</a></li>
-          <li><a href="#" data-soon="AGB">AGB</a></li>
-        </ul>
       </div>
     </div>
   </header>
 
   <main id="inhalt">
-    <!-- Hero -->
-    <section class="hero" id="top">
+    <!-- 1 Hero -->
+    <section class="hero" id="top" aria-labelledby="hero-titel">
       <div class="wrap hero-text">
-        <p class="kicker h-a" style="--i:0"><span class="nw">Drive 4 Life Fahrschule</span> <span aria-hidden="true">·</span> <span class="nw">Wallisellen und Zürich</span></p>
-        <h1 class="h-a" style="--i:1">Fahre fürs Leben,<br class="br-gross"> nicht für die Prüfung.</h1>
-        <p class="lead h-a" style="--i:2">Fahrausbildung für Auto, Anhänger und Taxi bei Dejan Rajic. Automat oder Schaltgetriebe, für Neulenker, Wiedereinsteiger und Senioren.</p>
-        <div class="hero-cta h-a" style="--i:3" id="hero-cta">
-          <a class="btn btn-blau btn-gross" href="https://wa.me/41763224408?text=Hallo%20Dejan%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Probelektion%20(Kat.%20B)." target="_blank" rel="noopener">
-            <svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg><span>Gratis Probelektion<span class="cta-lang"> anfragen</span></span>
+        <p class="kicker hero-kicker hero-auf" style="--d:0"><span>Drive 4 Life Fahrschule</span><span class="trenner" aria-hidden="true"> · </span><span>Wallisellen und Zürich</span></p>
+        <h1 class="hero-titel" id="hero-titel">
+          <span class="zeile hero-auf" style="--d:1">Fahre <span class="marker">fürs Leben,</span></span>
+          <span class="zeile hero-auf" style="--d:2">nicht für die Prüfung.</span>
+        </h1>
+        <p class="lead hero-auf" style="--d:3">Fahrausbildung für Auto, Anhänger und Taxi bei Dejan Rajic. Automat oder Schaltgetriebe, für Neulenker, Wiedereinsteiger und Senioren.</p>
+        <div class="hero-knoepfe hero-auf" style="--d:4" id="hero-knoepfe">
+          <a class="btn btn-blau btn-gross" href="https://wa.me/41763224408?text=Hallo%2C%20ich%20m%C3%B6chte%20gerne%20eine%20kostenlose%20Probelektion%20anfragen." target="_blank" rel="noopener">
+            <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>Gratis Probelektion anfragen
           </a>
-          <a class="btn btn-umriss btn-gross btn-anrufen" href="tel:+41763224408">
-            <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span class="btn-txt">Anrufen</span>
+          <a class="btn btn-umriss btn-gross" href="tel:+41763224408">
+            <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen
           </a>
         </div>
-        <ul class="hero-fakten h-a" style="--i:4" aria-label="Auf einen Blick">
-          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Fahrlehrer seit 2016</li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Lektion 50 Minuten</li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>100 % Vollkasko versichert</li>
+        <ul class="hero-fakten hero-auf" style="--d:5" aria-label="Auf einen Blick">
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Seit 2016</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Lektion 50 Minuten</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>100 % Vollkasko versichert</li>
         </ul>
       </div>
 
-      <div class="wrap pano-wrap">
+      <div class="wrap hero-buehne">
         <figure class="pano">
-          <div class="pano-frame">
-            <picture>
-              <source media="(max-width: 700px)" srcset="../assets/img/a-tiguan-mobil.webp" width="1000" height="625">
-              <img src="../assets/img/a-tiguan.webp" srcset="../assets/img/a-tiguan-1000.webp 1000w, ../assets/img/a-tiguan.webp 1600w" sizes="(max-width: 1344px) 100vw, 1280px" width="1600" height="686" alt="Weisser VW Tiguan R-Line der Drive 4 Life Fahrschule mit Beschriftung, seitlich am Waldrand" fetchpriority="high">
-            </picture>
-          </div>
-          <a class="siegel" href="#auszeichnungen" aria-label="Sehr guter Fahrlehrer 2026, zu den Auszeichnungen">
-            <svg class="siegel-ring" viewBox="0 0 140 140" aria-hidden="true">
-              <circle class="r-gold" cx="70" cy="70" r="66"/>
-              <circle class="r-strich" cx="70" cy="70" r="57"/>
-            </svg>
-            <span class="siegel-in">
-              <svg class="ic siegel-ic" aria-hidden="true"><use href="#i-wheel"/></svg>
-              <span class="siegel-t">Sehr guter Fahrlehrer</span>
-              <span class="siegel-j">2026</span>
-            </span>
-          </a>
+          <picture>
+            <source media="(max-width: 700px)" srcset="../assets/img/a-hero-m-800.webp 800w, ../assets/img/a-hero-m-1200.webp 1200w" sizes="100vw" width="800" height="447">
+            <img src="../assets/img/a-hero-1600.webp" srcset="../assets/img/a-hero-1000.webp 1000w, ../assets/img/a-hero-1600.webp 1600w, ../assets/img/a-hero-2200.webp 2200w" sizes="(max-width: 1340px) calc(100vw - 64px), 1280px" width="1600" height="744" alt="Weisser VW Tiguan R-Line mit der Beschriftung Drive 4 Life Fahrschule, seitlich vor einem Waldrand" fetchpriority="high">
+          </picture>
         </figure>
+
+        <a class="siegel" href="#auszeichnungen" aria-label="Sehr guter Fahrlehrer 2026: zu den Auszeichnungen">
+          <svg class="siegel-ring" viewBox="0 0 140 140" aria-hidden="true">
+            <circle class="ring-grund" cx="70" cy="70" r="66"/>
+            <circle class="ring-gold" cx="70" cy="70" r="66" pathLength="100"/>
+            <circle class="ring-innen" cx="70" cy="70" r="58"/>
+          </svg>
+          <span class="siegel-inhalt" aria-hidden="true">
+            <svg class="i siegel-icon"><use href="#i-wheel"/></svg>
+            <span class="siegel-text">Sehr guter Fahrlehrer</span>
+            <span class="siegel-jahr">2026</span>
+          </span>
+        </a>
+
+        <p class="preis-schild">
+          <span class="ps-label">Einzellektion, 50 Min.</span>
+          <span class="ps-preis">CHF&nbsp;90.00</span>
+        </p>
       </div>
     </section>
 
-    <!-- Probelektion -->
-    <section class="band" aria-label="Kostenlose Probelektion">
+    <!-- 2 Probelektion -->
+    <section class="band reveal" aria-label="Kostenlose Probelektion">
       <div class="wrap band-in">
-        <p class="band-t"><svg class="ic" aria-hidden="true"><use href="#i-gift"/></svg><strong>Kostenlose Probelektion,</strong> 50&nbsp;Minuten, Kategorie&nbsp;B.</p>
-        <a class="band-link" href="https://wa.me/41763224408?text=Hallo%20Dejan%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Probelektion%20(Kat.%20B)." target="_blank" rel="noopener">Jetzt per WhatsApp anfragen<svg class="ic band-pfeil" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <p class="band-text">
+          <span class="band-icon"><svg class="i" aria-hidden="true"><use href="#i-gift"/></svg></span>
+          <strong>Kostenlose Probelektion.</strong>
+          <span>50 Minuten, Kategorie B.</span>
+        </p>
+        <a class="band-link" href="https://wa.me/41763224408?text=Hallo%2C%20ich%20m%C3%B6chte%20gerne%20eine%20kostenlose%20Probelektion%20anfragen." target="_blank" rel="noopener">
+          Jetzt per WhatsApp anfragen<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
       </div>
     </section>
 
-    <!-- Angebot -->
-    <section class="sek" id="angebot" aria-labelledby="angebot-h">
+    <!-- 3 Angebot -->
+    <section class="sektion" id="angebot" aria-labelledby="angebot-titel">
       <div class="wrap">
-        <div class="sek-kopf sek-kopf-split rv">
+        <div class="sektion-kopf reveal">
           <div>
             <p class="kicker">Angebot</p>
-            <h2 id="angebot-h">Ein Fahrlehrer für Auto, Anhänger und&nbsp;Taxi.</h2>
+            <h2 id="angebot-titel">Ein Fahrlehrer für Auto, Anhänger und Taxi.</h2>
           </div>
-          <p class="sek-lead">Die Lektionen werden so auf dich abgestimmt, dass du weder unter- noch überfordert wirst. Für Neueinsteiger und für alle, die sich im Strassenverkehr unsicher fühlen.</p>
+          <p class="sektion-intro">Die Lektionen werden so auf dich abgestimmt, dass du weder unter&shy;fordert noch über&shy;fordert wirst. Für Neueinsteiger, für alle, die sich im Strassenverkehr unsicher fühlen, und für Senioren.</p>
         </div>
+
         <ul class="kacheln">
-          <li class="kachel k-gross rv" style="--i:0">
-            <div class="k-bild"><img src="../assets/img/a-golf.webp" width="720" height="450" loading="lazy" alt="Golf 7 GTD der Fahrschule unter Pinien am Wasser"></div>
-            <div class="k-text">
-              <p class="k-kat">Kategorie B</p>
-              <h3>Autofahren lernen</h3>
-              <p>Mit Automat oder Schaltgetriebe. Eine Lektion dauert 50&nbsp;Minuten.</p>
-              <div class="k-fuss"><span class="k-preis">Lektion <strong>CHF 90.00</strong></span><a class="k-link" href="#preise" data-tab="b" aria-label="Preise Kategorie B">Preise<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+          <li class="kachel reveal" style="--i:0">
+            <div class="kachel-bild"><img src="../assets/img/a-golf.webp" width="800" height="500" loading="lazy" decoding="async" alt="VW Golf von Drive 4 Life unter Pinien am Seeufer"></div>
+            <div class="kachel-text">
+              <p class="kachel-kat">Kategorie B</p>
+              <h3><a href="#" data-soon="Preise">Autofahren lernen</a></h3>
+              <p>Mit Automat oder Schaltgetriebe. Eine Lektion dauert 50 Minuten.</p>
+              <p class="kachel-fuss"><span>Lektion <strong>CHF&nbsp;90.00</strong></span><span class="mehr" aria-hidden="true">Preise<svg class="i"><use href="#i-arrow"/></svg></span></p>
             </div>
           </li>
-          <li class="kachel k-gross rv" style="--i:1">
-            <div class="k-bild"><img src="../assets/img/a-anhaenger.webp" width="720" height="450" loading="lazy" alt="VW Tiguan mit beschriftetem Anhänger der Drive 4 Life Fahrschule"></div>
-            <div class="k-text">
-              <p class="k-kat">Kategorie BE</p>
-              <h3>Mit Anhänger</h3>
-              <p>Mit Fahrschulfahrzeug und Anhänger bis 3,5&nbsp;t. Einzel- oder Doppellektion.</p>
-              <div class="k-fuss"><span class="k-preis">Lektion <strong>CHF 110.00</strong></span><a class="k-link" href="#preise" data-tab="be" aria-label="Preise Anhänger BE">Preise<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+          <li class="kachel reveal" style="--i:1">
+            <div class="kachel-bild"><img src="../assets/img/a-anhaenger.webp" width="800" height="500" loading="lazy" decoding="async" alt="VW Tiguan mit beschriftetem Anhänger von Drive 4 Life am Waldrand"></div>
+            <div class="kachel-text">
+              <p class="kachel-kat">Kategorie BE</p>
+              <h3><a href="#" data-soon="Preise">Mit Anhänger</a></h3>
+              <p>Mit Fahrschulfahrzeug und Anhänger bis 3,5&nbsp;t, als Einzel- oder Doppellektion.</p>
+              <p class="kachel-fuss"><span>Lektion <strong>CHF&nbsp;110.00</strong></span><span class="mehr" aria-hidden="true">Preise<svg class="i"><use href="#i-arrow"/></svg></span></p>
             </div>
           </li>
-          <li class="kachel rv" style="--i:2">
-            <div class="k-bild k-grafik k-taxi" aria-hidden="true">
-              <span class="taxi-schild">TAXI</span>
-              <span class="taxi-code">Code 121</span>
+          <li class="kachel reveal" style="--i:2">
+            <div class="kachel-bild kachel-grafik grafik-taxi" aria-hidden="true">
+              <span class="strasse"></span>
+              <span class="taxi-schild"><span>TAXI</span></span>
+              <span class="grafik-code">Code 121</span>
             </div>
-            <div class="k-text">
-              <p class="k-kat">BPT Code 121</p>
-              <h3>Taxi</h3>
-              <p>Berufsmässiger Personentransport, mit dem Fahrschulauto oder deinem Privatauto.</p>
-              <div class="k-fuss"><span class="k-preis">ab <strong>CHF 90.00</strong></span><a class="k-link" href="#preise" data-tab="weitere" aria-label="Preise Taxi BPT 121">Preise<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+            <div class="kachel-text">
+              <p class="kachel-kat">BPT Code 121</p>
+              <h3><a href="#" data-soon="Preise">Taxi</a></h3>
+              <p>Fahrlektionen für den berufsmässigen Personentransport, mit dem Fahrschulauto oder deinem Privatauto.</p>
+              <p class="kachel-fuss"><span>ab <strong>CHF&nbsp;90.00</strong></span><span class="mehr" aria-hidden="true">Preise<svg class="i"><use href="#i-arrow"/></svg></span></p>
             </div>
           </li>
-          <li class="kachel rv" style="--i:3">
-            <div class="k-bild k-grafik k-ausweis" aria-hidden="true">
-              <span class="karte karte-alt"><i></i><i></i><i></i></span>
-              <svg class="ic karte-pfeil"><use href="#i-arrow"/></svg>
-              <span class="karte karte-ch"><b>CH</b><i></i><i></i></span>
+          <li class="kachel reveal" style="--i:3">
+            <div class="kachel-bild kachel-grafik grafik-ausweis" aria-hidden="true">
+              <span class="strasse"></span>
+              <span class="karte karte-alt"><span class="k-kopf"></span><span class="k-foto"></span><span class="k-z"></span><span class="k-z k-z2"></span></span>
+              <span class="pfeil-kreis"><svg class="i"><use href="#i-arrow"/></svg></span>
+              <span class="karte karte-neu"><span class="k-kopf"><b>CH</b></span><span class="k-foto"></span><span class="k-z"></span><span class="k-z k-z2"></span></span>
             </div>
-            <div class="k-text">
-              <p class="k-kat">Kontrollfahrt</p>
-              <h3>Ausländischer Ausweis</h3>
+            <div class="kachel-text">
+              <p class="kachel-kat">Kontrollfahrt</p>
+              <h3><a href="#" data-soon="Preise">Ausländischer Führerausweis</a></h3>
               <p>Wir helfen dir, deinen ausländischen Führerausweis umzuschreiben, und bereiten dich auf die praktische Prüfung vor.</p>
-              <div class="k-fuss"><span class="k-preis">ab <strong>CHF 90.00</strong></span><a class="k-link" href="#preise" data-tab="weitere" aria-label="Preise Kontrollfahrt">Preise<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+              <p class="kachel-fuss"><span>ab <strong>CHF&nbsp;90.00</strong></span><span class="mehr" aria-hidden="true">Preise<svg class="i"><use href="#i-arrow"/></svg></span></p>
             </div>
           </li>
-          <li class="kachel rv" style="--i:4">
-            <div class="k-bild"><img src="../assets/img/a-cockpit.webp" width="720" height="450" loading="lazy" alt="Cockpit und Lenkrad des Fahrschul-Golf"></div>
-            <div class="k-text">
-              <p class="k-kat">Refresher</p>
-              <h3>Wieder sicher fahren</h3>
+          <li class="kachel reveal" style="--i:4">
+            <div class="kachel-bild"><img src="../assets/img/a-cockpit.webp" width="800" height="500" loading="lazy" decoding="async" alt="Cockpit und Lenkrad im Fahrschulauto"></div>
+            <div class="kachel-text">
+              <p class="kachel-kat">Refresher</p>
+              <h3><a href="#" data-soon="Preise">Wieder sicher fahren</a></h3>
               <p>Lange nicht mehr gefahren? Mit deinem Privatauto, dem Fahrschulauto oder einem Mietauto.</p>
-              <div class="k-fuss"><span class="k-preis"><strong>CHF 95.00</strong></span><a class="k-link" href="#preise" data-tab="weitere" aria-label="Preise Refresher">Preise<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+              <p class="kachel-fuss"><span><strong>CHF&nbsp;95.00</strong></span><span class="mehr" aria-hidden="true">Preise<svg class="i"><use href="#i-arrow"/></svg></span></p>
             </div>
           </li>
-          <li class="kachel rv" style="--i:5">
-            <div class="k-bild"><img src="../assets/img/a-spiegel.webp" width="720" height="450" loading="lazy" alt="Blick in den Seitenspiegel beim Parkieren"></div>
-            <div class="k-text">
-              <p class="k-kat">Manöver-Kurs</p>
-              <h3>Parkieren und Wenden</h3>
-              <p>Mit kleinen Tipps und Tricks parkierst du in kürzester Zeit wieder sicher.</p>
-              <div class="k-fuss"><span class="k-preis"><strong>CHF 95.00</strong></span><a class="k-link" href="#preise" data-tab="weitere" aria-label="Preise Manöver-Kurs">Preise<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+          <li class="kachel reveal" style="--i:5">
+            <div class="kachel-bild"><img src="../assets/img/a-spiegel.webp" width="800" height="500" loading="lazy" decoding="async" alt="Blick in den Seitenspiegel beim Parkieren"></div>
+            <div class="kachel-text">
+              <p class="kachel-kat">Manöver-Kurs</p>
+              <h3><a href="#" data-soon="Preise">Parkieren und Wenden</a></h3>
+              <p>Mühe beim Vorwärts-, Rückwärts- oder Seitwärts&shy;parkieren? Mit kleinen Tipps und Tricks bist du schnell wieder sicher.</p>
+              <p class="kachel-fuss"><span><strong>CHF&nbsp;95.00</strong></span><span class="mehr" aria-hidden="true">Preise<svg class="i"><use href="#i-arrow"/></svg></span></p>
             </div>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- Preise -->
-    <section class="sek sek-hell" id="preise" aria-labelledby="preise-h">
+    <!-- 4 Preise -->
+    <section class="sektion sektion-hell" id="preise" aria-labelledby="preise-titel">
       <div class="wrap">
-        <div class="sek-kopf rv">
-          <p class="kicker">Preise</p>
-          <h2 id="preise-h">Klare Preise, Lektion 50&nbsp;Minuten.</h2>
+        <div class="sektion-kopf reveal">
+          <div>
+            <p class="kicker">Preise</p>
+            <h2 id="preise-titel">Klare Preise. Jede Lektion dauert 50 Minuten.</h2>
+          </div>
+          <p class="sektion-intro">Fahrlektionen einzeln oder im Abo. Bezahlen kannst du per Rechnung oder bar.</p>
         </div>
-        <div class="preise-grid">
-          <div class="tafel rv">
-            <div class="reiter" role="tablist" aria-label="Preiskategorien" hidden>
-              <button type="button" role="tab" id="tab-b" aria-controls="p-b" aria-selected="true">Kategorie B</button>
-              <button type="button" role="tab" id="tab-be" aria-controls="p-be" aria-selected="false" tabindex="-1">Anhänger BE</button>
-              <button type="button" role="tab" id="tab-weitere" aria-controls="p-weitere" aria-selected="false" tabindex="-1">Weitere</button>
+
+        <div class="preise-raster">
+          <div class="preis-karte reveal">
+            <div class="reiter" role="tablist" aria-label="Preise nach Kategorie">
+              <button class="reiter-knopf" type="button" role="tab" id="tab-b" aria-controls="panel-b" aria-selected="true">Kategorie B</button>
+              <button class="reiter-knopf" type="button" role="tab" id="tab-be" aria-controls="panel-be" aria-selected="false" tabindex="-1">Anhänger BE</button>
+              <button class="reiter-knopf" type="button" role="tab" id="tab-weitere" aria-controls="panel-weitere" aria-selected="false" tabindex="-1">Weitere</button>
               <span class="reiter-marke" aria-hidden="true"></span>
             </div>
 
-            <div class="panel" id="p-b" role="tabpanel" aria-labelledby="tab-b">
-              <h3 class="panel-h">Kategorie B</h3>
-              <table class="ptab">
-                <caption class="sr">Preise Kategorie B, Automat oder Schaltgetriebe</caption>
+            <div class="panel" id="panel-b" role="tabpanel" aria-labelledby="tab-b" tabindex="0">
+              <h3 class="panel-titel">Kategorie B</h3>
+              <table class="preisliste">
                 <tbody>
-                  <tr class="p-gratis"><th scope="row">Probelektion<span>50 Min., nur Kategorie B</span></th><td>gratis</td></tr>
-                  <tr><th scope="row">Einzellektion<span>50 Min., Automat oder Schaltgetriebe</span></th><td>CHF 90.00</td></tr>
-                  <tr><th scope="row">5 Fahrlektionen<span>Lektion à 50 Min., entspricht CHF 88.00 pro Lektion</span></th><td>CHF 440.00</td></tr>
-                  <tr><th scope="row">10 Fahrlektionen<span>Lektion à 50 Min., entspricht CHF 86.00 pro Lektion</span></th><td>CHF 860.00</td></tr>
-                  <tr><th scope="row">20 Fahrlektionen<span>Lektion à 50 Min., entspricht CHF 84.50 pro Lektion</span></th><td>CHF 1&nbsp;690.00</td></tr>
-                  <tr class="p-neben"><th scope="row">Versicherungs- und Administrationsbeitrag<span>einmalig, fällt ab der 2. Lektion an</span></th><td>CHF 120.–</td></tr>
+                  <tr class="zeile-gratis"><th scope="row"><span class="pl-name"><span class="punkt" aria-hidden="true"></span>Probelektion</span><span class="pl-info">50 Min., nur Kategorie B</span></th><td><span class="gratis">gratis</span></td></tr>
+                  <tr><th scope="row"><span class="pl-name">Einzellektion</span><span class="pl-info">50 Min., Automat oder Schaltgetriebe</span></th><td>CHF&nbsp;90.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">5 Fahrlektionen</span><span class="pl-info">Lektion à 50 Min., entspricht CHF 88.00 pro Lektion</span></th><td>CHF&nbsp;440.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">10 Fahrlektionen</span><span class="pl-info">Lektion à 50 Min., entspricht CHF 86.00 pro Lektion</span></th><td>CHF&nbsp;860.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">20 Fahrlektionen</span><span class="pl-info">Lektion à 50 Min., entspricht CHF 84.50 pro Lektion</span></th><td>CHF&nbsp;1&nbsp;690.00</td></tr>
+                  <tr class="zeile-klein"><th scope="row"><span class="pl-name">Versicherungs- und Administrations&shy;beitrag</span><span class="pl-info">einmalig, fällt ab der 2. Lektion an</span></th><td>CHF&nbsp;120.00</td></tr>
                 </tbody>
               </table>
             </div>
 
-            <div class="panel" id="p-be" role="tabpanel" aria-labelledby="tab-be">
-              <h3 class="panel-h">Anhänger BE</h3>
-              <table class="ptab">
-                <caption class="sr">Preise Kategorie BE, Anhänger</caption>
+            <div class="panel" id="panel-be" role="tabpanel" aria-labelledby="tab-be" tabindex="0">
+              <h3 class="panel-titel">Anhänger BE</h3>
+              <table class="preisliste">
                 <tbody>
-                  <tr><th scope="row">Einzellektion<span>50 Min., mit Fahrschulfahrzeug und Anhänger</span></th><td>CHF 110.00</td></tr>
-                  <tr><th scope="row">Doppellektion<span>100 Min., mit Fahrschulfahrzeug und Anhänger</span></th><td>CHF 220.00</td></tr>
-                  <tr class="p-neben"><th scope="row">Versicherungs- und Administrationsbeitrag<span>einmalig, Zugfahrzeug mit Anhänger</span></th><td>CHF 135.–</td></tr>
+                  <tr><th scope="row"><span class="pl-name">Einzellektion</span><span class="pl-info">50 Min., mit Fahrschulfahrzeug und Anhänger</span></th><td>CHF&nbsp;110.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">Doppellektion</span><span class="pl-info">100 Min., mit Fahrschulfahrzeug und Anhänger</span></th><td>CHF&nbsp;220.00</td></tr>
+                  <tr class="zeile-klein"><th scope="row"><span class="pl-name">Versicherungs- und Administrations&shy;beitrag</span><span class="pl-info">einmalig, Zugfahrzeug mit Anhänger</span></th><td>CHF&nbsp;135.00</td></tr>
                 </tbody>
               </table>
             </div>
 
-            <div class="panel" id="p-weitere" role="tabpanel" aria-labelledby="tab-weitere">
-              <h3 class="panel-h">Weitere</h3>
-              <table class="ptab">
-                <caption class="sr">Weitere Preise</caption>
+            <div class="panel" id="panel-weitere" role="tabpanel" aria-labelledby="tab-weitere" tabindex="0">
+              <h3 class="panel-titel">Weitere</h3>
+              <table class="preisliste">
                 <tbody>
-                  <tr><th scope="row">Taxi BPT Code 121<span>Einzellektion mit Fahrschulauto</span></th><td>CHF 95.00</td></tr>
-                  <tr><th scope="row">Taxi BPT Code 121<span>Einzellektion mit Privatauto</span></th><td>CHF 90.00</td></tr>
-                  <tr><th scope="row">Kontrollfahrt ausländischer Führerausweis<span>mit Fahrschulauto</span></th><td>CHF 95.00</td></tr>
-                  <tr><th scope="row">Kontrollfahrt ausländischer Führerausweis<span>mit Privatauto</span></th><td>CHF 90.00</td></tr>
-                  <tr><th scope="row">Refresher<span>Privatauto, Fahrschulauto oder Mietauto</span></th><td>CHF 95.00</td></tr>
-                  <tr><th scope="row">Manöver-Kurs<span>Parkieren und Wenden</span></th><td>CHF 95.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">Taxi BPT Code 121</span><span class="pl-info">Einzellektion mit Fahrschulauto</span></th><td>CHF&nbsp;95.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">Taxi BPT Code 121</span><span class="pl-info">Einzellektion mit Privatauto</span></th><td>CHF&nbsp;90.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">Kontrollfahrt</span><span class="pl-info">ausländischer Führerausweis, mit Fahrschulauto</span></th><td>CHF&nbsp;95.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">Kontrollfahrt</span><span class="pl-info">ausländischer Führerausweis, mit Privatauto</span></th><td>CHF&nbsp;90.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">Refresher</span><span class="pl-info">mit Privatauto, Fahrschulauto oder Mietauto</span></th><td>CHF&nbsp;95.00</td></tr>
+                  <tr><th scope="row"><span class="pl-name">Manöver-Kurs</span><span class="pl-info">Parkieren und Wenden</span></th><td>CHF&nbsp;95.00</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <aside class="sorgen rv" style="--i:1" aria-labelledby="sorgen-h">
-            <span class="sorgen-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>
-            <h3 id="sorgen-h">Sorgenfrei versichert</h3>
-            <p>Alle Abklärungen beim Strassenverkehrsamt erledigen wir für dich. Du bist zu 100&nbsp;% Vollkasko versichert.</p>
-            <dl class="sorgen-liste">
-              <div><dt>Einmaliger Beitrag Kat. B</dt><dd>CHF 120.–, ab der 2. Lektion</dd></div>
-              <div><dt>Einmaliger Beitrag Kat. BE</dt><dd>CHF 135.–</dd></div>
+          <aside class="sorgenfrei reveal" style="--i:1" aria-labelledby="sorgenfrei-titel">
+            <span class="sf-icon"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span>
+            <h3 id="sorgenfrei-titel">Sorgenfrei versichert</h3>
+            <p>Alle Abklärungen, Änderungen oder Anmeldungen beim Strassenverkehrsamt erledigen wir für dich. Du bist zu 100 % Vollkasko versichert.</p>
+            <dl class="sf-liste">
+              <div><dt>Einmaliger Beitrag Kat. B</dt><dd>CHF&nbsp;120.00, ab der 2. Lektion</dd></div>
+              <div><dt>Einmaliger Beitrag Kat. BE</dt><dd>CHF&nbsp;135.00</dd></div>
               <div><dt>Bezahlung</dt><dd>per Rechnung oder bar</dd></div>
             </dl>
-            <a class="txt-link" href="#" data-soon="Preise">Alle Preise<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="text-link text-link-hell" href="#" data-soon="Preise">Alle Preise<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </aside>
         </div>
       </div>
     </section>
 
-    <!-- Auszeichnungen -->
-    <section class="sek" id="auszeichnungen" aria-labelledby="ausz-h">
+    <!-- 5 Auszeichnungen -->
+    <section class="sektion" id="auszeichnungen" aria-labelledby="ausz-titel">
       <div class="wrap">
-        <div class="ausz">
-          <div class="ausz-bild rv">
-            <img src="../assets/img/a-abzeichen-2026.webp" width="720" height="277" loading="lazy" alt="Abzeichen Sehr guter Fahrlehrer 2026, bewertet von den Fahrschülerinnen und Fahrschülern auf Superfahrlehrer">
-          </div>
-          <div class="ausz-text rv" style="--i:1">
+        <div class="ausz-raster">
+          <figure class="ausz-bild reveal">
+            <div class="ausz-rahmen">
+              <img src="../assets/img/a-abzeichen-2026.webp" width="800" height="308" loading="lazy" decoding="async" alt="Abzeichen Sehr guter Fahrlehrer 2026, bewertet von den Fahrschülerinnen und Fahrschülern auf Superfahrlehrer">
+            </div>
+          </figure>
+          <div class="ausz-text reveal" style="--i:1">
             <p class="kicker">Auszeichnung 2026</p>
-            <h2 id="ausz-h">Sehr guter Fahrlehrer&nbsp;2026.</h2>
-            <p>Bewertet von Fahrschülerinnen und Fahrschülern auf Superfahrlehrer. Dejan Rajic wird dort seit 2017 immer wieder ausgezeichnet.</p>
-            <a class="btn btn-blau" href="https://superfahrlehrer.ch/de/fahrlehrer/id/200703" target="_blank" rel="noopener">Bewertungen ansehen<svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg><span class="sr"> (öffnet in neuem Fenster)</span></a>
+            <h2 id="ausz-titel">Sehr guter Fahrlehrer 2026.</h2>
+            <p>Bewertet von Fahrschülerinnen und Fahrschülern auf Superfahrlehrer. Dejan Rajic wurde dort seit 2017 schon sechsmal ausgezeichnet.</p>
+            <a class="btn btn-blau" href="https://superfahrlehrer.ch/de/fahrlehrer/id/200703" target="_blank" rel="noopener">
+              Bewertungen ansehen<svg class="i" aria-hidden="true"><use href="#i-ext"/></svg><span class="sr">(öffnet in einem neuen Fenster)</span>
+            </a>
           </div>
         </div>
-        <ol class="zeit" aria-label="Auszeichnungen nach Jahr, neueste zuerst">
-          <li class="z-jetzt"><span class="z-punkt" aria-hidden="true"></span><span class="z-jahr">2026</span><span class="z-name">Sehr guter Fahrlehrer</span></li>
-          <li><span class="z-punkt" aria-hidden="true"></span><span class="z-jahr">2025</span><span class="z-name">Sehr guter Fahrlehrer</span></li>
-          <li><span class="z-punkt" aria-hidden="true"></span><span class="z-jahr">2022</span><span class="z-name" lang="fr">Très bon moniteur</span></li>
-          <li><span class="z-punkt" aria-hidden="true"></span><span class="z-jahr">2021</span><span class="z-name">Sehr guter Fahrlehrer</span></li>
-          <li><span class="z-punkt" aria-hidden="true"></span><span class="z-jahr">2020</span><span class="z-name">Prädikat: sehr gut</span></li>
-          <li><span class="z-punkt" aria-hidden="true"></span><span class="z-jahr">2017</span><span class="z-name">Prädikat: sehr gut</span></li>
+
+        <ol class="zeitleiste" aria-label="Auszeichnungen auf Superfahrlehrer, die neuste zuerst">
+          <li class="zl-punkt zl-aktuell" style="--i:0"><span class="zl-jahr">2026</span><span class="zl-titel">Sehr guter Fahrlehrer</span></li>
+          <li class="zl-punkt" style="--i:1"><span class="zl-jahr">2025</span><span class="zl-titel">Sehr guter Fahrlehrer</span></li>
+          <li class="zl-punkt" style="--i:2"><span class="zl-jahr">2022</span><span class="zl-titel" lang="fr">Très bon moniteur</span></li>
+          <li class="zl-punkt" style="--i:3"><span class="zl-jahr">2021</span><span class="zl-titel">Sehr guter Fahrlehrer</span></li>
+          <li class="zl-punkt" style="--i:4"><span class="zl-jahr">2020</span><span class="zl-titel">Prädikat: sehr gut</span></li>
+          <li class="zl-punkt" style="--i:5"><span class="zl-jahr">2017</span><span class="zl-titel">Prädikat: sehr gut</span></li>
         </ol>
       </div>
     </section>
 
-    <!-- Weg -->
-    <section class="sek sek-hell" id="weg" aria-labelledby="weg-h">
+    <!-- 6 Weg -->
+    <section class="sektion sektion-hell" id="weg" aria-labelledby="weg-titel">
       <div class="wrap">
-        <div class="sek-kopf sek-kopf-zeile rv">
+        <div class="sektion-kopf reveal">
           <div>
             <p class="kicker">Der Weg zum Führerausweis</p>
-            <h2 id="weg-h">In sechs Schritten zum Ausweis.</h2>
+            <h2 id="weg-titel">In sechs Schritten zum Ausweis.</h2>
           </div>
-          <a class="txt-link" href="#" data-soon="Der Weg zum Führerausweis">Der Weg zum Führerausweis<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="text-link" href="#" data-soon="Der Weg zum Führerausweis">Der Weg zum Führerausweis<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
+
         <ol class="weg">
-          <li class="schritt rv" style="--i:0">
-            <span class="s-nr">01</span>
-            <svg class="ic s-ic" aria-hidden="true"><use href="#i-aid"/></svg>
-            <h3>Nothilfekurs</h3>
-            <p>Den Nothilfekurs machst du bei Sandra Rajic.</p>
-            <span class="etikett">bei uns</span>
+          <li class="schritt reveal" style="--i:0">
+            <span class="nr" aria-hidden="true">1</span>
+            <div class="schritt-karte">
+              <svg class="i schritt-icon" aria-hidden="true"><use href="#i-aid"/></svg>
+              <h3>Nothilfekurs</h3>
+              <p>Den Nothilfekurs machst du bei Sandra Rajic.</p>
+              <span class="tag">bei uns</span>
+            </div>
           </li>
-          <li class="schritt rv" style="--i:1">
-            <span class="s-nr">02</span>
-            <svg class="ic s-ic" aria-hidden="true"><use href="#i-file"/></svg>
-            <h3>Gesuch</h3>
-            <p>Formular Gesuch Führerausweis ausfüllen und ans Strassenverkehrsamt schicken.</p>
+          <li class="schritt reveal" style="--i:1">
+            <span class="nr" aria-hidden="true">2</span>
+            <div class="schritt-karte">
+              <svg class="i schritt-icon" aria-hidden="true"><use href="#i-file"/></svg>
+              <h3>Gesuch</h3>
+              <p>Formular Gesuch Führerausweis ausfüllen und ans Strassen&shy;verkehrsamt schicken.</p>
+            </div>
           </li>
-          <li class="schritt rv" style="--i:2">
-            <span class="s-nr">03</span>
-            <svg class="ic s-ic" aria-hidden="true"><use href="#i-book"/></svg>
-            <h3>Theorieprüfung</h3>
-            <p>Theorie bestehen. Tipp: den Prüfungstest mindestens 3 Mal fehlerfrei lösen.</p>
+          <li class="schritt reveal" style="--i:2">
+            <span class="nr" aria-hidden="true">3</span>
+            <div class="schritt-karte">
+              <svg class="i schritt-icon" aria-hidden="true"><use href="#i-book"/></svg>
+              <h3>Theorieprüfung</h3>
+              <p>Tipp: Löse den Prüfungstest mindestens 3 Mal fehlerfrei.</p>
+            </div>
           </li>
-          <li class="schritt rv" style="--i:3">
-            <span class="s-nr">04</span>
-            <svg class="ic s-ic" aria-hidden="true"><use href="#i-wheel"/></svg>
-            <h3>Fahrlektionen</h3>
-            <p>Mit Dejan Rajic, im Automat oder mit Schaltgetriebe.</p>
-            <span class="etikett">bei uns</span>
+          <li class="schritt reveal" style="--i:3">
+            <span class="nr" aria-hidden="true">4</span>
+            <div class="schritt-karte">
+              <svg class="i schritt-icon" aria-hidden="true"><use href="#i-wheel"/></svg>
+              <h3>Fahrlektionen</h3>
+              <p>Mit Dejan Rajic, im Automat oder mit Schaltgetriebe.</p>
+              <span class="tag">bei uns</span>
+            </div>
           </li>
-          <li class="schritt rv" style="--i:4">
-            <span class="s-nr">05</span>
-            <svg class="ic s-ic" aria-hidden="true"><use href="#i-school"/></svg>
-            <h3>VKU-Kurs</h3>
-            <p>8 Lektionen Verkehrskunde, bei uns oder bei anderen Anbietern.</p>
-            <span class="etikett">bei uns</span>
+          <li class="schritt reveal" style="--i:4">
+            <span class="nr" aria-hidden="true">5</span>
+            <div class="schritt-karte">
+              <svg class="i schritt-icon" aria-hidden="true"><use href="#i-school"/></svg>
+              <h3>VKU-Kurs</h3>
+              <p>8 Lektionen Verkehrskunde, bei uns oder bei anderen Anbietern.</p>
+              <span class="tag">bei uns</span>
+            </div>
           </li>
-          <li class="schritt rv" style="--i:5">
-            <span class="s-nr">06</span>
-            <svg class="ic s-ic" aria-hidden="true"><use href="#i-route"/></svg>
-            <h3>WAB-Kurs</h3>
-            <p>Auch nach der Prüfung sind wir für dich da und erinnern dich an die WAB-Kurse.</p>
+          <li class="schritt reveal" style="--i:5">
+            <span class="nr" aria-hidden="true">6</span>
+            <div class="schritt-karte">
+              <svg class="i schritt-icon" aria-hidden="true"><use href="#i-route"/></svg>
+              <h3>WAB-Kurs</h3>
+              <p>Auch nach der Prüfung sind wir für dich da und erinnern dich an die WAB-Kurse.</p>
+            </div>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- Team -->
-    <section class="sek" id="team" aria-labelledby="team-h">
+    <!-- 7 Team -->
+    <section class="sektion" id="team" aria-labelledby="team-titel">
       <div class="wrap">
-        <div class="sek-kopf sek-kopf-zeile rv">
+        <div class="sektion-kopf reveal">
           <div>
             <p class="kicker">Team</p>
-            <h2 id="team-h">Zwei Menschen, ein&nbsp;Ziel: dass du sicher fährst.</h2>
+            <h2 id="team-titel">Fahrlehrer und Nothilfe aus einer Hand.</h2>
           </div>
-          <a class="txt-link" href="#" data-soon="Dein Fahrlehrer">Dein Fahrlehrer<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="text-link" href="#" data-soon="Dein Fahrlehrer">Dein Fahrlehrer<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <div class="team">
-          <article class="person person-gross rv">
-            <div class="p-kopf">
-              <span class="mono" aria-hidden="true">DR</span>
+
+        <div class="team-raster">
+          <article class="person person-gross reveal" aria-labelledby="p-dejan">
+            <div class="person-kopf">
+              <span class="monogramm" aria-hidden="true">DR</span>
               <div>
-                <h3>Dejan Rajic</h3>
-                <p class="p-rolle">Gründer und Fahrlehrer seit 2016</p>
+                <h3 id="p-dejan">Dejan Rajic</h3>
+                <p class="person-rolle">Gründer und Fahrlehrer seit&nbsp;2016</p>
               </div>
             </div>
-            <p class="p-label">Führerausweis-Kategorien</p>
-            <ul class="chips" aria-label="Führerausweis-Kategorien von Dejan Rajic">
-              <li>A</li><li>B</li><li>BE</li><li>D1</li><li>D1E</li><li>Code 121</li><li>Code 201</li>
-            </ul>
-            <p class="p-label">Weiterbildungen</p>
-            <ul class="wb">
-              <li><span>2023</span>Verkehrssicherheit</li>
-              <li><span>2021</span>Auto Schleuder Off-Road</li>
-              <li><span>2021</span>Motivationspsychologie</li>
-              <li><span>2019</span>4x4 Technik Geländefahren</li>
-              <li><span>2018</span>BE Anhänger Manöver</li>
-              <li><span>2017</span>Kräfte unter Kontrolle</li>
-            </ul>
-            <p class="p-zusatz">Ausserdem Praktikanten-Ausbildner. Den VKU-Kurs kannst du direkt bei uns besuchen.</p>
+            <p class="person-text">Unsere Fahrschule bildet dich nicht nur für die Prüfung aus, sondern für das Fahren im echten Leben. Dejan Rajic ist auch Praktikanten-Ausbildner.</p>
+            <div class="person-block">
+              <p class="mini-titel">Führerausweis-Kategorien</p>
+              <ul class="chips" aria-label="Führerausweis-Kategorien von Dejan Rajic">
+                <li>A</li><li>B</li><li>BE</li><li>D1</li><li>D1E</li><li>Code 121</li><li>Code 201</li>
+              </ul>
+            </div>
+            <div class="person-block">
+              <p class="mini-titel">Weiterbildungen</p>
+              <ul class="weiterbildung">
+                <li><span>2023</span>Verkehrssicherheit</li>
+                <li><span>2021</span>Auto Schleuder Off-Road</li>
+                <li><span>2021</span>Motivationspsychologie</li>
+                <li><span>2019</span>4x4 Technik Geländefahren</li>
+                <li><span>2018</span>BE Anhänger Manöver</li>
+                <li><span>2017</span>Kräfte unter Kontrolle</li>
+              </ul>
+            </div>
           </article>
-          <article class="person rv" style="--i:1">
-            <div class="p-kopf">
-              <span class="mono" aria-hidden="true">SR</span>
+
+          <article class="person reveal" style="--i:1" aria-labelledby="p-sandra">
+            <div class="person-kopf">
+              <span class="monogramm monogramm-hell" aria-hidden="true">SR</span>
               <div>
-                <h3>Sandra Rajic</h3>
-                <p class="p-rolle">Nothilfe-Instruktorin</p>
+                <h3 id="p-sandra">Sandra Rajic</h3>
+                <p class="person-rolle">Nothilfe-Instruktorin</p>
               </div>
             </div>
-            <p>Der Nothilfekurs ist der erste Schritt zum Führerausweis. Bei Sandra Rajic machst du ihn im selben Team wie deine Fahrausbildung.</p>
-            <ul class="p-kontakt">
-              <li><a href="tel:+41764454290"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>076 445 42 90</a></li>
-              <li><a href="mailto:sandra@drive4life.ch"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>sandra@drive4life.ch</a></li>
+            <p class="person-text">Der Nothilfekurs ist der erste Schritt zum Führerausweis. Bei Sandra Rajic machst du ihn im gleichen Team wie deine Fahrausbildung.</p>
+            <ul class="kontakt-mini">
+              <li><a href="tel:+41764454290"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>076 445 42 90</a></li>
+              <li><a href="mailto:sandra@drive4life.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>sandra@drive4life.ch</a></li>
             </ul>
           </article>
+
+          <div class="team-cta reveal" style="--i:2">
+            <p class="team-cta-titel">Fragen zur Ausbildung?</p>
+            <p>Schreib Dejan Rajic direkt per WhatsApp, zum Beispiel für deine kostenlose Probelektion.</p>
+            <a class="btn btn-weiss" href="https://wa.me/41763224408" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp an Dejan</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Fahrzeuge -->
-    <section class="sek sek-hell" id="fahrzeuge" aria-labelledby="auto-h">
-      <div class="wrap autos">
-        <div class="autos-text rv">
+    <!-- 8 Fahrzeuge -->
+    <section class="sektion sektion-hell" id="fahrzeuge" aria-labelledby="fz-titel">
+      <div class="wrap fz-raster">
+        <div class="fz-text reveal">
           <p class="kicker">Fahrzeuge</p>
-          <h2 id="auto-h">Moderne Fahrschulautos.</h2>
-          <p>Kategorie B wahlweise mit Automat oder Schaltgetriebe. Für die Kategorie BE fährst du mit Fahrschulfahrzeug und Anhänger.</p>
-          <ul class="auto-liste">
-            <li><span class="a-modell">Golf 7 GTD</span><span class="a-jahr">Jahrgang 2015</span></li>
-            <li><span class="a-modell">VW Tiguan R-Line</span><span class="a-jahr">Jahrgang 2018</span></li>
-            <li><span class="a-modell">BMW X1</span><span class="a-jahr">Jahrgang 2020</span></li>
+          <h2 id="fz-titel">Unterwegs im Golf, Tiguan oder BMW X1.</h2>
+          <p>Kategorie B wahlweise mit Automat oder Schaltgetriebe. Für die Kategorie BE fährst du mit Fahrschulfahrzeug und Anhänger bis 3,5&nbsp;t.</p>
+          <ul class="fz-liste">
+            <li><span class="fz-name">Golf 7 GTD</span><span class="fz-jahr">Jahrgang 2015</span></li>
+            <li><span class="fz-name">VW Tiguan R-Line</span><span class="fz-jahr">Jahrgang 2018</span></li>
+            <li><span class="fz-name">BMW X1</span><span class="fz-jahr">Jahrgang 2020</span></li>
           </ul>
         </div>
-        <div class="autos-bilder">
-          <figure class="ab-1 rv" style="--i:1"><img src="../assets/img/a-schnee.webp" width="760" height="570" loading="lazy" alt="Fahrschul-Golf im Schnee"></figure>
-          <figure class="ab-2 rv" style="--i:2"><img src="../assets/img/a-heck.webp" width="560" height="700" loading="lazy" alt="Heckleuchte und Logo am Fahrschul-Golf"></figure>
+        <div class="fz-bilder reveal" style="--i:1">
+          <img class="fz-gross" src="../assets/img/a-schnee.webp" width="1000" height="750" loading="lazy" decoding="async" alt="Golf von Drive 4 Life im Schnee">
+          <img class="fz-klein" src="../assets/img/a-heck.webp" width="600" height="750" loading="lazy" decoding="async" alt="Heck des Golf mit leuchtendem Rücklicht und Drive 4 Life Beschriftung">
         </div>
       </div>
     </section>
 
-    <!-- Kontakt -->
-    <section class="kontakt" id="kontakt" aria-labelledby="kontakt-h">
-      <div class="wrap kontakt-in">
-        <div class="kontakt-kopf rv">
+    <!-- 9 Kontakt -->
+    <section class="kontakt" id="kontakt" aria-labelledby="kontakt-titel">
+      <div class="wrap kontakt-raster">
+        <div class="kontakt-text reveal">
           <p class="kicker kicker-gelb">Kontakt</p>
-          <h2 id="kontakt-h">Schreib uns.</h2>
+          <h2 id="kontakt-titel">Schreib uns.</h2>
           <p>Am schnellsten erreichst du Dejan Rajic per WhatsApp. Frag nach deiner kostenlosen Probelektion.</p>
-          <a class="btn btn-gelb btn-gross" href="https://wa.me/41763224408?text=Hallo%20Dejan%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Probelektion%20(Kat.%20B)." target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp an Dejan</a>
+          <a class="btn btn-gelb btn-gross" href="https://wa.me/41763224408?text=Hallo%2C%20ich%20m%C3%B6chte%20gerne%20eine%20kostenlose%20Probelektion%20anfragen." target="_blank" rel="noopener">
+            <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp an Dejan
+          </a>
+          <p class="kontakt-gebiet"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Fahrunterricht in Wallisellen sowie in Zürich und Umgebung.</p>
         </div>
-        <ul class="kontakt-liste rv" style="--i:1">
-          <li><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span><small>Telefon Dejan Rajic</small><a href="tel:+41763224408">076 322 44 08</a></span></li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><span><small>E-Mail</small><a href="mailto:dejan@drive4life.ch">dejan@drive4life.ch</a></span></li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span><small>Adresse</small>Rosenbergstrasse 60<br>8304 Wallisellen</span></li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-aid"/></svg><span><small>Nothilfe, Sandra Rajic</small><a href="tel:+41764454290">076 445 42 90</a></span></li>
+        <ul class="kontakt-liste reveal" style="--i:1">
+          <li><a href="tel:+41763224408"><span class="kl-icon"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><span><span class="kl-label">Telefon Dejan Rajic</span><span class="kl-wert">076 322 44 08</span></span></a></li>
+          <li><a href="mailto:dejan@drive4life.ch"><span class="kl-icon"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span><span><span class="kl-label">E-Mail</span><span class="kl-wert">dejan@drive4life.ch</span></span></a></li>
+          <li><div><span class="kl-icon"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><span><span class="kl-label">Adresse</span><span class="kl-wert">Rosenbergstrasse 60<br>8304 Wallisellen</span></span></div></li>
+          <li><a href="tel:+41764454290"><span class="kl-icon"><svg class="i" aria-hidden="true"><use href="#i-aid"/></svg></span><span><span class="kl-label">Nothilfekurs, Sandra Rajic</span><span class="kl-wert">076 445 42 90</span></span></a></li>
         </ul>
       </div>
     </section>
   </main>
 
   <footer class="fuss">
-    <div class="wrap fuss-in">
+    <div class="wrap fuss-raster">
       <div class="fuss-marke">
-        <img src="../assets/img/a-logo.webp" width="400" height="159" alt="Drive 4 Life Fahrschule" loading="lazy">
-        <p>Fahrunterricht in Wallisellen sowie in Zürich und Umgebung.</p>
+        <img src="../assets/img/a-logo.webp" width="440" height="175" loading="lazy" alt="Drive 4 Life Fahrschule">
+        <p>Fahrunterricht in Wallisellen sowie in Zürich und Umgebung. Fahre fürs Leben, nicht für die Prüfung.</p>
       </div>
-      <div class="fuss-spalte">
-        <p class="fuss-h">Kontakt</p>
-        <ul>
+      <div>
+        <p class="fuss-titel">Kontakt</p>
+        <ul class="fuss-liste">
           <li><a href="tel:+41763224408">076 322 44 08</a></li>
           <li><a href="mailto:dejan@drive4life.ch">dejan@drive4life.ch</a></li>
           <li>Rosenbergstrasse 60, 8304 Wallisellen</li>
         </ul>
       </div>
-      <div class="fuss-spalte">
-        <p class="fuss-h">Seiten</p>
-        <ul>
+      <div>
+        <p class="fuss-titel">Seiten</p>
+        <ul class="fuss-liste fuss-seiten">
           <li><a href="#" data-soon="Dein Fahrlehrer">Dein Fahrlehrer</a></li>
           <li><a href="#" data-soon="Der Weg zum Führerausweis">Der Weg zum Führerausweis</a></li>
           <li><a href="#" data-soon="Preise">Preise</a></li>
@@ -494,17 +530,15 @@
         </ul>
       </div>
     </div>
-    <div class="wrap">
-      <div class="fuss-unten">
-        <p>© 2026 Drive 4 Life Fahrschule</p>
-        <p><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
-      </div>
+    <div class="wrap fuss-unten">
+      <p>© 2026 Drive 4 Life Fahrschule</p>
+      <p><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
     </div>
   </footer>
 
-  <nav class="aktion" aria-label="Schnellkontakt">
-    <a class="btn btn-blau" href="https://wa.me/41763224408" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
-    <a class="btn btn-umriss" href="tel:+41763224408"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
-  </nav>
+  <div class="aktionsleiste" id="aktionsleiste">
+    <a class="btn btn-blau" href="https://wa.me/41763224408?text=Hallo%2C%20ich%20m%C3%B6chte%20gerne%20eine%20kostenlose%20Probelektion%20anfragen." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+    <a class="btn btn-umriss" href="tel:+41763224408"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Anrufen</a>
+  </div>
 </body>
 </html>

@@ -3,6 +3,8 @@
   'use strict';
   window.balmerB = true;
   var root = document.documentElement;
+  /* Kam das Skript erst nach dem Sicherheitsnetz, gilt die JS-Darstellung trotzdem (ohne Animation) */
+  root.classList.add('js');
   var fx = function () { return root.classList.contains('fx'); };
 
   /* Kopf: Hintergrund ab 40 px Scrollweg */
@@ -41,6 +43,27 @@
     reveal.forEach(function (el) { io.observe(el); });
   } else {
     reveal.forEach(function (el) { el.classList.add('ist-da'); });
+  }
+
+  /* Zähler im Datenblatt-Abschnitt: zählen beim ersten Sichtbarwerden hoch */
+  var zaehler = document.querySelectorAll('[data-zaehler]');
+  if (zaehler.length && 'IntersectionObserver' in window && fx()) {
+    var zio = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        zio.unobserve(e.target);
+        var el = e.target, ziel = parseInt(el.getAttribute('data-zaehler'), 10), t0 = null, dauer = 1100;
+        var schritt = function (t) {
+          if (t0 === null) t0 = t;
+          var p = Math.min(1, (t - t0) / dauer);
+          el.textContent = Math.round(ziel * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(schritt);
+        };
+        el.textContent = '0';
+        requestAnimationFrame(schritt);
+      });
+    }, { threshold: 0.6 });
+    zaehler.forEach(function (el) { zio.observe(el); });
   }
 
   /* Paket-Wähler (ARIA-Tabs) mit rollender Zahl */

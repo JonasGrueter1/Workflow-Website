@@ -173,6 +173,12 @@ button { font: inherit; color: inherit; }
 .kopf.offen .kopf-menue .i-auf { display: none; }
 .kopf.offen .kopf-menue .i-zu { display: block; }
 
+@media (max-width: 359.98px) {
+  .kopf-inner { gap: 10px; }
+  .kopf-logo img { width: 136px; }
+  .kopf-aktion { gap: 6px; }
+  .kopf-rund[href^="https://wa.me"] { display: none; }
+}
 @media (max-width: 1023.98px) {
   .kopf-nav {
     position: absolute; top: 100%; left: 0; right: 0;
@@ -247,6 +253,11 @@ button { font: inherit; color: inherit; }
 .hero-fakten li + li { padding-left: 14px; border-left: 2px solid rgb(47 46 46 / 16%); }
 .hero-fakten strong { font: 800 16px/1.2 var(--display); letter-spacing: -.01em; }
 .hero-fakten span { font-size: 13.5px; line-height: 1.35; color: #4d4b4b; }
+@media (max-width: 379.98px) {
+  .hero-fakten { grid-template-columns: minmax(0, 1fr); padding-top: 8px; }
+  .hero-fakten li, .hero-fakten li + li { flex-direction: row; align-items: baseline; gap: 8px; padding: 8px 0; border-left: 0; }
+  .hero-fakten li + li { border-top: 1px solid rgb(47 46 46 / 14%); }
+}
 
 .hero-bild { position: relative; order: -1; aspect-ratio: 16 / 10; overflow: hidden; background: #c9cdd2; }
 .hero-bild img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 62%; }
@@ -499,6 +510,15 @@ button { font: inherit; color: inherit; }
   font: 700 14px/1.2 var(--text);
   box-shadow: 0 8px 24px -12px rgb(0 0 0 / 40%);
 }
+.ueber-links { display: grid; gap: 40px; max-width: 560px; }
+.fragen {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px;
+  padding: 20px 20px 20px 24px; border-radius: 22px;
+  background: var(--weiss); border: 1px solid var(--linie);
+}
+.fragen p { font-size: 17px; line-height: 1.4; }
+.fragen strong { display: block; font: 800 20px/1.25 var(--display); letter-spacing: -.01em; }
+@media (max-width: 459.98px) { .fragen .knopf { width: 100%; } }
 .ueber-text h2 { font-size: clamp(30px, 8.2vw, 52px); margin-bottom: 26px; }
 .ueber-text > p:not(.kicker):not(.signatur) { margin-top: 16px; max-width: 36em; }
 .ueber-text > p:not(.kicker):not(.signatur):first-of-type { margin-top: 0; }
@@ -510,13 +530,14 @@ button { font: inherit; color: inherit; }
 .signatur { display: flex; flex-direction: column; margin-top: 24px; }
 .signatur strong { font: 800 19px/1.3 var(--display); }
 .signatur span { font-size: 15px; color: var(--muted); }
-.ueber-knoepfe { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 30px; }
+.ueber-knoepfe { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 18px; }
 @media (max-width: 559.98px) {
   .ueber-knoepfe .knopf { width: 100%; white-space: normal; text-align: center; }
 }
 @media (min-width: 960px) {
   .ueber-raster { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(56px, 7vw, 104px); align-items: center; }
   .ueber-bild { margin-right: 20px; }
+  .ueber-links { gap: 48px; }
   .ueber-bild::before { inset: 28px -20px -20px 28px; }
   .ueber-bild figcaption { left: 20px; top: 20px; }
 }
@@ -570,6 +591,7 @@ button { font: inherit; color: inherit; }
   font-weight: 700; font-size: 15px;
   text-decoration: underline; text-decoration-color: var(--gelb-knopf); text-decoration-thickness: 3px; text-underline-offset: 5px;
 }
+.weiter[hidden] { display: none; }
 .weiter .i { width: 18px; height: 18px; transition: transform .3s var(--ease); }
 .weiter[aria-expanded="true"] .i { transform: rotate(180deg); }
 .js .stimme-text.gekuerzt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 7; overflow: hidden; }
@@ -593,19 +615,26 @@ button { font: inherit; color: inherit; }
 .stimmen-punkte i.aktiv { background: var(--anthrazit); transform: scaleX(2.6); margin-inline: 6px; }
 .stimmen-hinweis { font-size: 14px; color: var(--muted); font-weight: 600; }
 
-@media (min-width: 900px) {
+@media (min-width: 760px) {
   .stimmen-liste {
-    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: auto auto; gap: 18px;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;
     margin: 0; padding: 0; overflow: visible;
   }
-  .stimme { padding: 32px 30px 26px; }
-  .stimme-gross { grid-row: 1 / span 2; padding: 44px 42px 34px; justify-content: space-between; }
-  .stimme-gross .stimme-zeichen { width: 64px; height: 48px; margin-bottom: 28px; }
-  .stimme-gross .stimme-text { font-size: clamp(20px, 1.75vw, 23px); line-height: 1.5; }
+  .stimme { padding: 30px 28px 24px; }
+  .stimme-gross { grid-column: 1 / -1; padding: 40px 40px 30px; }
+  .stimme-gross .stimme-zeichen { width: 56px; height: 42px; margin-bottom: 24px; }
+  .stimme-gross .stimme-text { font-size: 20px; line-height: 1.5; }
   .stimmen-steuer { display: none; }
-  .js .stimme-text.gekuerzt { -webkit-line-clamp: 6; }
+  .js .stimme-text.gekuerzt { -webkit-line-clamp: 7; }
   .js .stimme-gross .stimme-text.gekuerzt { display: block; -webkit-line-clamp: unset; overflow: visible; }
+}
+@media (min-width: 1100px) {
+  .stimmen-liste { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto; gap: 18px; }
+  .stimme { padding: 32px 30px 26px; }
+  .stimme-gross { grid-column: auto; grid-row: 1 / span 2; padding: 44px 42px 34px; }
+  .stimme-gross .stimme-zeichen { width: 64px; height: 48px; margin-bottom: 28px; }
+  .stimme-gross .stimme-text { font-size: clamp(19px, 1.55vw, 22px); }
+  .js .stimme-text.gekuerzt { -webkit-line-clamp: 8; }
 }
 
 /* 7 Kontakt */
@@ -639,7 +668,7 @@ button { font: inherit; color: inherit; }
 .kk-icon { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 14px; background: var(--hell); }
 .kk-icon .i { width: 21px; height: 21px; }
 .kk-label { display: block; margin-bottom: 2px; font: 700 12px/1.3 var(--text); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.kontakt-karte a { font-weight: 600; text-decoration-color: var(--gelb-knopf); text-decoration-thickness: 2px; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.kontakt-karte a { font-weight: 600; text-decoration-color: var(--gelb-knopf); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .kk-knoepfe { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; margin-top: 22px; }
 .kk-knoepfe .textlink { background-image: linear-gradient(var(--gelb-knopf), var(--gelb-knopf)); }
 @media (max-width: 559.98px) {

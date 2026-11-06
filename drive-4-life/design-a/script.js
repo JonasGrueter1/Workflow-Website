@@ -1,139 +1,116 @@
-/* Drive 4 Life Fahrschule, Design A: Kopf, Menü, Einblenden, Preis-Reiter, Aktionsleiste */
+/* Drive 4 Life Fahrschule, Design A: Menü, Reiter, Scroll-Reveals, Aktionsleiste */
 (function () {
   'use strict';
   window.D4L_READY = true;
+
   var doc = document.documentElement;
-  doc.classList.add('js');
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var kopf = document.getElementById('kopf');
+  var reduziert = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Kopf: Schatten nach dem ersten Scrollen */
-  var kopf = document.getElementById('kopf');
-  var onScroll = function () { kopf.classList.toggle('is-scrolled', window.scrollY > 8); };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  function kopfStatus() { kopf.classList.toggle('ist-gescrollt', window.scrollY > 8); }
+  kopfStatus();
+  window.addEventListener('scroll', kopfStatus, { passive: true });
 
   /* Menü (Handy und Tablet) */
-  var btn = document.querySelector('.menu-btn');
-  var menu = document.getElementById('menu');
-  var setMenu = function (open) {
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    btn.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
-    menu.classList.toggle('is-open', open);
-  };
-  btn.addEventListener('click', function () { setMenu(btn.getAttribute('aria-expanded') !== 'true'); });
-  menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { setMenu(false); btn.focus(); }
-  });
-  document.addEventListener('click', function (e) {
-    if (btn.getAttribute('aria-expanded') === 'true' && !e.target.closest('.kopf')) setMenu(false);
-  });
-
-  /* Einblenden beim Scrollen (robust auch bei schnellem Scrollen und Sprüngen) */
-  var targets = [].slice.call(document.querySelectorAll('.rv, .zeit, .weg, .band'));
-  var reveal = function () {
-    var limit = window.innerHeight * 0.92;
-    targets = targets.filter(function (el) {
-      if (el.getBoundingClientRect().top < limit) { el.classList.add('is-in'); return false; }
-      return true;
-    });
-    if (!targets.length) window.removeEventListener('scroll', onReveal);
-  };
-  var ticking = false;
-  var onReveal = function () {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { ticking = false; reveal(); });
-  };
-  if (reduce) targets.forEach(function (el) { el.classList.add('is-in'); });
-  else {
-    window.addEventListener('scroll', onReveal, { passive: true });
-    window.addEventListener('resize', onReveal);
-    reveal();
+  var knopf = document.querySelector('.menu-knopf');
+  var nav = document.getElementById('nav');
+  function menu(offen) {
+    knopf.setAttribute('aria-expanded', String(offen));
+    knopf.setAttribute('aria-label', offen ? 'Menü schliessen' : 'Menü öffnen');
+    nav.classList.toggle('ist-offen', offen);
   }
-
-  /* Weiches Scrollen nur für Anker-Links */
+  knopf.addEventListener('click', function () { menu(knopf.getAttribute('aria-expanded') !== 'true'); });
+  nav.addEventListener('click', function (e) { if (e.target.closest('a')) menu(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && knopf.getAttribute('aria-expanded') === 'true') { menu(false); knopf.focus(); }
+  });
   document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href^="#"]');
-    if (!a || a.hasAttribute('data-soon')) return;
-    var id = a.getAttribute('href').slice(1);
-    var ziel = id ? document.getElementById(id) : null;
-    if (!ziel) return;
-    e.preventDefault();
-    ziel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    if (history.replaceState) history.replaceState(null, '', '#' + id);
+    if (knopf.getAttribute('aria-expanded') === 'true' && !e.target.closest('.kopf')) menu(false);
   });
 
-  /* Preis-Reiter (ARIA Tabs) */
-  var tafel = document.querySelector('.tafel');
-  var tablist = tafel.querySelector('[role="tablist"]');
-  var tabs = [].slice.call(tablist.querySelectorAll('[role="tab"]'));
-  var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
-  var marke = tablist.querySelector('.reiter-marke');
-  tablist.hidden = false;
-  tafel.classList.add('has-tabs');
-
-  var moveMarke = function (tab) {
-    marke.style.width = tab.offsetWidth + 'px';
-    marke.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
-  };
-  var select = function (tab, focus) {
-    tabs.forEach(function (t, i) {
-      var on = t === tab;
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      t.tabIndex = on ? 0 : -1;
-      panels[i].hidden = !on;
-      if (on && !reduce) {
-        panels[i].classList.remove('is-anim');
-        void panels[i].offsetWidth;
-        panels[i].classList.add('is-anim');
+  /* Preise: Reiter nach ARIA-Muster */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.reiter-knopf'));
+  var marke = document.querySelector('.reiter-marke');
+  function markeSetzen(tab) {
+    if (!marke || !tab) return;
+    marke.style.setProperty('--w', tab.offsetWidth + 'px');
+    marke.style.setProperty('--x', tab.offsetLeft + 'px');
+  }
+  function waehlen(tab, fokus) {
+    tabs.forEach(function (t) {
+      var aktiv = t === tab;
+      var panel = document.getElementById(t.getAttribute('aria-controls'));
+      t.setAttribute('aria-selected', String(aktiv));
+      t.tabIndex = aktiv ? 0 : -1;
+      if (aktiv) {
+        panel.hidden = false;
+        panel.classList.remove('ist-neu');
+        void panel.offsetWidth;
+        panel.classList.add('ist-neu');
+      } else {
+        panel.hidden = true;
       }
     });
-    moveMarke(tab);
-    if (focus) tab.focus();
-  };
-  tabs.forEach(function (t, i) {
-    panels[i].tabIndex = 0;
-    t.addEventListener('click', function () { select(t, false); });
-    t.addEventListener('keydown', function (e) {
-      var k = e.key, n = tabs.length, j = i;
-      if (k === 'ArrowRight') j = (i + 1) % n;
-      else if (k === 'ArrowLeft') j = (i - 1 + n) % n;
-      else if (k === 'Home') j = 0;
-      else if (k === 'End') j = n - 1;
-      else return;
-      e.preventDefault();
-      select(tabs[j], true);
-    });
-  });
-  panels.forEach(function (p, i) { p.hidden = i !== 0; });
-  moveMarke(tabs[0]);
-  window.addEventListener('resize', function () {
-    var cur = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
-    if (cur) moveMarke(cur);
-  });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
-    var cur = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
-    if (cur) moveMarke(cur);
-  });
-
-  /* Links aus den Kacheln öffnen den passenden Reiter */
-  [].forEach.call(document.querySelectorAll('[data-tab]'), function (a) {
-    a.addEventListener('click', function () {
-      var t = document.getElementById('tab-' + a.getAttribute('data-tab'));
-      if (t) select(t, false);
-    });
-  });
-
-  /* Aktionsleiste am Handy erst nach den Hero-Knöpfen zeigen */
-  var aktion = document.querySelector('.aktion');
-  var heroCta = document.getElementById('hero-cta');
-  if (aktion && heroCta && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      var e = entries[0];
-      aktion.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0);
-    }, { threshold: 0 }).observe(heroCta);
-  } else if (aktion) {
-    aktion.classList.add('is-visible');
+    markeSetzen(tab);
+    if (fokus) tab.focus();
   }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { waehlen(t, false); });
+    t.addEventListener('keydown', function (e) {
+      var n = null;
+      if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (e.key === 'Home') n = tabs[0];
+      if (e.key === 'End') n = tabs[tabs.length - 1];
+      if (n) { e.preventDefault(); waehlen(n, true); }
+    });
+  });
+  if (tabs.length) {
+    tabs.forEach(function (t) {
+      if (t.getAttribute('aria-selected') !== 'true') document.getElementById(t.getAttribute('aria-controls')).hidden = true;
+    });
+    var start = function () { markeSetzen(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0]); };
+    start();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
+    window.addEventListener('resize', start);
+  }
+
+  /* Scroll-Reveals, Zeitleiste und Weg */
+  var ziele = document.querySelectorAll('.reveal, .zeitleiste, .weg');
+  if (reduziert || !('IntersectionObserver' in window)) {
+    Array.prototype.forEach.call(ziele, function (el) { el.classList.add('ist-sichtbar'); });
+  } else {
+    var io = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('ist-sichtbar'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+    Array.prototype.forEach.call(ziele, function (el) { io.observe(el); });
+  }
+
+  /* Aktive Navigation */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav ul a'));
+  if ('IntersectionObserver' in window && links.length) {
+    var spy = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (a) { a.classList.toggle('ist-aktiv', a.getAttribute('href') === '#' + e.target.id); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    links.forEach(function (a) { var s = document.querySelector(a.getAttribute('href')); if (s) spy.observe(s); });
+  }
+
+  /* Aktionsleiste am Handy erst zeigen, wenn die Hero-Knöpfe weg sind */
+  var leiste = document.getElementById('aktionsleiste');
+  var heroKnoepfe = document.getElementById('hero-knoepfe');
+  if (leiste && heroKnoepfe && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (eintraege) {
+      leiste.classList.toggle('ist-sichtbar', !eintraege[0].isIntersecting);
+    }).observe(heroKnoepfe);
+  } else if (leiste) {
+    leiste.classList.add('ist-sichtbar');
+  }
+
+  doc.classList.add('ist-bereit');
 })();

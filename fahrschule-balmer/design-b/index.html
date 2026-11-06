@@ -10,7 +10,7 @@
   <link rel="icon" href="../assets/img/b-favicon.svg" type="image/svg+xml">
   <link rel="preload" href="../assets/fonts/b-krona-one-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/b-spline-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="../assets/img/b-buehne.webp" imagesrcset="../assets/img/b-buehne-768.webp 768w, ../assets/img/b-buehne.webp 1024w" imagesizes="(min-width: 1100px) 1024px, 100vw">
+  <link rel="preload" as="image" href="../assets/img/b-buehne.webp" imagesrcset="../assets/img/b-buehne-800.webp 800w, ../assets/img/b-buehne.webp 1200w" imagesizes="(min-width: 761px) 1000px, 128vw">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>
@@ -90,19 +90,19 @@
     <section class="hero" id="start" aria-labelledby="hero-titel">
       <div class="hero-licht" aria-hidden="true"></div>
       <div class="wrap hero-kopf">
-        <p class="kicker hero-kicker"><span class="h-k1">Performance Drive</span><span class="punkt" aria-hidden="true">·</span><span class="h-k2">Regensdorf ZH</span><span class="punkt" aria-hidden="true">·</span><span class="h-k3">Kategorie B</span></p>
+        <p class="kicker hero-kicker"><span class="h-k1">Performance Drive</span><span class="punkt p1" aria-hidden="true">·</span><span>Regensdorf ZH</span><span class="punkt" aria-hidden="true">·</span><span>Kategorie B</span></p>
         <h1 class="hero-titel" id="hero-titel">
           <span class="zeile"><span class="zeile-in gelb">Fahrschule Balmer.</span></span>
           <span class="zeile"><span class="zeile-in">Fahren lernen mit Leidenschaft.</span></span>
         </h1>
         <svg class="schwung" viewBox="0 0 600 42" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path d="M0 40.5 7.5 36C150 25.5 360 13 600 2.5L590.5 16.5C376 20.5 165 29.5 0 40.5Z"/>
+          <path d="M0 40 6.5 36.4C150 26 362 13.4 600 3L591.5 12.8C380 17.2 168 28.6 0 40Z"/>
         </svg>
       </div>
 
       <div class="buehne">
         <div class="buehne-in" data-parallax>
-          <img class="buehne-bild" src="../assets/img/b-buehne.webp" srcset="../assets/img/b-buehne-768.webp 768w, ../assets/img/b-buehne.webp 1024w" sizes="(min-width: 1100px) 1024px, 100vw" width="1024" height="684" fetchpriority="high" decoding="async" alt="Das Fahrschulauto von Patrick Balmer: ein mattgrauer Mercedes A35 mit gelber Beschriftung Fahrschule Balmer, Performance Drive und der Telefonnummer.">
+          <img class="buehne-bild" src="../assets/img/b-buehne.webp" srcset="../assets/img/b-buehne-800.webp 800w, ../assets/img/b-buehne.webp 1200w" sizes="(min-width: 761px) 1000px, 128vw" width="1200" height="684" fetchpriority="high" decoding="async" alt="Das Fahrschulauto von Patrick Balmer: ein mattgrauer Mercedes A35 mit gelber Beschriftung Fahrschule Balmer, Performance Drive und der Telefonnummer.">
         </div>
       </div>
 
@@ -131,6 +131,11 @@
           <h2 class="titel" id="auto-titel">Dein Fahrschulauto.</h2>
           <p class="auto-satz">Der Mercedes A35 der neuen Generation bietet eine optimale Fahrsicherheit und Technik. Somit ist das Fahrzeug ideal fürs Lernen geeignet.</p>
           <p class="leise">Die Fahrschule ist spezialisiert auf Praxis und Führerausweis der Kategorie B und darum noch effizienter und individueller an dich angepasst.</p>
+          <ul class="werte" aria-label="Auf einen Blick">
+            <li><span class="wert-zahl" data-zaehler="60">60</span><span class="wert-text">Minuten pro Lektion</span></li>
+            <li><span class="wert-zahl" data-zaehler="7">7</span><span class="wert-text">Fahrtage pro Woche</span></li>
+            <li><span class="wert-zahl">0.–</span><span class="wert-text">Zuschlag am Wochenende</span></li>
+          </ul>
         </div>
         <div class="datenblatt" data-reveal>
           <div class="db-kopf"><span>Datenblatt</span><span>Fahrschule Balmer</span></div>
@@ -188,7 +193,7 @@
             <button class="tab" type="button" role="tab" id="tab-einzel" aria-controls="p-einzel" aria-selected="true" data-wert="90">Einzeln</button>
             <button class="tab" type="button" role="tab" id="tab-5er" aria-controls="p-5er" aria-selected="false" tabindex="-1" data-wert="87">5er-Paket</button>
             <button class="tab" type="button" role="tab" id="tab-10er" aria-controls="p-10er" aria-selected="false" tabindex="-1" data-wert="85">10er-Paket</button>
-            <button class="tab" type="button" role="tab" id="tab-special" aria-controls="p-special" aria-selected="false" tabindex="-1" data-wert="65">Drive Special</button>
+            <button class="tab tab-special" type="button" role="tab" id="tab-special" aria-controls="p-special" aria-selected="false" tabindex="-1" data-wert="65">Drive Special</button>
           </div>
 
           <div class="waehler-buehne">
@@ -354,15 +359,17 @@
     <!-- Kontakt -->
     <section class="kontakt" id="kontakt" aria-labelledby="kontakt-titel">
       <div class="wrap kontakt-grid">
-        <div class="kontakt-haupt" data-reveal>
+        <div class="kontakt-kopf" data-reveal>
           <p class="kicker kicker-dunkel">Kontakt</p>
           <h2 class="kontakt-titel" id="kontakt-titel">Steig ein.</h2>
+        </div>
+        <div class="kontakt-haupt" data-reveal>
           <p class="kontakt-lead">Gerne stehe ich dir für Fragen zur Verfügung. Ich freue mich, mit dir gemeinsam deinen Führerausweis der Kategorie B zu erlangen.</p>
           <a class="tel-gross" href="tel:+41782532081" aria-label="Anrufen: 078 253 20 81">078 253 20 81</a>
         </div>
         <div class="kontakt-karte" data-reveal>
           <ul class="kontakt-liste">
-            <li><a href="mailto:patrick@fahrschulebalmer.ch?subject=Fahrstunde%20anfragen"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span><small>E-Mail</small>patrick@fahrschulebalmer.ch</span></a></li>
+            <li><a href="mailto:patrick@fahrschulebalmer.ch?subject=Fahrstunde%20anfragen"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span><small>E-Mail</small>patrick<wbr>@fahrschulebalmer.ch</span></a></li>
             <li><a href="https://wa.me/41782532081?text=Hallo%20Patrick%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span><small>WhatsApp</small>Chat öffnen</span></a></li>
             <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Obstgartenstrasse%2035%2C%208105%20Regensdorf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span><small>Adresse</small>Obstgartenstrasse 35, 8105 Regensdorf</span></a></li>
           </ul>
