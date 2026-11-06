@@ -76,7 +76,7 @@ button { font: inherit; color: inherit; }
 }
 .skip:focus { top: 12px; }
 
-/* Einspaltige Raster am Handy dürfen nie breiter werden als der Bildschirm */
+/* Einspaltige Raster auf dem Smartphone dürfen nie breiter werden als der Bildschirm */
 .hero-grid, .portraet-grid, .titelzeile, .doppelseite, .raster, .preise-grid, .preise-listen,
 .weg-grid, .unterwegs-grid, .kontakt-grid, .menu-in, .orte-3 { grid-template-columns: minmax(0, 1fr); }
 
@@ -560,6 +560,8 @@ body.menu-auf { overflow: hidden; }
   .h2-gross { font-size: clamp(5rem, 9.4vw, 8.75rem); }
   .kontakt-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(40px, 6vw, 96px); align-items: start; margin-top: 64px; }
   .kontakt-text { padding-top: 6px; }
+  .kontakt-lead { font-size: 1.25rem; max-width: 26em; }
+  .signatur { font-size: 1.75rem; }
   .kontakt-wege { padding: 0 0 0 40px; border-left: 1px solid var(--linie-dunkel); }
 }
 
@@ -583,7 +585,7 @@ body.menu-auf { overflow: hidden; }
   .fuss-marke { grid-column: auto; }
 }
 
-/* Aktionsleiste Handy */
+/* Aktionsleiste Smartphone */
 .aktionsleiste {
   position: fixed; left: 12px; right: 12px; z-index: 95;
   bottom: calc(76px + env(safe-area-inset-bottom));
