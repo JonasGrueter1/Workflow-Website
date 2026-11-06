@@ -123,7 +123,7 @@
       </div>
       <div class="wrap hero-in">
         <div class="hero-text">
-          <p class="kicker"><span class="kicker-strich" aria-hidden="true"></span>Rottenschwil AG · Oberes Freiamt</p>
+          <p class="kicker"><span class="kicker-strich" aria-hidden="true"></span><span class="kicker-txt"><span>Rottenschwil AG</span><span class="kicker-punkt" aria-hidden="true"> · </span><span>Oberes Freiamt</span></span></p>
           <p class="slogan" aria-label="ready to take your chance">
             <span class="w" aria-hidden="true">ready</span> <span class="w" aria-hidden="true">to</span> <span class="w" aria-hidden="true">take</span><br class="br-d"> <span class="w" aria-hidden="true">your</span> <span class="w w-akzent" aria-hidden="true">chance</span>
           </p>
@@ -131,10 +131,10 @@
           <p class="hero-lead">Bei Salvi Pandiscia, Fahrlehrer mit eidg. Fachausweis. Auf Deutsch und Italienisch.</p>
           <div class="hero-knoepfe">
             <a class="btn btn-primaer btn-gross" href="#kontakt" data-soon="Anmeldung">Probelektion buchen<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
-            <a class="btn btn-umriss btn-gross" href="https://wa.me/41792315194?text=Gr%C3%BCezi%20Herr%20Pandiscia%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+            <a class="btn btn-umriss btn-gross btn-wa" href="https://wa.me/41792315194?text=Gr%C3%BCezi%20Herr%20Pandiscia%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span class="btn-wa-txt">WhatsApp</span></a>
           </div>
           <p class="hero-fakten">
-            <span>Probelektion 90 Min.</span><span class="punkt" aria-hidden="true">·</span><span>Abos ab CHF 83 pro Lektion</span><span class="punkt" aria-hidden="true">·</span><span>Schaltung oder Automat</span>
+            <span>Probelektion 90 Min.</span><span>Abos ab CHF 83 pro Lektion</span><span>Schaltung oder Automat</span>
           </p>
         </div>
         <div class="hero-zeichen" aria-hidden="true">
@@ -151,7 +151,7 @@
     <section class="abos band" id="abos" aria-labelledby="abos-titel">
       <div class="wrap">
         <div class="sektion-kopf" data-reveal>
-          <p class="eyebrow">Preise und Abos · Kategorie B</p>
+          <p class="eyebrow">Preise · Kategorie B</p>
           <h2 id="abos-titel">Wähle dein Abo.</h2>
           <p class="sektion-intro">Je mehr Lektionen, desto tiefer der Preis pro Lektion. Eine Lektion dauert 45 Minuten, die Administrationskosten sind inbegriffen.</p>
         </div>
@@ -228,28 +228,32 @@
           <p class="sektion-intro">Seit dem 1. Februar 2019 darfst du die praktische Prüfung mit Automat ablegen, ohne dass ein Automaten-Eintrag erfolgt. Selbstverständlich gibt es bei uns beide Varianten.</p>
         </div>
 
-        <div class="autos">
-          <article class="auto" data-reveal>
+        <div class="autos" data-reveal data-reihe>
+          <article class="auto">
             <figure class="auto-bild">
               <img src="../assets/img/b-cockpit-leon.webp" width="500" height="333" alt="Cockpit des SEAT Leon mit Schaltgetriebe" loading="lazy" decoding="async">
             </figure>
             <div class="auto-text">
-              <p class="auto-gang"><span class="auto-zahl">6</span><span class="auto-gang-txt">Gang<br>Schaltgetriebe</span></p>
+              <p class="auto-art">Schaltung</p>
               <h3>SEAT Leon 1.5 TSI EVO</h3>
-              <p>Für alle, die mit Kupplung und Schalthebel lernen wollen.</p>
+              <p class="auto-detail">6-Gang Schaltgetriebe</p>
+              <p class="auto-gang" aria-hidden="true"><span class="auto-zahl">6</span><span class="auto-gang-txt">Gang</span></p>
             </div>
           </article>
-          <article class="auto auto-gespiegelt" data-reveal>
+          <span class="oder" aria-hidden="true">oder</span>
+          <article class="auto">
             <figure class="auto-bild">
               <img src="../assets/img/b-cockpit-ateca.webp" width="500" height="333" alt="Cockpit des SEAT Ateca mit Automatikgetriebe" loading="lazy" decoding="async">
             </figure>
             <div class="auto-text">
-              <p class="auto-gang"><span class="auto-zahl">7</span><span class="auto-gang-txt">Gang DSG<br>Automat</span></p>
+              <p class="auto-art">Automat</p>
               <h3>SEAT Ateca Swiss FR 4x4</h3>
-              <p>Mit Automatikgetriebe und Allradantrieb.</p>
+              <p class="auto-detail">7-Gang DSG Automatikgetriebe, Allrad</p>
+              <p class="auto-gang" aria-hidden="true"><span class="auto-zahl">7</span><span class="auto-gang-txt">Gang</span></p>
             </div>
           </article>
         </div>
+        <p class="autos-fuss" data-reveal>Beide Fahrzeuge bieten optimale Rundumsicht, hohen Komfort und eine moderne Ausstattung.</p>
 
         <div class="assist" data-reveal>
           <p class="assist-titel">Moderne Assistenzsysteme, zum Beispiel</p>
