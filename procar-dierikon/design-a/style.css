@@ -436,6 +436,7 @@ h2 { font-size: clamp(2rem, 3.9vw, 3.25rem); line-height: 1.05; }
   }
   .aktion .btn { flex: 1; min-height: 50px; border-radius: 999px; box-shadow: none; }
   .aktion .btn-blau { flex: 1.5; }
+  .aktion .btn { white-space: nowrap; }
   .js .aktion:not(.ist-da) { opacity: 0; transform: translateY(16px); pointer-events: none; visibility: hidden; }
 }
 
@@ -463,6 +464,8 @@ h2 { font-size: clamp(2rem, 3.9vw, 3.25rem); line-height: 1.05; }
   .kachel h3 { font-size: 1rem; }
   .auto-body { padding: 18px 18px 20px; }
   .auto-fuss { flex-direction: column; align-items: stretch; }
+  .aktion .btn { padding: .6em .8em; font-size: 1rem; }
+  .aktion .btn-blau { flex: 1.25; }
 }
 @media (max-width: 350px) {
   .kopf-tel-nr { display: none; }

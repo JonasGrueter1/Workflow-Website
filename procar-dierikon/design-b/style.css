@@ -498,7 +498,7 @@ html.fx .beispiel.ist-da .band { transform: rotate(45deg); opacity: 1; }
   .kopf.offen .nav-anker { flex-direction: column; gap: 0; }
   .kopf.offen .nav-anker a { width: 100%; min-height: 54px; padding: 0 4px; border-radius: 0; border-bottom: 1px solid var(--linie); color: var(--text); font: 700 1.5rem/1 var(--titel); }
 
-  .hero { padding: 28px 0 56px; }
+  .hero { padding: 28px 0 24px; }
   .hero::before { inset: 30% -40% -10% -10%; }
   .hero-in { grid-template-columns: 1fr; min-height: 0; gap: 26px; }
   .hero h1 { margin: 16px 0 14px; }

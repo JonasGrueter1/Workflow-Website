@@ -132,19 +132,20 @@
       '',
       'Termin: ' + v('termin'),
       'Fotos: ' + v('fotos'),
+      'Öffnungszeiten: ' + (v('oeffnungszeiten') || '-'),
       'Bemerkungen: ' + (v('bemerkungen') || '-'),
       '',
       'Name: ' + v('name'),
       'Telefon: ' + (v('telefon') || '-'),
       'E-Mail: ' + (v('email') || '-')
     ]);
-    var subject = 'Wunschliste neue Website Fahrschule Kurmann';
+    var subject = 'Wunschliste neue Website PROCAR-DIERIKON';
     var body = lines.join('\n');
 
     var payload = {
       access_key: ACCESS_KEY,
       subject: subject,
-      from_name: 'Wunschliste Fahrschule Kurmann',
+      from_name: 'Wunschliste PROCAR-DIERIKON',
       name: v('name'),
       phone: v('telefon'),
       message: body,

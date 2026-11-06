@@ -96,6 +96,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; color: var(--red); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .kicker::before { content: ""; width: 22px; height: 3px; border-radius: 3px; background: var(--orange); }
+.nobr { white-space: nowrap; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li { padding: 5px 12px; border-radius: 999px; background: var(--soft); font-size: .85rem; font-weight: 700; color: var(--ink-2); }
 
@@ -108,6 +109,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   body { font-size: 1rem; }
   .top-brand .top-tag { display: none; }
   .wm { font-size: 1.5rem; }
+  .top-inner { gap: 4px 20px; padding-top: 14px; padding-bottom: 4px; }
 }
 
 @media print {
