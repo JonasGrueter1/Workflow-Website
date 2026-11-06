@@ -281,6 +281,8 @@ button { font: inherit; color: inherit; }
 .schalter button[aria-selected="true"] { color: #fff; }
 html:not(.js) .schalter { display: none; }
 @media (min-width: 1000px) { .schalter { margin-top: 0; width: 380px; } }
+@media (max-width: 399.98px) { .schalter button { padding: 0 10px; gap: 6px; font-size: .9063rem; } }
+@media (max-width: 359.98px) { .schalter button .i { display: none; } }
 
 .autos { display: grid; grid-template-columns: minmax(0, 1fr); }
 .auto {
@@ -471,7 +473,7 @@ html:not(.js) .weg-fortschritt { display: none; }
 .fl-motor p { font-size: .875rem; color: var(--muted); line-height: 1.5; }
 .fl-motor strong { color: var(--tinte); }
 @media (min-width: 1000px) {
-  .fl-raster { grid-template-columns: 5fr 7fr; gap: 80px; align-items: center; }
+  .fl-raster { grid-template-columns: 5fr 7fr; gap: 80px; align-items: start; }
   .fl-portrait { max-width: none; position: sticky; top: calc(var(--kopf-h) + 32px); }
   .fl-motor { grid-template-columns: 150px 1fr; gap: 20px; }
   .fl-motor img { width: 150px; height: 120px; }

@@ -70,6 +70,19 @@
     navLinks.forEach(function (a, i) { a.classList.toggle('ist-aktiv', i === treffer); });
   }
 
+  /* Preisliste: Leitpunkte nur zeigen, wenn genug Platz bleibt (sonst stehen am Handy nur zwei Punkte da) */
+  var preisZeilen = [].slice.call(doc.querySelectorAll('.preisliste li'));
+  function leitpunkte() {
+    preisZeilen.forEach(function (li) {
+      li.classList.remove('ohne-punkte');
+      var punkte = li.querySelector('.p-punkte');
+      if (punkte && punkte.offsetWidth < 36) li.classList.add('ohne-punkte');
+    });
+  }
+  leitpunkte();
+  window.addEventListener('resize', leitpunkte);
+  if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(leitpunkte);
+
   var geplant = false;
   function tick() {
     geplant = false;
