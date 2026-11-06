@@ -1,4 +1,4 @@
-/* Fahrschule Rolf Melliger, Design A: Kopf, Menü, Hero-Auftritt, Scroll-Reveals, Zähler */
+/* Fahrschule Rolf Melliger, Design A: Kopf, Menü, SMS-Links, Hero-Auftritt, Scroll-Reveals, Zähler */
 (function () {
   'use strict';
   window.mellA = true;
@@ -17,7 +17,7 @@
     if (!tick) { tick = true; window.requestAnimationFrame(kopfStatus); }
   }, { passive: true });
 
-  /* Menü mobil */
+  /* Menü am Handy */
   function menu(auf) {
     kopf.classList.toggle('offen', auf);
     knopf.setAttribute('aria-expanded', auf ? 'true' : 'false');
@@ -33,7 +33,15 @@
     });
   }
 
-  /* Sanft zu den Ankern scrollen (nur bei Klick, nicht für programmatisches Scrollen) */
+  /* SMS: Ohne JavaScript öffnen diese Links das Telefon, mit JavaScript direkt die Nachrichten-App */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-sms]');
+    if (!a) return;
+    e.preventDefault();
+    window.location.href = 'sms:' + a.getAttribute('data-sms');
+  });
+
+  /* Sanft zu den Ankern scrollen */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');
     if (!a || a.hasAttribute('data-soon') || a.classList.contains('skip')) return;
@@ -49,21 +57,20 @@
   function zaehle(el) {
     var ziel = parseInt(el.getAttribute('data-zahl'), 10);
     if (!fx || !ziel) { el.textContent = ziel; return; }
-    var dauer = 1300, start = null;
+    var dauer = 1400, start = null;
     el.textContent = '0';
     function schritt(t) {
       if (start === null) start = t;
       var p = Math.min(1, (t - start) / dauer);
-      var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(ziel * e);
+      el.textContent = Math.round(ziel * (1 - Math.pow(1 - p, 3)));
       if (p < 1) window.requestAnimationFrame(schritt);
     }
     window.requestAnimationFrame(schritt);
   }
 
-  var ziele = document.querySelectorAll('.rv, .vierzig, .bilanz-karte, .inb-liste, .zahlen, .kanaele');
-
+  var ziele = document.querySelectorAll('.rv, .vierzig, .inb-liste, .kanaele, .zahlen');
   function zeige(el) {
+    if (el.classList.contains('ist-da')) return;
     el.classList.add('ist-da');
     if (el.classList.contains('zahlen')) el.querySelectorAll('[data-zahl]').forEach(zaehle);
   }
@@ -75,11 +82,11 @@
       eintraege.forEach(function (e) {
         if (e.isIntersecting) { zeige(e.target); io.unobserve(e.target); }
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.15 });
     ziele.forEach(function (el) { io.observe(el); });
   }
 
-  /* Hero-Auftritt starten, sobald die Schriften bereit sind (höchstens 600 ms warten) */
+  /* Hero-Auftritt, sobald die Schriften bereit sind (höchstens 700 ms warten) */
   var gestartet = false;
   function los() {
     if (gestartet) return;
@@ -88,7 +95,7 @@
   }
   if (fx && document.fonts && document.fonts.ready) {
     document.fonts.ready.then(los);
-    setTimeout(los, 600);
+    setTimeout(los, 700);
   } else {
     d.classList.add('los');
   }

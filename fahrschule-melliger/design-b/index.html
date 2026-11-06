@@ -8,6 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#E6EEF9">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="preload" href="../assets/fonts/b-antonio-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/b-jost-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/img/b-rolf.webp" as="image" type="image/webp">
@@ -17,8 +18,8 @@
     (function (d) {
       d.classList.add('js');
       try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('fx'); } catch (e) {}
-      /* Sicherheitsnetz: Lädt script.js nicht, wird alles ohne Animation gezeigt */
-      setTimeout(function () { if (!window.mellB) { d.classList.remove('fx'); d.classList.add('ohne-skript'); } }, 2500);
+      /* Sicherheitsnetz: Startet script.js nicht, wird alles ohne Animation gezeigt */
+      setTimeout(function () { if (!window.mellingerB) { d.classList.remove('fx'); } }, 2500);
     })(document.documentElement);
   </script>
   <script src="script.js" defer></script>
@@ -33,7 +34,7 @@
     "email": "fahrschulemelliger@gmail.com",
     "areaServed": "Bezirk Bremgarten AG",
     "knowsLanguage": ["de", "en", "fr"],
-    "employee": { "@type": "Person", "name": "Rolf Melliger", "jobTitle": "Fahrlehrer" }
+    "founder": { "@type": "Person", "name": "Rolf Melliger", "jobTitle": "Fahrlehrer" }
   }
   </script>
 </head>
@@ -59,274 +60,278 @@
   <header class="kopf" id="kopf">
     <div class="wrap kopf-in">
       <a class="marke" href="#top" aria-label="Fahrschule Rolf Melliger, zum Seitenanfang">
-        <span class="marke-name">Rolf Melliger</span>
-        <span class="marke-zusatz">Fahrschule <span aria-hidden="true">·</span> Auto und Töff</span>
+        <span class="marke-fahne" aria-hidden="true"></span>
+        <span class="marke-text">
+          <span class="marke-name">Rolf Melliger</span>
+          <span class="marke-zusatz">Fahrschule <span aria-hidden="true">·</span> Auto und Töff</span>
+        </span>
       </a>
-      <nav class="kopf-nav" aria-label="Hauptnavigation">
+      <nav class="kopf-nav" id="kopf-nav" aria-label="Hauptnavigation">
         <a href="#bilanz">Bilanz</a>
-        <a href="#jubilaeum">Jubiläum</a>
-        <a href="#auto">Auto</a>
-        <a href="#toeff">Töff</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
-      <div class="kopf-cta">
-        <a class="btn btn-blau btn-klein" href="https://wa.me/41762828288" target="_blank" rel="noopener" aria-label="WhatsApp an 076 282 82 88">
-          <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span class="kopf-cta-text">WhatsApp</span>
-        </a>
-        <a class="btn btn-rand btn-klein nur-desktop" href="mailto:fahrschulemelliger@gmail.com">
-          <svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span>E-Mail</span>
-        </a>
-        <a class="btn btn-rand btn-klein nur-touch kopf-sms" href="sms:+41762828288" aria-label="SMS an 076 282 82 88">
-          <svg class="i" aria-hidden="true"><use href="#i-sms"/></svg><span class="kopf-cta-text">SMS</span>
-        </a>
-        <button class="menu-knopf" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
-          <svg class="i i-auf" aria-hidden="true"><use href="#i-menu"/></svg>
-          <svg class="i i-zu" aria-hidden="true"><use href="#i-x"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="menu" id="menu">
-      <nav class="wrap menu-in" aria-label="Menü">
-        <a href="#bilanz">Prüfungsbilanz</a>
         <a href="#jubilaeum">Jubiläum</a>
         <a href="#auto">Auto</a>
         <a href="#toeff">Töff</a>
         <a href="#ueber">Über mich</a>
         <a href="#kontakt">Kontakt</a>
-        <p class="menu-kontakt">
-          <a href="mailto:fahrschulemelliger@gmail.com">fahrschulemelliger@gmail.com</a>
-          <a href="tel:+41762828288">Natel 076 282 82 88</a>
-        </p>
+        <div class="kopf-nav-kontakt">
+          <a class="btn btn-blau" href="https://wa.me/41762828288" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp schreiben</span></a>
+          <a class="btn btn-rand nur-touch" href="sms:+41762828288"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg><span>SMS senden</span></a>
+          <a class="btn btn-rand" href="mailto:fahrschulemelliger@gmail.com"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span>E-Mail schreiben</span></a>
+        </div>
       </nav>
+      <div class="kopf-cta">
+        <a class="btn btn-blau btn-klein" href="https://wa.me/41762828288" target="_blank" rel="noopener" aria-label="WhatsApp an 076 282 82 88">
+          <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span>
+        </a>
+        <a class="btn btn-rand btn-klein nur-maus" href="mailto:fahrschulemelliger@gmail.com">
+          <svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span>E-Mail</span>
+        </a>
+        <button class="menue-knopf" type="button" aria-expanded="false" aria-controls="kopf-nav" aria-label="Menü öffnen">
+          <svg class="i i-auf" aria-hidden="true"><use href="#i-menu"/></svg>
+          <svg class="i i-zu" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
   <main id="inhalt">
-    <!-- 1 Hero -->
-    <section class="hero" id="top" aria-labelledby="titel">
-      <div class="wrap hero-in">
-        <figure class="hero-bild">
-          <div class="hero-rahmen">
-            <div class="hero-zug">
-              <img src="../assets/img/b-rolf.webp" width="1024" height="768" alt="Rolf Melliger lehnt an der offenen Tür seines schwarzen Fahrschulautos mit der Aufschrift Rolf Melliger" fetchpriority="high">
-            </div>
-          </div>
-          <a class="plakette" href="#jubilaeum">
-            <span class="plakette-k">Jubiläum 40 Jahre</span>
-            <span class="plakette-t">45 Minuten für Fr. 45.–</span>
-          </a>
+    <!-- 1. Hero -->
+    <section class="hero" id="top" aria-labelledby="hero-titel">
+      <div class="hero-bild">
+        <figure class="hero-foto">
+          <img src="../assets/img/b-rolf.webp" width="1024" height="768" alt="Rolf Melliger lehnt an der offenen Tür seines schwarzen Fahrschulautos mit der Aufschrift Rolf Melliger und seiner Natelnummer." fetchpriority="high">
         </figure>
-
+        <a class="plakette" href="#jubilaeum">
+          <span class="plakette-klein">Jubiläum 40 Jahre</span>
+          <span class="plakette-gross">45 Min. für Fr. 45.–</span>
+        </a>
+      </div>
+      <div class="wrap hero-in">
         <div class="hero-text">
-          <p class="kicker auf" style="--i:0">Bremgarten <span aria-hidden="true">·</span> Mutschellen <span aria-hidden="true">·</span> seit 1985</p>
-          <h1 id="titel">
-            <span class="zeile" style="--i:1">Deine Fahrschule</span>
-            <span class="zeile" style="--i:2">für Auto</span>
-            <span class="zeile" style="--i:3">und Töff.</span>
+          <p class="kicker hero-kicker" data-hero="1">Bremgarten <span aria-hidden="true">·</span> Mutschellen <span aria-hidden="true">·</span> seit 1985</p>
+          <h1 id="hero-titel" class="hero-titel">
+            <span class="zeile" data-hero="2">Deine Fahrschule</span>
+            <span class="zeile" data-hero="3">für <em>Auto und</em></span>
+            <span class="zeile" data-hero="4"><em>Töff.</em></span>
           </h1>
-          <p class="lead auf" style="--i:4">Ich begleite dich mit meiner langjährigen Erfahrung auf deinem Weg zum Führerausweis. Persönlich, fair und ohne versteckte Kosten.</p>
-          <div class="knoepfe auf" id="hero-cta" style="--i:5">
+          <p class="hero-lead" data-hero="5">Ich begleite dich mit meiner langjährigen Erfahrung auf deinem Weg zum Führerausweis. Persönlich, fair und ohne versteckte Kosten.</p>
+          <div class="knoepfe" data-hero="6">
             <a class="btn btn-blau btn-gross" href="https://wa.me/41762828288" target="_blank" rel="noopener">
-              <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp schreiben
+              <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp schreiben</span>
             </a>
             <a class="btn btn-rand btn-gross nur-touch" href="sms:+41762828288">
-              <svg class="i" aria-hidden="true"><use href="#i-sms"/></svg>SMS senden
+              <svg class="i" aria-hidden="true"><use href="#i-sms"/></svg><span>SMS senden</span>
             </a>
-            <a class="btn btn-rand btn-gross nur-desktop" href="mailto:fahrschulemelliger@gmail.com">
-              <svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>E-Mail schreiben
+            <a class="btn btn-rand btn-gross nur-maus" href="mailto:fahrschulemelliger@gmail.com">
+              <svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span>E-Mail schreiben</span>
             </a>
           </div>
-          <ul class="hero-kontakt auf" style="--i:6">
+          <ul class="hero-kontakt" data-hero="7">
             <li><a href="mailto:fahrschulemelliger@gmail.com"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>fahrschulemelliger@gmail.com</a></li>
             <li><a href="tel:+41762828288"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Natel 076 282 82 88</a></li>
           </ul>
-          <p class="hero-hinweis auf" style="--i:7">Während der Fahrstunden telefoniere ich nicht. Am schnellsten erreichst du mich per WhatsApp, SMS oder E-Mail.</p>
+          <p class="hero-hinweis" data-hero="8">Während der Fahrstunden telefoniere ich nicht. Am schnellsten erreichst du mich per WhatsApp, SMS oder E-Mail.</p>
         </div>
       </div>
     </section>
 
-    <!-- 2 Anzeigetafel -->
+    <!-- 2. Anzeigetafel -->
     <section class="bilanz" id="bilanz" aria-labelledby="bilanz-titel">
       <div class="wrap">
-        <div class="bilanz-kopf rv">
-          <div>
+        <div class="bilanz-kopf">
+          <div class="zeigen">
             <p class="kicker kicker-hell">Prüfungsbilanz 2018 bis 2026</p>
-            <h2 id="bilanz-titel">Meine Prüfungsbilanz, Jahr&nbsp;für&nbsp;Jahr.</h2>
+            <h2 id="bilanz-titel" class="titel titel-hell">Meine Prüfungsbilanz, Jahr für Jahr.</h2>
           </div>
-          <p class="bilanz-lead">Alle Jahre seit 2018, auch die mit negativen Prüfungen. So kannst du selbst sehen, wie meine Fahrschülerinnen und Fahrschüler abschneiden.</p>
+          <p class="bilanz-intro zeigen">Alle Jahre seit 2018, auch die mit negativen Prüfungen. So siehst du selbst, wie meine Fahrschülerinnen und Fahrschüler abschneiden.</p>
         </div>
 
-        <p class="legende rv">
-          <span>Negative praktische Auto-Prüfungen pro Jahr</span>
-          <span class="legende-haken"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>keine negative Prüfung</span>
-        </p>
+        <figure class="tafel" aria-labelledby="tafel-legende">
+          <figcaption class="tafel-kopf">
+            <span id="tafel-legende" class="tafel-legende">Negative praktische Auto-Prüfungen pro Jahr</span>
+            <span class="tafel-zeichen"><svg class="i i-haken" aria-hidden="true"><use href="#i-check"/></svg>keine negative Prüfung</span>
+          </figcaption>
+          <ol class="tafel-reihe">
+            <li class="feld ist-null"><span class="feld-jahr">2018</span><svg class="i feld-haken" aria-hidden="true"><use href="#i-check"/></svg><span class="feld-ziffer">0</span><span class="feld-wort">negativ</span></li>
+            <li class="feld"><span class="feld-jahr">2019</span><span class="feld-ziffer">1</span><span class="feld-wort">negativ</span></li>
+            <li class="feld ist-null"><span class="feld-jahr">2020</span><svg class="i feld-haken" aria-hidden="true"><use href="#i-check"/></svg><span class="feld-ziffer">0</span><span class="feld-wort">negativ</span></li>
+            <li class="feld ist-null"><span class="feld-jahr">2021</span><svg class="i feld-haken" aria-hidden="true"><use href="#i-check"/></svg><span class="feld-ziffer">0</span><span class="feld-wort">negativ</span></li>
+            <li class="feld"><span class="feld-jahr">2022</span><span class="feld-ziffer">1</span><span class="feld-wort">negativ</span></li>
+            <li class="feld ist-null"><span class="feld-jahr">2023</span><svg class="i feld-haken" aria-hidden="true"><use href="#i-check"/></svg><span class="feld-ziffer">0</span><span class="feld-wort">negativ</span></li>
+            <li class="feld"><span class="feld-jahr">2024</span><span class="feld-ziffer">2</span><span class="feld-wort">negativ</span></li>
+            <li class="feld ist-null"><span class="feld-jahr">2025</span><svg class="i feld-haken" aria-hidden="true"><use href="#i-check"/></svg><span class="feld-ziffer">0</span><span class="feld-wort">negativ</span></li>
+            <li class="feld ist-null ist-aktuell"><span class="feld-jahr">2026<sup>*</sup></span><svg class="i feld-haken" aria-hidden="true"><use href="#i-check"/></svg><span class="feld-ziffer">0</span><span class="feld-wort">negativ</span></li>
+          </ol>
+        </figure>
 
-        <ol class="tafel rv" aria-label="Negative praktische Prüfungen pro Jahr">
-          <li class="feld null" style="--i:0"><span class="jahr">2018</span><span class="ziffer">0</span><span class="neg">negativ</span><svg class="i haken" aria-hidden="true"><use href="#i-check"/></svg></li>
-          <li class="feld" style="--i:1"><span class="jahr">2019</span><span class="ziffer">1</span><span class="neg">negativ</span></li>
-          <li class="feld null" style="--i:2"><span class="jahr">2020</span><span class="ziffer">0</span><span class="neg">negativ</span><svg class="i haken" aria-hidden="true"><use href="#i-check"/></svg></li>
-          <li class="feld null" style="--i:3"><span class="jahr">2021</span><span class="ziffer">0</span><span class="neg">negativ</span><svg class="i haken" aria-hidden="true"><use href="#i-check"/></svg></li>
-          <li class="feld" style="--i:4"><span class="jahr">2022</span><span class="ziffer">1</span><span class="neg">negativ</span></li>
-          <li class="feld null" style="--i:5"><span class="jahr">2023</span><span class="ziffer">0</span><span class="neg">negativ</span><svg class="i haken" aria-hidden="true"><use href="#i-check"/></svg></li>
-          <li class="feld" style="--i:6"><span class="jahr">2024</span><span class="ziffer">2</span><span class="neg">negativ</span></li>
-          <li class="feld null" style="--i:7"><span class="jahr">2025</span><span class="ziffer">0</span><span class="neg">negativ</span><svg class="i haken" aria-hidden="true"><use href="#i-check"/></svg></li>
-          <li class="feld null feld-jetzt" style="--i:8"><span class="jahr">2026<sup>*</sup></span><span class="ziffer">0</span><span class="neg">negativ</span><svg class="i haken" aria-hidden="true"><use href="#i-check"/></svg></li>
-        </ol>
-
-        <div class="bilanz-fuss rv">
-          <p class="bilanz-erfolg">
-            <span class="bilanz-jahre">2018, 2020, 2021, 2023 und 2025</span>
-            <strong>100&nbsp;% Erfolg beim 1.&nbsp;Anlauf.</strong>
-            <span class="bilanz-satz">In fünf dieser Jahre keine negative praktische Auto-Prüfung meiner Fahrschülerinnen und Fahrschüler.</span>
-          </p>
-          <blockquote class="bilanz-zitat">
+        <div class="bilanz-fuss">
+          <div class="bilanz-erfolg zeigen">
+            <p class="kicker kicker-hell">2018, 2020, 2021, 2023 und 2025</p>
+            <p class="erfolg-titel">100 % Erfolg beim 1. Anlauf.</p>
+            <p class="erfolg-text">In diesen fünf Jahren hatten meine Fahrschülerinnen und Fahrschüler keine einzige negative praktische Auto-Führerprüfung.</p>
+          </div>
+          <blockquote class="bilanz-zitat zeigen">
             <p>«Beste Ausbildungsqualität gemäss offizieller Statistik Strassenverkehrsamt AG seit vielen Jahren.»</p>
             <footer>Rolf Melliger</footer>
           </blockquote>
         </div>
-        <p class="fussnote rv"><sup>*</sup> 2026 bis 31. Oktober: keine negative praktische Auto- oder Motorrad-Prüfung A2/A.</p>
+        <p class="bilanz-note"><sup>*</sup> 2026 bis 31. Oktober: keine negative praktische Auto- oder Motorrad-Prüfung A2/A.</p>
       </div>
     </section>
 
-    <!-- 3 Jubiläum -->
-    <section class="jubi" id="jubilaeum" aria-labelledby="jubi-titel">
+    <!-- 3. Jubiläum -->
+    <section class="jubilaeum" id="jubilaeum" aria-labelledby="jubi-titel">
+      <span class="jubi-vierzig" aria-hidden="true">40</span>
       <div class="wrap jubi-in">
         <div class="jubi-preis" aria-hidden="true">
           <span class="jubi-fr">Fr.</span>
           <span class="jubi-maske"><span class="jubi-zahl">45.–</span></span>
+          <span class="jubi-uhr">
+            <svg class="uhr" viewBox="0 0 88 88" aria-hidden="true">
+              <circle class="uhr-spur" cx="44" cy="44" r="36"/>
+              <circle class="uhr-bogen" cx="44" cy="44" r="36" pathLength="100"/>
+              <path class="uhr-striche" d="M44 4v7M84 44h-7M44 84v-7M4 44h7"/>
+            </svg>
+            <span class="uhr-text"><b>45 Minuten</b>Autofahrstunde mit Automat</span>
+          </span>
         </div>
-        <div class="jubi-text rv">
-          <p class="kicker"><span class="jubi-40">40 Jahre</span> Jubiläumsangebot</p>
-          <h2 id="jubi-titel">So günstig wie vor 40&nbsp;Jahren.</h2>
-          <p class="jubi-satz"><strong>Fr. 45.– für 45 Minuten</strong> Autofahrstunde mit Automat.</p>
-          <p class="jubi-klein">Gültig bei Anmeldung bis 31. Dezember 2026, während deiner ganzen Ausbildung.</p>
-          <div class="jubi-knoepfe">
-            <a class="btn btn-blau btn-gross" href="https://wa.me/41762828288" target="_blank" rel="noopener">
-              <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>Per WhatsApp anmelden
+        <div class="jubi-text zeigen">
+          <p class="schild"><span>40 Jahre</span> Jubiläumsangebot</p>
+          <h2 id="jubi-titel" class="titel">So günstig wie vor 40 Jahren.</h2>
+          <p class="jubi-satz"><strong>Fr. 45.– für 45 Minuten:</strong> deine Autofahrstunde mit Automat zum Jubiläumspreis.</p>
+          <p class="jubi-klein">Gültig bei Anmeldung bis 31. Dezember 2026, für deine ganze Ausbildung.</p>
+          <div class="knoepfe">
+            <a class="btn btn-blau btn-gross" href="https://wa.me/41762828288?text=Gr%C3%BCezi%20Herr%20Melliger%2C%20ich%20interessiere%20mich%20f%C3%BCr%20das%20Jubil%C3%A4umsangebot." target="_blank" rel="noopener">
+              <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>Per WhatsApp anmelden</span>
             </a>
-            <a class="link-pfeil" href="mailto:fahrschulemelliger@gmail.com">oder per E-Mail<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            <a class="link-pfeil" href="mailto:fahrschulemelliger@gmail.com?subject=Jubil%C3%A4umsangebot">oder per E-Mail<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 4 Auto | Töff -->
-    <section class="angebot" aria-label="Angebot und Preise">
+    <!-- 4. Auto | Töff -->
+    <section class="angebot" aria-label="Auto und Töff">
       <div class="wrap">
-        <div class="geteilt">
-          <article class="haelfte haelfte-auto rv" id="auto" aria-labelledby="auto-titel">
+        <div class="split">
+          <article class="haelfte haelfte-auto" id="auto" aria-labelledby="auto-titel">
             <div class="haelfte-kopf">
-              <h2 class="gross-titel" id="auto-titel">Auto</h2>
-              <svg class="i haelfte-icon" aria-hidden="true"><use href="#i-auto"/></svg>
+              <h2 id="auto-titel" class="haelfte-titel">Auto</h2>
+              <span class="haelfte-icon"><svg class="i" aria-hidden="true"><use href="#i-auto"/></svg></span>
             </div>
             <p class="haelfte-unter">Kategorie B, auch mit Automat</p>
-            <ul class="preise">
-              <li class="preis-jubi"><span><span class="preis-titel"><em class="preis-marke">Jubiläum</em>Fahrstunde 45&nbsp;Min.</span><small>mit Automat, Anmeldung bis 31.12.2026</small></span><i aria-hidden="true"></i><b>Fr. 45.–</b></li>
-              <li><span>Fahrstunde 60&nbsp;Min.</span><i aria-hidden="true"></i><b>Fr. 60.–</b></li>
-              <li><span>Fahrstunde 90&nbsp;Min.</span><i aria-hidden="true"></i><b>Fr. 90.–</b></li>
-              <li><span>Fahrstunde 120&nbsp;Min.</span><i aria-hidden="true"></i><b>Fr. 120.–</b></li>
-            </ul>
+            <dl class="preise">
+              <div class="preis preis-jubi">
+                <dt><span class="p-name"><span class="mini-schild">Jubiläum</span>45 Minuten</span><small>mit Automat, Anmeldung bis 31.12.2026</small></dt>
+                <dd>Fr. 45.–</dd>
+              </div>
+              <div class="preis"><dt><span class="p-name">60 Minuten</span></dt><dd>Fr. 60.–</dd></div>
+              <div class="preis"><dt><span class="p-name">90 Minuten</span></dt><dd>Fr. 90.–</dd></div>
+              <div class="preis"><dt><span class="p-name">120 Minuten</span></dt><dd>Fr. 120.–</dd></div>
+            </dl>
             <ul class="punkte">
-              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Ab dem 2. oder 3. Termin üben wir gezielt in deinem Prüfungsgebiet</li>
               <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Doppelstunden, auf Wunsch jede Woche</li>
+              <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Ab dem 2. oder 3. Termin üben wir gezielt im Prüfungsgebiet</li>
               <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Fahrlehrerwechsel ohne Wechselgebühren</li>
             </ul>
-            <p class="startorte-titel">Treffpunkt</p>
-            <ul class="startorte">
-              <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Gratis-Abholung an deinem Wunsch-Startort im Bezirk Bremgarten</li>
-            </ul>
-            <p class="haelfte-notiz">Gefahren und geprüft wird in meinem kleinen Seat: praktisch und übersichtlich.</p>
+            <p class="haelfte-notiz"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Gratis-Abholung</strong> an deinem Wunsch-Startort im Bezirk Bremgarten. Geprüft wird in meinem kleinen Seat: praktisch und übersichtlich.</span></p>
             <a class="link-pfeil" href="#" data-soon="Auto">Mehr zu Auto<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </article>
 
-          <article class="haelfte haelfte-toeff rv" id="toeff" aria-labelledby="toeff-titel">
+          <article class="haelfte haelfte-toeff" id="toeff" aria-labelledby="toeff-titel">
             <div class="haelfte-kopf">
-              <h2 class="gross-titel" id="toeff-titel">Töff</h2>
-              <svg class="i haelfte-icon" aria-hidden="true"><use href="#i-toeff"/></svg>
+              <h2 id="toeff-titel" class="haelfte-titel">Töff</h2>
+              <span class="haelfte-icon"><svg class="i" aria-hidden="true"><use href="#i-toeff"/></svg></span>
             </div>
             <p class="haelfte-unter">Motorrad und Roller, A1, A2 und A. Seit 1985.</p>
-            <ul class="preise">
-              <li><span>Grundkurs PGS <small>Einzelkurs, pro Kursteil zu 4 Std.</small></span><i aria-hidden="true"></i><b>Fr. 140.–</b></li>
-              <li><span>Grundkurs PGS zu zweit <small>pro Person und Kursteil</small></span><i aria-hidden="true"></i><b>Fr. 120.–</b></li>
-              <li><span>Fahrstunde 60&nbsp;Min. <small>Prüfungsvorbereitung A1, A2, A</small></span><i aria-hidden="true"></i><b>Fr. 60.–</b></li>
-              <li><span>Fahrstunde zu zweit <small>pro Person, 60&nbsp;Min.</small></span><i aria-hidden="true"></i><b>Fr. 30.–</b></li>
-            </ul>
+            <dl class="preise">
+              <div class="preis"><dt><span class="p-name">Grundkurs PGS, einzeln</span><small>pro Kursteil zu 4 Stunden</small></dt><dd>Fr. 140.–</dd></div>
+              <div class="preis"><dt><span class="p-name">Grundkurs PGS zu zweit</span><small>pro Person und Kursteil</small></dt><dd>Fr. 120.–</dd></div>
+              <div class="preis"><dt><span class="p-name">Fahrstunde 60 Minuten</span><small>Prüfungsvorbereitung A1, A2, A</small></dt><dd>Fr. 60.–</dd></div>
+              <div class="preis"><dt><span class="p-name">Fahrstunde zu zweit</span><small>pro Person, 60 Minuten</small></dt><dd>Fr. 30.–</dd></div>
+            </dl>
             <ul class="punkte">
               <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Grundkurs in 3 Kursteilen zu 4 Stunden, einzeln oder zu zweit</li>
               <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Ab Kursteil 2 fahre ich als Sozius mit</li>
               <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Du bestimmst Tag, Zeit, Startort und Prüfungsort</li>
             </ul>
-            <p class="startorte-titel">Startorte</p>
-            <ul class="startorte">
-              <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Bahnhof Dottikon-Dintikon</li>
-              <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Region Mutschellen</li>
-              <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Bremgarten Obere Ebene</li>
-            </ul>
-            <a class="link-pfeil" href="#" data-soon="Motorrad">Mehr zu Motorrad<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+            <div class="startorte">
+              <p class="startorte-titel">Startorte</p>
+              <ul>
+                <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span>Bahnhof Dottikon-Dintikon <small>Prüfungsort Schafisheim</small></span></li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span>Region Mutschellen <small>Prüfungsort Wettingen</small></span></li>
+                <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span>Bremgarten Obere Ebene <small>Schafisheim oder Wettingen</small></span></li>
+              </ul>
+            </div>
+            <a class="link-pfeil" href="#" data-soon="Motorrad">Mehr zum Töff<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- 5 Alles drin -->
+    <!-- 5. Alles drin -->
     <section class="drin" aria-labelledby="drin-titel">
-      <div class="wrap drin-in">
-        <div class="drin-text rv">
-          <p class="kicker">Autofahrstunden</p>
-          <h2 id="drin-titel">Alles drin, nichts&nbsp;versteckt.</h2>
-          <p>Im Lektionenpreis ist alles inbegriffen. Und er bleibt während deiner ganzen Ausbildung gleich, bis zur bestandenen Prüfung.</p>
+      <div class="wrap">
+        <div class="drin-grid">
+          <div class="drin-text zeigen">
+            <p class="kicker">Autofahrstunden</p>
+            <h2 id="drin-titel" class="titel">Alles drin, nichts versteckt.</h2>
+            <p class="drin-lead">Im Lektionenpreis ist alles inbegriffen. Und er bleibt während deiner ganzen Ausbildung gleich, bis zur bestandenen Prüfung.</p>
+          </div>
+          <ul class="chips">
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Fahrschulversicherung</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Alle Administrativkosten</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Lernunterlagen</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Prüfungsanmeldung</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Gratis-Abholung im Bezirk Bremgarten</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Rechnungsstellung</li>
+          </ul>
         </div>
-        <ul class="chips rv">
-          <li style="--i:0"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Fahrschulversicherung</li>
-          <li style="--i:1"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Alle Administrativkosten</li>
-          <li style="--i:2"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Lernunterlagen</li>
-          <li style="--i:3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Prüfungsanmeldung</li>
-          <li style="--i:4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Gratis-Abholung im Bezirk Bremgarten</li>
-          <li style="--i:5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Rechnungsstellung</li>
-        </ul>
-        <dl class="drin-fakten rv">
-          <div><dt>Vorauszahlung</dt><dd>Keine</dd></div>
-          <div><dt>Abo</dt><dd>Keines</dd></div>
-          <div><dt>Bezahlen</dt><dd>Bar, Twint oder Rechnung</dd></div>
+        <dl class="fakten">
+          <div class="zeigen"><dt>Vorauszahlung</dt><dd>Keine</dd></div>
+          <div class="zeigen"><dt>Abo</dt><dd>Keines</dd></div>
+          <div class="zeigen"><dt>Bezahlen</dt><dd>Bar, Twint oder Rechnung</dd></div>
         </dl>
       </div>
     </section>
 
-    <!-- 6 Über Rolf und Neuigkeiten -->
+    <!-- 6. Über Rolf und Neuigkeiten -->
     <section class="ueber" id="ueber" aria-labelledby="ueber-titel">
-      <div class="wrap ueber-in">
-        <div class="ueber-person rv">
-          <p class="kicker">Über mich</p>
-          <h2 id="ueber-titel">41 Jahre Erfahrung als Fahrlehrer.</h2>
-          <figure class="ueber-zitat">
-            <img class="ueber-kopf" src="../assets/img/b-rolf-kopf.webp" width="192" height="192" alt="Rolf Melliger" loading="lazy">
+      <div class="wrap ueber-grid">
+        <div class="ueber-text">
+          <div class="zeigen">
+            <p class="kicker">Über mich</p>
+            <h2 id="ueber-titel" class="titel">41 Jahre Erfahrung als Fahrlehrer.</h2>
+          </div>
+          <figure class="ueber-zitat zeigen">
+            <img src="../assets/img/b-rolf-kopf.webp" width="200" height="200" alt="" loading="lazy">
             <blockquote><p>«Mir ist eine persönliche Betreuung meiner Fahr-Lernenden sehr wichtig.»</p></blockquote>
           </figure>
           <ol class="stationen">
-            <li><span class="st-nr">01</span>Fahrlehrer für Auto, Motorrad, Roller, Anhänger, Wohnmobile und Lastwagen</li>
-            <li><span class="st-nr">02</span>Armee-Fahrlehrer für schwere und leichte Motorfahrzeuge</li>
-            <li><span class="st-nr">03</span>Ausbilder für Neu-Fahrlehrer</li>
-            <li><span class="st-nr">04</span>WAB-Instruktor, VKU und Theorie</li>
-            <li><span class="st-nr">05</span>Ausbilder mit eidg. Fachausweis</li>
+            <li class="zeigen"><span class="nr">01</span>Fahrlehrer für Auto, Motorrad, Roller, Anhänger, Wohnmobile und Lastwagen</li>
+            <li class="zeigen"><span class="nr">02</span>Armee-Fahrlehrer für schwere und leichte Motorfahrzeuge</li>
+            <li class="zeigen"><span class="nr">03</span>Mitbegründer einer Fahrlehrer-Berufsschule und Ausbilder für Neu-Fahrlehrer</li>
+            <li class="zeigen"><span class="nr">04</span>WAB-Instruktor, VKU und Theorie</li>
+            <li class="zeigen"><span class="nr">05</span>Ausbilder mit eidg. Fachausweis</li>
           </ol>
-          <p class="sprachen"><svg class="i" aria-hidden="true"><use href="#i-sprache"/></svg>Unterricht auf Deutsch, Englisch und Französisch</p>
-          <a class="link-pfeil" href="#" data-soon="Über mich">Mehr über mich<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          <p class="sprachen zeigen"><svg class="i" aria-hidden="true"><use href="#i-sprache"/></svg>Unterricht auf Deutsch, Englisch und Französisch</p>
+          <a class="link-pfeil zeigen" href="#" data-soon="Über mich">Mehr über mich<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
         </div>
 
-        <aside class="news rv" aria-labelledby="news-titel">
-          <h2 class="news-titel" id="news-titel">Neuigkeiten</h2>
+        <aside class="news zeigen" aria-labelledby="news-titel">
+          <h2 id="news-titel" class="news-titel">Neuigkeiten</h2>
           <ul class="news-liste">
             <li>
               <p class="news-datum">Seit 1. Juli 2025</p>
-              <p class="news-text">Fahrassistenzsysteme sind in Theorie und Praxis prüfungsrelevant. Mein kleiner Seat ist praktisch und übersichtlich.</p>
+              <p>Fahrassistenzsysteme sind in Theorie und Praxis prüfungsrelevant. Mein kleiner Seat ist praktisch und übersichtlich.</p>
             </li>
             <li>
               <p class="news-datum">Töff: Winterpause</p>
-              <p class="news-text">Motorradprüfungen gibt es in der Regel von November bis März nicht. Melde dich frühzeitig an, mindestens 4 bis 6 Wochen vorher.</p>
+              <p>Motorradprüfungen gibt es in der Regel von November bis März nicht. Melde dich frühzeitig an, mindestens 4 bis 6 Wochen vorher.</p>
             </li>
             <li>
               <p class="news-datum">Seit 1. Januar 2021</p>
-              <p class="news-text">Lernfahrausweis ab 17 Jahren, Prüfung ab 18. Nur noch ein WAB-Tag.</p>
+              <p>Lernfahrausweis ab 17 Jahren, Prüfung ab 18. Nur noch ein WAB-Tag.</p>
             </li>
           </ul>
           <a class="link-pfeil" href="#" data-soon="Neuigkeiten">Alle Neuigkeiten<svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
@@ -334,65 +339,67 @@
       </div>
     </section>
 
-    <!-- 7 Kontakt -->
+    <!-- 7. Kontakt -->
     <section class="kontakt" id="kontakt" aria-labelledby="kontakt-titel">
       <div class="wrap">
-        <div class="kontakt-kopf rv">
+        <div class="kontakt-kopf zeigen">
           <p class="kicker kicker-hell">Kontakt</p>
-          <h2 id="kontakt-titel">So erreichst du&nbsp;mich.</h2>
+          <h2 id="kontakt-titel" class="titel titel-hell">So erreichst du mich.</h2>
           <p class="kontakt-lead">Hast du Fragen? Schreib mir, ich berate dich gerne persönlich.</p>
         </div>
-        <ul class="kacheln rv">
-          <li style="--i:0">
+        <ul class="kacheln">
+          <li class="zeigen">
             <a class="kachel" href="https://wa.me/41762828288" target="_blank" rel="noopener">
               <span class="kachel-icon"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg></span>
-              <span class="kachel-text"><span class="kachel-titel">WhatsApp</span>
-              <span class="kachel-wert">076 282 82 88</span></span>
+              <span class="kachel-titel">WhatsApp</span>
+              <span class="kachel-wert">076 282 82 88</span>
               <svg class="i kachel-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg>
             </a>
           </li>
-          <li style="--i:1">
+          <li class="zeigen">
             <a class="kachel" href="sms:+41762828288">
               <span class="kachel-icon"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg></span>
-              <span class="kachel-text"><span class="kachel-titel">SMS</span>
-              <span class="kachel-wert">076 282 82 88</span></span>
+              <span class="kachel-titel">SMS</span>
+              <span class="kachel-wert">076 282 82 88</span>
               <svg class="i kachel-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg>
             </a>
           </li>
-          <li style="--i:2">
+          <li class="zeigen">
             <a class="kachel" href="mailto:fahrschulemelliger@gmail.com">
               <span class="kachel-icon"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
-              <span class="kachel-text"><span class="kachel-titel">E-Mail</span>
-              <span class="kachel-wert">fahrschulemelliger@gmail.com</span></span>
+              <span class="kachel-titel">E-Mail</span>
+              <span class="kachel-wert">fahrschulemelliger@gmail.com</span>
               <svg class="i kachel-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg>
             </a>
           </li>
         </ul>
-        <div class="kontakt-fuss rv">
-          <p class="kontakt-hinweis">Telefonieren während der Fahrstunde ist ein No-Go, auch für mich. Schreib mir lieber, ich melde mich.</p>
-          <p class="kontakt-klein">
-            <a href="tel:+41762828288"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Natel 076 282 82 88</a>
-            <span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Abholung an deinem Wunsch-Startort im Bezirk Bremgarten</span>
-          </p>
+        <div class="kontakt-fuss zeigen">
+          <p class="kontakt-nogo">Telefonieren während der Fahrstunde ist ein No-Go, auch für mich. Schreib mir lieber, ich melde mich.</p>
+          <ul class="kontakt-info">
+            <li><a href="tel:+41762828288"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Natel 076 282 82 88</a></li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Abholung an deinem Wunsch-Startort im Bezirk Bremgarten, Treffpunkte nach Vereinbarung</li>
+          </ul>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="fuss">
-    <div class="wrap fuss-in">
+    <div class="wrap fuss-grid">
       <div class="fuss-marke">
-        <span class="marke-name">Rolf Melliger</span>
-        <span class="marke-zusatz">Fahrschule für Auto und Töff in der Region Bremgarten und Mutschellen</span>
+        <p class="marke-name">Rolf Melliger</p>
+        <p>Fahrschule für Auto und Töff in der Region Bremgarten und Mutschellen.</p>
       </div>
-      <nav class="fuss-nav" aria-label="Seiten">
+      <nav class="fuss-spalte" aria-label="Seiten">
+        <p class="fuss-titel">Seiten</p>
         <a href="#" data-soon="Auto">Auto</a>
         <a href="#" data-soon="Motorrad">Motorrad</a>
         <a href="#" data-soon="Neuigkeiten">Neuigkeiten</a>
         <a href="#" data-soon="Über mich">Über mich</a>
         <a href="#" data-soon="Kontakt">Kontakt</a>
       </nav>
-      <div class="fuss-kontakt">
+      <div class="fuss-spalte">
+        <p class="fuss-titel">Schreib mir</p>
         <a href="https://wa.me/41762828288" target="_blank" rel="noopener">WhatsApp</a>
         <a href="sms:+41762828288">SMS</a>
         <a href="mailto:fahrschulemelliger@gmail.com">fahrschulemelliger@gmail.com</a>
@@ -400,17 +407,17 @@
       </div>
     </div>
     <div class="wrap fuss-unten">
-      <span>© 2026 Fahrschule Rolf Melliger</span>
-      <span class="fuss-recht"><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></span>
+      <p>© 2026 Fahrschule Rolf Melliger</p>
+      <p><a href="#" data-soon="Impressum">Impressum</a><a href="#" data-soon="Datenschutz">Datenschutz</a></p>
     </div>
   </footer>
 
-  <!-- Aktionsleiste mobil -->
-  <nav class="aktion" id="aktion" aria-label="Schnellkontakt">
+  <!-- Aktionsleiste Handy -->
+  <nav class="aktion" aria-label="Schnellkontakt">
     <a class="aktion-wa" href="https://wa.me/41762828288" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
-    <a class="aktion-sms" href="sms:+41762828288"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg>SMS</a>
+    <a class="aktion-sms nur-touch" href="sms:+41762828288"><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg>SMS</a>
     <a class="aktion-rund" href="mailto:fahrschulemelliger@gmail.com" aria-label="E-Mail an fahrschulemelliger@gmail.com"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></a>
-    <a class="aktion-rund" href="tel:+41762828288" aria-label="Anrufen: 076 282 82 88"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg></a>
+    <a class="aktion-rund aktion-tel" href="tel:+41762828288" aria-label="Anrufen: 076 282 82 88"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg></a>
   </nav>
 </body>
 </html>
