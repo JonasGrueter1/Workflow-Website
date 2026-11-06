@@ -10,15 +10,15 @@
   <link rel="icon" href="../assets/img/b-favicon.svg" type="image/svg+xml">
   <link rel="preload" href="../assets/fonts/b-krona-one-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/b-spline-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="../assets/img/b-a35.webp" imagesrcset="../assets/img/b-a35-768.webp 768w, ../assets/img/b-a35.webp 1024w" imagesizes="(min-width: 1100px) 960px, 100vw">
+  <link rel="preload" as="image" href="../assets/img/b-buehne.webp" imagesrcset="../assets/img/b-buehne-768.webp 768w, ../assets/img/b-buehne.webp 1024w" imagesizes="(min-width: 1100px) 1024px, 100vw">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../assets/shared/vorschau.css">
   <script>
     (function (d) {
       d.classList.add('js');
       try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('fx'); } catch (e) {}
-      /* Sicherheitsnetz: Lädt script.js nicht, wird alles ohne Animation gezeigt */
-      setTimeout(function () { if (!window.balB) { d.classList.remove('fx'); d.classList.remove('js'); } }, 2500);
+      /* Sicherheitsnetz: Lädt script.js nicht, bleibt alles ohne Animation sichtbar */
+      setTimeout(function () { if (!window.balmerB) { d.classList.remove('fx', 'js'); } }, 2500);
     })(document.documentElement);
   </script>
   <script src="script.js" defer></script>
@@ -29,6 +29,7 @@
     "@type": "DrivingSchool",
     "name": "Fahrschule Balmer Performance Drive",
     "slogan": "Der Weg zum Führerausweis",
+    "founder": { "@type": "Person", "name": "Patrick Balmer" },
     "telephone": "+41 78 253 20 81",
     "email": "patrick@fahrschulebalmer.ch",
     "address": {
@@ -38,329 +39,338 @@
       "addressLocality": "Regensdorf",
       "addressRegion": "ZH",
       "addressCountry": "CH"
-    }
+    },
+    "areaServed": "Regensdorf",
+    "priceRange": "CHF 65 bis 90 pro Lektion"
   }
   </script>
 </head>
 <body data-vorschau="b">
-  <!-- Symbole: eigene Zeichnungen -->
-  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
-    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3.5 20.5l1.3-4.4A8.6 8.6 0 1 1 8 19.3z"/><path d="M9.2 8.6c0 3.3 2.9 6.2 6.2 6.2l.9-1.5-1.9-1-1 .8a4.6 4.6 0 0 1-2.4-2.4l.8-1-.9-1.9z"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol>
-    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11.5a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></symbol>
-    <symbol id="i-pfeil" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.2 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.8"/></symbol>
-    <symbol id="i-links" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
-    <symbol id="i-rechts" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
-    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-    <symbol id="i-fb" viewBox="0 0 24 24"><path d="M14 8.5h2.5V5H14a4 4 0 0 0-4 4v2H7.5v3.5H10V21h3.5v-6.5H16l.5-3.5h-3V9.5a1 1 0 0 1 1-1z"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.6l1.9 4.7-2.4 1.5a11.5 11.5 0 0 0 6 6l1.5-2.4 4.7 1.9v3.6a2 2 0 0 1-2.1 2A17 17 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3.6 20.4l1.2-4.3a8.7 8.7 0 1 1 3.1 3.1z"/><path d="M9.1 8.3c-.1 3.4 3.1 6.6 6.6 6.6l1-1.5-2-1.1-1 .8a4.7 4.7 0 0 1-2.7-2.7l.8-1-1.1-2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.6 7.2 12 13l8.4-5.8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.2s-6.6-6.1-6.6-11.5a6.6 6.6 0 0 1 13.2 0c0 5.4-6.6 11.5-6.6 11.5z"/><circle cx="12" cy="9.7" r="2.4"/></symbol>
+    <symbol id="i-pfeil" viewBox="0 0 24 24"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.3"/><circle cx="18" cy="6" r="2.3"/><path d="M8.3 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.7"/></symbol>
+    <symbol id="i-links" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></symbol>
+    <symbol id="i-rechts" viewBox="0 0 24 24"><path d="M9.5 5.5 16 12l-6.5 6.5"/></symbol>
+    <symbol id="i-haken" viewBox="0 0 24 24"><path d="M5 12.6l4.4 4.4L19 7.4"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path d="M14 8.6h2.6V5H14a4 4 0 0 0-4 4v2H7.6v3.5H10V21h3.5v-6.5H16l.6-3.5h-3.1V9.6a1 1 0 0 1 1-1z"/></symbol>
   </svg>
 
-  <a class="skip" href="#main">Zum Inhalt springen</a>
-
-  <header class="kopf" id="top">
+  <header class="kopf" data-kopf>
     <div class="wrap kopf-in">
-      <a class="kopf-logo" href="./" aria-label="Fahrschule Balmer Performance Drive, Startseite">
-        <img src="../assets/img/b-logo.webp" width="520" height="111" alt="Fahrschule Balmer Performance Drive">
+      <a class="kopf-logo" href="#start" aria-label="Fahrschule Balmer Performance Drive, zum Seitenanfang">
+        <img src="../assets/img/b-logo.webp" width="520" height="111" alt="">
       </a>
-      <nav class="kopf-nav" id="kopf-nav" aria-label="Hauptmenü">
+      <nav class="kopf-nav" aria-label="Hauptnavigation">
         <a href="#auto">Auto</a>
         <a href="#pakete">Pakete</a>
-        <a href="#ueber">Über mich</a>
+        <a href="#patrick">Über mich</a>
         <a href="#stimmen">Stimmen</a>
         <a href="#kontakt">Kontakt</a>
-        <span class="nav-mobil nav-trenner" aria-hidden="true"></span>
-        <a class="nav-mobil" href="#" data-soon="Preise &amp; Special">Preise &amp; Special</a>
-        <a class="nav-mobil" href="#" data-soon="Vorteile">Vorteile</a>
       </nav>
-      <div class="kopf-aktionen">
-        <a class="btn btn-linie btn-klein kopf-wa" href="https://wa.me/41782532081" target="_blank" rel="noopener">
+      <div class="kopf-aktion">
+        <a class="kk kk-linie" href="https://wa.me/41782532081?text=Hallo%20Patrick%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener" aria-label="WhatsApp-Chat mit Patrick öffnen">
           <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span>
         </a>
-        <a class="btn btn-gelb btn-klein kopf-tel" href="tel:+41782532081" aria-label="Anrufen: 078 253 20 81">
+        <a class="kk kk-gelb" href="tel:+41782532081" aria-label="Anrufen: 078 253 20 81">
           <svg class="i" aria-hidden="true"><use href="#i-tel"/></svg><span>078 253 20 81</span>
         </a>
-        <button class="kopf-menu" type="button" aria-expanded="false" aria-controls="kopf-nav" aria-label="Menü öffnen">
-          <svg class="i" aria-hidden="true"><use href="#i-menu"/></svg>
-        </button>
       </div>
     </div>
   </header>
 
-  <main id="main">
-    <!-- 1 Hero -->
-    <section class="hero" aria-labelledby="hero-titel">
+  <main id="inhalt">
+
+    <!-- Hero: Titel, Schwung aus dem Logo, das Auto auf der Bühne -->
+    <section class="hero" id="start" aria-labelledby="hero-titel">
       <div class="hero-licht" aria-hidden="true"></div>
       <div class="wrap hero-kopf">
-        <p class="kicker hero-kicker"><b class="k-teil">Performance Drive</b> <span aria-hidden="true">·</span> <b class="k-teil">Regensdorf ZH</b></p>
+        <p class="kicker hero-kicker"><span class="h-k1">Performance Drive</span><span class="punkt" aria-hidden="true">·</span><span class="h-k2">Regensdorf ZH</span><span class="punkt" aria-hidden="true">·</span><span class="h-k3">Kategorie B</span></p>
         <h1 class="hero-titel" id="hero-titel">
-          <span class="z"><span class="gelb">Fahrschule Balmer.</span></span>
-          <span class="z"><span>Fahren lernen mit</span></span>
-          <span class="z"><span>Leidenschaft.</span></span>
+          <span class="zeile"><span class="zeile-in gelb">Fahrschule Balmer.</span></span>
+          <span class="zeile"><span class="zeile-in">Fahren lernen mit Leidenschaft.</span></span>
         </h1>
-        <svg class="schwung" viewBox="0 0 600 40" aria-hidden="true" focusable="false">
-          <defs>
-            <mask id="schwung-maske" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="40">
-              <path class="schwung-zug" d="M-4 38C150 22 360 12 606 6" fill="none" stroke="#fff" stroke-width="22" pathLength="1"/>
-            </mask>
-          </defs>
-          <path class="schwung-form" mask="url(#schwung-maske)" d="M2 37.5C150 22 360 9 598 2L593 15.5C380 18.5 170 27.5 2 37.5Z"/>
+        <svg class="schwung" viewBox="0 0 600 42" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path d="M0 40.5 7.5 36C150 25.5 360 13 600 2.5L590.5 16.5C376 20.5 165 29.5 0 40.5Z"/>
         </svg>
       </div>
 
-      <figure class="buehne">
-        <img class="buehne-auto" src="../assets/img/b-a35.webp" srcset="../assets/img/b-a35-768.webp 768w, ../assets/img/b-a35.webp 1024w" sizes="(min-width: 1100px) 960px, 100vw" width="1024" height="684" alt="Das Fahrschulauto: ein mattgrauer Mercedes A35 mit der Beschriftung Fahrschule Balmer Performance Drive">
-        <figcaption class="sr-only">Mercedes A35 der neuen Generation</figcaption>
-      </figure>
+      <div class="buehne">
+        <div class="buehne-in" data-parallax>
+          <img class="buehne-bild" src="../assets/img/b-buehne.webp" srcset="../assets/img/b-buehne-768.webp 768w, ../assets/img/b-buehne.webp 1024w" sizes="(min-width: 1100px) 1024px, 100vw" width="1024" height="684" fetchpriority="high" decoding="async" alt="Das Fahrschulauto von Patrick Balmer: ein mattgrauer Mercedes A35 mit gelber Beschriftung Fahrschule Balmer, Performance Drive und der Telefonnummer.">
+        </div>
+      </div>
 
       <div class="wrap hero-fuss">
-        <span class="bodenlinie" aria-hidden="true"></span>
+        <span class="boden" aria-hidden="true"></span>
         <p class="hero-lead">Kategorie B im Mercedes A35. Fahrstunden von Montag bis Sonntag, ohne Zusatzkosten.</p>
         <div class="hero-knoepfe">
-          <a class="btn btn-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Fahrstunde%20anfragen">Fahrstunde anfragen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
-          <a class="btn btn-linie" href="tel:+41782532081"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen</a>
-          <a class="btn btn-linie" href="https://wa.me/41782532081" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="knopf knopf-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Fahrstunde%20anfragen">
+            Fahrstunde anfragen <svg class="i i-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg>
+          </a>
+          <a class="knopf knopf-linie" href="tel:+41782532081">
+            <svg class="i" aria-hidden="true"><use href="#i-tel"/></svg> Anrufen
+          </a>
+          <a class="knopf knopf-linie" href="https://wa.me/41782532081?text=Hallo%20Patrick%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener">
+            <svg class="i" aria-hidden="true"><use href="#i-wa"/></svg> WhatsApp
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- 2 Datenblatt -->
-    <section class="sektion datenblatt" id="auto" aria-labelledby="auto-titel">
-      <div class="wrap datenblatt-grid">
-        <div class="datenblatt-titel" data-r>
+    <!-- Datenblatt wie in einer Fahrzeug-Broschüre -->
+    <section class="sek auto" id="auto" aria-labelledby="auto-titel">
+      <div class="wrap auto-grid">
+        <div class="auto-text" data-reveal>
           <p class="kicker">Das Fahrzeug</p>
           <h2 class="titel" id="auto-titel">Dein Fahrschulauto.</h2>
+          <p class="auto-satz">Der Mercedes A35 der neuen Generation bietet eine optimale Fahrsicherheit und Technik. Somit ist das Fahrzeug ideal fürs Lernen geeignet.</p>
+          <p class="leise">Die Fahrschule ist spezialisiert auf Praxis und Führerausweis der Kategorie B und darum noch effizienter und individueller an dich angepasst.</p>
         </div>
-        <div class="datenblatt-text" data-r style="--i:1">
-          <p class="text-gross">Der Mercedes A35 der neuen Generation bietet eine optimale Fahrsicherheit und Technik. Somit ist das Fahrzeug ideal fürs Lernen geeignet.</p>
-          <p class="text-klein">Spezialisiert auf Praxis und Führerausweis der Kategorie B.</p>
-        </div>
-        <div class="datenblatt-tabelle" data-r>
+        <div class="datenblatt" data-reveal>
           <div class="db-kopf"><span>Datenblatt</span><span>Fahrschule Balmer</span></div>
-          <dl class="db">
-            <div class="db-zeile" style="--i:0"><dt>Fahrzeug</dt><dd>Mercedes A35, neue Generation</dd></div>
-            <div class="db-zeile" style="--i:1"><dt>Kategorie</dt><dd>B</dd></div>
-            <div class="db-zeile" style="--i:2"><dt>Lektion</dt><dd>60 Minuten</dd></div>
-            <div class="db-zeile" style="--i:3"><dt>Fahrtage</dt><dd>Montag bis Sonntag</dd></div>
-            <div class="db-zeile" style="--i:4"><dt>Zuschlag Wochenende</dt><dd class="db-null"><span>keiner</span></dd></div>
-            <div class="db-zeile" style="--i:5"><dt>Administrationskosten</dt><dd class="db-null"><span>keine</span></dd></div>
-            <div class="db-zeile" style="--i:6"><dt>Versicherungsgebühren</dt><dd class="db-null"><span>keine</span></dd></div>
-            <div class="db-zeile" style="--i:7"><dt>Prüfungsgebiet</dt><dd>Region Regensdorf</dd></div>
-            <div class="db-zeile" style="--i:8"><dt>Zahlung</dt><dd>bar, Twint, Rechnung</dd></div>
+          <dl class="db-liste" data-reihe>
+            <div class="db-zeile"><dt>Fahrzeug</dt><dd>Mercedes A35, neue Generation</dd></div>
+            <div class="db-zeile"><dt>Kategorie</dt><dd>B</dd></div>
+            <div class="db-zeile"><dt>Lektion</dt><dd>60 Minuten</dd></div>
+            <div class="db-zeile"><dt>Fahrtage</dt><dd>Montag bis Sonntag</dd></div>
+            <div class="db-zeile"><dt>Zuschlag Wochenende</dt><dd><span class="null">keiner</span></dd></div>
+            <div class="db-zeile"><dt>Administrationskosten</dt><dd><span class="null">keine</span></dd></div>
+            <div class="db-zeile"><dt>Versicherungsgebühren</dt><dd><span class="null">keine</span></dd></div>
+            <div class="db-zeile"><dt>Prüfungsgebiet</dt><dd>Region Regensdorf</dd></div>
+            <div class="db-zeile"><dt>Zahlung</dt><dd>bar, Twint, Rechnung</dd></div>
           </dl>
         </div>
       </div>
     </section>
 
-    <!-- 3 Wochenleiste -->
-    <section class="woche" aria-labelledby="woche-titel">
+    <!-- Wochenleiste -->
+    <section class="woche" id="woche" aria-labelledby="woche-titel">
       <div class="wrap woche-grid">
-        <div class="woche-text" data-r>
-          <h2 class="titel titel-m" id="woche-titel">Montag bis Sonntag. Ohne Zusatzkosten.</h2>
-          <p>Fahrstunden an allen sieben Tagen, auch am Wochenende ohne weitere Kosten. <strong>Express:</strong> Mehrere Fahrstunden pro Woche sind möglich.</p>
+        <div class="woche-text" data-reveal>
+          <h2 class="titel titel-m" id="woche-titel">Montag bis Sonntag. <span class="gelb">Ohne Zuschlag.</span></h2>
+          <p>Fahrstunden an allen sieben Tagen, auch am Wochenende ohne weitere Kosten. <strong>Express:</strong> mehrere Fahrstunden pro Woche möglich.</p>
         </div>
-        <ol class="tage" aria-label="Fahrtage">
-          <li style="--i:0"><abbr title="Montag">Mo</abbr></li>
-          <li style="--i:1"><abbr title="Dienstag">Di</abbr></li>
-          <li style="--i:2"><abbr title="Mittwoch">Mi</abbr></li>
-          <li style="--i:3"><abbr title="Donnerstag">Do</abbr></li>
-          <li style="--i:4"><abbr title="Freitag">Fr</abbr></li>
-          <li style="--i:5"><abbr title="Samstag">Sa</abbr></li>
-          <li style="--i:6"><abbr title="Sonntag">So</abbr></li>
-        </ol>
+        <div class="tage-box" data-reveal>
+          <ol class="tage" aria-label="Fahrtage: Montag bis Sonntag">
+            <li style="--i:0"><span class="tag" title="Montag">Mo</span></li>
+            <li style="--i:1"><span class="tag" title="Dienstag">Di</span></li>
+            <li style="--i:2"><span class="tag" title="Mittwoch">Mi</span></li>
+            <li style="--i:3"><span class="tag" title="Donnerstag">Do</span></li>
+            <li style="--i:4"><span class="tag" title="Freitag">Fr</span></li>
+            <li style="--i:5" class="we"><span class="tag" title="Samstag">Sa</span></li>
+            <li style="--i:6" class="we"><span class="tag" title="Sonntag">So</span></li>
+          </ol>
+          <p class="we-hinweis"><span>Wochenende ohne Zuschlag</span></p>
+        </div>
       </div>
     </section>
 
-    <!-- 4 Paket-Wähler -->
-    <section class="sektion pakete" id="pakete" aria-labelledby="pakete-titel">
+    <!-- Paket-Wähler -->
+    <section class="sek pakete" id="pakete" aria-labelledby="pakete-titel">
       <div class="wrap">
-        <div class="pakete-kopf" data-r>
+        <div class="sek-kopf" data-reveal>
           <div>
             <p class="kicker">Preise pro Lektion</p>
             <h2 class="titel" id="pakete-titel">Wähle dein Paket.</h2>
           </div>
-          <p class="pakete-intro">Jede Lektion dauert 60 Minuten. Keine Administrationskosten, keine Versicherungsgebühren.</p>
+          <p class="sek-text">Eine Lektion dauert 60 Minuten. Keine Administrationskosten, keine Versicherungsgebühren.</p>
         </div>
 
-        <div class="waehler" data-r>
-          <div class="segmente" role="tablist" aria-label="Paket wählen">
-            <button class="segment" type="button" role="tab" id="tab-1" aria-controls="paket-1" aria-selected="true" data-preis="90">Einzeln</button>
-            <button class="segment" type="button" role="tab" id="tab-5" aria-controls="paket-5" aria-selected="false" tabindex="-1" data-preis="87">5er<span class="seg-lang">-Paket</span></button>
-            <button class="segment" type="button" role="tab" id="tab-10" aria-controls="paket-10" aria-selected="false" tabindex="-1" data-preis="85">10er<span class="seg-lang">-Paket</span></button>
-            <button class="segment segment-special" type="button" role="tab" id="tab-abo" aria-controls="paket-abo" aria-selected="false" tabindex="-1" data-preis="65">Drive Special</button>
+        <div class="waehler" data-waehler data-reveal>
+          <div class="tabs" role="tablist" aria-label="Paket wählen">
+            <span class="tab-marker" aria-hidden="true"></span>
+            <button class="tab" type="button" role="tab" id="tab-einzel" aria-controls="p-einzel" aria-selected="true" data-wert="90">Einzeln</button>
+            <button class="tab" type="button" role="tab" id="tab-5er" aria-controls="p-5er" aria-selected="false" tabindex="-1" data-wert="87">5er-Paket</button>
+            <button class="tab" type="button" role="tab" id="tab-10er" aria-controls="p-10er" aria-selected="false" tabindex="-1" data-wert="85">10er-Paket</button>
+            <button class="tab" type="button" role="tab" id="tab-special" aria-controls="p-special" aria-selected="false" tabindex="-1" data-wert="65">Drive Special</button>
           </div>
 
-          <div class="waehler-flaeche">
-            <div class="tacho" aria-hidden="true">
-              <span class="tacho-chf">CHF</span>
-              <span class="tacho-zahl">
-                <span class="rolle" style="--d:9"><span class="streifen"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="rolle" style="--d:0"><span class="streifen"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span>
-              </span>
-              <span class="tacho-pro">pro Lektion</span>
+          <div class="waehler-buehne">
+            <div class="anzeige" aria-hidden="true">
+              <span class="anz-chf">CHF</span>
+              <span class="anz-zahl"><span class="anz-wert">90</span></span>
+              <span class="anz-pro">pro Lektion</span>
             </div>
 
             <div class="panels">
-              <div class="paket" role="tabpanel" id="paket-1" aria-labelledby="tab-1" tabindex="0">
-                <h3 class="paket-name">1 Einzelfahrstunde</h3>
-                <p class="paket-preis"><span class="chf">CHF</span> 90 <span class="pro">pro Lektion</span></p>
-                <ul class="paket-liste">
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>60 Minuten</li>
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Zahlung bar, mit Twint oder auf Rechnung</li>
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Keine Versicherungsgebühren</li>
+              <div class="panel" role="tabpanel" id="p-einzel" aria-labelledby="tab-einzel">
+                <h3 class="panel-titel">1 Einzelfahrstunde</h3>
+                <p class="panel-preis"><strong>CHF 90</strong> pro Lektion</p>
+                <ul class="haken">
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>60 Minuten</li>
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>Zahlung bar, mit Twint oder auf Rechnung</li>
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>Keine Versicherungsgebühren</li>
                 </ul>
-                <a class="btn btn-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Buchung%20Einzelfahrstunde">Einzelfahrstunde buchen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+                <a class="knopf knopf-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Buchung%20Einzelfahrstunde">Einzelfahrstunde buchen <svg class="i i-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
               </div>
-              <div class="paket" role="tabpanel" id="paket-5" aria-labelledby="tab-5" tabindex="0">
-                <h3 class="paket-name">5er-Paket</h3>
-                <p class="paket-preis"><span class="chf">CHF</span> 87 <span class="pro">pro Lektion</span></p>
-                <ul class="paket-liste">
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>5 Lektionen à 60 Minuten</li>
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Zahlung bar, mit Twint oder auf Rechnung</li>
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Keine Versicherungsgebühren</li>
+              <div class="panel" role="tabpanel" id="p-5er" aria-labelledby="tab-5er">
+                <h3 class="panel-titel">5er-Paket</h3>
+                <p class="panel-preis"><strong>CHF 87</strong> pro Lektion</p>
+                <ul class="haken">
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>60 Minuten</li>
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>Zahlung bar, mit Twint oder auf Rechnung</li>
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>Keine Versicherungsgebühren</li>
                 </ul>
-                <a class="btn btn-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Buchung%205er-Paket">5er-Paket buchen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+                <a class="knopf knopf-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Buchung%205er-Paket">5er-Paket buchen <svg class="i i-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
               </div>
-              <div class="paket" role="tabpanel" id="paket-10" aria-labelledby="tab-10" tabindex="0">
-                <h3 class="paket-name">10er-Paket</h3>
-                <p class="paket-preis"><span class="chf">CHF</span> 85 <span class="pro">pro Lektion</span></p>
-                <ul class="paket-liste">
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>10 Lektionen à 60 Minuten</li>
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Zahlung bar, mit Twint oder auf Rechnung</li>
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Keine Versicherungsgebühren</li>
+              <div class="panel" role="tabpanel" id="p-10er" aria-labelledby="tab-10er">
+                <h3 class="panel-titel">10er-Paket</h3>
+                <p class="panel-preis"><strong>CHF 85</strong> pro Lektion</p>
+                <ul class="haken">
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>60 Minuten</li>
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>Zahlung bar, mit Twint oder auf Rechnung</li>
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>Keine Versicherungsgebühren</li>
                 </ul>
-                <a class="btn btn-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Buchung%2010er-Paket">10er-Paket buchen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+                <a class="knopf knopf-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Buchung%2010er-Paket">10er-Paket buchen <svg class="i i-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
               </div>
-              <div class="paket paket-abo" role="tabpanel" id="paket-abo" aria-labelledby="tab-abo" tabindex="0">
-                <h3 class="paket-name">Drive Special ABO <span class="marke">Nur 1 Mal buchbar</span></h3>
-                <p class="paket-preis"><span class="chf">CHF</span> 65 <span class="pro">pro Lektion</span></p>
-                <ul class="paket-liste">
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>5 Lektionen à 65.– = <span class="nw">325 CHF</span></span></li>
-                  <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Ohne Administrationskosten</li>
+              <div class="panel panel-special" role="tabpanel" id="p-special" aria-labelledby="tab-special">
+                <p class="badge">Special</p>
+                <h3 class="panel-titel">Drive Special ABO</h3>
+                <p class="panel-preis"><strong>CHF 65</strong> pro Lektion</p>
+                <p class="abo-formel">5 Lektionen à 65.– = <strong>325 CHF</strong></p>
+                <ul class="haken">
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>Ohne Administrationskosten</li>
+                  <li><svg class="i" aria-hidden="true"><use href="#i-haken"/></svg>Nur 1 Mal buchbar</li>
                 </ul>
-                <a class="btn btn-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Buchung%20Drive%20Special%20ABO">Drive Special buchen <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+                <a class="knopf knopf-gelb" href="mailto:patrick@fahrschulebalmer.ch?subject=Buchung%20Drive%20Special%20ABO">Drive Special ABO buchen <svg class="i i-pfeil" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
               </div>
             </div>
           </div>
         </div>
 
-        <p class="pakete-fuss" data-r>
-          <span>Treue und Weiterempfehlungen werden belohnt.</span>
-          <a class="textlink" href="#" data-soon="Preise &amp; Special">Preise &amp; Special <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
-        </p>
+        <div class="pakete-fuss" data-reveal>
+          <p>Treue und Weiterempfehlungen werden belohnt.</p>
+          <a class="link-pfeil" href="#pakete" data-soon="Preise &amp; Special">Preise &amp; Special <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+        </div>
       </div>
     </section>
 
-    <!-- 5 Über mich -->
-    <section class="sektion ueber" id="ueber" aria-labelledby="ueber-titel">
-      <div class="wrap ueber-grid">
-        <div class="ueber-kopf" data-r>
-          <p class="kicker">Hallo, ich bin Patrick Balmer</p>
-          <h2 class="titel" id="ueber-titel">Aus Leidenschaft für Autos zum Fahrlehrer.</h2>
-        </div>
-        <div class="ueber-inhalt">
-          <blockquote class="ueber-zitat" data-r>
+    <!-- Über Patrick -->
+    <section class="sek patrick" id="patrick" aria-labelledby="patrick-titel">
+      <div class="wrap patrick-grid">
+        <figure class="patrick-bild" data-reveal>
+          <img src="../assets/img/b-tuer.webp" width="360" height="450" loading="lazy" decoding="async" alt="Die Fahrertür des Mercedes A35 mit der Beschriftung Fahrschule Balmer, Performance Drive und 078 253 20 81.">
+          <figcaption>Mercedes A35, das Fahrschulauto</figcaption>
+        </figure>
+        <div class="patrick-text">
+          <div data-reveal>
+            <p class="kicker">Hallo, ich bin Patrick Balmer</p>
+            <h2 class="titel" id="patrick-titel">Aus Leidenschaft für Autos zum Fahrlehrer.</h2>
+          </div>
+          <blockquote class="patrick-zitat" data-reveal>
             <p>Mein Ziel ist es nicht nur, dich erfolgreich durch die Fahrprüfung zu bringen, sondern dir auch zu zeigen, wie viel Freude Autofahren machen kann, damit du dich jedes Mal sicher und wohlfühlst, wenn du am Steuer sitzt.</p>
           </blockquote>
-          <div class="ueber-text" data-r>
+          <div class="patrick-lauf" data-reveal>
             <p>Autos sind seit meiner Kindheit meine grosse Leidenschaft. Da ich einen Grossteil meines Lebens am Steuer verbracht und meine berufliche Laufbahn der Automobilbranche gewidmet habe, war es für mich ein natürlicher nächster Schritt, Fahrlehrer zu werden.</p>
             <p>Heute freue ich mich darauf, meine Begeisterung für das Autofahren mit meinen Fahrschülerinnen und Fahrschülern zu teilen und ihnen zu helfen, sicher, selbstbewusst und selbstständig zu fahren.</p>
-            <p>Ob sicheres Einparken, das Erkennen von Verkehrsschildern oder das Fahren auf Schweizer Strassen bei jedem Wetter: Ich begleite dich Schritt für Schritt auf deinem Weg zum sicheren Fahren.</p>
+            <p>Ob sicheres Einparken, das Erkennen von Verkehrsschildern oder das Fahren auf Schweizer Strassen bei jedem Wetter: ich begleite dich Schritt für Schritt auf deinem Weg zum sicheren Fahren.</p>
           </div>
-          <div class="ueber-fuss" data-r>
-            <p class="unterschrift"><span class="unterschrift-name">Patrick Balmer</span><span class="unterschrift-rolle">Fahrlehrer, Fahrschule Balmer Performance Drive</span></p>
-            <div class="ueber-knoepfe">
-              <a class="btn btn-linie" href="tel:+41782532081"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Du hast Fragen? Ruf mich an.</a>
-              <a class="textlink" href="#" data-soon="Über mich">Mehr über mich <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+          <div class="patrick-fuss" data-reveal>
+            <p class="unterschrift"><strong>Patrick Balmer</strong><span>Fahrlehrer und Inhaber</span></p>
+            <div class="patrick-cta">
+              <a class="knopf knopf-linie" href="tel:+41782532081"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg> Du hast Fragen? Ruf mich an.</a>
+              <a class="link-pfeil" href="#patrick" data-soon="Über mich">Über mich <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 6 Stimmen -->
-    <section class="sektion stimmen" id="stimmen" aria-labelledby="stimmen-titel">
+    <!-- Kundenstimmen -->
+    <section class="sek stimmen" id="stimmen" aria-labelledby="stimmen-titel">
       <div class="wrap stimmen-grid">
-        <div class="stimmen-kopf" data-r>
+        <div class="stimmen-kopf" data-reveal>
           <p class="kicker">Kundenstimmen</p>
           <h2 class="titel" id="stimmen-titel">Ruhig, geduldig, klar erklärt.</h2>
-          <p class="stimmen-intro">Fünf Fahrschülerinnen und Fahrschüler erzählen, wie sie ihre Fahrstunden bei Patrick erlebt haben.</p>
-          <div class="stimmen-steuer" hidden>
-            <button class="rund" type="button" data-schritt="-1" aria-label="Vorherige Stimme"><svg class="i" aria-hidden="true"><use href="#i-links"/></svg></button>
-            <span class="stimmen-zahl" aria-hidden="true"><b>01</b> / 05</span>
-            <button class="rund" type="button" data-schritt="1" aria-label="Nächste Stimme"><svg class="i" aria-hidden="true"><use href="#i-rechts"/></svg></button>
+          <p class="sek-text">Fünf Fahrschülerinnen und Fahrschüler erzählen, wie ihre Fahrstunden bei Patrick waren.</p>
+          <div class="st-steuer">
+            <button class="rund" type="button" data-st="-1" aria-label="Vorherige Kundenstimme"><svg class="i" aria-hidden="true"><use href="#i-links"/></svg></button>
+            <p class="st-zahl"><span class="st-akt">01</span> / 05</p>
+            <button class="rund" type="button" data-st="1" aria-label="Nächste Kundenstimme"><svg class="i" aria-hidden="true"><use href="#i-rechts"/></svg></button>
           </div>
         </div>
-        <div class="stimmen-buehne" data-r>
-          <div class="folien" aria-live="polite">
-            <figure class="folie" id="stimme-1">
+
+        <div class="stimmen-buehne" data-stimmen data-reveal>
+          <svg class="st-zeichen" viewBox="0 0 64 48" aria-hidden="true" focusable="false"><path d="M0 48V27.6C0 12.2 7.6 3 22.8 0l3 6.6C17.4 9.2 13.4 14 13.2 21.2H26V48zm36 0V27.6C36 12.2 43.6 3 58.8 0l3 6.6c-8.4 2.6-12.4 7.4-12.6 14.6H62V48z"/></svg>
+          <div class="st-liste" aria-live="polite">
+            <figure class="stimme">
               <blockquote><p>Patrick ist ein ausgezeichneter Fahrlehrer! Seine <mark>ruhige, geduldige und strukturierte Art</mark> hat mir enorm geholfen, schnell Sicherheit im Strassenverkehr zu gewinnen. Der Unterricht war immer angenehm und sehr lehrreich. Ich habe meine Fahrprüfung diese Woche fehlerfrei bestanden was ich ehrlich gesagt selbst nicht erwartet hätte. Die Vorbereitung war top und genau auf die Prüfung abgestimmt. Vielen Dank für die tolle Begleitung! Patrick kann ich mit bestem Gewissen jederzeit weiterempfehlen</p></blockquote>
-              <figcaption><span class="initial" aria-hidden="true">M</span>Mordecai K.</figcaption>
+              <figcaption><span class="st-initiale" aria-hidden="true">M</span>Mordecai K.</figcaption>
             </figure>
-            <figure class="folie folie-kurz" id="stimme-2" lang="en">
-              <blockquote><p>Was a really good experience to make my driving lessons with Patrik he teach me so good <mark>very calm</mark>. I learn a lot from him and I recommend him a lot!</p></blockquote>
-              <figcaption lang="de-CH"><span class="initial" aria-hidden="true">A</span>Ahlam S.</figcaption>
+            <figure class="stimme">
+              <blockquote lang="en"><p>Was a really good experience to make my driving lessons with Patrik he teach me so good <mark>very calm</mark>. I learn a lot from him and I recommend him a lot!</p></blockquote>
+              <figcaption><span class="st-initiale" aria-hidden="true">A</span>Ahlam S.</figcaption>
             </figure>
-            <figure class="folie" id="stimme-3">
-              <blockquote><p>Patrick ist ein äusserst geduldiger und professioneller Fahrlehrer, achtet auf jede Kleinigkeit und erklärt alles klar und verständlich. Ich habe zuvor bei anderen Fahrschulen die Prüfung nicht bestanden, was natürlich nicht «zwingend» an den Fahrschulen lag. Aber <mark>erst bei Patrick habe ich wirklich verstanden, worauf es ankommt</mark>, und konnte endlich die Fahrprüfung bestehen. Seine ruhige Art, sein Blick fürs Detail und seine Erfahrung haben den entscheidenden Unterschied gemacht. Ich kann Patrick als Fahrlehrer absolut empfehlen und bin ihm für seine Unterstützung dankbar!</p></blockquote>
-              <figcaption><span class="initial" aria-hidden="true">N</span>Nazek A.</figcaption>
+            <figure class="stimme">
+              <blockquote><p>Patrick ist ein <mark>äusserst geduldiger und professioneller Fahrlehrer</mark>, achtet auf jede Kleinigkeit und erklärt alles klar und verständlich. Ich habe zuvor bei anderen Fahrschulen die Prüfung nicht bestanden, was natürlich nicht «zwingend» an den Fahrschulen lag. Aber erst bei Patrick habe ich wirklich verstanden, worauf es ankommt, und konnte endlich die Fahrprüfung bestehen. Seine ruhige Art, sein Blick fürs Detail und seine Erfahrung haben den entscheidenden Unterschied gemacht. Ich kann Patrick als Fahrlehrer absolut empfehlen und bin ihm für seine Unterstützung dankbar!</p></blockquote>
+              <figcaption><span class="st-initiale" aria-hidden="true">N</span>Nazek A.</figcaption>
             </figure>
-            <figure class="folie folie-kurz" id="stimme-4">
+            <figure class="stimme">
               <blockquote><p>Ich hatte mit Patrick immer sehr gute Fahrstunden. Er hat mir immer alles erklärt, war stets geduldig und nett. Das Fahren hat immer Spass gemacht. Auch die Atmosphäre war immer sehr entspannt und ich konnte auch gute Gespräche mit ihm führen. <mark>Bestanden habe ich beim ersten Mal</mark>, dank Patrick.</p></blockquote>
-              <figcaption><span class="initial" aria-hidden="true">S</span>Simona X.</figcaption>
+              <figcaption><span class="st-initiale" aria-hidden="true">S</span>Simona X.</figcaption>
             </figure>
-            <figure class="folie" id="stimme-5">
-              <blockquote><p>Hallo! Ich möchte meine Erfahrung mit Fahrschule Balmer teilen. Ich kam aus dem Kosovo und beherrschte nur die albanische Sprache, während ich Deutsch nur teilweise verstand. Meine Angst war jedoch, dass es für mich sehr schwierig sein würde, alles auf Deutsch zu verstehen. Aber nachdem ich meine erste Praxisstunde hatte, habe ich gesehen, <mark>wie verständlich und klar Patric ist</mark>. Dank dir und deinen Erklärungen habe ich heute die Prüfung erfolgreich bestanden.</p></blockquote>
-              <figcaption><span class="initial" aria-hidden="true">A</span>Arjana S.</figcaption>
+            <figure class="stimme">
+              <blockquote><p>Hallo! Ich möchte meine Erfahrung mit Fahrschule Balmer teilen. Ich kam aus dem Kosovo und beherrschte nur die albanische Sprache, während ich Deutsch nur teilweise verstand. Meine Angst war jedoch, dass es für mich sehr schwierig sein würde, alles auf Deutsch zu verstehen. Aber nachdem ich meine erste Praxisstunde hatte, habe ich gesehen, <mark>wie verständlich und klar</mark> Patric ist. Dank dir und deinen Erklärungen habe ich heute die Prüfung erfolgreich bestanden.</p></blockquote>
+              <figcaption><span class="st-initiale" aria-hidden="true">A</span>Arjana S.</figcaption>
             </figure>
           </div>
-          <div class="punkte" hidden></div>
+          <div class="st-punkte" aria-label="Kundenstimme wählen">
+            <button type="button" class="st-punkt" aria-label="Stimme 1: Mordecai K."></button>
+            <button type="button" class="st-punkt" aria-label="Stimme 2: Ahlam S."></button>
+            <button type="button" class="st-punkt" aria-label="Stimme 3: Nazek A."></button>
+            <button type="button" class="st-punkt" aria-label="Stimme 4: Simona X."></button>
+            <button type="button" class="st-punkt" aria-label="Stimme 5: Arjana S."></button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 7 Vorteile -->
-    <section class="vorteile" id="vorteile" aria-labelledby="vorteile-titel">
+    <!-- Vorteile -->
+    <section class="sek vorteile" id="vorteile" aria-labelledby="vorteile-titel">
       <div class="wrap">
-        <div class="vorteile-kopf" data-r>
-          <h2 class="titel titel-m" id="vorteile-titel">Deine Vorteile.</h2>
-          <a class="textlink" href="#" data-soon="Vorteile">Alle Vorteile <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
+        <div class="sek-kopf" data-reveal>
+          <div>
+            <p class="kicker">Performance Drive Vorteile</p>
+            <h2 class="titel" id="vorteile-titel">Deine Vorteile.</h2>
+          </div>
+          <a class="link-pfeil" href="#vorteile" data-soon="Vorteile">Alle Vorteile <svg class="i" aria-hidden="true"><use href="#i-pfeil"/></svg></a>
         </div>
-        <ol class="vorteil-liste">
-          <li class="vorteil" data-r style="--i:0"><span class="vorteil-nr" aria-hidden="true">01</span><h3>Spezialisiert auf Kategorie B</h3><p>Darum noch effizienter und individueller an dich angepasst.</p></li>
-          <li class="vorteil" data-r style="--i:1"><span class="vorteil-nr" aria-hidden="true">02</span><h3>Fahrstunden am Wochenende</h3><p>Auch am Samstag und Sonntag, ohne weitere Kosten.</p></li>
-          <li class="vorteil" data-r style="--i:2"><span class="vorteil-nr" aria-hidden="true">03</span><h3>Optimale Region</h3><p>Schulung im Prüfungsgebiet, in der Region Regensdorf.</p></li>
-          <li class="vorteil" data-r style="--i:3"><span class="vorteil-nr" aria-hidden="true">04</span><h3>Keine Administrationskosten</h3><p>Und keine Versicherungsgebühren auf deinen Lektionen.</p></li>
-          <li class="vorteil" data-r style="--i:4"><span class="vorteil-nr" aria-hidden="true">05</span><h3>Gemeinsam zum Ziel</h3><p>Ich begleite dich persönlich und zielorientiert bis zur Prüfung.</p></li>
+        <ol class="vt-liste" data-reihe>
+          <li class="vt" data-reveal><span class="vt-nr" aria-hidden="true">01</span><h3>Spezialisiert auf Kategorie B</h3><p>Darum noch effizienter und individueller an dich angepasst.</p></li>
+          <li class="vt" data-reveal><span class="vt-nr" aria-hidden="true">02</span><h3>Fahrstunden am Wochenende</h3><p>Auch am Samstag und Sonntag, ohne weitere Kosten.</p></li>
+          <li class="vt" data-reveal><span class="vt-nr" aria-hidden="true">03</span><h3>Optimale Region</h3><p>Schulung im Prüfungsgebiet, in der Region Regensdorf.</p></li>
+          <li class="vt" data-reveal><span class="vt-nr" aria-hidden="true">04</span><h3>Keine Administrationskosten</h3><p>Und auch keine Versicherungsgebühren.</p></li>
+          <li class="vt" data-reveal><span class="vt-nr" aria-hidden="true">05</span><h3>Gemeinsam zum Ziel</h3><p>Ich begleite dich gerne persönlich und zielorientiert bis zur Prüfung.</p></li>
         </ol>
       </div>
     </section>
 
-    <!-- 8 Kontakt -->
+    <!-- Kontakt -->
     <section class="kontakt" id="kontakt" aria-labelledby="kontakt-titel">
       <div class="wrap kontakt-grid">
-        <div class="kontakt-kopf" data-r>
-          <p class="kicker">Kontakt</p>
-          <h2 class="titel" id="kontakt-titel">Steig ein.</h2>
-          <p class="kontakt-lead">Du hast Fragen oder willst deine erste Fahrstunde abmachen? Ich bin gerne für dich da.</p>
-          <a class="kontakt-tel" href="tel:+41782532081"><span class="sr-only">Anrufen: </span>078 253 20 81</a>
+        <div class="kontakt-haupt" data-reveal>
+          <p class="kicker kicker-dunkel">Kontakt</p>
+          <h2 class="kontakt-titel" id="kontakt-titel">Steig ein.</h2>
+          <p class="kontakt-lead">Gerne stehe ich dir für Fragen zur Verfügung. Ich freue mich, mit dir gemeinsam deinen Führerausweis der Kategorie B zu erlangen.</p>
+          <a class="tel-gross" href="tel:+41782532081" aria-label="Anrufen: 078 253 20 81">078 253 20 81</a>
         </div>
-        <ul class="kontakt-liste" data-r>
-          <li>
-            <a href="mailto:patrick@fahrschulebalmer.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span><small>E-Mail</small>patrick@fahrschulebalmer.ch</span></a>
-          </li>
-          <li>
-            <a href="https://wa.me/41782532081" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span><small>WhatsApp</small>Chat öffnen</span></a>
-          </li>
-          <li>
-            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Obstgartenstrasse%2035%2C%208105%20Regensdorf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span><small>Adresse</small>Obstgartenstrasse 35, 8105 Regensdorf</span></a>
-          </li>
-          <li class="kontakt-knoepfe">
-            <a class="btn btn-dunkel" href="https://www.google.com/maps/dir/?api=1&amp;destination=Obstgartenstrasse%2035%2C%208105%20Regensdorf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg>Route planen</a>
-            <a class="btn btn-dunkel-linie" href="#" data-soon="Kontakt">Zum Kontaktformular</a>
-          </li>
-        </ul>
+        <div class="kontakt-karte" data-reveal>
+          <ul class="kontakt-liste">
+            <li><a href="mailto:patrick@fahrschulebalmer.ch?subject=Fahrstunde%20anfragen"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span><small>E-Mail</small>patrick@fahrschulebalmer.ch</span></a></li>
+            <li><a href="https://wa.me/41782532081?text=Hallo%20Patrick%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span><small>WhatsApp</small>Chat öffnen</span></a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Obstgartenstrasse%2035%2C%208105%20Regensdorf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span><small>Adresse</small>Obstgartenstrasse 35, 8105 Regensdorf</span></a></li>
+          </ul>
+          <div class="kontakt-knoepfe">
+            <a class="knopf knopf-dunkel" href="https://www.google.com/maps/dir/?api=1&amp;destination=Obstgartenstrasse%2035%2C%208105%20Regensdorf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg> Route planen</a>
+            <a class="knopf knopf-dunkel-linie" href="#kontakt" data-soon="Kontakt">Zum Kontaktformular</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -368,36 +378,38 @@
   <footer class="fuss">
     <div class="wrap fuss-grid">
       <div class="fuss-marke">
-        <img src="../assets/img/b-logo.webp" width="520" height="111" alt="Fahrschule Balmer Performance Drive" loading="lazy">
+        <img src="../assets/img/b-logo.webp" width="520" height="111" loading="lazy" alt="Fahrschule Balmer Performance Drive">
         <p>Der Weg zum Führerausweis</p>
       </div>
-      <address class="fuss-adresse">
-        Obstgartenstrasse 35<br>8105 Regensdorf ZH<br>
-        <a href="tel:+41782532081">078 253 20 81</a><br>
-        <a href="mailto:patrick@fahrschulebalmer.ch">patrick@fahrschulebalmer.ch</a>
-      </address>
-      <nav class="fuss-nav" aria-label="Seiten">
-        <a href="#" data-soon="Preise &amp; Special">Preise &amp; Special</a>
-        <a href="#" data-soon="Vorteile">Vorteile</a>
-        <a href="#" data-soon="Über mich">Über mich</a>
-        <a href="#" data-soon="Kontakt">Kontakt</a>
+      <div class="fuss-spalte">
+        <h3>Kontakt</h3>
+        <p>Obstgartenstrasse 35<br>8105 Regensdorf ZH</p>
+        <p><a href="tel:+41782532081">078 253 20 81</a><br><a href="mailto:patrick@fahrschulebalmer.ch">patrick@fahrschulebalmer.ch</a></p>
+      </div>
+      <nav class="fuss-spalte" aria-label="Seiten">
+        <h3>Seiten</h3>
+        <a href="#pakete" data-soon="Preise &amp; Special">Preise &amp; Special</a>
+        <a href="#vorteile" data-soon="Vorteile">Vorteile</a>
+        <a href="#patrick" data-soon="Über mich">Über mich</a>
+        <a href="#kontakt" data-soon="Kontakt">Kontakt</a>
       </nav>
-      <nav class="fuss-nav" aria-label="Rechtliches und Social Media">
+      <div class="fuss-spalte">
+        <h3>Weiteres</h3>
         <a href="#" data-soon="Impressum">Impressum</a>
         <a href="#" data-soon="Datenschutz">Datenschutz</a>
-        <a href="https://www.facebook.com/Fahrschule-Balmer-106951298875095/" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-fb"/></svg>Facebook</a>
-      </nav>
+        <a href="https://www.facebook.com/Fahrschule-Balmer-106951298875095/" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-fb"/></svg> Facebook</a>
+      </div>
     </div>
     <div class="wrap fuss-unten">
-      <span>© Fahrschule Balmer Performance Drive, Regensdorf</span>
-      <a href="#top">Nach oben</a>
+      <p>© 2026 Fahrschule Balmer Performance Drive, Regensdorf</p>
+      <a href="#start">Nach oben</a>
     </div>
   </footer>
 
-  <nav class="aktion" aria-label="Schnellkontakt">
-    <a href="tel:+41782532081"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg>Anrufen</a>
-    <a href="https://wa.me/41782532081" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
-    <a href="mailto:patrick@fahrschulebalmer.ch?subject=Fahrstunde%20anfragen"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>Mail</a>
+  <nav class="aktionen" aria-label="Schnellkontakt">
+    <a class="ak ak-gelb" href="tel:+41782532081"><svg class="i" aria-hidden="true"><use href="#i-tel"/></svg><span>Anrufen</span></a>
+    <a class="ak" href="https://wa.me/41782532081?text=Hallo%20Patrick%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Fahrstunden." target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+    <a class="ak" href="mailto:patrick@fahrschulebalmer.ch?subject=Fahrstunde%20anfragen"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span>Mail</span></a>
   </nav>
 </body>
 </html>

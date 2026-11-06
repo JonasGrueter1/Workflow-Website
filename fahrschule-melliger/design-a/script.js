@@ -6,6 +6,7 @@
   var d = document.documentElement;
   var fx = d.classList.contains('fx');
   var kopf = document.getElementById('kopf');
+
   var knopf = document.querySelector('.menu-knopf');
   var nav = document.getElementById('nav');
 

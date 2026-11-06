@@ -1,102 +1,101 @@
-/* Fahrschule Rolf Melliger, Design B «Bilanz»: Kopf, Menü, Einblenden, Anzeigetafel, Aktionsleiste */
+/* Fahrschule Rolf Melliger, Design B: Kopfzeile, Menü, Hero-Auftritt, Einblendungen beim Scrollen */
 (function () {
   'use strict';
-  window.mellB = true;
+  window.mellingerB = true;
 
   var root = document.documentElement;
-  var fx = root.classList.contains('fx');
-  var hasIO = 'IntersectionObserver' in window;
-
-  /* ---------- Kopf: weisser Hintergrund beim Scrollen ---------- */
   var kopf = document.getElementById('kopf');
-  var aktion = document.getElementById('aktion');
-  var heroCta = document.getElementById('hero-cta');
+  var menueKnopf = kopf ? kopf.querySelector('.menue-knopf') : null;
+
+  /* Kopfzeile: beim Scrollen weiss mit Schatten.
+     Aktionsleiste mobil: erscheint, sobald die Kontakt-Knöpfe im Hero weggescrollt sind
+     (per Scroll-Abfrage, damit es auch nach Sprüngen über Anker stimmt). */
+  var leiste = document.querySelector('.aktion');
+  var heroKnoepfe = document.querySelector('.hero .knoepfe');
+  if (leiste && heroKnoepfe) root.classList.add('aktion-wartet');
   var tick = false;
-  function kopfUpdate() {
+  function kopfZustand() {
     tick = false;
-    kopf.classList.toggle('gescrollt', window.scrollY > 8);
-    /* Aktionsleiste mobil: nach dem ersten Scrollen da, ausser die Hero-Knöpfe sind gerade selbst im Bild */
-    if (aktion && heroCta) {
-      var r = heroCta.getBoundingClientRect();
-      var ctaImBild = r.bottom > 0 && r.top < window.innerHeight - 40;
-      aktion.classList.toggle('zeigen', window.scrollY > 240 && !ctaImBild);
-    }
+    if (kopf) kopf.classList.toggle('ist-gescrollt', window.scrollY > 12);
+    if (leiste && heroKnoepfe) leiste.classList.toggle('ist-da', heroKnoepfe.getBoundingClientRect().bottom < 0);
   }
   window.addEventListener('scroll', function () {
-    if (!tick) { tick = true; window.requestAnimationFrame(kopfUpdate); }
+    if (!tick) { tick = true; window.requestAnimationFrame(kopfZustand); }
   }, { passive: true });
-  kopfUpdate();
+  window.addEventListener('resize', kopfZustand);
+  kopfZustand();
 
-  /* ---------- Hero: nach dem Auftritt die Animationen entfernen (Endzustand = Grundstil) ---------- */
-  var heroBild = document.querySelector('.hero-bild');
-  if (fx && heroBild) {
-    var heroFertig = function () { heroBild.classList.add('fertig'); };
-    heroBild.addEventListener('animationend', function (e) {
-      if (e.target.classList.contains('plakette')) heroFertig();
+  /* Menü auf schmalen Bildschirmen */
+  function menue(auf) {
+    if (!kopf || !menueKnopf) return;
+    kopf.classList.toggle('ist-offen', auf);
+    menueKnopf.setAttribute('aria-expanded', auf ? 'true' : 'false');
+    menueKnopf.setAttribute('aria-label', auf ? 'Menü schliessen' : 'Menü öffnen');
+  }
+  if (menueKnopf) {
+    menueKnopf.addEventListener('click', function () { menue(!kopf.classList.contains('ist-offen')); });
+    kopf.querySelectorAll('.kopf-nav a').forEach(function (a) {
+      a.addEventListener('click', function () { menue(false); });
     });
-    setTimeout(heroFertig, 2600);
-  }
-
-  /* ---------- Menü mobil ---------- */
-  var knopf = kopf.querySelector('.menu-knopf');
-  var menu = document.getElementById('menu');
-  function menuSetzen(auf) {
-    kopf.classList.toggle('offen', auf);
-    knopf.setAttribute('aria-expanded', auf ? 'true' : 'false');
-    knopf.setAttribute('aria-label', auf ? 'Menü schliessen' : 'Menü öffnen');
-  }
-  if (knopf && menu) {
-    knopf.addEventListener('click', function () { menuSetzen(!kopf.classList.contains('offen')); });
-    menu.addEventListener('click', function (e) { if (e.target.closest('a')) menuSetzen(false); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && kopf.classList.contains('offen')) { menuSetzen(false); knopf.focus(); }
+      if (e.key === 'Escape' && kopf.classList.contains('ist-offen')) { menue(false); menueKnopf.focus(); }
     });
-    document.addEventListener('click', function (e) {
-      if (kopf.classList.contains('offen') && !kopf.contains(e.target)) menuSetzen(false);
-    });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 1180) menue(false); });
   }
 
-  /* ---------- Anker-Links: sanft scrollen ---------- */
+  /* Sanftes Scrollen nur bei Klicks auf Anker (nicht per CSS, damit Skripte sofort springen) */
+  var ruhig = false;
+  try { ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');
-    if (!a || a.hasAttribute('data-soon')) return;
-    var id = a.getAttribute('href').slice(1);
-    var ziel = id && document.getElementById(id);
+    if (!a || a.hasAttribute('data-soon') || a.classList.contains('skip')) return;
+    var id = a.getAttribute('href');
+    if (id.length < 2) return;
+    var ziel = document.getElementById(id.slice(1));
     if (!ziel) return;
     e.preventDefault();
-    ziel.scrollIntoView({ behavior: fx ? 'smooth' : 'auto', block: 'start' });
-    if (history.replaceState) history.replaceState(null, '', '#' + id);
+    ziel.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
+    if (history.pushState) history.pushState(null, '', id);
   });
 
-  /* ---------- Einblenden beim Scrollen (inkl. Anzeigetafel und Jubiläumszahl) ---------- */
-  var rvs = document.querySelectorAll('.rv, .jubi-preis');
-  if (fx && hasIO) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('ist-da'); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-    rvs.forEach(function (el) { io.observe(el); });
-  } else {
-    rvs.forEach(function (el) { el.classList.add('ist-da'); });
-  }
-
-  /* ---------- Aktiver Menüpunkt im Kopf ---------- */
-  var navLinks = document.querySelectorAll('.kopf-nav a[href^="#"]');
-  if (hasIO && navLinks.length) {
-    var ziele = [];
-    navLinks.forEach(function (a) {
-      var el = document.getElementById(a.getAttribute('href').slice(1));
-      if (el) ziele.push({ a: a, el: el });
+  /* Hero-Auftritt: erst wenn das Foto bereit ist (höchstens 700 ms warten) */
+  var gestartet = false;
+  function start() {
+    if (gestartet) return;
+    gestartet = true;
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () { root.classList.add('ist-bereit'); });
     });
-    var navIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        ziele.forEach(function (z) {
-          if (z.el === e.target) z.a.classList.toggle('aktiv', e.isIntersecting);
-        });
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
-    ziele.forEach(function (z) { navIO.observe(z.el); });
   }
+  var foto = document.querySelector('.hero-foto img');
+  if (foto && foto.decode && !foto.complete) {
+    foto.decode().then(start, start);
+  } else {
+    start();
+  }
+  setTimeout(start, 700);
 
+  /* Einblendungen beim Scrollen */
+  var ziele = document.querySelectorAll('.zeigen, .tafel, .jubi-preis, .jubilaeum, .haelfte, .chips');
+
+  /* Versatz innerhalb einer Gruppe: Geschwister mit .zeigen nacheinander */
+  document.querySelectorAll('.zeigen').forEach(function (el) {
+    var i = 0, s = el.previousElementSibling;
+    while (s) { if (s.classList.contains('zeigen')) i++; s = s.previousElementSibling; }
+    if (i) el.style.setProperty('--i', Math.min(i, 6));
+  });
+
+  if (!root.classList.contains('fx') || !('IntersectionObserver' in window)) {
+    ziele.forEach(function (el) { el.classList.add('ist-sichtbar'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (eintraege) {
+    eintraege.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('ist-sichtbar');
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  ziele.forEach(function (el) { io.observe(el); });
 })();

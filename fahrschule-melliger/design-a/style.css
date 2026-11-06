@@ -103,7 +103,8 @@ h2 {
   letter-spacing: -.005em;
   color: var(--tinte);
 }
-.sek-kopf { max-width: 780px; margin-bottom: clamp(32px, 5vw, 56px); }
+.sek-kopf { max-width: 800px; margin-bottom: clamp(32px, 5vw, 56px); }
+.sek-kopf-breit { max-width: 1000px; }
 .sek-text { margin-top: 16px; color: var(--muted); font-size: 18px; max-width: 36em; }
 @media (min-width: 900px) {
   .sek-kopf-zeile { max-width: none; display: flex; align-items: flex-end; justify-content: space-between; gap: 48px; }
@@ -142,8 +143,9 @@ h2 {
 .link-pfeil:hover .i { transform: translateX(4px); }
 
 /* SMS nur am Handy, E-Mail am Computer */
-@media (hover: hover) and (pointer: fine) { .nur-touch { display: none !important; } }
+@media (hover: hover) and (pointer: fine) { html:not(.ist-touch) .nur-touch { display: none !important; } }
 @media (hover: none), (pointer: coarse) { .nur-maus { display: none !important; } }
+.ist-touch .nur-maus { display: none !important; }
 
 /* ---------- Kopf ---------- */
 .kopf {
@@ -223,7 +225,7 @@ h2 {
     radial-gradient(900px 520px at 12% 8%, rgb(255 255 255 / 85%), transparent 65%),
     var(--creme);
 }
-.hero-raster { display: grid; gap: 44px; align-items: center; }
+.hero-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; align-items: center; }
 .hero-bild { position: relative; width: 100%; max-width: 560px; margin-inline: auto; }
 .hero-rahmen {
   position: absolute; inset: -12px 12px 12px -12px;
@@ -274,6 +276,25 @@ h2 {
 @media (max-width: 899px) {
   .hero-cta .btn { flex: 1 1 220px; }
 }
+@media (max-width: 639px) {
+  /* Handy: Foto flacher, damit Titel und Name im ersten Bild über der Aktionsleiste stehen */
+  .hero { padding-top: 14px; }
+  .hero-raster { gap: 34px; }
+  .hero-foto { aspect-ratio: 16 / 10; }
+  .hero-foto img { object-position: 47% 36%; }
+  .hero-rahmen { inset: -8px 8px 8px -8px; border-radius: 26px; }
+  .siegel { width: 92px; right: 10px; bottom: -30px; }
+  .hero-text { padding-top: 0; }
+  .hero-text .kicker { font-size: 11.5px; letter-spacing: .12em; }
+  .hero h1 { margin-top: 14px; }
+}
+@media (max-width: 639px) and (max-height: 620px) {
+  /* Kleine Handys (z. B. iPhone SE) */
+  .hero-foto { aspect-ratio: 2 / 1; }
+  .siegel { width: 80px; bottom: -24px; }
+  .hero-raster { gap: 28px; }
+  .hero h1 { font-size: 38px; }
+}
 @media (max-width: 420px) {
   .hero h1 { font-size: 42px; }
   .lead { font-size: 17.5px; }
@@ -318,7 +339,7 @@ h2 {
 /* ---------- Jubiläum ---------- */
 .jubi { background: #fff; padding: calc(56px + clamp(56px, 8vw, 112px)) 0 clamp(72px, 9vw, 128px); }
 @media (min-width: 900px) { .jubi { padding-top: calc(64px + clamp(72px, 8vw, 120px)); } }
-.jubi-raster { display: grid; gap: 44px; align-items: center; }
+.jubi-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; align-items: center; }
 @media (min-width: 900px) { .jubi-raster { grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: clamp(48px, 6vw, 96px); } }
 
 .vierzig {
@@ -334,9 +355,11 @@ h2 {
   border: 1px solid rgb(176 141 87 / 40%); pointer-events: none;
 }
 .vierzig-svg { width: 100%; height: auto; }
-.v-band { fill: none; stroke: var(--blau); stroke-width: 58; }
-.v-mitte { fill: none; stroke: #fff; stroke-width: 5; stroke-dasharray: 28 22; }
-.v-maske-pfad { fill: none; stroke: #fff; stroke-width: 80; }
+.v-band { fill: none; stroke: var(--blau); stroke-width: 64; }
+.v-rand { fill: none; stroke: #F6F1E7; stroke-width: 55; }
+.v-belag { fill: none; stroke: var(--blau); stroke-width: 49; }
+.v-mitte { fill: none; stroke: #fff; stroke-width: 4.5; stroke-dasharray: 26 20; }
+.v-maske-pfad { fill: none; stroke: #fff; stroke-width: 96; }
 .v-fuellung { fill: #fff; }
 .v-kontur { fill: none; stroke: var(--messing); stroke-width: 3.2; stroke-linejoin: round; }
 .vierzig-text {
@@ -351,6 +374,7 @@ h2 {
   margin: 28px 0 24px; padding: 22px 0; border-top: 1px solid var(--linie); border-bottom: 1px solid var(--linie);
 }
 .preis-betrag { font: 400 clamp(68px, 8.4vw, 112px)/.9 var(--serif); color: var(--rot); letter-spacing: -.01em; white-space: nowrap; }
+.preis-betrag .strich { margin-left: -.06em; }
 .preis-zusatz { font: 600 18px/1.35 var(--sans); color: var(--tinte); }
 .jubi-text .klein { margin-top: 14px; font-size: 15px; }
 .jubi-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 30px; }
@@ -396,7 +420,7 @@ h2 {
 .l-ok { background: var(--blau); }
 .l-neg { border: 1.5px solid #8F99A6; background: #fff; }
 
-.bilanz-unten { display: grid; gap: 36px; margin-top: clamp(40px, 6vw, 64px); align-items: center; }
+.bilanz-unten { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; margin-top: clamp(40px, 6vw, 64px); align-items: center; }
 @media (min-width: 900px) { .bilanz-unten { grid-template-columns: 1fr 1fr; gap: 72px; } }
 .erfolg { display: flex; align-items: center; gap: 22px; }
 .erfolg-zahl { font: 400 clamp(64px, 8vw, 104px)/.9 var(--serif); color: var(--blau); white-space: nowrap; }
@@ -409,7 +433,7 @@ h2 {
 
 /* ---------- Auto und Motorrad ---------- */
 .angebot { background: #fff; padding: clamp(72px, 10vw, 136px) 0; }
-.karten { display: grid; gap: 22px; }
+.karten { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
 @media (min-width: 900px) { .karten { grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; } }
 .karte {
   display: flex; flex-direction: column;
@@ -447,7 +471,7 @@ h2 {
 
 /* ---------- Alles inbegriffen ---------- */
 .inbegriffen { background: var(--creme); padding: clamp(72px, 10vw, 136px) 0; }
-.inb-raster { display: grid; gap: 36px; }
+.inb-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }
 @media (min-width: 900px) { .inb-raster { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 72px; align-items: start; } }
 .inb-kopf > p:not(.kicker) { margin-top: 18px; color: var(--muted); max-width: 30em; }
 .inb-liste {
@@ -471,10 +495,11 @@ h2 {
 }
 .plaketten li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--rot); }
 .plaketten p { margin-top: 14px; font-size: 15px; color: var(--muted); }
+@media (max-width: 520px) { .plaketten li { font-size: 16.5px; padding: 9px 15px; } }
 
 /* ---------- Über mich ---------- */
 .ueber { background: #fff; padding: clamp(72px, 10vw, 136px) 0; }
-.ueber-raster { display: grid; gap: 48px; }
+.ueber-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; }
 @media (min-width: 900px) { .ueber-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(56px, 7vw, 112px); } }
 .zitat { margin-top: 20px; }
 .zitat p { font: 400 clamp(32px, 3.7vw, 48px)/1.1 var(--serif); color: var(--tinte); text-wrap: balance; }
@@ -492,11 +517,12 @@ h2 {
   content: ""; position: absolute; left: 2px; top: 7px; width: 12px; height: 7px;
   border-left: 2px solid var(--blau); border-bottom: 2px solid var(--blau); transform: rotate(-45deg);
 }
-.zahlen { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 30px; border-top: 1px solid var(--linie); }
+.zahlen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 30px; border-top: 1px solid var(--linie); }
 .zahlen > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 4px; padding: 18px 12px 0 0; }
 .zahlen > div + div { padding-left: 18px; border-left: 1px solid var(--linie); }
 .zahlen dd { font: 400 clamp(44px, 5vw, 58px)/1 var(--serif); color: var(--blau); font-variant-numeric: tabular-nums; }
 .zahlen dt { font-size: 13.5px; line-height: 1.35; color: var(--muted); }
+.zahlen dt span { display: block; }
 .werdegang + .werdegang { margin-top: 34px; }
 .werdegang h3 { font: 400 26px/1.15 var(--serif); }
 .werdegang ul { margin-top: 12px; border-top: 1px solid var(--linie); }
@@ -508,7 +534,7 @@ h2 {
 
 /* ---------- Neuigkeiten ---------- */
 .news { background: var(--creme); padding: clamp(72px, 10vw, 136px) 0; }
-.news-raster { display: grid; gap: 18px; }
+.news-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
 @media (min-width: 900px) { .news-raster { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
 .news-karte {
   position: relative; padding: 30px 28px 28px; border-radius: 22px;
@@ -535,7 +561,7 @@ h2 {
 .kontakt h2 { color: #fff; }
 .kontakt-kopf { max-width: 720px; }
 .kontakt-kopf > p:not(.kicker) { margin-top: 18px; color: rgb(255 255 255 / 86%); font-size: 18px; }
-.kanaele { display: grid; gap: 14px; margin-top: clamp(32px, 5vw, 48px); }
+.kanaele { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: clamp(32px, 5vw, 48px); }
 @media (min-width: 900px) { .kanaele { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
 .kanal {
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto;
@@ -569,7 +595,7 @@ h2 {
 
 /* ---------- Fusszeile ---------- */
 .fuss { background: var(--nacht); color: rgb(255 255 255 / 78%); padding: 64px 0 32px; font-size: 15.5px; }
-.fuss-raster { display: grid; gap: 36px; }
+.fuss-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }
 @media (min-width: 760px) { .fuss-raster { grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; } }
 .fuss .marke-name { display: block; color: #fff; font-size: 27px; }
 .fuss .marke-zusatz { display: block; margin-top: 6px; color: var(--messing-hell); }
@@ -598,15 +624,25 @@ h2 {
     box-shadow: 0 16px 36px -14px rgb(26 36 51 / 40%);
     -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   }
-  .aktion .btn { flex: 1 1 auto; min-height: 48px; padding: 0 14px; font-size: 15.5px; gap: 8px; }
+  .aktion .btn { flex: 1 1 auto; min-width: 0; min-height: 48px; padding: 0 12px; font-size: 15.5px; gap: 7px; }
   .aktion .btn-umriss { background: #fff; }
   .aktion .aktion-icon { flex: 0 0 48px; width: 48px; padding: 0; }
   .aktion .aktion-icon .i { width: 21px; height: 21px; }
 }
+@media (max-width: 400px) {
+  .aktion { gap: 6px; padding: 6px; left: 10px; right: 10px; }
+  .aktion .aktion-icon { flex-basis: 46px; width: 46px; min-height: 46px; }
+  .aktion .btn { min-height: 46px; }
+}
+@media (max-width: 369px) {
+  /* Sehr schmale Handys: SMS nur als Symbol */
+  .aktion .aktion-sms { flex: 0 0 46px; width: 46px; padding: 0; }
+  .aktion .aktion-sms span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
 @media (max-width: 640px) { .aktion { bottom: calc(76px + env(safe-area-inset-bottom)); } }
 @media (hover: hover) and (pointer: fine) and (max-width: 899px) {
-  /* Schmales Fenster am Computer: SMS-Knopf der Leiste durch E-Mail ersetzt */
-  .aktion [data-sms] { display: none; }
+  /* Schmales Fenster am Computer: kein SMS-Knopf in der Leiste */
+  html:not(.ist-touch) .aktion [data-sms] { display: none; }
 }
 
 /* ---------- Animationen (nur mit JavaScript und ohne reduzierte Bewegung) ---------- */
@@ -635,12 +671,11 @@ html.fx .rv.ist-da {
 /* Die 40: Kontur zeichnet sich, Fläche füllt sich, dann läuft die Strasse hindurch */
 html.fx .v-kontur { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
 html.fx .v-fuellung { opacity: 0; }
-html.fx .v-band, html.fx .v-maske-pfad { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+html.fx .v-maske-pfad { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
 html.fx .vierzig-text { opacity: 0; transform: translateY(10px); }
 html.fx .vierzig.ist-da .v-kontur { stroke-dashoffset: 0; transition: stroke-dashoffset 1.7s cubic-bezier(.55, 0, .3, 1) .15s; }
 html.fx .vierzig.ist-da .v-fuellung { opacity: 1; transition: opacity .9s ease 1.25s; }
-html.fx .vierzig.ist-da .v-band { stroke-dashoffset: 0; transition: stroke-dashoffset 1.25s cubic-bezier(.55, 0, .25, 1) 1.65s; }
-html.fx .vierzig.ist-da .v-maske-pfad { stroke-dashoffset: 0; transition: stroke-dashoffset 1.25s cubic-bezier(.55, 0, .25, 1) 1.8s; }
+html.fx .vierzig.ist-da .v-maske-pfad { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s cubic-bezier(.55, 0, .25, 1) 1.6s; }
 html.fx .vierzig.ist-da .vierzig-text { opacity: 1; transform: none; transition: opacity .7s ease 2.4s, transform .8s var(--ease) 2.4s; }
 
 /* Bilanz: Linie zeichnet sich, Kreise erscheinen von links nach rechts, Haken zeichnen sich */
