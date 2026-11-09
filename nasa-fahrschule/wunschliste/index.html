@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wunschliste | Neue Website NASA Fahrschule</title>
+  <meta name="description" content="Wählen Sie Design, Seiten und Funktionen für die neue Website der NASA Fahrschule.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2e3192">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/shared/basis.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"/><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"/><path d="M7 15a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2l0 -4"/></symbol>
+    <symbol id="i-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14l0 7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11"/><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="../" aria-label="NASA Fahrschule, Übersicht der Designvorschläge">
+        <span class="wordmark" aria-hidden="true"><svg class="wm-wheel"><use href="#i-wheel"/></svg><span class="wm-nasa">NASA</span><span class="wm-fs">Fahrschule</span></span>
+        <span class="top-tag">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="../">Übersicht</a>
+        <a href="../design-a/" target="_blank" rel="noopener">Design A</a>
+        <a href="../design-b/" target="_blank" rel="noopener">Design B</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <p class="kicker">Wunschliste</p>
+      <h1>Ihre Wunschliste für die neue Website</h1>
+      <p>Wählen Sie Ihr Lieblingsdesign und die Seiten und Funktionen, die Sie sich für die NASA Fahrschule wünschen. Der Preis rechnet automatisch mit und gilt für die ganze neue Website mit allen gewählten Seiten, nicht nur für die Startseite. Am Schluss senden Sie mir Ihre Auswahl mit einem Klick.</p>
+    </div>
+
+    <div class="layout">
+      <form class="wish" id="wish" novalidate>
+
+        <!-- 1 Design -->
+        <section class="block" aria-labelledby="h-design">
+          <div class="block-head">
+            <span class="block-no">1</span>
+            <div>
+              <h2 id="h-design">Welches Design gefällt Ihnen?</h2>
+              <p>Mit «Ansehen» öffnet sich das Design in einem neuen Fenster.</p>
+            </div>
+          </div>
+          <div class="designs" id="designs">
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design A: Klare Preise, zwei Lokale">
+                <img src="../assets/img/vorschau-a.webp" width="960" height="600" alt="Vorschau Design A">
+                <span class="design-text"><strong>Design A</strong><span>Klare Preise, zwei Lokale</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-a/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design B: Showroom">
+                <img src="../assets/img/vorschau-b.webp" width="960" height="600" alt="Vorschau Design B">
+                <span class="design-text"><strong>Design B</strong><span>Showroom</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-b/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+          </div>
+          <label class="opt opt-mix">
+            <input type="radio" name="design" value="Mischung aus beiden, gerne besprechen">
+            <span class="opt-box opt-box-round" aria-hidden="true"></span>
+            <span class="opt-text"><strong>Eine Mischung aus beiden</strong><small>Zum Beispiel der Abo-Rechner von A im dunklen Showroom von B. Das besprechen wir dann gemeinsam.</small></span>
+          </label>
+          <p class="error" id="design-error" hidden>Bitte wählen Sie ein Design aus.</p>
+        </section>
+
+        <!-- 2 Grundpaket -->
+        <section class="block" aria-labelledby="h-base">
+          <div class="block-head">
+            <span class="block-no">2</span>
+            <div>
+              <h2 id="h-base">Grundpaket</h2>
+              <p>Ist immer dabei, damit die Website sauber funktioniert.</p>
+            </div>
+          </div>
+          <ul class="base" id="base">
+            <li data-hours="6"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Konzept und zwei Designentwürfe</span><span class="cost">CHF 270.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ausarbeitung des gewählten Designs</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Startseite</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Texte und Bilder übernehmen und aufbereiten</span><span class="cost">CHF 225.00</span></li>
+            <li data-hours="1.5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Datenschutz und Impressum</span><span class="cost">CHF 67.50</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Optimiert für Smartphone, Tablet und Computer</span><span class="cost">CHF 135.00</span></li>
+            <li data-hours="2"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Aufschalten, Domain und Hosting einrichten</span><span class="cost">CHF 90.00</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Einführung und eine Korrekturrunde</span><span class="cost">CHF 135.00</span></li>
+          </ul>
+        </section>
+
+        <!-- 3 Seiten -->
+        <section class="block" aria-labelledby="h-pages">
+          <div class="block-head">
+            <span class="block-no">3</span>
+            <div>
+              <h2 id="h-pages">Welche Seiten wünschen Sie?</h2>
+              <p>Vorausgewählt sind die Seiten, die Ihre bisherige Website schon hat. Jede Seite entsteht im gewählten Design.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Seiten">
+            <label class="opt"><input type="checkbox" name="seite" value="Autofahrlektionen und Anhänger" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Autofahrlektionen und Anhänger</strong><small>Kat. B und BE, Abo-Preise, Ausbildungskarte und Prüfungs-Check</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Motorrad" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Motorrad</strong><small>Motorradgrundkurs und Motorradfahrlektionen mit Abos</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Motorbootfahrschule" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Motorbootfahrschule</strong><small>Schulschiffe, Basis Oberrieden, Abholung am Zürichsee</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="BPT und Taxiausbildung" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>BPT und Taxiausbildung</strong><small>Code 121, ARV-2-Theorie, Stadtkundeprüfung Zürich</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kurse" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Nothelferkurs, VKU und Theorie</strong><small>Kursinhalte, Ablauf und Theorielokal mit Voranmeldung</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kontrollfahrt und Fahrberatung" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kontrollfahrt und Fahrberatung</strong><small>Ausländischer Führerausweis, Wiedereinstieg und Senioren</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Preise" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Preise</strong><small>Alle Preise in einer Übersicht, passend zu den Angebotsseiten</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Team" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Team</strong><small>Vorstellung von Reza und Sanela Shirazi, sechs Sprachen</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kontakt und Standorte" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kontakt und Standorte</strong><small>Theorielokale Oerlikon und Rapperswil-Jona mit Routenlinks</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Der Weg zum Führerausweis" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Der Weg zum Führerausweis</strong><small>Der neue Ablauf ab 2027, Schritt für Schritt erklärt</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Häufige Fragen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Häufige Fragen</strong><small>Antworten auf die Fragen, die Fahrschüler am meisten stellen</small></span><span class="cost">CHF 90.00</span></label>
+          </div>
+        </section>
+
+        <!-- 4 Funktionen -->
+        <section class="block" aria-labelledby="h-features">
+          <div class="block-head">
+            <span class="block-no">4</span>
+            <div>
+              <h2 id="h-features">Welche Funktionen wünschen Sie?</h2>
+              <p>Extras, die Ihren Fahrschülerinnen und Fahrschülern das Leben leichter machen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Funktionen">
+            <label class="opt"><input type="checkbox" name="funktion" value="Online-Anmeldung" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Online-Anmeldung</strong><small>Ersetzt die bisherige Anmeldeseite, Anfragen kommen per E-Mail</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Optimierung" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Optimierung</strong><small>Damit man Sie bei «Fahrschule Oerlikon» und «Fahrschule Rapperswil-Jona» gut findet</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Abo-Rechner" data-hours="3"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Abo-Rechner</strong><small>Zeigt, was 5, 10 oder 30 Fahrlektionen kosten und wie viel man spart</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Probelektion anfragen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Gratis-Probelektion anfragen</strong><small>Kurzes Formular für die Probelektion, direkt von der Startseite</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Kursdaten und Online-Buchung" data-hours="5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kursdaten und Online-Buchung</strong><small>Nothelferkurs und VKU mit Daten anzeigen und direkt buchen</small></span><span class="cost">CHF 225.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Karte mit beiden Standorten" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Karte mit beiden Standorten</strong><small>Oerlikon, Rapperswil-Jona und die Motorboot-Basis auf einer Karte</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Kundenstimmen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kundenstimmen</strong><small>Echte Bewertungen Ihrer Fahrschüler, zum Beispiel von Google</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="WhatsApp-Button" data-hours="1"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>WhatsApp-Button</strong><small>Fahrschüler schreiben Ihnen mit einem Tipp auf WhatsApp</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Englische Version" data-hours="6"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Englische Version</strong><small>Die wichtigsten Seiten zusätzlich auf Englisch</small></span><span class="cost">CHF 270.00</span></label>
+          </div>
+        </section>
+
+        <!-- 5 Weitere Angaben -->
+        <section class="block" aria-labelledby="h-more">
+          <div class="block-head">
+            <span class="block-no">5</span>
+            <div>
+              <h2 id="h-more">Noch ein paar Fragen</h2>
+              <p>Damit ich gut planen kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-when">Wann soll die neue Website online sein?</label>
+              <select id="f-when" name="termin">
+                <option>So bald wie möglich</option>
+                <option>Bis Ende 2026</option>
+                <option>Bis Frühling 2027, vor der Motorrad- und Bootsaison</option>
+                <option>Kein fester Termin</option>
+              </select>
+            </div>
+            <fieldset class="field">
+              <legend>Fotos</legend>
+              <label class="mini"><input type="radio" name="fotos" value="Vorhandene Fotos verwenden" checked> Vorhandene Fotos verwenden</label>
+              <label class="mini"><input type="radio" name="fotos" value="Ich liefere neue Fotos"> Ich liefere neue Fotos</label>
+              <label class="mini"><input type="radio" name="fotos" value="Neue Fotos wären schön, bitte beraten"> Neue Fotos wären schön, bitte beraten</label>
+            </fieldset>
+            <div class="field field-full">
+              <label for="f-notes">Weitere Wünsche oder Bemerkungen</label>
+              <textarea id="f-notes" name="bemerkungen" rows="4" placeholder="Was ist Ihnen sonst noch wichtig?"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 Kontakt -->
+        <section class="block" aria-labelledby="h-contact">
+          <div class="block-head">
+            <span class="block-no">6</span>
+            <div>
+              <h2 id="h-contact">Ihre Kontaktangaben</h2>
+              <p>Damit ich mich bei Ihnen melden kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telefon</label>
+              <input id="f-phone" name="telefon" type="tel" autocomplete="tel">
+            </div>
+            <div class="field field-full">
+              <label for="f-mail">E-Mail</label>
+              <input id="f-mail" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <aside class="summary" id="summary" aria-labelledby="h-summary">
+        <h2 id="h-summary">Ihre Auswahl</h2>
+        <dl class="sum-lines">
+          <div><dt>Design</dt><dd id="s-design" class="sum-design">noch nicht gewählt</dd></div>
+          <div><dt>Grundpaket</dt><dd id="s-base">CHF 1’282.50</dd></div>
+          <div><dt>Seiten <span id="s-pages-n">(9)</span></dt><dd id="s-pages">CHF 990.00</dd></div>
+          <div><dt>Funktionen <span id="s-feat-n">(2)</span></dt><dd id="s-feat">CHF 270.00</dd></div>
+        </dl>
+        <div class="sum-total">
+          <span>Total</span>
+          <strong id="s-total">CHF 2’542.50</strong>
+        </div>
+        <p class="sum-hours"><span id="s-hours">56.5</span> Stunden à CHF 45</p>
+        <div class="sum-actions no-print">
+          <button class="btn btn-red btn-block" type="submit" form="wish">Auswahl senden <svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+          <button class="btn btn-line btn-block" type="button" id="print"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg> Drucken oder als PDF</button>
+        </div>
+        <div class="status" id="status" role="status" aria-live="polite" hidden></div>
+        <p class="sum-note">Alle Preise sind unverbindliche Richtpreise. Zusätzliche Wünsche berechne ich mit CHF 45 pro Stunde.</p>
+        <p class="sum-note">Beim Senden werden Ihre Angaben über den Dienst Web3Forms per E-Mail an mich übermittelt und nur für dieses Projekt verwendet.</p>
+      </aside>
+    </div>
+  </main>
+
+  <div class="mbar no-print">
+    <span>Total <strong id="m-total">CHF 2’542.50</strong></span>
+    <a class="btn btn-red" href="#summary">Zur Auswahl</a>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026 · <a data-mail href="#">E-Mail an Jonas Grüter</a></span>
+    </div>
+  </footer>
+</body>
+</html>

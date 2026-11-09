@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NASA Fahrschule | Zürich-Oerlikon und Rapperswil-Jona</title>
+  <meta name="description" content="Die NASA Fahrschule bildet in Zürich-Oerlikon und Rapperswil-Jona aus: Auto, Anhänger, Motorrad, Taxi und Motorboot, mit klaren Preisen und einer Gratis-Probe-Fahrlektion.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2E3192">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/a-readexpro-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/img/a-flotte.webp" as="image" type="image/webp">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/shared/vorschau.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
+  <script src="../assets/shared/vorschau.js" defer></script>
+</head>
+<body data-vorschau="a">
+  <!-- Icons: grösstenteils Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-wheel" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 14l0 7"/><path d="M10 12l-6.75 -2"/><path d="M14 12l6.75 -2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><path d="M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/><path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></symbol>
+    <symbol id="i-trailer" viewBox="0 0 24 24"><path d="M3 5h13a1 1 0 0 1 1 1v9h-14a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1z"/><path d="M17 13h5"/><path d="M6 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M8 9h5"/></symbol>
+    <symbol id="i-moto" viewBox="0 0 24 24"><path d="M2 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M16 16a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4"/><path d="M13 6h2l1.5 3l2 4"/></symbol>
+    <symbol id="i-cone" viewBox="0 0 24 24"><path d="M4 21h16"/><path d="M9.5 6h5"/><path d="M8 11h8"/><path d="M6 16h12"/><path d="M11 3h2l5 18h-12z"/></symbol>
+    <symbol id="i-taxi" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h14l2 5v6h-2m-4 0h-6"/><path d="M3 11h18"/><path d="M10 6v-3h4v3"/></symbol>
+    <symbol id="i-board" viewBox="0 0 24 24"><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1"/><path d="M12 14a2 2 0 1 0 4.001 -.001a2 2 0 0 0 -4.001 .001"/><path d="M17 19a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6l0 13"/><path d="M12 6l0 13"/><path d="M21 6l0 13"/></symbol>
+    <symbol id="i-world" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M19.5 13.572l-7.5 7.428l-2.896 -2.868m-6.117 -8.104a5 5 0 0 1 9.013 -3.022a5 5 0 1 1 7.5 6.572"/><path d="M3 13h2l2 3l2 -6l1 3h3"/></symbol>
+    <symbol id="i-ship" viewBox="0 0 24 24"><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1"/><path d="M4 18l-1 -5h18l-2 4"/><path d="M5 13v-6h8l4 6"/><path d="M7 7v-4h-1"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/></symbol>
+    <symbol id="i-passport" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 8l2 0"/><path d="M15 12l2 0"/><path d="M7 16l10 0"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 7l6 -3l6 3l6 -3v13l-6 3l-6 -3l-6 3v-13"/><path d="M9 4v13"/><path d="M15 7v13"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"/><path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/><path d="M9 14l2 2l4 -4"/></symbol>
+    <symbol id="i-gears" viewBox="0 0 24 24"><path d="M3 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M10 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M3 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M10 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 8l0 8"/><path d="M12 8l0 8"/><path d="M19 8v2a2 2 0 0 1 -2 2h-12"/></symbol>
+    <symbol id="i-progress" viewBox="0 0 24 24"><path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969"/><path d="M14 3.223a9.003 9.003 0 0 1 0 17.554"/><path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592"/><path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305"/><path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356"/><path d="M9 12l2 2l4 -4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9z"/><path d="M5 21v-7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z"/><path d="M12 8l0 13"/><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5"/></symbol>
+  </svg>
+
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+  <div class="topbar">
+    <div class="wrap topbar-in">
+      <span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg> Montag bis Samstag 06:00 bis 22:00 Uhr</span>
+      <span class="topbar-sep" aria-hidden="true"></span>
+      <span>Theorielokal nur mit Voranmeldung</span>
+      <a class="topbar-mail" href="mailto:info@nasafahrschule.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> info@nasafahrschule.ch</a>
+    </div>
+  </div>
+
+  <header class="head" id="kopf">
+    <div class="wrap head-in">
+      <a class="brand" href="#top" aria-label="NASA Fahrschule, zum Seitenanfang">
+        <svg class="brand-wheel" aria-hidden="true"><use href="#i-wheel"/></svg>
+        <span class="brand-nasa">NASA</span><span class="brand-fs">Fahrschule</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#angebot">Angebot</a></li>
+          <li><a href="#preise">Preise</a></li>
+          <li><a href="#ablauf">Ablauf</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#standorte">Standorte</a></li>
+        </ul>
+        <a class="btn btn-indigo nav-call" href="tel:+41791504444"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 150 44 44</a>
+      </nav>
+      <a class="head-call" href="tel:+41791504444" aria-label="Anrufen: 079 150 44 44"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </header>
+
+  <main id="inhalt">
+    <!-- 1 Hero -->
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-media">
+          <figure class="hm hm-flotte">
+            <img src="../assets/img/a-flotte.webp" width="1600" height="888" alt="Porsche Macan, weitere Fahrschulautos, Motorrad und Anhänger der NASA Fahrschule vor dem Theorielokal an der Oberwiesenstrasse in Oerlikon" fetchpriority="high">
+            <figcaption>Unsere Flotte vor dem Theorielokal Oerlikon</figcaption>
+          </figure>
+          <figure class="hm hm-lokal">
+            <img src="../assets/img/a-lokal-3.webp" width="900" height="605" alt="Helles Theorielokal mit Tischen, Beamer und Verkehrstafeln">
+            <figcaption>Theorielokal</figcaption>
+          </figure>
+          <div class="hm hm-fleet" aria-label="Was Du bei uns lernen kannst">
+            <p class="hm-fleet-t">Fast alles aus einer Hand</p>
+            <ul>
+              <li><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Auto</li>
+              <li><svg class="i" aria-hidden="true"><use href="#i-trailer"/></svg>Anhänger</li>
+              <li><svg class="i" aria-hidden="true"><use href="#i-moto"/></svg>Motorrad</li>
+              <li><svg class="i" aria-hidden="true"><use href="#i-taxi"/></svg>Taxi</li>
+              <li><svg class="i" aria-hidden="true"><use href="#i-ship"/></svg>Motorboot</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hero-text">
+          <p class="kicker hx">Fahrschule in <span class="nw">Zürich-Oerlikon</span> und <span class="nw">Rapperswil-Jona</span></p>
+          <h1 class="hx">Lerne Autofahren in top modernen Premium&shy;fahrzeugen.</h1>
+          <p class="lead hx">Erfahrene FahrlehrerInnen, zwei Theorielokale und Unterricht in sechs Sprachen. Von Zürich bis und mit Zürichsee-Umgebung.</p>
+          <div class="hero-cta hx">
+            <a class="btn btn-indigo btn-lg" href="tel:+41791504444"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Gratis-Probelektion anfragen</a>
+            <a class="btn btn-line btn-lg" href="#preise">Preise ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+          <ul class="hero-facts hx">
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg> Automat oder Schaltung</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg> Mo bis Sa 06:00 bis 22:00 Uhr</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Probelektion-Band -->
+    <section class="probe" aria-label="Gratis-Probelektion">
+      <div class="wrap probe-in">
+        <p class="probe-t"><svg class="i" aria-hidden="true"><use href="#i-gift"/></svg> <span><strong>Gratis-Probe-Fahrlektion,</strong> ohne Verpflichtung.</span></p>
+        <a class="btn btn-white" href="tel:+41791504444"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Jetzt anrufen</a>
+      </div>
+    </section>
+
+    <!-- 2 Stärken -->
+    <section class="staerken" aria-label="Was Dich erwartet">
+      <ul class="wrap staerken-grid">
+        <li class="reveal">
+          <span class="s-ic"><svg class="i draw" aria-hidden="true"><use href="#i-map"/></svg></span>
+          <h2 class="s-t">Ausbildung im Prüfungsgebiet</h2>
+          <p>Du übst dort, wo Du später auch geprüft wirst.</p>
+        </li>
+        <li class="reveal">
+          <span class="s-ic"><svg class="i draw" aria-hidden="true"><use href="#i-clipboard"/></svg></span>
+          <h2 class="s-t">Prüfungs-Check</h2>
+          <p>Auf einer speziellen Strecke, mit dem Original-Prüfungsformular.</p>
+        </li>
+        <li class="reveal">
+          <span class="s-ic"><svg class="i draw" aria-hidden="true"><use href="#i-progress"/></svg></span>
+          <h2 class="s-t">Ausbildungskarte</h2>
+          <p>Du siehst jederzeit, wo Du stehst.</p>
+        </li>
+        <li class="reveal">
+          <span class="s-ic"><svg class="i draw" aria-hidden="true"><use href="#i-gears"/></svg></span>
+          <h2 class="s-t">Automat oder Schaltung</h2>
+          <p>Du entscheidest, womit Du lernst.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 3 Abo-Rechner -->
+    <section class="preise" id="preise" aria-labelledby="preise-t">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker">Preise Autofahrlektionen Kat. B</p>
+          <h2 id="preise-t">Je mehr Lektionen, desto günstiger.</h2>
+          <p class="sec-lead">Alle Preise gelten für Lektionen à 50 Minuten, egal ob Automat oder Schaltung. Wähle Dein Abo und sieh sofort, was es kostet.</p>
+        </div>
+
+        <div class="calc reveal" id="rechner">
+          <div class="calc-in">
+            <p class="calc-label" id="calc-label">Anzahl Fahrlektionen</p>
+            <div class="calc-range">
+              <input type="range" id="abo-range" min="0" max="5" step="1" value="2" aria-labelledby="calc-label" aria-valuetext="10 Lektionen">
+              <div class="calc-ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span><span>30</span></div>
+            </div>
+            <div class="calc-chips" role="group" aria-label="Abo wählen">
+              <button type="button" data-i="0">1</button>
+              <button type="button" data-i="1">5er</button>
+              <button type="button" data-i="2" aria-pressed="true">10er</button>
+              <button type="button" data-i="3">15er</button>
+              <button type="button" data-i="4">20er</button>
+              <button type="button" data-i="5">30er</button>
+            </div>
+            <div class="calc-bars" aria-hidden="true">
+              <p class="calc-bars-t">Preis pro Lektion</p>
+              <div class="bars"></div>
+            </div>
+          </div>
+          <div class="calc-out" aria-live="polite">
+            <p class="out-what"><span data-out="what">10 Fahrlektionen à 50 Minuten</span></p>
+            <p class="out-total"><span class="out-cur">CHF</span> <span class="roll" data-out="total">800</span></p>
+            <p class="out-per"><span class="roll" data-out="per">CHF 80</span> pro Lektion</p>
+            <p class="out-save" data-out="save">Du sparst CHF 50 gegenüber Einzellektionen.</p>
+            <p class="out-fee">Einmalige Grundpauschale CHF 100.</p>
+            <a class="btn btn-indigo out-cta" href="tel:+41791504444"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Abo bestellen</a>
+          </div>
+        </div>
+
+        <div class="preise-unten">
+        <div class="tbl-wrap reveal">
+          <table class="tbl" id="abo-table">
+            <caption>Alle Abos auf einen Blick, Autofahrlektionen à 50 Minuten</caption>
+            <thead><tr><th scope="col">Abo</th><th scope="col">Gesamtpreis</th><th scope="col">pro Lektion</th></tr></thead>
+            <tbody>
+              <tr data-n="1" data-total="85"><th scope="row">Einzellektion</th><td>CHF 85</td><td>CHF 85</td></tr>
+              <tr data-n="5" data-total="410"><th scope="row">5 Fahrbons</th><td>CHF 410</td><td>CHF 82</td></tr>
+              <tr data-n="10" data-total="800"><th scope="row">10 Fahrbons</th><td>CHF 800</td><td>CHF 80</td></tr>
+              <tr data-n="15" data-total="1170"><th scope="row">15 Fahrbons</th><td>CHF 1170</td><td>CHF 78</td></tr>
+              <tr data-n="20" data-total="1520"><th scope="row">20 Fahrbons</th><td>CHF 1520</td><td>CHF 76</td></tr>
+              <tr data-n="30" data-total="2100"><th scope="row">30 Fahrbons</th><td>CHF 2100</td><td>CHF 70</td></tr>
+            </tbody>
+          </table>
+          <p class="tbl-note">Dazu einmalig die Grundpauschale (Administrationsgebühren) von CHF 100.</p>
+        </div>
+
+        <aside class="promise reveal" aria-label="Preisversprechen">
+          <p class="promise-k">Unser Versprechen</p>
+          <p class="promise-q">«Unsere Preise sind unschlagbar, wenn nicht, dann ruf sofort an!»</p>
+          <ul class="promise-list">
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg> Lektionen à 50 Minuten, Automat oder Schaltung</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg> Grundpauschale CHF 100, einmalig</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg> Gratis-Probe-Fahrlektion ohne Verpflichtung</li>
+          </ul>
+          <a class="btn btn-indigo" href="tel:+41791504444"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> 079 150 44 44</a>
+        </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 Angebot -->
+    <section class="angebot" id="angebot" aria-labelledby="angebot-t">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker">Angebot</p>
+          <h2 id="angebot-t">Fast alles aus einer Hand.</h2>
+          <p class="sec-lead">Vom Nothelferkurs bis zum Motorboot, mit allen Preisen auf einen Blick.</p>
+        </div>
+
+        <div class="feat">
+          <a class="fcard reveal" href="#" data-soon="Autofahrlektionen">
+            <div class="fcard-img"><img src="../assets/img/a-auto.webp" width="900" height="562" alt="Porsche Macan der NASA Fahrschule" loading="lazy"></div>
+            <div class="fcard-b">
+              <h3>Autofahrlektionen</h3>
+              <p>Kategorie B, Automat oder Schaltung. Mit individuellem Ausbildungsplan.</p>
+              <p class="price"><strong>CHF 85</strong> <span>pro Lektion à 50 Min.</span></p>
+            </div>
+          </a>
+          <a class="fcard reveal" href="#" data-soon="Anhänger BE">
+            <div class="fcard-img"><img src="../assets/img/a-anhaenger.webp" width="900" height="562" alt="Audi Q3 der NASA Fahrschule mit Anhänger" loading="lazy"></div>
+            <div class="fcard-b">
+              <h3>Anhänger BE</h3>
+              <p>Kategorie BE: Auto mit Anhänger, ergänzend zu Deinen Autofahrlektionen.</p>
+              <p class="price"><strong>CHF 110</strong> <span>pro Lektion à 50 Min.</span></p>
+            </div>
+          </a>
+          <a class="fcard reveal" href="#" data-soon="Motorradfahrlektionen">
+            <div class="fcard-img"><img src="../assets/img/a-motorrad.webp" width="900" height="562" alt="Ducati Multistrada der NASA Fahrschule" loading="lazy"></div>
+            <div class="fcard-b">
+              <h3>Motorradfahrlektionen</h3>
+              <p>5er-Abo CHF 430, 10er-Abo CHF 820.</p>
+              <p class="price"><strong>CHF 90</strong> <span>pro Lektion à 50 Min.</span></p>
+            </div>
+          </a>
+        </div>
+
+        <ul class="tiles">
+          <li class="reveal"><a class="tile" href="#" data-soon="Motorradgrundkurs">
+            <span class="t-ic"><svg class="i draw" aria-hidden="true"><use href="#i-cone"/></svg></span>
+            <span class="t-b"><span class="t-t">Motorradgrundkurs</span><span class="t-p">12 Std. CHF 480 · 4 Std. CHF 200</span></span>
+            <svg class="i t-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li class="reveal"><a class="tile" href="#" data-soon="BPT und Taxiausbildung">
+            <span class="t-ic"><svg class="i draw" aria-hidden="true"><use href="#i-taxi"/></svg></span>
+            <span class="t-b"><span class="t-t">BPT und Taxiausbildung</span><span class="t-p">Code 121, Lektionspreise wie Auto</span></span>
+            <svg class="i t-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li class="reveal"><a class="tile" href="#" data-soon="Motorbootfahrschule">
+            <span class="t-ic"><svg class="i draw" aria-hidden="true"><use href="#i-ship"/></svg></span>
+            <span class="t-b"><span class="t-t">Motorbootfahrschule</span><span class="t-p">CHF 120 pro 60 Min. · 2er-Gruppe CHF 65 p. P.</span></span>
+            <svg class="i t-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li class="reveal"><a class="tile" href="#" data-soon="Verkehrskundeunterricht VKU">
+            <span class="t-ic"><svg class="i draw" aria-hidden="true"><use href="#i-board"/></svg></span>
+            <span class="t-b"><span class="t-t">Verkehrskunde VKU</span><span class="t-p">8 Lektionen CHF 100</span></span>
+            <svg class="i t-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li class="reveal"><a class="tile" href="#" data-soon="Theorieunterricht">
+            <span class="t-ic"><svg class="i draw" aria-hidden="true"><use href="#i-book"/></svg></span>
+            <span class="t-b"><span class="t-t">Theorieunterricht</span><span class="t-p">Einzellektion 50 Min. CHF 40</span></span>
+            <svg class="i t-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li class="reveal"><a class="tile" href="#" data-soon="Nothelferkurs">
+            <span class="t-ic"><svg class="i draw" aria-hidden="true"><use href="#i-pulse"/></svg></span>
+            <span class="t-b"><span class="t-t">Nothelferkurs</span><span class="t-p">10 Stunden, Preis auf Anfrage</span></span>
+            <svg class="i t-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li class="reveal"><a class="tile" href="#" data-soon="Kontrollfahrt">
+            <span class="t-ic"><svg class="i draw" aria-hidden="true"><use href="#i-passport"/></svg></span>
+            <span class="t-b"><span class="t-t">Kontrollfahrt</span><span class="t-p">Ausländischer Ausweis, Lektionspreise wie Auto</span></span>
+            <svg class="i t-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li class="reveal"><a class="tile" href="#" data-soon="Fahrberatung">
+            <span class="t-ic"><svg class="i draw" aria-hidden="true"><use href="#i-chat"/></svg></span>
+            <span class="t-b"><span class="t-t">Fahrberatung</span><span class="t-p">Wiedereinstieg und Senioren, Kosten wie zwei Lektionen</span></span>
+            <svg class="i t-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        </ul>
+        <p class="fee-note reveal">Bei Auto, Kontrollfahrt, BPT und Taxi sowie Motorboot kommt einmalig die Grundpauschale von CHF 100 dazu.</p>
+      </div>
+    </section>
+
+    <!-- 5 Theorielokal -->
+    <section class="lokal" id="lokal" aria-labelledby="lokal-t">
+      <div class="wrap lokal-grid">
+        <div class="lokal-text reveal">
+          <p class="kicker">Theorielokal Oerlikon</p>
+          <h2 id="lokal-t">Hell, ruhig und gut ausgerüstet.</h2>
+          <p>Hier finden Nothelferkurs, VKU und Theorieunterricht statt. Ein zweites Theorielokal steht in Rapperswil-Jona.</p>
+          <p class="lokal-hint"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg> Besuch nur mit Voranmeldung.</p>
+        </div>
+        <div class="lokal-band" tabindex="0" role="region" aria-label="Fotos vom Theorielokal">
+          <figure class="lb lb-1"><img src="../assets/img/a-lokal-1.webp" width="900" height="605" alt="Theorielokal mit Tischen, Beamer und Lerntafeln mit Verkehrszeichen" loading="lazy"></figure>
+          <figure class="lb lb-2"><img src="../assets/img/a-lokal-2.webp" width="900" height="605" alt="Blick durchs Theorielokal mit Fenstern zur Strasse" loading="lazy"></figure>
+          <figure class="lb lb-3"><img src="../assets/img/a-lokal-3.webp" width="900" height="605" alt="Theorielokal mit Tischreihen und Wandtafeln" loading="lazy"></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 Weg ab 2027 -->
+    <section class="weg" id="ablauf" aria-labelledby="weg-t">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker">Neu ab 1. Januar 2027</p>
+          <h2 id="weg-t">Dein Weg zum Führerausweis.</h2>
+          <p class="sec-lead">Ab 2027 besuchst Du den VKU schon vor der Basistheorieprüfung. Einen Lernfahrausweis brauchst Du dafür nicht mehr.</p>
+        </div>
+        <ol class="steps">
+          <li class="step reveal">
+            <span class="st-n">1</span>
+            <div class="st-b">
+              <h3><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg> Nothelferkurs und Sehtest</h3>
+              <p>Den Nothelferkurs (10 Stunden) bieten wir selbst an.</p>
+            </div>
+          </li>
+          <li class="step step-new reveal">
+            <span class="st-n">2</span>
+            <div class="st-b">
+              <h3><svg class="i" aria-hidden="true"><use href="#i-board"/></svg> Verkehrskunde VKU <span class="tag">Neu</span></h3>
+              <p>Ab 2027 vor der Basistheorieprüfung. Frühestens sechs Monate vor dem Mindestalter, neu auch mit Fahrassistenzsystemen. Bei uns 8 Lektionen für CHF 100.</p>
+            </div>
+          </li>
+          <li class="step reveal">
+            <span class="st-n">3</span>
+            <div class="st-b">
+              <h3><svg class="i" aria-hidden="true"><use href="#i-book"/></svg> Basistheorieprüfung</h3>
+              <p>Mit Unterlagen für privates Lernen oder Einzellektionen Theorie.</p>
+            </div>
+          </li>
+          <li class="step reveal">
+            <span class="st-n">4</span>
+            <div class="st-b">
+              <h3><svg class="i" aria-hidden="true"><use href="#i-passport"/></svg> Lernfahrausweis</h3>
+              <p>Jetzt darfst Du mit Begleitung ans Steuer.</p>
+            </div>
+          </li>
+          <li class="step reveal">
+            <span class="st-n">5</span>
+            <div class="st-b">
+              <h3><svg class="i" aria-hidden="true"><use href="#i-wheel"/></svg> Fahrstunden</h3>
+              <p>Starte mit der Gratis-Probe-Fahrlektion. Eine gute Planung spart Geld und Zeit.</p>
+              <p class="st-note"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg> Bei uns mit Ausbildungskarte und Prüfungs-Check.</p>
+            </div>
+          </li>
+          <li class="step reveal">
+            <span class="st-n">6</span>
+            <div class="st-b">
+              <h3><svg class="i" aria-hidden="true"><use href="#i-flag"/></svg> Praktische Prüfung</h3>
+              <p>Gut vorbereitet, weil Du im Prüfungsgebiet geübt hast.</p>
+            </div>
+          </li>
+        </ol>
+        <a class="text-link reveal" href="#" data-soon="Der Weg zum Führerausweis">Der Weg zum Führerausweis im Detail <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </section>
+
+    <!-- 7 Team -->
+    <section class="team" id="team" aria-labelledby="team-t">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker">Deine FahrlehrerInnen</p>
+          <h2 id="team-t">Reza und Sanela Shirazi.</h2>
+        </div>
+        <div class="team-grid">
+          <article class="tcard tcard-main reveal">
+            <div class="tcard-img"><img src="../assets/img/a-team.webp" width="1000" height="750" alt="Fahrlehrer vor dem Theorielokal Oerlikon, mit Audi Q3 und Ducati" loading="lazy"></div>
+            <div class="tcard-b">
+              <h3>Reza Shirazi</h3>
+              <p class="role">Fahrlehrer mit eidg. Fachausweis, Inhaber</p>
+              <p>Freundlich, gelassen, nervenstark, korrekt und offen. Bevor er Fahrlehrer wurde, war er unter anderem Elektromechaniker und Taxichauffeur.</p>
+              <p class="lang-t"><svg class="i" aria-hidden="true"><use href="#i-world"/></svg> Unterricht in sechs Sprachen</p>
+              <ul class="chips">
+                <li>Deutsch</li><li>Englisch</li><li>Französisch</li><li>Italienisch</li><li>Persisch</li><li>Arabisch</li>
+              </ul>
+            </div>
+          </article>
+          <article class="tcard tcard-2 reveal">
+            <figure class="tcard-img2">
+              <img src="../assets/img/a-fahrlehrerin.webp" width="510" height="367" alt="Fahrlehrerin neben dem blauen Audi A1 der NASA Fahrschule" loading="lazy">
+              <figcaption>Unsere Fahrlehrerin mit dem Audi A1</figcaption>
+            </figure>
+            <div class="tcard-b">
+              <h3>Sanela Shirazi</h3>
+              <p class="role">FahrlehrerIn</p>
+              <a class="text-link" href="#" data-soon="Team">Das Team kennenlernen <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 Standorte -->
+    <section class="orte" id="standorte" aria-labelledby="orte-t">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker">Standorte</p>
+          <h2 id="orte-t">Zwei Theorielokale, ein Team.</h2>
+          <p class="status" id="status"><span class="dot" aria-hidden="true"></span><span class="status-t">Erreichbar Montag bis Samstag 06:00 bis 22:00 Uhr</span></p>
+        </div>
+        <div class="orte-grid">
+          <article class="ort reveal">
+            <p class="ort-k"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg> Theorielokal 1</p>
+            <h3>Zürich-Oerlikon</h3>
+            <address>Oberwiesenstrasse 44<br>8050 Zürich</address>
+            <dl class="ort-tel">
+              <div><dt>Telefon</dt><dd><a href="tel:+41444302323">044 430 23 23</a></dd></div>
+              <div><dt>Natel</dt><dd><a href="tel:+41791504444">079 150 44 44</a></dd></div>
+            </dl>
+            <div class="ort-cta">
+              <a class="btn btn-indigo" href="tel:+41791504444"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Anrufen</a>
+              <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&amp;query=Oberwiesenstrasse+44+8050+Z%C3%BCrich" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg> Route</a>
+            </div>
+          </article>
+          <article class="ort reveal">
+            <p class="ort-k"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg> Theorielokal 2</p>
+            <h3>Rapperswil-Jona</h3>
+            <address>Rütistrasse 44<br>8645 Rapperswil-Jona</address>
+            <dl class="ort-tel">
+              <div><dt>Telefon</dt><dd><a href="tel:+41554222323">055 422 23 23</a></dd></div>
+              <div><dt>Natel</dt><dd><a href="tel:+41764442244">076 444 22 44</a></dd></div>
+            </dl>
+            <div class="ort-cta">
+              <a class="btn btn-indigo" href="tel:+41764442244"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Anrufen</a>
+              <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&amp;query=R%C3%BCtistrasse+44+8645+Rapperswil-Jona" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg> Route</a>
+            </div>
+          </article>
+        </div>
+        <p class="orte-note reveal"><svg class="i" aria-hidden="true"><use href="#i-ship"/></svg> Motorbootfahrschule: Basis in Oberrieden, Abholung am Wunschort am Zürichsee.</p>
+      </div>
+    </section>
+
+    <!-- 9 Kontakt -->
+    <section class="kontakt" id="kontakt" aria-labelledby="kontakt-t">
+      <div class="wrap kontakt-in">
+        <div class="kontakt-main reveal">
+        <h2 id="kontakt-t">Du bist auf der Suche nach einer modernen und flexiblen Fahrschule?</h2>
+        <p>Dann findest Du uns ganz einfach von Zürich bis und mit Zürichsee-Umgebung.</p>
+        <div class="kontakt-cta">
+          <a class="btn btn-white btn-lg" href="tel:+41791504444"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Gratis-Probelektion anfragen</a>
+        </div>
+        <p class="kontakt-time">Montag bis Samstag 06:00 bis 22:00 Uhr, Sonntag geschlossen</p>
+        </div>
+        <div class="kontakt-side reveal">
+          <a class="kcall" href="tel:+41791504444"><span class="kcall-ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><span><span class="kcall-o">Zürich-Oerlikon</span><span class="kcall-n">079 150 44 44</span></span><svg class="i kcall-go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="kcall" href="tel:+41764442244"><span class="kcall-ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><span><span class="kcall-o">Rapperswil-Jona</span><span class="kcall-n">076 444 22 44</span></span><svg class="i kcall-go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="kcall" href="mailto:info@nasafahrschule.ch"><span class="kcall-ic"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span><span><span class="kcall-o">E-Mail</span><span class="kcall-n kcall-mail">info@nasafahrschule.ch</span></span><svg class="i kcall-go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top" aria-label="NASA Fahrschule, zum Seitenanfang">
+          <svg class="brand-wheel" aria-hidden="true"><use href="#i-wheel"/></svg>
+          <span class="brand-nasa">NASA</span><span class="brand-fs">Fahrschule</span>
+        </a>
+        <p>NASA Fahrschule GmbH<br><a href="mailto:info@nasafahrschule.ch">info@nasafahrschule.ch</a></p>
+      </div>
+      <div>
+        <p class="foot-h">Zürich-Oerlikon</p>
+        <p>Oberwiesenstrasse 44<br>8050 Zürich<br><a href="tel:+41444302323">044 430 23 23</a></p>
+      </div>
+      <div>
+        <p class="foot-h">Rapperswil-Jona</p>
+        <p>Rütistrasse 44<br>8645 Rapperswil-Jona<br><a href="tel:+41554222323">055 422 23 23</a></p>
+      </div>
+      <div>
+        <p class="foot-h">Angebot</p>
+        <ul class="foot-links">
+          <li><a href="#" data-soon="Autofahrlektionen">Autofahrlektionen</a></li>
+          <li><a href="#" data-soon="Motorradgrundkurs">Motorradgrundkurs</a></li>
+          <li><a href="#" data-soon="BPT und Taxiausbildung">BPT und Taxiausbildung</a></li>
+          <li><a href="#" data-soon="Motorbootfahrschule">Motorbootfahrschule</a></li>
+          <li><a href="#" data-soon="Nothelferkurs">Nothelferkurs</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap foot-bottom">
+      <p>© NASA Fahrschule GmbH</p>
+      <ul class="foot-legal">
+        <li><a href="#" data-soon="Kontakt">Kontakt</a></li>
+        <li><a href="#" data-soon="Impressum">Impressum</a></li>
+        <li><a href="#" data-soon="Datenschutzerklärung">Datenschutzerklärung</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <nav class="dock" aria-label="Schnellkontakt">
+    <a class="dock-call" href="tel:+41791504444"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> Anrufen</a>
+    <a class="dock-mail" href="mailto:info@nasafahrschule.ch"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> E-Mail</a>
+  </nav>
+</body>
+</html>
