@@ -6,7 +6,7 @@
   // Web3Forms access key, meant to be public; submissions are mailed to Jonas
   var ACCESS_KEY = 'd2e340ec-3d1e-4baf-9f1a-cdb4e59d18e9';
   // Assembled here so the address does not sit in the HTML for spam bots
-  var MAIL = ['jonas.grueter.web', 'gmail.com'].join('@');
+  var MAIL = ['info', 'codani.ch'].join('@');
 
   var form = document.getElementById('wish');
   var $ = function (id) { return document.getElementById(id); };

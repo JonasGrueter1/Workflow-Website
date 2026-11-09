@@ -6,7 +6,7 @@
   // Web3Forms access key, meant to be public; submissions are mailed to Jonas
   var ACCESS_KEY = 'd2e340ec-3d1e-4baf-9f1a-cdb4e59d18e9';
   // Assembled here so the address does not sit in the HTML for spam bots
-  var MAIL = ['jonas.grueter.web', 'gmail.com'].join('@');
+  var MAIL = ['info', 'codani.ch'].join('@');
 
   var form = document.getElementById('wish');
   var $ = function (id) { return document.getElementById(id); };
@@ -89,7 +89,7 @@
       if (!field.querySelector('.field-error')) {
         var err = document.createElement('span');
         err.className = 'field-error';
-        err.textContent = 'Bitte geben Sie Ihren Namen an.';
+        err.textContent = 'Bitte gib deinen Namen an.';
         field.appendChild(err);
       }
       firstProblem = firstProblem || nameInput;
@@ -103,7 +103,7 @@
       emailField.classList.add('has-error');
       var mailErr = document.createElement('span');
       mailErr.className = 'field-error';
-      mailErr.textContent = 'Bitte prüfen Sie die E-Mail-Adresse.';
+      mailErr.textContent = 'Bitte prüfe die E-Mail-Adresse.';
       emailField.appendChild(mailErr);
       firstProblem = firstProblem || emailInput;
     }
@@ -135,7 +135,7 @@
       'Bemerkungen: ' + (v('bemerkungen') || '-'),
       '',
       'Name: ' + v('name'),
-      'Telefon: ' + (v('telefon') || '-'),
+      'WhatsApp: ' + (v('telefon') || '-'),
       'E-Mail: ' + (v('email') || '-')
     ]);
     var subject = 'Wunschliste neue Website Fahrschule Lena';
@@ -166,7 +166,7 @@
         });
       })
       .then(function () {
-        showStatus('ok', 'Vielen Dank!', 'Ihre Auswahl ist bei mir angekommen. Ich melde mich in den nächsten Tagen bei Ihnen.');
+        showStatus('ok', 'Vielen Dank!', 'Deine Auswahl ist bei mir angekommen. Ich melde mich in den nächsten Tagen bei dir.');
         submitBtn.textContent = 'Gesendet';
       })
       .catch(function () {
@@ -194,7 +194,7 @@
 
   // If the form service cannot be reached, fall back to the visitor's own mail program
   function showFallback(subject, body) {
-    var status = showStatus('error', 'Das Senden hat leider nicht geklappt.', 'Sie können Ihre Auswahl stattdessen per E-Mail an ');
+    var status = showStatus('error', 'Das Senden hat leider nicht geklappt.', 'Du kannst mir deine Auswahl stattdessen per E-Mail an ');
     var link = document.createElement('a');
     link.href = 'mailto:' + MAIL;
     link.textContent = MAIL;
