@@ -1,6 +1,4 @@
 # GitHub Pages (Jekyll): interne Dateien der eigenen Website nicht veroeffentlichen.
-# ARCHITEKTUR.md enthaelt interne Notizen, dev.html/dev.js sind nur die Testseite fuer Szenen.
+# README nicht als Startseite zeigen; die Startseite (index.html) leitet auf codani.ch weiter.
 exclude:
-  - studio/ARCHITEKTUR.md
-  - studio/dev.html
-  - studio/js/dev.js
+  - README.md
