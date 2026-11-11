@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wunschliste | Neue Website Electra AG, Adligenswil</title>
+  <meta name="description" content="Wählen Sie Design, Seiten und Funktionen für die neue Website der Electra AG in Adligenswil.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#15312b">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/shared/basis.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"/><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"/><path d="M7 15a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2l0 -4"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11"/><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="../" aria-label="Electra AG, Elektro-Unternehmungen Luzern: zur Übersicht">
+        <img src="../assets/img/logo.png" alt="Electra AG, Elektro-Unternehmungen Luzern" width="647" height="184">
+        <span>Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="../">Übersicht</a>
+        <a href="../design-a/" target="_blank" rel="noopener">Design A</a>
+        <a href="../design-b/" target="_blank" rel="noopener">Design B</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <p class="kicker">Wunschliste</p>
+      <h1>Ihre Wunschliste für die neue Website</h1>
+      <p>Wählen Sie Ihr Lieblingsdesign und die Seiten und Funktionen, die Sie sich für die Electra AG wünschen. Der Preis rechnet automatisch mit und gilt für die ganze neue Website mit allen gewählten Seiten, nicht nur für die Startseite. Am Schluss senden Sie mir Ihre Auswahl mit einem Klick.</p>
+    </div>
+
+    <div class="layout">
+      <form class="wish" id="wish" novalidate>
+
+        <!-- 1 Design -->
+        <section class="block" aria-labelledby="h-design">
+          <div class="block-head">
+            <span class="block-no">1</span>
+            <div>
+              <h2 id="h-design">Welches Design gefällt Ihnen?</h2>
+              <p>Mit «Ansehen» öffnet sich das Design in einem neuen Fenster.</p>
+            </div>
+          </div>
+          <div class="designs" id="designs">
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design A: Für alles mit Strom">
+                <img src="../assets/img/vorschau-a.webp" width="960" height="600" alt="Vorschau Design A">
+                <span class="design-text"><strong>Design A</strong><span>Für alles mit Strom</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-a/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design B: Stromkreis">
+                <img src="../assets/img/vorschau-b.webp" width="960" height="600" alt="Vorschau Design B">
+                <span class="design-text"><strong>Design B</strong><span>Stromkreis</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-b/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+          </div>
+          <label class="opt opt-mix">
+            <input type="radio" name="design" value="Mischung aus beiden, gerne besprechen">
+            <span class="opt-box opt-box-round" aria-hidden="true"></span>
+            <span class="opt-text"><strong>Eine Mischung aus beiden</strong><small>Zum Beispiel das Tannengrün und das Slogan-Band von A mit dem Stromkreis im ersten Bild von B. Das besprechen wir dann gemeinsam.</small></span>
+          </label>
+          <p class="error" id="design-error" hidden>Bitte wählen Sie ein Design aus.</p>
+        </section>
+
+        <!-- 2 Grundpaket -->
+        <section class="block" aria-labelledby="h-base">
+          <div class="block-head">
+            <span class="block-no">2</span>
+            <div>
+              <h2 id="h-base">Grundpaket</h2>
+              <p>Ist immer dabei, damit die Website sauber funktioniert.</p>
+            </div>
+          </div>
+          <ul class="base" id="base">
+            <li data-hours="6"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Konzept und zwei Designentwürfe</span><span class="cost">CHF 270.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ausarbeitung des gewählten Designs</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Startseite mit Ihren sechs Kernaufgaben, Inhaber, Lehrstellen und Kontakt</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Texte und Fotos von Ihrer bisherigen Website übernehmen, sprachlich überarbeiten und in passenden Grössen für schnelles Laden aufbereiten</span><span class="cost">CHF 225.00</span></li>
+            <li data-hours="1"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ihr Logo mit der roten Linie und dem Blitz-Pfeil als scharfe Grafik für alle Bildschirme</span><span class="cost">CHF 45.00</span></li>
+            <li data-hours="1.5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Impressum und Datenschutzerklärung mit Ihren Firmenangaben, passend zum Kontaktformular</span><span class="cost">CHF 67.50</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Optimiert für Smartphone, Tablet und Computer, mit gut sichtbarem Menü und einer Telefonnummer, die direkt anruft</span><span class="cost">CHF 135.00</span></li>
+            <li data-hours="2"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Aufschalten und Hosting einrichten, Ihre Internetadresse bleibt gleich</span><span class="cost">CHF 90.00</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Einführung und eine Korrekturrunde</span><span class="cost">CHF 135.00</span></li>
+          </ul>
+        </section>
+
+        <!-- 3 Seiten -->
+        <section class="block" aria-labelledby="h-pages">
+          <div class="block-head">
+            <span class="block-no">3</span>
+            <div>
+              <h2 id="h-pages">Welche Seiten wünschen Sie?</h2>
+              <p>Vorausgewählt sind die Seiten, die Ihre bisherige Website schon hat. Ihre Dienstleistungen können zusätzlich je eine eigene Seite bekommen. Jede Seite lässt sich an- oder abwählen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Seiten">
+            <label class="opt"><input type="checkbox" name="seite" value="Dienstleistungen" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Dienstleistungen</strong><small>Ihre sechs Kernaufgaben ausführlich: Elektro Service, Netzwerk für ICT, Videoüberwachung mit KI, E-Mobilität, Wärmepumpen und Heizung sowie die Elektrokontrolle, mit eigenen Symbolen statt Herstellerbildern</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Ausbildung und Lehrstellen" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Ausbildung und Lehrstellen</strong><small>Elektroinstallateur/in EFZ und Montageelektriker/in EFZ mit Dauer und Anforderungen, Links zur Berufsberatung und dem Weg zur Schnupperlehre</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Partner und Lieferanten" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Partner und Lieferanten</strong><small>fiberwork, Feller, Swisscom, Mennekes, Winterhalter + Fenner, Solektra, EM und ASCO übersichtlich, mit Link zu jedem Partner</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kontakt" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kontakt</strong><small>Telefon, E-Mail, Formular, Bürozeiten und Ihr Standort an der Stubenhalde 4. Heute ein Teil der Startseite, neu auch als eigene Seite</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Elektrokontrolle gemäss NIV" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Elektrokontrolle gemäss NIV</strong><small>Eigene Seite mit dem Ablauf von der Mahnung des Netzbetreibers bis zum Sicherheitsnachweis und dem Hinweis zum Fehlerstromschutzschalter</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Videoüberwachung mit KI" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Videoüberwachung mit KI</strong><small>Eigene Seite zu UniFi Protect und Access: vollständig lokal, ohne jährliche Lizenzkosten, von der Planung bis zur Einrichtung</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Wärmepumpen und Heizung" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Wärmepumpen und Heizung</strong><small>Eigene Seite zu Luft und Erdwärme, zur Förderung durch den Kanton Luzern und zu Ihrer Erfahrung mit 30 bis 50 Wärmepumpen pro Jahr</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="E-Mobilität" data-hours="1"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>E-Mobilität</strong><small>Eigene Seite zu Ladestationen von 1 bis 22 kW und Ihrer bevorzugten Marke easee, mit Beratung zu Ladestation oder PV-Anlage</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Über uns" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Über uns</strong><small>Über 60 Jahre Electra AG, Pascal Odermatt als Inhaber, Ihre Stammkundschaft und die Zusammenarbeit mit Architekten und anderen Handwerkern</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Team" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Team</strong><small>Ihre Mitarbeitenden mit Foto und Funktion, sobald Sie Fotos und Angaben liefern</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Referenzen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Referenzen</strong><small>Ausgewählte Arbeiten mit Fotos Ihrer eigenen Anlagen, zum Beispiel Wärmepumpen, Ladestationen oder Videoüberwachung, sobald Sie Bilder liefern</small></span><span class="cost">CHF 90.00</span></label>
+          </div>
+        </section>
+
+        <!-- 4 Funktionen -->
+        <section class="block" aria-labelledby="h-features">
+          <div class="block-head">
+            <span class="block-no">4</span>
+            <div>
+              <h2 id="h-features">Welche Funktionen wünschen Sie?</h2>
+              <p>Extras, die Ihren Kundinnen und Kunden den Weg zu einer Offerte leichter machen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Funktionen">
+            <label class="opt"><input type="checkbox" name="funktion" value="Kontakt- und Offertformular" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kontakt- und Offertformular</strong><small>Anfragen mit der gewünschten Leistung, zum Beispiel Elektro Service, Wärmepumpe oder Elektrokontrolle, kommen per E-Mail zu Ihnen, mit Spamschutz</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Optimierung" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Optimierung</strong><small>Damit man Sie bei «Elektriker Adligenswil», «Elektriker Ebikon» oder «Elektriker Luzern» gut findet, mit klaren Seitentiteln und Beschreibungen</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Schnellkontakt-Leiste" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Schnellkontakt-Leiste</strong><small>Anrufen und Offerte anfragen mit einem Tipp, auf dem Smartphone immer sichtbar</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Anmeldung Elektrokontrolle" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Anmeldung Elektrokontrolle</strong><small>Eigentümer und Verwaltungen melden die Kontrolle online an, mit Adresse des Objekts und der Frist aus dem Schreiben des Netzbetreibers</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Fotos zur Anfrage mitsenden" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Fotos zur Anfrage mitsenden</strong><small>Kundinnen und Kunden schicken ein Foto vom Sicherungskasten oder der Installation gleich mit der Anfrage</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Schnupperanfrage online" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Schnupperanfrage online</strong><small>Schülerinnen und Schüler fragen eine Schnupperlehre mit Wunschdatum an, die Anfrage kommt per E-Mail zu Ihnen</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Lehrstellen selbst pflegen" data-hours="4"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Lehrstellen selbst pflegen</strong><small>Lehrstellen und Neuigkeiten ändern Sie selbst über eine einfache Eingabemaske, ohne Programmierkenntnisse</small></span><span class="cost">CHF 180.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Kundenstimmen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kundenstimmen</strong><small>Bewertungen Ihrer Kundinnen und Kunden, zum Beispiel aus Google oder Ihrem Verzeichniseintrag, die Sie selbst auswählen</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Unternehmensprofil" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Unternehmensprofil</strong><small>Ihr Eintrag in Google Maps mit Fotos, Telefon, Bürozeiten und Link zur neuen Website, neu eingerichtet oder ergänzt</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Karte mit Standort" data-hours="1"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Karte mit Standort</strong><small>Ihr Standort an der Stubenhalde 4 auf einer Karte, datenschutzfreundlich erst nach einem Klick geladen</small></span><span class="cost">CHF 45.00</span></label>
+          </div>
+        </section>
+
+        <!-- 5 Weitere Angaben -->
+        <section class="block" aria-labelledby="h-more">
+          <div class="block-head">
+            <span class="block-no">5</span>
+            <div>
+              <h2 id="h-more">Noch ein paar Fragen</h2>
+              <p>Damit ich gut planen kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-when">Wann soll die neue Website online sein?</label>
+              <select id="f-when" name="termin">
+                <option>So bald wie möglich</option>
+                <option>Bis Ende 2026</option>
+                <option>Bis Frühling 2027</option>
+                <option>Kein fester Termin</option>
+              </select>
+            </div>
+            <fieldset class="field">
+              <legend>Fotos</legend>
+              <label class="mini"><input type="radio" name="fotos" value="Vorhandene Fotos verwenden" checked> Vorhandene Fotos verwenden, zum Beispiel Ihr Porträt und Ihr Firmengebäude</label>
+              <label class="mini"><input type="radio" name="fotos" value="Ich liefere Fotos von Anlagen und Arbeiten"> Ich liefere Fotos von unseren Anlagen und Arbeiten</label>
+              <label class="mini"><input type="radio" name="fotos" value="Neue Fotos wären schön, bitte beraten"> Neue Fotos wären schön, bitte beraten</label>
+            </fieldset>
+            <div class="field field-full">
+              <label for="f-notes">Weitere Wünsche oder Bemerkungen</label>
+              <textarea id="f-notes" name="bemerkungen" rows="4" placeholder="Was ist Ihnen sonst noch wichtig?"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 Kontakt -->
+        <section class="block" aria-labelledby="h-contact">
+          <div class="block-head">
+            <span class="block-no">6</span>
+            <div>
+              <h2 id="h-contact">Ihre Kontaktangaben</h2>
+              <p>Damit ich mich bei Ihnen melden kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telefon</label>
+              <input id="f-phone" name="telefon" type="tel" autocomplete="tel">
+            </div>
+            <div class="field field-full">
+              <label for="f-mail">E-Mail</label>
+              <input id="f-mail" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <aside class="summary" id="summary" aria-labelledby="h-summary">
+        <h2 id="h-summary">Ihre Auswahl</h2>
+        <dl class="sum-lines">
+          <div><dt>Design</dt><dd id="s-design" class="sum-design">noch nicht gewählt</dd></div>
+          <div><dt>Grundpaket</dt><dd id="s-base">CHF 1’327.50</dd></div>
+          <div><dt>Seiten <span id="s-pages-n">(4)</span></dt><dd id="s-pages">CHF 315.00</dd></div>
+          <div><dt>Funktionen <span id="s-feat-n">(3)</span></dt><dd id="s-feat">CHF 292.50</dd></div>
+        </dl>
+        <div class="sum-total">
+          <span>Total</span>
+          <strong id="s-total">CHF 1’935.00</strong>
+        </div>
+        <p class="sum-hours"><span id="s-hours">43</span> Stunden à CHF 45</p>
+        <div class="sum-actions no-print">
+          <button class="btn btn-red btn-block" type="submit" form="wish">Auswahl senden <svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+          <button class="btn btn-line btn-block" type="button" id="print"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg> Drucken oder als PDF</button>
+        </div>
+        <div class="status" id="status" role="status" aria-live="polite" hidden></div>
+        <p class="sum-note">Der Preis gilt für die ganze neue Website mit allen gewählten Seiten, nicht nur für die Startseite.</p>
+        <p class="sum-note">Alle Preise sind unverbindliche Richtpreise. Zusätzliche Wünsche berechne ich mit CHF 45 pro Stunde.</p>
+        <p class="sum-note">Beim Senden werden Ihre Angaben über den Dienst Web3Forms per E-Mail an mich übermittelt und nur für dieses Projekt verwendet.</p>
+      </aside>
+    </div>
+  </main>
+
+  <div class="mbar no-print">
+    <span>Total <strong id="m-total">CHF 1’935.00</strong></span>
+    <a class="btn btn-red" href="#summary">Zur Auswahl</a>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026</span>
+      <a data-mail href="#">E-Mail an Jonas Grüter</a>
+    </div>
+  </footer>
+</body>
+</html>

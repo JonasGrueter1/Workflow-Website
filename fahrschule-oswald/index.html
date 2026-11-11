@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website Fahrschule Oliver Oswald, Hünenberg See</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website der Fahrschule Oliver Oswald GmbH in Hünenberg See, Fahrstunden im Raum Hünenberg und Cham.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#15427e">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    .hero { padding: 64px 0 44px; max-width: 790px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; color: var(--red); }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 8px; background: var(--red); color: #fff; font-weight: 800; font-size: .95rem; box-shadow: -4px 0 0 var(--hell); }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; overflow: hidden; padding: 22px 22px 0; background: var(--soft); isolation: isolate; }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(15 30 51 / 12%); background: var(--white); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(15 30 51 / 30%); background: var(--white); }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--red); }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+
+    /* Design A: hell, schräge Flächen wie die Beschriftung des Scenic */
+    .option-a .shots { background: var(--eis); }
+    .option-a .shots::before,
+    .option-a .shots::after { content: ""; position: absolute; z-index: -1; inset: 0; }
+    .option-a .shots::before { background: var(--red); clip-path: polygon(64% 0, 100% 0, 100% 100%, 40% 100%); }
+    .option-a .shots::after { background: var(--hell); clip-path: polygon(56% 0, 63% 0, 39% 100%, 32% 100%); }
+    .option-a .chips li { background: var(--red-soft); color: var(--red); }
+
+    /* Design B: tiefes Markenblau, Datenblatt */
+    .option-b .shots { background: var(--nacht); }
+    .option-b .shots::before { content: ""; position: absolute; z-index: -1; inset: 0; background: radial-gradient(circle at 85% 0%, rgb(27 175 230 / 28%), transparent 60%); }
+    .option-b .shot-desk { box-shadow: 0 -2px 24px rgb(0 0 0 / 45%); background: var(--nacht); }
+    .option-b .shot-mob { border-color: #050f1f; background: var(--nacht); box-shadow: 0 10px 30px rgb(0 0 0 / 50%); }
+    .option-b .chips li { background: #e3f5fc; color: #0b5878; }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #c3d0de; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
+
+    /* Kasten unten: Dunkelblau mit schräger hellblauer Fläche und Punktraster wie auf dem Auto */
+    .next { position: relative; overflow: hidden; isolation: isolate; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px; border-radius: var(--r-lg); background: var(--red); color: #fff; }
+    .next::before { content: ""; position: absolute; z-index: -1; top: 0; right: 0; bottom: 0; width: 46%; background: var(--hell); clip-path: polygon(62% 0, 70% 0, 38% 100%, 30% 100%); }
+    .next::after { content: ""; position: absolute; z-index: -1; top: 0; right: 0; bottom: 0; width: 46%; background: radial-gradient(circle, rgb(27 175 230 / 85%) 1.6px, transparent 1.9px) 0 0 / 10px 10px; clip-path: polygon(72% 0, 100% 0, 100% 100%, 40% 100%); -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 100%); mask-image: linear-gradient(90deg, transparent 30%, #000 100%); }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .btn-weiss { background: #fff; color: var(--red); box-shadow: 0 8px 24px rgb(5 20 45 / 30%); }
+    .btn-weiss:hover { background: var(--eis); color: var(--red); }
+    .next p { color: rgb(255 255 255 / 82%); max-width: 620px; }
+
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+      .next::before, .next::after { width: 70%; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .shot-mob { right: 16px; }
+      .next { padding: 26px 22px; }
+      .next::before, .next::after { width: 100%; opacity: .35; }
+      .next .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./" aria-label="Fahrschule Oliver Oswald: Übersicht">
+        <img src="assets/img/logo.webp" alt="Fahrschule Oliver Oswald" width="640" height="162">
+        <span class="top-tag">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite der Fahrschule Oliver Oswald zwei unterschiedliche Designs entworfen, mit Ihren eigenen Texten und Preisen, den Fotos Ihres neuen <span class="nobr">Renault Scenic E-Tech</span> und dem Bild von Ihnen mit dem Hund, alles in den zwei Blautönen Ihres Logos. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Schräge Flächen</h2>
+          <p>Hell und klar, gestaltet wie die Beschriftung Ihres neuen Scenic: schräge Flächen in Dunkel- und Hellblau mit Punktraster. Im ersten Bild steht der Scenic mit offenen Türen vor dem Bergpanorama, daneben die Fahrstunde für CHF 100 und die Knöpfe «Fahrstunde buchen» und «Anrufen». Eine Wochenansicht zeigt auf einen Blick, wann Fahrstunden online buchbar sind.</p>
+          <ul class="chips"><li>Hell und klar</li><li>Wie Ihre Autobeschriftung</li><li>Wochenansicht</li></ul>
+          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Datenblatt</h2>
+          <p>Persönlich, mit dunklem Einstieg: Das erste Bild zeigt Sie mit dem Hund vor dem Fahrschulauto, darüber Ihr Leitsatz «Freiheit, aber auch Verantwortung.» Danach baut sich ein Datenblatt zum <span class="nobr">Scenic E-Tech</span> Zeile für Zeile auf, und ein Ladebalken füllt sich bis 625 km. Der Rest ist hell: Preise, Buchung, der Weg ab 2027 und Ihr Werdegang vom Automechaniker zum Fahrlehrer.</p>
+          <ul class="chips"><li>Persönlich</li><li>Animiertes Datenblatt</li><li>Dunkler Einstieg</li></ul>
+          <a class="btn btn-nacht" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Weg zum Führerausweis, Angebote oder Über mich werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Preise, Buchungszeiten und Fotos stammen von Ihrer bisherigen Website und Ihrer QualiDrive-Seite, die Knöpfe «Fahrstunde buchen» führen direkt zu Ihrer Buchung dort. Die Adresse Langweid 11B habe ich aus dem Handelsregister übernommen, weil sie auf der Website bisher fehlt. Der Weg zum Führerausweis zeigt bereits den neuen Ablauf ab 2027.</span>
+    </p>
+
+    <div class="next">
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn btn-weiss" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026</span>
+    </div>
+  </footer>
+</body>
+</html>

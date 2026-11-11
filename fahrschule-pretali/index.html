@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website Fahrschule Pretali, Menzingen</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website der Fahrschule Pretali in Menzingen: Fahrstunden mit Automat, Schaltung und für die Taxilizenz.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1e2427">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/a-barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    .hero { padding: 64px 0 44px; max-width: 780px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--gelb); color: var(--ink); font-weight: 800; font-size: .95rem; box-shadow: inset 0 0 0 1px rgb(30 36 39 / 14%); }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(30 36 39 / 12%); background: var(--white); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(30 36 39 / 30%); background: var(--white); }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { display: inline-flex; align-items: center; gap: 10px; color: var(--ink-2); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+    /* Design A: hell, Strassenband, Gelb als Fläche */
+    .option-a .shots { position: relative; padding-top: 36px; }
+    .option-a .shots::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 14px; background: var(--strasse) linear-gradient(90deg, #fff 0 34px, transparent 34px 60px) repeat-x left center / 60px 3px; }
+    .option-a .option-tag::before { content: ""; width: 26px; height: 8px; background: var(--strasse) linear-gradient(90deg, #fff 0 8px, transparent 8px 13px) repeat-x left center / 13px 2px; }
+    .option-a .chips li { background: #fff6a6; color: var(--ink); }
+    /* Design B: dunkel, drei gelbe Streifen */
+    .option-b .shots { position: relative; padding-top: 36px; background: var(--nacht); }
+    .option-b .shots::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 14px; background: linear-gradient(var(--gelb) 0 3px, transparent 3px 5.5px, var(--gelb) 5.5px 8.5px, transparent 8.5px 11px, var(--gelb) 11px 14px); }
+    .option-b .shot-desk { box-shadow: 0 -2px 24px rgb(0 0 0 / 45%); background: var(--nacht); }
+    .option-b .shot-mob { border-color: #000; background: var(--nacht); box-shadow: 0 10px 30px rgb(0 0 0 / 55%); }
+    .option-b .option-tag::before { content: ""; width: 22px; height: 14px; background: linear-gradient(var(--gelb) 0 3px, transparent 3px 5.5px, var(--gelb) 5.5px 8.5px, transparent 8.5px 11px, var(--gelb) 11px 14px); box-shadow: -4px 0 0 0 var(--ink); margin-left: 4px; }
+    .option-b .chips li { background: var(--ink); color: var(--gelb); }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #c3c8d2; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--ink); width: 22px; height: 22px; margin-top: 2px; }
+
+    .next { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 48px 38px 34px; border-radius: var(--r-lg); background: var(--ink); color: #fff; }
+    .next .band { position: absolute; left: 0; right: 0; top: 0; }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .next p { color: rgb(255 255 255 / 80%); max-width: 640px; }
+
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .option-a .shots, .option-b .shots { padding-top: 30px; }
+      .shot-mob { right: 16px; }
+      .next { padding: 40px 22px 26px; }
+      .next .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./" aria-label="Fahrschule Pretali, Menzingen: Übersicht">
+        <img src="assets/img/uebersicht-logo.webp" alt="" width="126" height="144">
+        <span class="wordmark" aria-hidden="true"><span class="wm">Fahrschule Pretali</span><span class="wm-sub">Menzingen · seit 2002</span></span>
+        <span class="top-tag">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+  <div class="band" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite der Fahrschule Pretali zwei unterschiedliche Designs entworfen, mit Ihren eigenen Texten, Preisen und Fotos und in den Farben Ihres Logos: Gelb, Grau und Schwarz. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Strassenband</h2>
+          <p>Hell und klar: Das graue Strassenband mit der weissen Mittellinie von Ihren Fahrschulautos trägt Ihr Motto «Auf direkter Fahrt zum Führerschein» quer durch die Seite, im ersten Bild steht der weisse T-Roc vor den Bergen. Gelb erscheint nur als Fläche, etwa auf der Karte mit Ihren Preisen, damit alles gut lesbar bleibt.</p>
+          <ul class="chips"><li>Hell und klar</li><li>Strassenband mit Motto</li><li>Weisser T-Roc</li></ul>
+          <a class="btn btn-gelb" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Drei gelbe Streifen</h2>
+          <p>Dunkel und kräftig mit dem schwarzen Golf GTI: Beim Laden baut sich Ihr Logo neben dem Foto auf, das graue L stellt sich auf und die drei gelben Streifen schieben sich herein. Danach führen nummerierte Kapitel von 01 Angebot bis 06 Kontakt durch Preise, den Weg zum Führerausweis ab 2027, Ihren Werdegang und die Stimmen Ihrer Fahrschüler.</p>
+          <ul class="chips"><li>Dunkel und kräftig</li><li>Logo-Streifen in Bewegung</li><li>Schwarzer Golf GTI</li></ul>
+          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Angebot, Über mich oder Kontakt &amp; Infos werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Preise und Fotos stammen von Ihrer bisherigen Website. Der WhatsApp-Knopf ist ein Vorschlag, weil Ihre AGB die Anmeldung per WhatsApp erlauben. Den Verkehrskunde-Unterricht aus Ihrem heutigen Titelbild zeige ich nicht als Angebot, weil ich auf Ihrer Website keine Kurse dazu gefunden habe. Bieten Sie ihn an, ergänze ich ihn gerne.</span>
+    </p>
+
+    <div class="next">
+      <div class="band" aria-hidden="true"></div>
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn btn-gelb" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026</span>
+    </div>
+  </footer>
+</body>
+</html>
