@@ -1,0 +1,640 @@
+/* D’Drive Fahrschule, Design A «Reifenprofil»: dunkel wie das Logo, Navy und Himmelblau, Reifenprofil als Motiv */
+
+@font-face { font-family: "Chakra Petch"; font-style: normal; font-weight: 500; font-display: swap; src: url("../assets/fonts/a-chakrapetch-500.woff2") format("woff2"); }
+@font-face { font-family: "Chakra Petch"; font-style: normal; font-weight: 600; font-display: swap; src: url("../assets/fonts/a-chakrapetch-600.woff2") format("woff2"); }
+@font-face { font-family: "Chakra Petch"; font-style: normal; font-weight: 700; font-display: swap; src: url("../assets/fonts/a-chakrapetch-700.woff2") format("woff2"); }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 300 800; font-display: swap; src: url("../assets/fonts/a-rubik-wght.woff2") format("woff2"); }
+
+:root {
+  --schwarz: #231F20;     /* exakt der Hintergrund der Logo-Datei */
+  --schwarz-tief: #1A1718;
+  --karte-dunkel: #2C2829;
+  --navy: #21223F;
+  --navy-tief: #1A1B34;
+  --royal: #2A338E;
+  --royal-tief: #232B7A;
+  --sky: #2DBFFD;
+  --l-blau: #0098D8;
+  --text: #F3F6FB;
+  --muted: #AEB6CC;
+  --muted-royal: #CDD3EE;
+  --wa: #0E7C66;
+  --wa-hover: #0B6A57;
+  --profil: #3A3B5C;
+  --linie: rgb(255 255 255 / 11%);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --gut: clamp(16px, 4vw, 40px);
+  --kopf-h: 76px;
+  --ecke: 14px;
+  /* Reifenprofil: Chevron-Blöcke wie eine Lauffläche (waagrecht und senkrecht) */
+  --profil-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cpath d='M2 2h7l5 12H7zM7 18h7l-5 12H2z' fill='%233A3B5C'/%3E%3C/svg%3E");
+  --profil-h-sky: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cpath d='M2 2h7l5 12H7zM7 18h7l-5 12H2z' fill='%232DBFFD'/%3E%3C/svg%3E");
+  --profil-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='16' viewBox='0 0 32 16'%3E%3Cpath d='M30 2v7l-12 5V7zM14 7v7L2 9V2z' fill='%233A3B5C'/%3E%3C/svg%3E");
+  --profil-v-sky: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='16' viewBox='0 0 32 16'%3E%3Cpath d='M30 2v7l-12 5V7zM14 7v7L2 9V2z' fill='%232DBFFD'/%3E%3C/svg%3E");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-padding-top: calc(var(--kopf-h) + 12px); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--navy); color: var(--text);
+  font: 400 18px/1.6 "Rubik", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3 { font-family: "Chakra Petch", "Rubik", system-ui, sans-serif; font-weight: 700; margin: 0; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { width: min(1240px, 100% - 2 * var(--gut)); margin-inline: auto; }
+.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+
+.skip { position: absolute; left: 12px; top: -60px; z-index: 200; padding: 10px 16px; background: var(--sky); color: var(--navy); font-weight: 600; text-decoration: none; }
+.skip:focus { top: 12px; }
+
+/* ---------- Bausteine ---------- */
+.kicker {
+  display: inline-flex; align-items: center; gap: 12px;
+  font: 600 13.5px/1.3 "Chakra Petch", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--sky);
+  margin-bottom: 18px;
+}
+.kicker::before {
+  content: ""; width: 26px; height: 12px; flex: none;
+  background: var(--profil-h-sky) repeat-x left center / auto 12px;
+}
+h2 { font-size: clamp(34px, 4.6vw, 60px); line-height: 1; letter-spacing: .01em; text-transform: uppercase; }
+.intro { color: var(--muted); font-size: clamp(17.5px, 1.4vw, 19.5px); line-height: 1.6; max-width: 38em; }
+.kopfzeile { max-width: 760px; margin-bottom: clamp(36px, 4.5vw, 56px); }
+.kopfzeile h2 { margin-bottom: 18px; }
+.kopfzeile-breit { max-width: none; display: grid; grid-template-columns: 1fr 1fr; gap: 24px 64px; align-items: end; }
+.kopfzeile-breit h2 { margin-bottom: 0; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 50px; padding: 0 22px;
+  font: 500 16.5px/1.15 "Rubik", sans-serif; text-decoration: none; text-align: center;
+  border: 0; cursor: pointer;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  transition: transform .25s var(--ease), background-color .2s, color .2s, filter .2s;
+}
+.btn:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn-gross { min-height: 58px; padding: 0 28px; font-size: 17px; }
+.btn-wa { background: var(--wa); color: #fff; }
+.btn-wa:hover { background: var(--wa-hover); }
+.btn-sky { background: var(--sky); color: var(--navy); font-weight: 600; }
+.btn-sky:hover { background: #5ACDFF; }
+.btn .i { width: 21px; height: 21px; }
+
+.textlink {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  font: 600 14px/1.2 "Chakra Petch", sans-serif; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sky); text-decoration: none;
+}
+.textlink .i { width: 18px; height: 18px; transition: transform .25s var(--ease); }
+.textlink:hover .i { transform: translateX(4px); }
+.mehr { margin-top: 28px; }
+
+/* ---------- Kopf ---------- */
+.kopf {
+  position: sticky; top: 0; z-index: 80; background: var(--schwarz);
+  transition: background-color .35s, box-shadow .35s;
+}
+.kopf.ist-gescrollt {
+  background: rgb(33 34 63 / 94%);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 7%), 0 12px 32px rgb(0 0 0 / 28%);
+}
+.kopf-in { display: flex; align-items: center; gap: 24px; height: var(--kopf-h); }
+.marke { display: block; flex: none; line-height: 0; }
+.marke img { height: 44px; width: auto; }
+.kopf-nav { margin-left: auto; }
+.kopf-anker { display: flex; gap: clamp(16px, 2vw, 30px); list-style: none; }
+.kopf-anker a {
+  position: relative; display: inline-flex; align-items: center; min-height: 44px;
+  font: 600 13.5px/1 "Chakra Petch", sans-serif; letter-spacing: .14em; text-transform: uppercase;
+  color: #DCE2EE; text-decoration: none; transition: color .2s;
+}
+.kopf-anker a::after {
+  content: ""; position: absolute; left: 0; right: .14em; bottom: 8px; height: 2px; background: var(--sky);
+  transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease);
+}
+.kopf-anker a:hover { color: #fff; }
+.kopf-anker a:hover::after { transform: scaleX(1); }
+.menue-seiten, .menue-kontakt { display: none; }
+.nur-gross { display: inline; }
+.kopf-aktion { display: flex; align-items: center; gap: 10px; flex: none; }
+.kopf-tel {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px;
+  font: 600 15px/1 "Chakra Petch", sans-serif; letter-spacing: .05em; color: var(--sky); text-decoration: none;
+  box-shadow: inset 0 0 0 1.5px rgb(45 191 253 / 55%);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition: background-color .2s, color .2s;
+}
+.kopf-tel:hover { background: var(--sky); color: var(--navy); }
+.kopf-tel .i { width: 18px; height: 18px; }
+.kopf-rund {
+  display: grid; place-items: center; width: 44px; height: 44px; color: #fff; text-decoration: none;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition: background-color .2s;
+}
+.kopf-mail { box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 22%); }
+.kopf-mail:hover { background: rgb(255 255 255 / 10%); }
+.kopf-wa { background: var(--wa); }
+.kopf-wa:hover { background: var(--wa-hover); }
+.menue-knopf { display: none; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; background: var(--schwarz); overflow: hidden; padding-top: clamp(36px, 5.5vw, 80px); }
+.hero::before {
+  content: ""; position: absolute; width: 1100px; height: 900px; right: -260px; top: -200px; pointer-events: none;
+  background: radial-gradient(closest-side, rgb(45 191 253 / 15%), rgb(45 191 253 / 0));
+}
+.hero-grid {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr);
+  gap: clamp(40px, 5.5vw, 88px); align-items: center;
+  padding-bottom: clamp(52px, 6.5vw, 92px);
+}
+.hero h1 {
+  font-size: clamp(40px, 5.4vw, 78px); line-height: .98; letter-spacing: .005em; text-transform: uppercase;
+  margin-bottom: 26px; text-wrap: balance;
+}
+.hero h1 em { font-style: normal; color: var(--sky); }
+.hero h1 .zeile { white-space: nowrap; }
+.hero .lead { font-size: clamp(18px, 1.45vw, 20.5px); color: #C8CFDF; max-width: 33em; }
+.hero-knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin: 34px 0 40px; }
+.hero-preise { list-style: none; display: flex; flex-wrap: wrap; border-top: 1px solid var(--linie); padding-top: 22px; }
+.hero-preise li { display: flex; flex-direction: column; gap: 4px; padding: 0 clamp(16px, 2vw, 28px); border-left: 1px solid var(--linie); }
+.hero-preise li:first-child { padding-left: 0; border-left: 0; }
+.hero-preise span { font-size: 14px; color: var(--muted); }
+.hero-preise b { font: 700 27px/1 "Chakra Petch", sans-serif; letter-spacing: .02em; color: var(--sky); }
+
+.hero-bild { position: relative; isolation: isolate; padding: clamp(28px, 3.5vw, 56px) 0 0 clamp(28px, 3.5vw, 56px); }
+.hero-foto {
+  position: relative; overflow: hidden; background: #2E3A52;
+  clip-path: polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px);
+}
+.hero-foto img { display: block; width: 100%; height: auto; }
+.hero-foto::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgb(35 31 32 / 0) 62%, rgb(35 31 32 / 38%) 100%);
+}
+.hero-bild::after {
+  content: ""; position: absolute; right: -14px; bottom: -14px; width: 46%; height: 46%; z-index: -1;
+  background: var(--profil-h) repeat / 16px 32px; opacity: .9;
+}
+.etikett {
+  position: absolute; z-index: 2; bottom: 14px; display: inline-flex; flex-direction: column; gap: 2px;
+  padding: 8px 12px 9px;
+  font: 600 13px/1.15 "Chakra Petch", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #fff;
+  background: rgb(26 23 24 / 82%);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+}
+.etikett i { font-style: normal; color: var(--sky); font-size: 11.5px; letter-spacing: .14em; }
+.etikett-l { left: 5%; }
+.etikett-r { right: 5%; text-align: right; }
+.hero-rad {
+  position: absolute; z-index: 3; left: 0; top: 0;
+  width: clamp(112px, 12.5vw, 184px); aspect-ratio: 1;
+  filter: drop-shadow(0 18px 28px rgb(0 0 0 / 55%));
+}
+.hero-rad svg { display: block; width: 100%; height: 100%; }
+.hero-text { position: relative; }
+.hero-rad-mobil { display: none; }
+
+.spur { position: relative; height: 34px; overflow: hidden; background: var(--schwarz); }
+.spur-band { position: absolute; inset: 0; background: var(--profil-h) repeat-x left center / 17px 34px; }
+.spur::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -120px; width: calc(100% + 120px);
+  background: linear-gradient(90deg, rgb(35 31 32 / 0) 0, var(--schwarz) 120px);
+  transform: translateX(101%);
+}
+
+/* ---------- Preise ---------- */
+.preise { background: var(--navy); padding: clamp(72px, 9vw, 128px) 0 clamp(64px, 8vw, 112px); }
+.preis-raster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.preis-karte {
+  position: relative; display: flex; flex-direction: column; padding: 30px 30px 30px;
+  background: linear-gradient(165deg, #3039A0 0%, var(--royal) 45%, var(--royal-tief) 100%);
+  clip-path: polygon(var(--ecke) 0, 100% 0, 100% calc(100% - var(--ecke)), calc(100% - var(--ecke)) 100%, 0 100%, 0 var(--ecke));
+}
+.preis-karte h3 { font-size: 17px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.preis { display: flex; align-items: flex-start; gap: 8px; margin: 20px 0 14px; font: 700 clamp(54px, 5.4vw, 72px)/.9 "Chakra Petch", sans-serif; color: var(--sky); letter-spacing: .01em; }
+.preis small { font-size: 15px; line-height: 1; letter-spacing: .14em; color: var(--muted-royal); margin-top: 8px; }
+.preis span { font-variant-numeric: tabular-nums; }
+.preis-text { color: var(--muted-royal); font-size: 16.5px; margin-bottom: 26px; }
+.preis-karte .btn { margin-top: auto; align-self: flex-start; }
+.preis-karte-still { background: transparent; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 14%); clip-path: none; }
+.preis-karte-still .preis { color: #fff; }
+.preis-karte-still .preis small, .preis-karte-still .preis-text { color: var(--muted); }
+.preis-karte-still .textlink { margin-top: auto; align-self: flex-start; }
+.hinweis { display: flex; align-items: center; gap: 12px; margin-top: 26px; color: var(--muted); font-size: 16px; }
+.hinweis .i { color: var(--sky); }
+
+/* ---------- Profilband ---------- */
+.profilband { height: 30px; background: var(--schwarz) var(--profil-h) repeat-x left center / 15px 30px; }
+
+/* ---------- Kurse ---------- */
+.kurse {
+  position: relative; padding: clamp(72px, 9vw, 120px) 0;
+  background: linear-gradient(180deg, var(--royal) 0%, var(--royal-tief) 100%);
+}
+.kurse .kicker { color: #fff; }
+.kurse .kicker::before { background-image: var(--profil-h-sky); }
+.nh-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(40px, 6vw, 88px); align-items: center; }
+.preis19 { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 6px 26px; margin: 4px 0 26px; }
+.p19-neu { display: flex; align-items: flex-start; gap: 10px; font: 700 clamp(104px, 13vw, 168px)/.8 "Chakra Petch", sans-serif; color: #fff; letter-spacing: -.01em; }
+.p19-neu small { font-size: 22px; line-height: 1; letter-spacing: .14em; color: var(--sky); margin-top: 10px; }
+.p19-alt { font: 600 clamp(22px, 2.2vw, 28px)/1 "Chakra Petch", sans-serif; color: var(--muted-royal); padding-bottom: 10px; letter-spacing: .04em; }
+.p19-alt s { position: relative; text-decoration: none; color: #fff; white-space: nowrap; }
+.p19-alt s::after {
+  content: ""; position: absolute; left: -5px; right: -5px; top: 54%; height: 3px; margin-top: -1.5px;
+  background: var(--sky); transform: rotate(-4deg);
+}
+.nh-lead { font-size: clamp(18px, 1.45vw, 20px); color: #E6E9F7; max-width: 34em; }
+.haken { list-style: none; display: grid; gap: 10px; margin: 26px 0 34px; }
+.haken li { display: flex; gap: 12px; align-items: flex-start; color: var(--muted-royal); }
+.haken .i { color: var(--sky); margin-top: 4px; stroke-width: 2.4; }
+.knopfreihe { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.kurse .textlink { color: #fff; }
+.nh-bild { margin: 0; }
+.nh-bild img {
+  display: block; width: 100%; aspect-ratio: 4 / 3.4; object-fit: cover; object-position: 40% 50%;
+  clip-path: polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px);
+}
+.nh-bild figcaption { margin-top: 14px; font-size: 15px; color: var(--muted-royal); max-width: 30em; }
+
+.vku {
+  margin-top: clamp(56px, 7vw, 88px); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: center;
+  padding: clamp(24px, 3vw, 36px) clamp(22px, 3vw, 40px);
+  background: var(--navy);
+  clip-path: polygon(var(--ecke) 0, 100% 0, 100% calc(100% - var(--ecke)), calc(100% - var(--ecke)) 100%, 0 100%, 0 var(--ecke));
+}
+.vku-kopf { display: flex; gap: 24px; align-items: flex-start; }
+.vku .vku-marke {
+  flex: none; padding: 12px 14px 11px; font: 700 26px/1 "Chakra Petch", sans-serif; letter-spacing: .08em;
+  color: var(--navy); background: var(--sky);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+.vku h3 { font-size: 22px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+.vku p { color: var(--muted); font-size: 16.5px; max-width: 40em; }
+.vku-fuss { display: flex; align-items: center; gap: 28px; }
+.vku .vku-preis { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; max-width: 9em; font: 700 44px/1 "Chakra Petch", sans-serif; color: var(--sky); white-space: nowrap; }
+.vku-preis small { font-size: 15px; letter-spacing: .14em; color: var(--muted); }
+.vku-preis span { display: block; width: 100%; font: 400 14px/1.3 "Rubik", sans-serif; color: var(--muted); }
+
+/* ---------- Fahrzeuge ---------- */
+.fahrzeuge { background: var(--schwarz); padding: clamp(72px, 9vw, 128px) 0; }
+.fz-raster { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.fz-karte {
+  background: var(--karte-dunkel);
+  clip-path: polygon(var(--ecke) 0, 100% 0, 100% calc(100% - var(--ecke)), calc(100% - var(--ecke)) 100%, 0 100%, 0 var(--ecke));
+}
+.fz-bild { overflow: hidden; }
+.fz-bild img { display: block; width: 100%; aspect-ratio: 640 / 340; object-fit: cover; transition: transform .8s var(--ease); }
+.fz-karte:hover .fz-bild img { transform: scale(1.035); }
+.fz-text { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 20px; padding: 22px 26px 26px; }
+.fz-art { font: 600 13px/1.2 "Chakra Petch", sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--sky); }
+.fz-text h3 { grid-column: 1; font-size: clamp(24px, 2.4vw, 30px); text-transform: uppercase; letter-spacing: .02em; line-height: 1.05; }
+.fz-zeichen { grid-column: 2; grid-row: 1 / span 2; display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.fz-zeichen .i { width: 40px; height: 40px; stroke-width: 1.6; }
+.fz-prnd span, .fz-prnd b { font: 600 19px/1 "Chakra Petch", sans-serif; width: 22px; text-align: center; }
+.fz-prnd b { color: var(--navy); background: var(--sky); padding: 4px 0; }
+
+/* ---------- Weg ab 2027 ---------- */
+.weg { background: var(--navy); padding: clamp(72px, 9vw, 128px) 0; }
+.strecke { position: relative; --p: 1; }
+.strecke-spur { position: absolute; left: 0; right: 0; top: 19px; height: 26px; }
+.strecke-grund, .strecke-voll { position: absolute; inset: 0; }
+.strecke-grund { background: var(--profil-h) repeat-x left center / 13px 26px; }
+.strecke-voll { overflow: hidden; transform: translateX(calc((var(--p) - 1) * 100%)); }
+.strecke-voll::before {
+  content: ""; position: absolute; inset: 0; background: var(--profil-h-sky) repeat-x left center / 13px 26px;
+  transform: translateX(calc((1 - var(--p)) * 100%));
+}
+.stationen { position: relative; list-style: none; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 18px; }
+.station { display: flex; flex-direction: column; }
+.st-rad { position: relative; width: 64px; height: 64px; display: grid; place-items: center; flex: none; }
+.st-rad svg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 6px 12px rgb(0 0 0 / 40%)); transition: transform .9s var(--ease); }
+.st-rad b { position: relative; font: 700 24px/1 "Chakra Petch", sans-serif; color: #fff; }
+.st-scheibe { fill: #34365E; stroke: #F3F6FB; stroke-width: 2.5; }
+.bei-uns .st-scheibe { fill: var(--l-blau); }
+.station.ist-erreicht .st-rad svg { transform: rotate(90deg); }
+.st-text { position: relative; padding-top: 52px; }
+.st-marke {
+  position: absolute; top: 18px; left: 0; height: 20px; display: flex; gap: 6px; align-items: center;
+  font: 600 12px/1 "Chakra Petch", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--sky);
+}
+.st-marke span { padding: 3px 6px; background: var(--sky); color: var(--navy); letter-spacing: .1em; }
+.station h3 { font-size: 19px; font-weight: 600; line-height: 1.15; margin-bottom: 8px; }
+.station p:not(.st-marke) { font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+.neu h3 { color: var(--sky); }
+
+.neu2027 {
+  margin-top: clamp(40px, 5vw, 64px); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px 32px; align-items: center;
+  padding: 22px 28px; background: var(--navy-tief);
+  box-shadow: inset 3px 0 0 var(--sky);
+}
+.neu2027-marke {
+  font: 700 14px/1 "Chakra Petch", sans-serif; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+  color: var(--navy); background: var(--sky); padding: 8px 10px;
+}
+.neu2027-text { color: #D6DBE8; font-size: 17px; max-width: 46em; }
+.neu2027-text strong { color: #fff; font-weight: 500; }
+
+/* ---------- Team ---------- */
+.team { background: linear-gradient(180deg, var(--royal) 0%, var(--royal-tief) 100%); padding: clamp(72px, 9vw, 120px) 0; }
+.team .kicker { color: #fff; }
+.team .intro { color: var(--muted-royal); }
+.team .textlink { color: #fff; }
+.team-raster { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.person {
+  display: grid; grid-template-columns: 188px minmax(0, 1fr); gap: 28px; align-items: center;
+  padding: 24px; background: rgb(16 18 58 / 34%);
+  clip-path: polygon(var(--ecke) 0, 100% 0, 100% calc(100% - var(--ecke)), calc(100% - var(--ecke)) 100%, 0 100%, 0 var(--ecke));
+}
+.person img {
+  display: block; width: 188px; height: 188px; object-fit: cover; object-position: 50% 20%;
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+.person h3 { font-size: 26px; text-transform: uppercase; letter-spacing: .03em; line-height: 1.05; }
+.rolle { margin: 6px 0 12px; font: 600 14px/1.35 "Chakra Petch", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--sky); }
+.person-text > p:not(.rolle) { color: var(--muted-royal); font-size: 16px; line-height: 1.55; }
+.sprachen { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.sprachen li { padding: 5px 11px; font-size: 13.5px; line-height: 1.2; color: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 26%); }
+
+/* ---------- Kontakt ---------- */
+.kontakt { background: var(--schwarz); padding: clamp(72px, 9vw, 128px) 0; position: relative; overflow: hidden; }
+.kontakt-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(40px, 6vw, 88px); align-items: center; }
+.kontakt h2 { margin-bottom: 10px; }
+.gross-tel {
+  display: inline-block; margin: 10px 0 18px; text-decoration: none; color: var(--sky);
+  font: 700 clamp(40px, 5.6vw, 76px)/1 "Chakra Petch", sans-serif; letter-spacing: .02em; white-space: nowrap;
+}
+.gross-tel:hover { color: #6AD3FF; }
+.kontakt .knopfreihe { margin-top: 30px; }
+.kontakt-karte {
+  position: relative; padding: clamp(26px, 3vw, 40px);
+  background: var(--navy);
+  clip-path: polygon(var(--ecke) 0, 100% 0, 100% calc(100% - var(--ecke)), calc(100% - var(--ecke)) 100%, 0 100%, 0 var(--ecke));
+}
+.kontakt-rad { position: absolute; right: clamp(20px, 3vw, 36px); top: clamp(20px, 3vw, 36px); width: 84px; height: 84px; }
+.kontakt-rad svg { width: 100%; height: 100%; display: block; }
+.kontakt-liste { list-style: none; }
+.kontakt-liste li { display: flex; gap: 14px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--linie); }
+.kontakt-liste li:first-child { padding-top: 4px; padding-right: 104px; }
+.kontakt-liste .i { color: var(--sky); margin-top: 3px; }
+.kontakt-liste b { font-weight: 500; color: #fff; }
+.kontakt-liste span { color: #D6DBE8; }
+.kontakt-liste a { color: #fff; text-decoration-color: rgb(45 191 253 / 60%); text-underline-offset: 4px; }
+.sozial { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+.sozial p { width: 100%; color: var(--muted); font-size: 15.5px; margin-bottom: 4px; }
+.sozial-link {
+  display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 16px; text-decoration: none; color: #fff; font-size: 15.5px;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 20%);
+  transition: background-color .2s;
+}
+.sozial-link:hover { background: rgb(255 255 255 / 8%); }
+.sozial-link .i { color: var(--sky); }
+
+/* ---------- Fusszeile ---------- */
+.fuss { background: var(--schwarz-tief); color: var(--muted); padding: 64px 0 32px; font-size: 15.5px; }
+.fuss-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 36px; padding-bottom: 40px; border-bottom: 1px solid var(--linie); }
+.fuss-marke img { height: 40px; width: auto; display: block; margin-bottom: 16px; }
+.fuss-marke p { max-width: 24em; }
+.fuss-titel { font: 600 13px/1 "Chakra Petch", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #fff; margin-bottom: 14px; }
+.fuss ul { list-style: none; }
+.fuss-nav li { margin-bottom: 4px; }
+.fuss a { color: #D3D8E4; text-decoration: none; display: inline-block; padding: 4px 0; }
+.fuss a:hover { color: var(--sky); }
+.fuss-kontakt p + p { margin-top: 12px; }
+.fuss-unten { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px 24px; padding-top: 22px; font-size: 14px; }
+.fuss-unten ul { display: flex; gap: 22px; }
+.fuss-unten a { min-height: 44px; display: inline-flex; align-items: center; }
+
+/* ---------- Handy-Aktionsleiste ---------- */
+.aktion { display: none; }
+
+/* ---------- Mittlere Breite ---------- */
+@media (max-width: 1180px) {
+  .kopf-tel { width: 44px; padding: 0; justify-content: center; }
+  .kopf-tel span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .hero-preise li { padding: 0 14px; justify-content: space-between; }
+  .hero-preise span { font-size: 13.5px; max-width: 9.5em; line-height: 1.3; }
+  .hero-preise b { font-size: 24px; }
+}
+
+@media (max-width: 1099px) {
+  /* Weg senkrecht */
+  .strecke-spur { left: 22px; right: auto; top: 32px; bottom: 32px; width: 20px; height: auto; }
+  .strecke-grund { background: var(--profil-v) repeat-y center top / 20px 10px; }
+  .strecke-voll { transform: translateY(calc((var(--p) - 1) * 100%)); }
+  .strecke-voll::before { background: var(--profil-v-sky) repeat-y center top / 20px 10px; transform: translateY(calc((1 - var(--p)) * 100%)); }
+  .stationen { grid-template-columns: 1fr; gap: 30px; max-width: 640px; }
+  .station { flex-direction: row; gap: 22px; align-items: flex-start; }
+  .st-text { padding-top: 6px; }
+  .st-marke { position: static; margin-bottom: 8px; }
+  .station h3 { font-size: 21px; }
+  .station p:not(.st-marke) { font-size: 16.5px; }
+}
+
+@media (max-width: 980px) {
+  :root { --kopf-h: 68px; }
+  .marke img { height: 38px; }
+  .kopf-mail, .kopf-wa { display: none; }
+  .kopf-aktion { margin-left: auto; }
+  .menue-knopf {
+    display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 0; cursor: pointer;
+    color: #fff; background: rgb(255 255 255 / 8%);
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  }
+  .menue-knopf .i { width: 24px; height: 24px; }
+  .menue-knopf .i-zu { display: none; }
+  .menue-offen .menue-knopf .i-auf { display: none; }
+  .menue-offen .menue-knopf .i-zu { display: block; }
+  .kopf-nav {
+    position: fixed; left: 0; right: 0; top: var(--kopf-h); bottom: 0; z-index: 79; margin: 0;
+    overflow-y: auto; padding: 24px var(--gut) 120px; background: var(--navy);
+    display: flex; flex-direction: column; gap: 28px;
+    visibility: hidden; opacity: 0; transform: translateY(-8px);
+    transition: opacity .25s, transform .3s var(--ease), visibility 0s .3s;
+  }
+  .menue-offen .kopf-nav { visibility: visible; opacity: 1; transform: none; transition: opacity .25s, transform .3s var(--ease); }
+  .kopf-anker { flex-direction: column; gap: 0; }
+  .kopf-anker a { width: 100%; min-height: 56px; font-size: 22px; letter-spacing: .1em; border-bottom: 1px solid var(--linie); }
+  .kopf-anker a::after { display: none; }
+  .menue-seiten { display: block; }
+  .menue-titel { font: 600 12.5px/1 "Chakra Petch", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--sky); margin-bottom: 8px; }
+  .menue-seiten ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  .menue-seiten a { display: flex; align-items: center; min-height: 44px; color: #D6DBE8; text-decoration: none; }
+  .menue-kontakt { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+  .menue-kontakt .btn { white-space: nowrap; }
+  .menue-mail { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: #D6DBE8; text-decoration: none; }
+  .menue-mail .i { color: var(--sky); }
+  .kopf.menue-offen { background: var(--navy); }
+
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-bild { max-width: 720px; }
+  .kopfzeile-breit { grid-template-columns: 1fr; }
+  .kopfzeile-breit h2 { margin-bottom: 4px; }
+  .preis-raster { grid-template-columns: 1fr 1fr; }
+  .preis-karte-still { grid-column: 1 / -1; }
+  .nh-grid { grid-template-columns: 1fr; }
+  .nh-bild { max-width: 640px; }
+  .vku { grid-template-columns: 1fr; }
+  .neu2027 { grid-template-columns: auto minmax(0, 1fr); }
+  .neu2027 .textlink { grid-column: 2; }
+  .team-raster { grid-template-columns: 1fr; }
+  .kontakt-grid { grid-template-columns: 1fr; }
+  .fuss-grid { grid-template-columns: 1fr 1fr; }
+  .fuss-marke { grid-column: 1 / -1; }
+
+  .aktion {
+    position: fixed; z-index: 90; left: 12px; right: 12px; bottom: calc(76px + env(safe-area-inset-bottom));
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 6px;
+    background: rgb(26 27 52 / 95%);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: 0 12px 34px rgb(0 0 0 / 40%), 0 0 0 1px rgb(255 255 255 / 9%);
+    clip-path: none; border-radius: 14px;
+    transition: transform .35s var(--ease), opacity .3s;
+  }
+  .aktion-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px;
+    font: 500 16.5px/1 "Rubik", sans-serif; text-decoration: none; border-radius: 10px;
+  }
+  .aktion-btn .i { width: 20px; height: 20px; }
+  .aktion-tel { background: var(--sky); color: var(--navy); font-weight: 600; }
+  .aktion-wa { background: var(--wa); color: #fff; }
+  html.js .aktion.ist-weg { transform: translateY(18px); opacity: 0; pointer-events: none; visibility: hidden; transition: transform .3s var(--ease), opacity .25s, visibility 0s .3s; }
+  .fuss { padding-bottom: calc(170px + env(safe-area-inset-bottom)); }
+}
+
+/* ---------- Handy ---------- */
+@media (max-width: 640px) {
+  body { font-size: 17.5px; }
+  .hero { padding-top: 26px; }
+  .hero h1 { font-size: clamp(31px, 10.4vw, 46px); margin-bottom: 18px; }
+  .hero h1 .zeile, .hero h1 em { display: block; }
+  .hero .kicker { font-size: 12px; letter-spacing: .12em; gap: 10px; margin-bottom: 14px; }
+  .hero .kicker::before { width: 20px; }
+  .hero-knoepfe { margin: 24px 0 26px; display: grid; grid-template-columns: 1fr; }
+  .hero-knoepfe .btn { width: 100%; }
+  .hero-preise { flex-direction: column; padding-top: 6px; }
+  .hero-preise li { flex-direction: row; justify-content: space-between; align-items: baseline; padding: 11px 0; border-left: 0; border-bottom: 1px solid var(--linie); }
+  .hero-preise span { font-size: 15.5px; color: #C8CFDF; max-width: none; }
+  .hero-preise b { font-size: 22px; }
+  .hero-grid { gap: 34px; padding-bottom: 40px; }
+  .hero-bild { padding: 0; margin-right: 0; }
+  .hero-rad-gross { display: none; }
+  .hero-rad-mobil { display: block; left: auto; right: 0; top: 34px; width: 84px; }
+  .hero-bild::after { display: none; }
+  .hero-foto { clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); }
+  .etikett { bottom: 8px; padding: 6px 8px 7px; font-size: 11px; letter-spacing: .06em; }
+  .etikett i { font-size: 9.5px; letter-spacing: .1em; }
+  .etikett-l { left: 3%; }
+  .etikett-r { right: 3%; }
+  .spur { height: 26px; }
+  .spur-band { background-size: 13px 26px; }
+
+  .preis-raster { grid-template-columns: 1fr; gap: 14px; }
+  .preis-karte { padding: 24px; }
+  .preis { margin: 14px 0 10px; font-size: 56px; }
+  .preis-text { margin-bottom: 20px; }
+  .hinweis { align-items: flex-start; font-size: 15.5px; }
+  .hinweis .i { margin-top: 2px; }
+  .profilband { height: 22px; background-size: 11px 22px; }
+
+  .p19-neu { font-size: 112px; }
+  .p19-neu small { font-size: 18px; }
+  .knopfreihe .btn { width: 100%; }
+  .vku-kopf { flex-direction: column; gap: 16px; }
+  .vku-fuss { flex-direction: column; align-items: stretch; gap: 18px; }
+  .vku-fuss .btn { width: 100%; }
+
+  .fz-raster { grid-template-columns: 1fr; gap: 16px; }
+  .fz-text { padding: 18px 20px 22px; }
+  .fz-zeichen .i { width: 34px; height: 34px; }
+  .fz-prnd span, .fz-prnd b { font-size: 16px; width: 18px; }
+
+  .strecke-spur { left: 18px; top: 28px; bottom: 28px; width: 18px; }
+  .st-rad { width: 56px; height: 56px; }
+  .st-rad b { font-size: 21px; }
+  .station { gap: 18px; }
+  .station h3 { font-size: 20px; }
+
+  .person { grid-template-columns: 84px minmax(0, 1fr); grid-template-areas: "bild kopf" "bild rolle" "text text" "spr spr"; gap: 0 16px; padding: 18px 18px 20px; align-items: center; }
+  .person img { grid-area: bild; width: 84px; height: 84px; }
+  .person-text { display: contents; }
+  .person h3 { grid-area: kopf; align-self: end; font-size: 22px; }
+  .rolle { grid-area: rolle; align-self: start; margin: 6px 0 0; font-size: 12.5px; }
+  .person-text > p:not(.rolle) { grid-area: text; margin-top: 16px; }
+  .sprachen { grid-area: spr; }
+  .nur-gross { display: none; }
+  .neu2027 { grid-template-columns: 1fr; padding: 20px 20px 14px; justify-items: start; gap: 12px; }
+  .neu2027 .textlink { grid-column: auto; }
+
+  .gross-tel { font-size: clamp(36px, 11vw, 48px); }
+  .kontakt-rad { width: 64px; height: 64px; }
+  .kontakt-liste li:first-child { padding-right: 76px; }
+  .fuss-grid { grid-template-columns: 1fr; gap: 28px; }
+  .fuss-unten { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 360px) {
+  .hero-rad-mobil { width: 68px; top: 30px; }
+  .hero .kicker { font-size: 11px; letter-spacing: .08em; gap: 8px; }
+  .hero .kicker::before { width: 16px; }
+  .etikett-r { display: none; }
+  .aktion { left: 8px; right: 8px; }
+}
+
+/* ---------- Bewegung (nur mit JS) ---------- */
+html.js .h-a { opacity: 0; transform: translateY(18px); }
+html.js.bereit .h-a { opacity: 1; transform: none; transition: opacity .7s var(--ease-out), transform .8s var(--ease-out); transition-delay: calc(var(--d, 0) * 90ms + 240ms); }
+
+html.js .hero-foto { opacity: 0; transform: translateY(14px) scale(.985); }
+html.js.bereit .hero-foto { opacity: 1; transform: none; transition: opacity 1s var(--ease-out) .55s, transform 1.2s var(--ease-out) .55s; }
+html.js .hero-rad { opacity: 0; transform: rotate(-360deg) scale(.7); }
+html.js.bereit .hero-rad { opacity: 1; transform: none; transition: transform 1.3s var(--ease-out) .05s, opacity .5s ease .05s; }
+html.js .spur::after { transform: translateX(0); }
+html.js.bereit .spur::after { transform: translateX(101%); transition: transform 1.3s cubic-bezier(.45, .05, .25, 1) .05s; }
+html.js .etikett { opacity: 0; transform: translateY(8px); }
+html.js.bereit .etikett { opacity: 1; transform: none; transition: opacity .5s var(--ease-out), transform .6s var(--ease-out); transition-delay: calc(1.35s + var(--e) * 140ms); }
+
+html.js [data-reveal] { opacity: 0; transform: translateY(26px); }
+html.js [data-reveal].ist-da { opacity: 1; transform: none; transition: opacity .75s var(--ease-out), transform .85s var(--ease-out); transition-delay: var(--rd, 0ms); }
+
+html.js .preis19 .p19-neu { opacity: 0; transform: scale(1.15); transform-origin: left bottom; }
+html.js .preis19.ist-da .p19-neu { opacity: 1; transform: none; transition: opacity .45s ease .95s, transform .7s var(--ease-out) .95s; }
+html.js .preis19 s::after { transform: rotate(-4deg) scaleX(0); transform-origin: left center; }
+html.js .preis19.ist-da s::after { transform: rotate(-4deg) scaleX(1); transition: transform .5s var(--ease) .45s; }
+
+html.js .station .st-rad { opacity: 0; transform: scale(.8); }
+html.js .station .st-text { opacity: 0; transform: translateY(14px); }
+html.js .station.ist-da .st-rad { opacity: 1; transform: none; transition: opacity .5s ease, transform .6s var(--ease-out); }
+html.js .station.ist-da .st-text { opacity: 1; transform: none; transition: opacity .6s var(--ease-out) .1s, transform .7s var(--ease-out) .1s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .h-a, html.js .hero-foto, html.js .hero-rad, html.js .etikett, html.js [data-reveal],
+  html.js .preis19 .p19-neu, html.js .station .st-rad, html.js .station .st-text {
+    opacity: 1 !important; transform: none !important; transition: none !important;
+  }
+  html.js .spur::after { display: none; }
+  html.js .preis19 s::after { transform: rotate(-4deg) !important; transition: none !important; }
+  .strecke { --p: 1 !important; }
+  .strecke-voll, .strecke-voll::before { transition: none !important; }
+  .st-rad svg, .station.ist-erreicht .st-rad svg { transform: none !important; transition: none !important; }
+  .btn, .textlink .i, .fz-bild img, .kopf-nav { transition: none !important; }
+  .btn:hover, .fz-karte:hover .fz-bild img { transform: none; }
+}
+
+@media print {
+  .kopf, .aktion, .spur, .profilband { display: none !important; }
+  body { background: #fff; color: #000; }
+}

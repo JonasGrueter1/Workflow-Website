@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website Fahrschule Sandra Schoch, Drive Easy Fahrschule</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website der Fahrschule Sandra Schoch (Drive Easy Fahrschule), Fahrstunden im Kanton Zug mit Treffpunkt Bahnhof Zug.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#002b42">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/b-saira-italic-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    .hero { padding: 64px 0 44px; max-width: 780px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--nacht); color: #fff; font-weight: 800; font-size: .95rem; }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(0 43 66 / 12%); background: var(--white); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid #0b1a24; border-bottom: 0; box-shadow: 0 10px 30px rgb(0 43 66 / 30%); background: var(--white); }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+    /* Design A: Nachtblau mit Lichtkegel wie der heutige Auftritt */
+    .option-a .shots { background: radial-gradient(ellipse 75% 85% at 50% 30%, var(--kegel) 0%, #0f4566 45%, var(--nacht) 100%); }
+    .option-a .shot-desk { box-shadow: 0 -2px 24px rgb(0 0 0 / 40%); background: var(--nacht); }
+    .option-a .shot-mob { border-color: #001a29; background: var(--nacht); box-shadow: 0 10px 30px rgb(0 0 0 / 45%); }
+    .option-a .option-tag { color: var(--rot); }
+    .option-a .chips li { background: var(--red-soft); color: var(--nacht); }
+    .btn-a { background: var(--nacht); color: #fff; }
+    .btn-a:hover { background: #001a29; color: #fff; }
+    /* Design B: hell, Nachricht per WhatsApp oder SMS */
+    .option-b .shots { background: #e4eef5; }
+    .option-b .option-tag { color: #0b6b58; }
+    .option-b .chips li { background: #dcf3ec; color: #0b5e4e; }
+    .btn-b { background: #0e7c66; color: #fff; }
+    .btn-b:hover { background: #0b6654; color: #fff; }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #c3cfd9; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--nacht); width: 22px; height: 22px; margin-top: 2px; }
+
+    .next {
+      position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      margin: 40px 0 24px; padding: 34px 38px; border-radius: var(--r-lg); color: #fff;
+      background: radial-gradient(ellipse 60% 140% at 28% 0%, var(--kegel) 0%, #0f4566 42%, var(--nacht) 100%);
+    }
+    .next::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--licht), transparent); opacity: .7; }
+    .next > div { position: relative; max-width: 640px; }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .next p { color: rgb(255 255 255 / 80%); }
+    .next .btn { position: relative; }
+    .next-linie { position: absolute; right: 230px; top: 50%; width: 240px; height: 70px; transform: translateY(-50%); color: #fff; stroke-width: 3; opacity: .16; pointer-events: none; }
+
+    @media (max-width: 1100px) { .next-linie { display: none; } }
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .shot-mob { right: 16px; }
+      .next { padding: 26px 22px; }
+      .next .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons; Auto-Linie nachgezeichnet nach dem Logo der Fahrschule Sandra Schoch -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+    <symbol id="auto" viewBox="0 0 336 97"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M1,61 C40,48 90,37 176,31"/><path d="M82,38 C110,22 150,6 195,4 C225,3 248,10 261,21"/><path d="M108,32 C150,27 190,24 218,23 C226,22 227,12 220,10 C212,8 205,9 201,9"/><path d="M231,25 C260,25 300,26 321,27 C319,45 310,62 295,74"/><path d="M242,52 C255,44 272,43 283,50 C290,56 294,65 296,74"/><path d="M54,68 C64,69 74,76 79,91"/><path d="M80,91 C130,89 190,86 235,83"/></g></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./" aria-label="Fahrschule Sandra Schoch, Drive Easy Fahrschule: Übersicht">
+        <span class="wordmark" aria-hidden="true">
+          <svg class="wm-linie" viewBox="0 0 336 97"><use href="#auto"/></svg>
+          <span class="wm-text"><span class="wm">Fahrschule Sandra Schoch</span><span class="wm-sub">Drive Easy Fahrschule</span></span>
+        </span>
+        <span class="top-tag">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite der Fahrschule Sandra Schoch zwei unterschiedliche Designs entworfen, mit Ihren eigenen Texten, Ihrer Preisliste ab 1. Januar 2026 und dem Foto Ihres Toyota Yaris. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Nachtfahrt</h2>
+          <p>Ihr heutiger Auftritt, sauber umgesetzt: tiefes Nachtblau und ein weicher Lichtkegel, in dem sich Ihre Auto-Linie zeichnet, darüber Ihr Name in roter Kursivschrift. Danach folgen Ihre 57 Bewertungen mit der Auszeichnung von 2018, die Preise, die Herbst-Aktion, der Yaris, Über mich und der Kontakt per WhatsApp und SMS.</p>
+          <ul class="chips"><li>Nachtblau</li><li>Leuchtende Auto-Linie</li><li>Bewertungen zuerst</li></ul>
+          <a class="btn btn-a" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Schreib mir</h2>
+          <p>Hell und direkt: Im ersten Bild steht eine fertige Nachricht an Sie («Hallo Sandra, ich interessiere mich für Fahrstunden»), ein Tipp auf WhatsApp oder SMS öffnet genau diese Nachricht. Darunter folgen die Aktion, Ihre Preise mit Umschalter 60 oder 90 Minuten, das Angebot, der Yaris, die Bewertungen und Über mich.</p>
+          <ul class="chips"><li>Hell und freundlich</li><li>Nachricht im Fokus</li><li>Preise 60 oder 90 Minuten</li></ul>
+          <a class="btn btn-b" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Über mich, Angebot, Aktionen oder Fahrzeuge werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Preise und das Foto Ihres Yaris stammen von Ihrer bisherigen Website, die Bewertungen von Ihrem Profil auf dem Vergleichsportal für Fahrlehrer. WhatsApp und SMS stehen an erster Stelle, wie Sie es auf Ihrer Kontaktseite empfehlen, einen Anruf-Knopf gibt es bewusst nicht. Statt einer Adresse nennen die Entwürfe den Treffpunkt Bahnhof Zug, und die Herbst-Aktion verschwindet nach dem 30. November von selbst. Ein Foto von Ihnen habe ich nicht gefunden, darum kommen beide Entwürfe ohne Personenbild aus. Ein eigenes Foto setze ich gerne ein.</span>
+    </p>
+
+    <div class="next">
+      <svg class="next-linie" viewBox="0 0 336 97" aria-hidden="true" focusable="false"><use href="#auto"/></svg>
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn btn-light" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026</span>
+    </div>
+  </footer>
+</body>
+</html>

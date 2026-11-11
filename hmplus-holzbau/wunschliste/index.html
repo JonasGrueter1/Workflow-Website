@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wunschliste | Neue Website HMplus Holzbau AG, Sempach</title>
+  <meta name="description" content="Wählen Sie Design, Seiten und Funktionen für die neue Website der HMplus Holzbau AG in Sempach.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#c8101a">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/shared/basis.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"/><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"/><path d="M7 15a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2l0 -4"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11"/><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="../" aria-label="HMplus Holzbau AG, Sempach: zur Übersicht">
+        <img src="../assets/img/logo.webp" alt="HMplus Holzbau AG, Sempach" width="600" height="178">
+        <span class="top-tag">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="../">Übersicht</a>
+        <a href="../design-a/" target="_blank" rel="noopener">Design A</a>
+        <a href="../design-b/" target="_blank" rel="noopener">Design B</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <p class="kicker">Wunschliste</p>
+      <h1>Ihre Wunschliste für die neue Website</h1>
+      <p>Wählen Sie Ihr Lieblingsdesign und die Seiten und Funktionen, die Sie sich für die HMplus Holzbau AG wünschen. Der Preis rechnet automatisch mit und gilt für die ganze neue Website mit allen gewählten Seiten, nicht nur für die Startseite. Am Schluss senden Sie mir Ihre Auswahl mit einem Klick.</p>
+    </div>
+
+    <div class="layout">
+      <form class="wish" id="wish" novalidate>
+
+        <!-- 1 Design -->
+        <section class="block" aria-labelledby="h-design">
+          <div class="block-head">
+            <span class="block-no">1</span>
+            <div>
+              <h2 id="h-design">Welches Design gefällt Ihnen?</h2>
+              <p>Mit «Ansehen» öffnet sich das Design in einem neuen Fenster.</p>
+            </div>
+          </div>
+          <div class="designs" id="designs">
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design A: Holzbau aus Sempach">
+                <img src="../assets/img/vorschau-a.webp" width="960" height="600" alt="Vorschau Design A">
+                <span class="design-text"><strong>Design A</strong><span>Holzbau aus Sempach: hell und warm, Zeitstrahl und Fotos mit Ort</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-a/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design B: Balken und Raster">
+                <img src="../assets/img/vorschau-b.webp" width="960" height="600" alt="Vorschau Design B">
+                <span class="design-text"><strong>Design B</strong><span>Balken und Raster: Anthrazit und Rot, Projekte nach Bereich filterbar</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-b/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+          </div>
+          <label class="opt opt-mix">
+            <input type="radio" name="design" value="Mischung aus beiden, gerne besprechen">
+            <span class="opt-box opt-box-round" aria-hidden="true"></span>
+            <span class="opt-text"><strong>Eine Mischung aus beiden</strong><small>Zum Beispiel das helle Design A mit der filterbaren Projektauswahl von B. Das besprechen wir dann gemeinsam.</small></span>
+          </label>
+          <p class="error" id="design-error" hidden>Bitte wählen Sie ein Design aus.</p>
+        </section>
+
+        <!-- 2 Grundpaket -->
+        <section class="block" aria-labelledby="h-base">
+          <div class="block-head">
+            <span class="block-no">2</span>
+            <div>
+              <h2 id="h-base">Grundpaket</h2>
+              <p>Ist immer dabei, damit die Website sauber funktioniert.</p>
+            </div>
+          </div>
+          <ul class="base" id="base">
+            <li data-hours="6"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Konzept und zwei Designentwürfe</span><span class="cost">CHF 270.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ausarbeitung des gewählten Designs</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Startseite mit Logo, Projektfotos und den Knöpfen «Anrufen» und «Offerte anfragen» im ersten Bild</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Texte und Fotos von Ihrer bisherigen Website übernehmen, sprachlich glätten und aufbereiten</span><span class="cost">CHF 225.00</span></li>
+            <li data-hours="1"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ihr Logo als scharfe Grafik, auf jedem Bildschirm vollständig sichtbar</span><span class="cost">CHF 45.00</span></li>
+            <li data-hours="1"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Neuer Name «HMplus Holzbau AG» in allen Seitentiteln und Beschreibungen für Suchmaschinen</span><span class="cost">CHF 45.00</span></li>
+            <li data-hours="1.5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Impressum und Datenschutzerklärung mit Ihren Firmenangaben</span><span class="cost">CHF 67.50</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Optimiert für Smartphone, Tablet und Computer</span><span class="cost">CHF 135.00</span></li>
+            <li data-hours="2"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Aufschalten und Hosting einrichten, Ihre Internetadresse bleibt gleich</span><span class="cost">CHF 90.00</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Einführung und eine Korrekturrunde</span><span class="cost">CHF 135.00</span></li>
+          </ul>
+        </section>
+
+        <!-- 3 Seiten -->
+        <section class="block" aria-labelledby="h-pages">
+          <div class="block-head">
+            <span class="block-no">3</span>
+            <div>
+              <h2 id="h-pages">Welche Seiten wünschen Sie?</h2>
+              <p>Vorausgewählt sind die Seiten, die Ihre bisherige Website schon hat, jede mit Ihren Fotos und Ortsnamen. Jede Seite lässt sich an- oder abwählen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Seiten">
+            <label class="opt"><input type="checkbox" name="seite" value="Portrait" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Portrait</strong><small>Ihr Betrieb und der Zeitstrahl von der Gründung 1996 bis zur HMplus Holzbau AG</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Team" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Team</strong><small>Alle 23 Personen mit Foto und Funktion, von der Geschäftsleitung bis zu den Lernenden</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Systemholzbau" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Systemholzbau</strong><small>Im Werk vorgefertigte Elemente, mit Projekten wie der Oberstadt in Aarburg oder dem Eichhof in Eich</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Planung und Ausführung" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Planung und Ausführung</strong><small>Ihre Rolle als GU-Partner von Beginn der Planung an, mit dem 3D-Plan und Ihren Projekten</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Industrie" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Industrie</strong><small>Objekte aus Holz im Industriebereich, zum Beispiel in Büron und Schenkon</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Landwirtschaft" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Landwirtschaft</strong><small>Remisen und Tragwerke, zum Beispiel in Mettenwil, Sempach Station und Eich</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Umbauten" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Umbauten</strong><small>Altes und Neues kombiniert, vom Rathaus Sempach bis Wahligen in Rothenburg</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Fassade und Sichtschutz" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Fassade und Sichtschutz</strong><small>Holz und Holzwerkstoffe im Aussenbereich, zum Beispiel bei der Suisag oder am Vierherrenplatz in Sursee</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Innenausbau" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Innenausbau</strong><small>Täfer, Verkleidungen und Treppen für ein behagliches Wohnklima</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Parkett" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Parkett</strong><small>Böden in Holz, Laminat und Kork, mit Beratung zu Wahl und Pflege</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Terrassenroste" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Terrassenroste</strong><small>Gemütliche Plätze im Freien, zum Beispiel im Städtli Sempach</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Vermietung" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Vermietung</strong><small>30 Festgarnituren mit Lieferung auf Wunsch und der Parkettolino für geölte Böden</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kontakt und Anfahrt" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kontakt und Anfahrt</strong><small>Telefon, E-Mail und Adresse am Stephansweg 13, dazu die Ansprechpartner der Geschäftsleitung</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Aktuell" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Aktuell</strong><small>Neue Projekte, Aufrichten und Neuigkeiten aus dem Betrieb, die Sie selbst ergänzen können</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Lehre und Stellen" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Lehre und Stellen</strong><small>Ihr Lehrbetrieb vorgestellt, mit Platz für Lehrstellen und offene Stellen, wenn Sie welche ausschreiben</small></span><span class="cost">CHF 67.50</span></label>
+          </div>
+        </section>
+
+        <!-- 4 Funktionen -->
+        <section class="block" aria-labelledby="h-features">
+          <div class="block-head">
+            <span class="block-no">4</span>
+            <div>
+              <h2 id="h-features">Welche Funktionen wünschen Sie?</h2>
+              <p>Extras, die Ihren Kundinnen und Kunden den Weg zu Ihnen leichter machen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Funktionen">
+            <label class="opt"><input type="checkbox" name="funktion" value="Offertanfrage-Formular" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Offertanfrage-Formular</strong><small>Anfragen mit Bereich, zum Beispiel Systemholzbau, Umbau oder Parkett, dazu Ort und Nachricht, kommen per E-Mail zu Ihnen</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Referenzen-Galerie mit Filter" data-hours="4" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Referenzen-Galerie mit Filter</strong><small>Ihre rund 200 Projektfotos nach Bereich filterbar, mit Ortsnamen und Grossansicht</small></span><span class="cost">CHF 180.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Optimierung" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Optimierung</strong><small>Damit man Sie bei «Holzbau Sempach» oder «Zimmerei Sursee» gut findet, mit klaren Seitentiteln und Beschreibungen</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Schnellkontakt-Leiste" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Schnellkontakt-Leiste</strong><small>Anrufen und Offerte mit einem Tipp, auf dem Smartphone immer sichtbar</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Fotos und Pläne zur Anfrage mitsenden" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Fotos und Pläne zur Anfrage mitsenden</strong><small>Kundinnen und Kunden schicken Fotos oder Pläne ihres Vorhabens gleich mit der Anfrage</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Vorher-nachher-Vergleich" data-hours="2.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Vorher-nachher-Vergleich</strong><small>Für Umbauten wie am Benziwinkel in Sempach: Ein Schieberegler zeigt vorher und nachher im selben Bild</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Vermietung online anfragen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Vermietung online anfragen</strong><small>Festgarnituren oder Parkettolino mit Datum, Anzahl und Lieferwunsch anfragen, die Anfrage kommt per E-Mail zu Ihnen</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Unternehmensprofil" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Unternehmensprofil</strong><small>Ihr Eintrag in Google Maps unter dem neuen Namen, mit Fotos, Telefon und Link zur neuen Website</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Karte mit Standort" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Karte mit Standort</strong><small>Ihr Betrieb am Stephansweg 13 auf einer Karte, direkt auf der Kontaktseite</small></span><span class="cost">CHF 67.50</span></label>
+          </div>
+        </section>
+
+        <!-- 5 Weitere Angaben -->
+        <section class="block" aria-labelledby="h-more">
+          <div class="block-head">
+            <span class="block-no">5</span>
+            <div>
+              <h2 id="h-more">Noch ein paar Fragen</h2>
+              <p>Damit ich gut planen kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-when">Wann soll die neue Website online sein?</label>
+              <select id="f-when" name="termin">
+                <option>So bald wie möglich</option>
+                <option>Bis Ende 2026</option>
+                <option>Bis Frühling 2027</option>
+                <option>Kein fester Termin</option>
+              </select>
+            </div>
+            <fieldset class="field">
+              <legend>Fotos</legend>
+              <label class="mini"><input type="radio" name="fotos" value="Vorhandene Fotos verwenden" checked> Vorhandene Fotos verwenden, zum Beispiel aus Ihren Projektgalerien</label>
+              <label class="mini"><input type="radio" name="fotos" value="Ich liefere neue Fotos"> Ich liefere neue Fotos, zum Beispiel ein Teamfoto mit dem neuen Logo</label>
+              <label class="mini"><input type="radio" name="fotos" value="Neue Fotos wären schön, bitte beraten"> Neue Fotos wären schön, bitte beraten</label>
+            </fieldset>
+            <div class="field field-full">
+              <label for="f-notes">Weitere Wünsche oder Bemerkungen</label>
+              <textarea id="f-notes" name="bemerkungen" rows="4" placeholder="Was ist Ihnen sonst noch wichtig?"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 Kontakt -->
+        <section class="block" aria-labelledby="h-contact">
+          <div class="block-head">
+            <span class="block-no">6</span>
+            <div>
+              <h2 id="h-contact">Ihre Kontaktangaben</h2>
+              <p>Damit ich mich bei Ihnen melden kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telefon</label>
+              <input id="f-phone" name="telefon" type="tel" autocomplete="tel">
+            </div>
+            <div class="field field-full">
+              <label for="f-mail">E-Mail</label>
+              <input id="f-mail" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <aside class="summary" id="summary" aria-labelledby="h-summary">
+        <h2 id="h-summary">Ihre Auswahl</h2>
+        <dl class="sum-lines">
+          <div><dt>Design</dt><dd id="s-design" class="sum-design">noch nicht gewählt</dd></div>
+          <div><dt>Grundpaket</dt><dd id="s-base">CHF 1’372.50</dd></div>
+          <div><dt>Seiten <span id="s-pages-n">(13)</span></dt><dd id="s-pages">CHF 810.00</dd></div>
+          <div><dt>Funktionen <span id="s-feat-n">(4)</span></dt><dd id="s-feat">CHF 472.50</dd></div>
+        </dl>
+        <div class="sum-total">
+          <span>Total</span>
+          <strong id="s-total">CHF 2’655.00</strong>
+        </div>
+        <p class="sum-hours"><span id="s-hours">59</span> Stunden à CHF 45</p>
+        <div class="sum-actions no-print">
+          <button class="btn btn-red btn-block" type="submit" form="wish">Auswahl senden <svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+          <button class="btn btn-line btn-block" type="button" id="print"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg> Drucken oder als PDF</button>
+        </div>
+        <div class="status" id="status" role="status" aria-live="polite" hidden></div>
+        <p class="sum-note">Der Preis gilt für die ganze neue Website mit allen gewählten Seiten, nicht nur für die Startseite.</p>
+        <p class="sum-note">Alle Preise sind unverbindliche Richtpreise. Zusätzliche Wünsche berechne ich mit CHF 45 pro Stunde.</p>
+        <p class="sum-note">Beim Senden werden Ihre Angaben über den Dienst Web3Forms per E-Mail an mich übermittelt und nur für dieses Projekt verwendet.</p>
+      </aside>
+    </div>
+  </main>
+
+  <div class="mbar no-print">
+    <span>Total <strong id="m-total">CHF 2’655.00</strong></span>
+    <a class="btn btn-red" href="#summary">Zur Auswahl</a>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter</span>
+      <span>November 2026</span>
+      <a data-mail href="#">E-Mail an Jonas Grüter</a>
+    </div>
+  </footer>
+</body>
+</html>

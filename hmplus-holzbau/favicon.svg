@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="182 -8 456 456">
+  <!-- HM-Zeichen nach dem Logo der HMplus Holzbau AG: graue Balken, rotes Feld, weisse Aussparungen -->
+  <rect x="182" y="-8" width="456" height="456" rx="80" fill="#fff"/>
+  <rect x="240" y="48" width="377" height="382" fill="#E40814"/>
+  <rect x="204" y="12" width="28" height="376" fill="#7E7F81"/>
+  <rect x="240" y="190" width="140" height="32" fill="#fff"/>
+  <path d="M410 48H548V70L478 152L410 70Z" fill="#fff"/>
+  <rect x="376" y="12" width="34" height="382" fill="#fff"/>
+  <rect x="380" y="12" width="26" height="378" fill="#7E7F81"/>
+  <rect x="548" y="12" width="34" height="382" fill="#fff"/>
+  <rect x="552" y="12" width="26" height="378" fill="#7E7F81"/>
+  <path d="M414 22H546L480 110Z" fill="#7E7F81"/>
+</svg>

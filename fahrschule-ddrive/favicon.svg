@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#1F1A1F"/>
+  <circle cx="16" cy="16" r="12.6" fill="none" stroke="#EEF2F8" stroke-width="3" stroke-dasharray="2.3 1.2"/>
+  <circle cx="16" cy="16" r="9.6" fill="#0098D8"/>
+  <path d="M13.6 9.6h3v7.6h4.2v3H13.6z" fill="#fff" transform="translate(16 16) skewX(-10) translate(-16 -16)"/>
+</svg>
