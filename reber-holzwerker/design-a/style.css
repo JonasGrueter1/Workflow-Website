@@ -1,0 +1,401 @@
+/* Reber Holzwerker GmbH, Design A «Holzwerker»: Reber-Braun, weisses Logo, Maserung als Band, Gelb als Akzent */
+
+@font-face { font-family: "Asap Condensed"; src: url("../assets/fonts/a-asapcondensed-600-latin.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Asap Condensed"; src: url("../assets/fonts/a-asapcondensed-700-latin.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Asap"; src: url("../assets/fonts/a-asap-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+
+:root {
+  --braun: #653B2A;
+  --braun-tief: #4A2A1E;
+  --braun-nacht: #3B2117;
+  --braun-hell: #7A4A36;
+  --karte: #6E4231;
+  --weiss: #FFFFFF;
+  --gelb: #F5D554;
+  --muted: #E9D9CF;
+  --linie: rgb(255 255 255 / 14%);
+  --schmal: "Asap Condensed", "Arial Narrow", system-ui, sans-serif;
+  --text: "Asap", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --r: 4px;
+  --kopf-h: 80px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--kopf-h) + 12px); }
+body {
+  margin: 0; background: var(--braun); color: var(--weiss);
+  font-family: var(--text); font-size: 1.125rem; line-height: 1.6; font-weight: 400;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+h1, h2, h3, p, ul, figure { margin: 0; }
+h1, h2, h3 { font-family: var(--schmal); font-weight: 700; line-height: 1.02; letter-spacing: -0.012em; text-wrap: balance; }
+a { color: inherit; }
+ul { padding: 0; list-style: none; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 3px solid var(--gelb); outline-offset: 3px; border-radius: 2px; }
+
+.wrap { width: 100%; max-width: 1320px; margin: 0 auto; padding-left: clamp(20px, 4vw, 40px); padding-right: clamp(20px, 4vw, 40px); }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 200; padding: 10px 16px; background: var(--gelb); color: var(--braun-tief); font-weight: 600; text-decoration: none; border-radius: var(--r); }
+.skip:focus { top: 12px; }
+
+.kicker {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--schmal); font-weight: 600; font-size: .9375rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gelb);
+}
+.kicker::before { content: ""; width: 28px; height: 2px; background: currentColor; flex: none; }
+
+/* ===== Knöpfe ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 22px; border: 2px solid transparent; border-radius: var(--r);
+  font-family: var(--schmal); font-weight: 700; font-size: 1.0625rem; letter-spacing: .03em; line-height: 1.1;
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color .25s, color .25s, border-color .25s, transform .25s var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+.btn-gross { min-height: 56px; padding: 0 26px; font-size: 1.125rem; }
+.btn-weiss { background: var(--weiss); color: var(--braun); }
+.btn-weiss:hover { background: var(--gelb); color: var(--braun-tief); }
+.btn-gelb { background: var(--gelb); color: var(--braun-tief); }
+.btn-gelb:hover { background: var(--weiss); color: var(--braun); }
+.btn-umriss { border-color: var(--gelb); color: var(--weiss); }
+.btn-umriss:hover { background: var(--gelb); color: var(--braun-tief); }
+.textlink {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  font-family: var(--schmal); font-weight: 600; font-size: 1rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: var(--weiss);
+  transition: color .25s;
+}
+.textlink .i { transition: transform .3s var(--ease); }
+.textlink:hover { color: var(--gelb); }
+.textlink:hover .i { transform: translateX(4px); }
+
+/* ===== Kopf ===== */
+.kopf { position: sticky; top: 0; z-index: 60; background: var(--braun); transition: box-shadow .3s, background-color .3s; }
+.kopf.ist-unten { background: rgb(92 53 37 / 97%); box-shadow: 0 12px 32px -16px rgb(0 0 0 / 55%); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.kopf-innen { display: flex; align-items: center; gap: 28px; height: var(--kopf-h); }
+.marke { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--weiss); min-height: 44px; }
+.marke-logo { height: 52px; width: auto; fill: var(--weiss); flex: none; }
+.marke-text { display: flex; flex-direction: column; line-height: 1.15; }
+.marke-text strong { font-family: var(--schmal); font-weight: 700; font-size: 1.1875rem; letter-spacing: .08em; text-transform: uppercase; }
+.marke-text span { font-size: .875rem; color: var(--muted); }
+.nav { display: flex; gap: 4px; margin-left: auto; }
+.nav a {
+  position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px;
+  font-family: var(--schmal); font-weight: 600; font-size: .9375rem; letter-spacing: .12em; text-transform: uppercase;
+  color: rgb(255 255 255 / 86%); text-decoration: none; transition: color .25s;
+}
+.nav a::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 6px; height: 2px; background: var(--gelb); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
+.nav a:hover, .nav a.ist-aktiv { color: var(--weiss); }
+.nav a:hover::after, .nav a.ist-aktiv::after { transform: scaleX(1); }
+.kopf-tel .nur-klein { display: none; }
+.kopf-menu { display: none; }
+.menu[hidden] { display: none; }
+
+/* ===== Hero ===== */
+.hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  min-height: calc(78vh - var(--kopf-h)); min-height: calc(78svh - var(--kopf-h));
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: clamp(40px, 6vh, 72px);
+}
+.hero-wasser {
+  position: absolute; z-index: -1; right: -16%; top: 50%; width: min(900px, 78vw); height: auto; aspect-ratio: 1;
+  fill: var(--braun-hell); opacity: .5; transform: translateY(-50%);
+  -webkit-mask-image: linear-gradient(100deg, transparent 4%, #000 38%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(100deg, transparent 4%, #000 38%, #000 80%, transparent 100%);
+}
+.hero::after { /* sanfter Schatten links, damit das Logo ruhig steht */
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(60% 80% at 18% 50%, rgb(74 42 30 / 55%), transparent 70%);
+}
+.hero-raster { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero-logo { display: flex; justify-content: center; }
+.lg { height: clamp(240px, 27vw, 340px); width: auto; fill: var(--weiss); color: var(--weiss); overflow: visible; }
+.lg-rahmen { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linejoin: miter; }
+.hero-text h1 { font-size: clamp(2.75rem, 6.2vw, 5.5rem); line-height: .96; letter-spacing: -0.02em; margin: 18px 0 26px; }
+.hero-bereiche { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-bottom: 26px; }
+.hero-bereiche li {
+  padding-left: 12px; border-left: 3px solid var(--gelb);
+  font-family: var(--schmal); font-weight: 600; font-size: clamp(1.0625rem, 1.35vw, 1.25rem); line-height: 1.15; letter-spacing: .01em;
+}
+.lead { max-width: 46ch; color: var(--muted); font-size: clamp(1.0625rem, 1.3vw, 1.1875rem); margin-bottom: 32px; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-fuss {
+  display: flex; flex-wrap: wrap; gap: 10px 32px; margin-top: clamp(44px, 7vh, 80px);
+  padding-top: 20px; padding-bottom: 22px; border-top: 1px solid var(--linie);
+  font-size: .9375rem; color: var(--muted);
+}
+.hero-fuss > * { display: inline-flex; align-items: center; gap: 10px; min-height: 28px; }
+.hero-fuss .i { width: 18px; height: 18px; color: var(--gelb); }
+.hero-fuss a { text-decoration: none; transition: color .25s; }
+.hero-fuss a:hover { color: var(--gelb); }
+
+/* ===== Fotoband: Betten aus Balken ===== */
+.betten {
+  display: grid; grid-template-columns: minmax(0, 1.3333fr) minmax(0, 1.2308fr); gap: 6px;
+  max-width: 1920px; margin: 0 auto; background: var(--braun-tief);
+}
+.betten-bild { position: relative; overflow: hidden; }
+.betten-dunkel { aspect-ratio: 4 / 3; }
+.betten-hell { aspect-ratio: 1024 / 832; }
+.betten-bild img { width: 100%; height: 100%; object-fit: cover; }
+.betten-bild figcaption, .kachel-bild figcaption, .kontakt-bild figcaption {
+  position: absolute; left: 0; bottom: 0; z-index: 1;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 16px 10px 14px; background: rgb(59 33 23 / 90%); color: var(--weiss);
+  font-size: .9375rem; font-weight: 500; line-height: 1.3;
+}
+.betten-bild figcaption::before, .kachel-bild figcaption::before, .kontakt-bild figcaption::before { content: ""; width: 8px; height: 8px; background: var(--gelb); flex: none; }
+.betten-bild figcaption { left: clamp(12px, 2vw, 28px); bottom: clamp(12px, 2vw, 28px); }
+
+/* ===== Abschnitte ===== */
+.bereiche, .arbeiten { padding: clamp(80px, 10vw, 136px) 0; background: var(--braun); }
+.kopfzeile {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 18px 64px; align-items: end;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+.kopfzeile .kicker { grid-column: 1 / -1; }
+.kopfzeile h2, .eh-kopf h2, .kontakt-text h2 { font-size: clamp(2.25rem, 4.4vw, 3.75rem); }
+.kopfzeile-text { color: var(--muted); max-width: 42ch; padding-bottom: 6px; }
+
+/* Bereiche: vier Bildkacheln */
+.kacheln { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px clamp(20px, 2.6vw, 36px); align-items: start; }
+.kacheln li:nth-child(even) { margin-top: 80px; }
+.kachel {
+  display: flex; flex-direction: column; height: 100%;
+  background: var(--karte); color: var(--weiss); text-decoration: none; border-radius: var(--r); overflow: hidden;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 6%) inset, 0 24px 48px -28px rgb(0 0 0 / 55%);
+  transition: transform .4s var(--ease), box-shadow .4s;
+}
+.kachel-bild { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: var(--braun-tief); }
+.kachel-bild img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.kachel-bild figcaption { font-size: .875rem; padding: 8px 14px 8px 12px; }
+.kachel-nr { margin: 26px 30px 0; font-family: var(--schmal); font-weight: 700; font-size: 1rem; letter-spacing: .14em; color: var(--gelb); }
+.kachel h3 { margin: 6px 30px 0; font-size: clamp(1.625rem, 2.2vw, 2rem); }
+.kachel h3::after { content: ""; display: block; width: 64px; height: 3px; margin-top: 14px; background: var(--gelb); transform: scaleX(.4); transform-origin: left; transition: transform .45s var(--ease); }
+.kachel p { margin: 16px 30px 0; color: var(--muted); font-size: 1.0625rem; }
+.kachel-mehr {
+  display: inline-flex; align-items: center; gap: 8px; margin: auto 30px 0; padding: 22px 0 28px;
+  font-family: var(--schmal); font-weight: 600; font-size: .9375rem; letter-spacing: .12em; text-transform: uppercase; transition: color .25s;
+}
+.kachel-mehr .i { width: 18px; height: 18px; transition: transform .3s var(--ease); }
+.kachel:hover { transform: translateY(-4px); box-shadow: 0 1px 0 rgb(255 255 255 / 6%) inset, 0 32px 56px -26px rgb(0 0 0 / 65%); }
+.kachel:hover .kachel-bild img { transform: scale(1.04); }
+.kachel:hover h3::after { transform: scaleX(1); }
+.kachel:hover .kachel-mehr { color: var(--gelb); }
+.kachel:hover .kachel-mehr .i { transform: translateX(5px); }
+
+/* Maserungsband aus dem Logo */
+.maserungsband { position: relative; height: 34px; background: var(--braun-tief); overflow: hidden; }
+.maserungsband::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("../assets/img/a-maserung.svg") repeat-x 0 50% / 34px 34px; opacity: .24;
+}
+
+/* ===== Ehrengabe ===== */
+.ehrengabe { background: var(--braun-tief); padding: clamp(80px, 10vw, 136px) 0; overflow: hidden; }
+.eh-kopf { max-width: 900px; margin-bottom: clamp(36px, 4.5vw, 56px); }
+.eh-kopf h2 { margin-top: 18px; }
+.eh-rahmen { position: relative; overflow: hidden; border-radius: var(--r); aspect-ratio: 1400 / 370; background: var(--braun-nacht); box-shadow: 0 40px 80px -36px rgb(0 0 0 / 70%); }
+.eh-rahmen img { width: 100%; height: 100%; object-fit: cover; }
+.eh-bild figcaption { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-size: .9375rem; color: var(--muted); }
+.eh-bild figcaption::before { content: ""; width: 18px; height: 2px; background: var(--gelb); flex: none; }
+.eh-unten { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px 64px; align-items: center; margin-top: clamp(36px, 4vw, 52px); }
+.eh-text { max-width: 58ch; color: var(--muted); }
+.eh-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; justify-content: flex-end; }
+
+/* ===== Arbeiten ===== */
+.wand { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr); gap: clamp(14px, 1.8vw, 24px); align-items: start; }
+.wand-rahmen { overflow: hidden; border-radius: var(--r); background: var(--braun-tief); }
+.wand-hoch .wand-rahmen { aspect-ratio: 3 / 4; }
+.wand-quer .wand-rahmen { aspect-ratio: 3 / 2; }
+.wand-rahmen img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.wand-bild:hover .wand-rahmen img { transform: scale(1.03); }
+.wand-bild figcaption { display: flex; align-items: center; gap: 12px; margin-top: 14px; font-size: .9375rem; color: var(--muted); line-height: 1.35; }
+.wand-bild figcaption::before { content: ""; width: 18px; height: 2px; background: var(--gelb); flex: none; }
+
+/* ===== Kontakt ===== */
+.kontakt { background: var(--braun-tief); padding: clamp(80px, 10vw, 136px) 0; }
+.kontakt-raster { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 6vw, 88px); align-items: center; }
+.kontakt-bild { position: relative; overflow: hidden; border-radius: var(--r); aspect-ratio: 800 / 933; background: var(--braun-nacht); }
+.kontakt-bild img { width: 100%; height: 100%; object-fit: cover; }
+.kontakt-text h2 { margin: 18px 0 18px; }
+.kontakt-text > p:not(.kicker) { color: var(--muted); max-width: 44ch; }
+.kontakt-tel {
+  display: inline-block; margin: 26px 0 22px; padding-bottom: 4px;
+  font-family: var(--schmal); font-weight: 700; font-size: clamp(2.5rem, 4.6vw, 3.75rem); line-height: 1; letter-spacing: .01em;
+  color: var(--weiss); text-decoration: none; border-bottom: 3px solid var(--gelb); transition: color .25s;
+}
+.kontakt-tel:hover { color: var(--gelb); }
+.kontakt-liste { display: grid; gap: 14px; margin-bottom: 34px; }
+.kontakt-liste li { display: flex; align-items: flex-start; gap: 14px; line-height: 1.45; }
+.kontakt-liste .i { color: var(--gelb); margin-top: 3px; }
+.kontakt-liste a { text-decoration: none; border-bottom: 1px solid rgb(255 255 255 / 30%); transition: color .25s, border-color .25s; }
+.kontakt-liste a:hover { color: var(--gelb); border-color: var(--gelb); }
+.kontakt-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ===== Fusszeile ===== */
+.fuss { background: var(--braun-nacht); color: var(--muted); font-size: 1rem; }
+.maserungsband-fuss { background: var(--braun-nacht); }
+.fuss-raster { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 40px; padding-top: 64px; padding-bottom: 48px; }
+.fuss-marke { display: flex; gap: 22px; align-items: flex-start; }
+.fuss-logo { height: 96px; width: auto; fill: var(--weiss); flex: none; }
+.fuss h2 { margin-bottom: 14px; font-size: .875rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--gelb); line-height: 1.3; }
+.fuss p + p { margin-top: 14px; }
+.fuss a { text-decoration: none; transition: color .25s; }
+.fuss a:hover { color: var(--gelb); }
+.fuss-klein { font-size: .875rem; }
+.fuss-liste li + li { margin-top: 6px; }
+.fuss-unten { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 28px; padding-top: 22px; padding-bottom: 28px; border-top: 1px solid var(--linie); font-size: .875rem; }
+.fuss .fuss-unten p { margin: 0; }
+.fuss-recht { display: flex; gap: 24px; }
+.fuss-recht a { display: inline-flex; align-items: center; min-height: 32px; }
+
+.aktion { display: none; }
+
+/* ===== Animationen (nur mit html.fx) ===== */
+@keyframes rahmen { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes streifen { from { opacity: 0; transform: translate(-18px, 18px); } to { opacity: 1; transform: none; } }
+@keyframes rein { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hoch { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes wasser { from { opacity: 0; transform: translateY(-50%) rotate(3deg) scale(1.03); } to { opacity: .5; transform: translateY(-50%); } }
+
+.fx .lg-rahmen { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: rahmen 1.05s cubic-bezier(.65, 0, .25, 1) .15s forwards; }
+.fx .lg-maserung path { opacity: 0; animation: streifen .75s var(--ease) forwards; animation-delay: calc(.5s + var(--i) * 42ms); }
+.fx .lg-reber { opacity: 0; animation: rein .7s ease 1.25s forwards; }
+.fx .lg-holz { opacity: 0; animation: rein .7s ease 1.45s forwards; }
+.fx .hx { opacity: 0; animation: hoch .85s var(--ease) forwards; animation-delay: calc(.2s + var(--d, 0) * 85ms); }
+.fx .hero-wasser { animation: wasser 1.9s var(--ease) both; }
+
+.fx .rv { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .9s var(--ease); transition-delay: calc(var(--d, 0) * 110ms); }
+.fx .rv.ist-da { opacity: 1; transform: none; }
+.fx .kacheln .rv.ist-da { transition-delay: calc(var(--d, 0) * 140ms), calc(var(--d, 0) * 140ms); }
+
+.fx .rv-oeffnen img { transform: scale(1.08); transition: clip-path 1.15s cubic-bezier(.65, 0, .25, 1), transform 1.8s var(--ease); }
+.fx .betten-dunkel.rv-oeffnen img { clip-path: inset(0 0 0 100%); }
+.fx .betten-hell.rv-oeffnen img { clip-path: inset(0 100% 0 0); }
+.fx .rv-oeffnen.ist-da img { clip-path: inset(0 0 0 0); transform: none; }
+.fx .rv-oeffnen figcaption { opacity: 0; transform: translateY(10px); transition: opacity .6s ease .75s, transform .7s var(--ease) .75s; }
+.fx .rv-oeffnen.ist-da figcaption { opacity: 1; transform: none; }
+
+.fx .rv-streifen::before { clip-path: inset(0 100% 0 0); transition: clip-path 1.5s cubic-bezier(.65, 0, .25, 1); }
+.fx .rv-streifen.ist-da::before { clip-path: inset(0 0 0 0); }
+
+/* Ehrengabe: leichte seitliche Bewegung beim Scrollen (nur Desktop, per Skript) */
+.fx .eh-rahmen img.ist-parallax { width: calc(100% + 40px); max-width: none; margin-left: -20px; transform: translate3d(var(--px, 0px), 0, 0); will-change: transform; }
+
+/* ===== Tablet ===== */
+@media (max-width: 1080px) {
+  .nav a { padding: 0 10px; letter-spacing: .08em; }
+  .marke-text span { display: none; }
+  .kopf-innen { gap: 18px; }
+}
+
+/* ===== Handy ===== */
+@media (max-width: 860px) {
+  :root { --kopf-h: 66px; }
+  body { font-size: 1.0625rem; }
+  .nav, .kopf-tel .nur-gross { display: none; }
+  .kopf-tel .nur-klein { display: inline; }
+  .kopf-innen { gap: 10px; }
+  .marke { gap: 10px; margin-right: auto; }
+  .marke-logo { height: 44px; }
+  .marke-text strong { font-size: 1.0625rem; letter-spacing: .06em; }
+  .kopf-tel { min-height: 44px; padding: 0 16px; font-size: 1rem; }
+  .kopf-menu {
+    display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgb(255 255 255 / 35%); border-radius: var(--r);
+    background: transparent; color: var(--weiss); cursor: pointer;
+  }
+  .kopf-menu .i { width: 22px; height: 22px; }
+  .kopf-menu .i-zu, .kopf-menu[aria-expanded="true"] .i-auf { display: none; }
+  .kopf-menu[aria-expanded="true"] .i-zu { display: block; }
+  .menu { position: absolute; top: 100%; left: 0; right: 0; background: var(--braun-tief); box-shadow: 0 24px 40px -20px rgb(0 0 0 / 60%); border-top: 1px solid var(--linie); }
+  .menu-innen { display: flex; flex-direction: column; padding-top: 6px; padding-bottom: 18px; }
+  .menu-innen a { display: flex; align-items: center; min-height: 54px; border-bottom: 1px solid var(--linie); font-family: var(--schmal); font-weight: 600; font-size: 1.25rem; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+  .menu-innen a.menu-mail { gap: 10px; border-bottom: 0; font-family: var(--text); font-weight: 500; font-size: 1rem; letter-spacing: 0; text-transform: none; color: var(--muted); }
+  .menu-innen a.menu-mail .i { color: var(--gelb); }
+
+  .hero { min-height: 0; padding-top: 28px; }
+  .hero-raster { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .hero-logo { justify-content: flex-start; }
+  .lg { height: 104px; }
+  .hero-wasser { width: 560px; right: -260px; top: 34%; }
+  .hero::after { background: radial-gradient(90% 60% at 10% 18%, rgb(74 42 30 / 55%), transparent 70%); }
+  .hero-text h1 { font-size: clamp(2.5rem, 11vw, 3.25rem); margin: 14px 0 20px; }
+  .hero-bereiche { gap: 10px 16px; margin-bottom: 22px; }
+  .hero-bereiche li { font-size: 1.0625rem; padding-left: 10px; }
+  .lead { margin-bottom: 26px; }
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn { width: 100%; }
+  .hero-fuss { flex-direction: column; gap: 6px; margin-top: 36px; padding-top: 16px; padding-bottom: 18px; }
+
+  .betten { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .fx .betten-bild.rv-oeffnen img { clip-path: inset(0 50% 0 50%); }
+  .fx .betten-bild.rv-oeffnen.ist-da img { clip-path: inset(0 0 0 0); }
+  .betten-bild figcaption { left: 12px; bottom: 12px; font-size: .875rem; padding: 8px 12px 8px 10px; }
+
+  .kopfzeile { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .kacheln { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .kacheln li:nth-child(even) { margin-top: 0; }
+  .kachel-nr { margin: 22px 22px 0; }
+  .kachel h3 { margin: 6px 22px 0; }
+  .kachel p { margin: 14px 22px 0; }
+  .kachel-mehr { margin: auto 22px 0; padding: 18px 0 22px; }
+
+  .maserungsband { height: 26px; }
+  .maserungsband::before { background-size: 26px 26px; }
+
+  .eh-rahmen { aspect-ratio: 760 / 300; }
+  .eh-unten { grid-template-columns: minmax(0, 1fr); }
+  .eh-cta { justify-content: flex-start; }
+
+  .wand { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "a c" "b b"; gap: 26px 12px; }
+  .wand-bild:nth-child(1) { grid-area: a; }
+  .wand-bild:nth-child(2) { grid-area: b; }
+  .wand-bild:nth-child(3) { grid-area: c; }
+  .wand-bild figcaption { font-size: .875rem; gap: 8px; }
+  .wand-bild figcaption::before { width: 12px; }
+
+  .kontakt-raster { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .kontakt-bild { aspect-ratio: 1 / 1; }
+  .kontakt-bild img { object-position: 50% 62%; }
+  .kontakt-cta { flex-direction: column; }
+  .kontakt-cta .btn { width: 100%; }
+
+  .fuss-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 20px; padding-top: 48px; }
+  .fuss-marke { grid-column: 1 / -1; }
+  .fuss-logo { height: 80px; }
+  .fuss-unten { padding-bottom: 168px; }
+
+  .aktion {
+    position: fixed; left: 12px; right: 12px; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 90;
+    display: flex; gap: 8px; padding: 8px; border-radius: 8px;
+    background: rgb(59 33 23 / 96%); box-shadow: 0 16px 36px -10px rgb(0 0 0 / 55%), 0 0 0 1px rgb(255 255 255 / 10%);
+    transition: opacity .3s, transform .35s var(--ease), visibility .3s;
+  }
+  .aktion .btn { flex: 1; min-height: 50px; padding: 0 12px; }
+  .js .aktion:not(.ist-da) { opacity: 0; transform: translateY(16px); pointer-events: none; visibility: hidden; }
+}
+
+@media (max-width: 520px) {
+  .fuss-raster { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+
+@media (max-width: 380px) {
+  .marke-text { display: none; }
+  .hero-text h1 { font-size: 2.375rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+@media print {
+  .kopf, .aktion, .hero-cta, .maserungsband { display: none !important; }
+}
