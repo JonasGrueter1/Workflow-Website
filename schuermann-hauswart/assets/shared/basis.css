@@ -1,0 +1,133 @@
+/* Übersicht und Wunschliste: Grund-Design für die Präsentation, Schürmann Hauswart GmbH (Blau und Grau aus den zwei Logo-Dreiecken) */
+
+@font-face {
+  font-family: "Manrope";
+  src: url("../fonts/manrope-latin-wght-normal.woff2") format("woff2");
+  font-weight: 200 800; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("../fonts/manrope-latin-ext-wght-normal.woff2") format("woff2");
+  font-weight: 200 800; font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Wortmarke: Serifenschrift wie im Logo (dieselbe Datei wie Design A) */
+@font-face {
+  font-family: "U Literata";
+  src: url("../fonts/a-literata-latin-wght.woff2") format("woff2");
+  font-weight: 500 600; font-style: normal; font-display: swap;
+}
+
+:root {
+  --ink: #1d2333;
+  --ink-2: #3a4152;
+  --muted: #5b6170;
+  --line: #dfe2e8;
+  --bg: #f4f5f7;
+  --white: #fff;
+  --soft: #eceef3;
+  /* Hauptfarbe: Logo-Blau (Weiss darauf 7.3:1). Name --red aus der Vorlage beibehalten, damit alle Regeln greifen. */
+  --red: #35539b;
+  --red-dark: #2a4381;
+  --red-soft: #e2e4f0;
+  --blau: #35539b;
+  --tiefblau: #233a70;
+  --grau: #8a8a8c;
+  --blass-grau: #edefee;
+  --blass-blau: #e2e4f0;
+  --green: #1f7a4a;
+  --green-soft: #e8f5ee;
+  --r-lg: 22px;
+  --r: 14px;
+  --shadow: 0 1px 2px rgb(29 35 51 / 5%), 0 10px 30px rgb(29 35 51 / 8%);
+  --wrap: 1160px;
+  --gut: 24px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 1.0625rem/1.6 "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--red); }
+h1, h2, h3 { margin: 0; font-weight: 800; line-height: 1.15; letter-spacing: -0.025em; }
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+.i { width: 1.2em; height: 1.2em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { width: 100%; max-width: calc(var(--wrap) + 2 * var(--gut)); margin: 0 auto; padding: 0 var(--gut); }
+
+/* Kopfzeile */
+.top { background: var(--white); border-bottom: 1px solid var(--line); }
+.top-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 72px; flex-wrap: wrap; }
+.top-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); }
+.top-brand .top-tag { padding-left: 14px; border-left: 1px solid var(--line); font-size: .9rem; font-weight: 700; color: var(--muted); }
+
+/* Gesetzte Wortmarke: zwei Dreiecke und "schürmann hauswart gmbh" klein in Serifenschrift, wie im Logo */
+.wm { display: inline-flex; align-items: center; gap: 11px; color: #2b2b2d; }
+.wm-zeichen { width: 44px; height: 24px; flex: none; }
+.wm-text { display: grid; line-height: 1; font-family: "U Literata", Georgia, "Times New Roman", serif; }
+.wm-1 { font-weight: 500; font-size: 16px; letter-spacing: .26em; margin-right: -.26em; }
+.wm-2 { font-weight: 600; font-size: 16px; letter-spacing: .005em; }
+.wm-3 { display: flex; align-items: center; gap: 3px; margin-top: 4px; padding-top: 4px; border-top: 1px solid #c9ccd3; font-family: "Manrope", ui-sans-serif, system-ui, sans-serif; font-size: 9.5px; font-weight: 600; letter-spacing: .04em; color: var(--muted); }
+.wm-3 svg { width: 7px; height: 6px; flex: none; }
+.top-links { display: flex; gap: 6px; flex-wrap: wrap; }
+.top-links a { padding: 8px 14px; border-radius: 999px; color: var(--ink-2); font-weight: 600; font-size: .925rem; text-decoration: none; }
+.top-links a:hover { background: var(--soft); color: var(--ink); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+  padding: .9em 1.35em; border-radius: 999px; border: 2px solid transparent;
+  font: inherit; font-weight: 700; font-size: 1rem; line-height: 1.2; text-decoration: none; cursor: pointer;
+  transition: background-color .2s, color .2s, border-color .2s, transform .2s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-dark); color: #fff; }
+.btn-dark { background: var(--ink); color: #fff; }
+.btn-dark:hover { background: #000; color: #fff; }
+.btn-blau { background: var(--blau); color: #fff; }
+.btn-blau:hover { background: var(--red-dark); color: #fff; }
+.btn-tief { background: var(--tiefblau); color: #fff; }
+.btn-tief:hover { background: #172a55; color: #fff; }
+.btn-weiss { background: #fff; color: var(--tiefblau); }
+.btn-weiss:hover { background: var(--blass-blau); color: var(--tiefblau); }
+.btn-line { border-color: var(--line); background: var(--white); color: var(--ink); }
+.btn-line:hover { border-color: var(--ink); color: var(--ink); }
+.btn-block { width: 100%; }
+
+.kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; color: var(--red); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+/* Kleines Dreieck nach oben wie das blaue Logo-Dreieck */
+.kicker::before { content: ""; width: 12px; height: 11px; background: currentColor; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.nobr { white-space: nowrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { padding: 5px 12px; border-radius: 999px; background: var(--soft); font-size: .85rem; font-weight: 700; color: var(--ink-2); }
+
+.foot { padding: 40px 0 48px; color: var(--muted); font-size: .925rem; }
+.foot-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 24px; background: linear-gradient(var(--line), var(--line)) no-repeat top center / calc(100% - 2 * var(--gut)) 1px; }
+.foot a { color: var(--ink-2); }
+
+@media (max-width: 640px) {
+  :root { --gut: 16px; }
+  body { font-size: 1rem; }
+  .top-brand .top-tag { display: none; }
+  .top-inner { gap: 4px 20px; padding-top: 12px; padding-bottom: 6px; }
+}
+
+/* Sehr schmale Smartphones (320 px): Menü bleibt auf einer Zeile */
+@media (max-width: 360px) {
+  .top-links { gap: 2px; margin-left: -10px; }
+  .top-links a { padding: 8px 10px; font-size: .875rem; }
+}
+
+@media print {
+  body { background: #fff; }
+  .top-links, .no-print { display: none !important; }
+}

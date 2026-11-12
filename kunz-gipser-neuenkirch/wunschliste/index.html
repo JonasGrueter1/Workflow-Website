@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wunschliste | Neue Website Kunz AG Gipsergeschäft, Neuenkirch</title>
+  <meta name="description" content="Wählen Sie Design, Seiten und Funktionen für die neue Website der Kunz AG Gipsergeschäft am Maiengrün 2 in Neuenkirch.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#e3001a">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/shared/basis.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M17 7l-10 10"/><path d="M8 7l9 0l0 9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"/><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"/><path d="M7 15a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2l0 -4"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M10 14l11 -11"/><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="../" aria-label="Kunz AG, Ihr Gipser: zur Übersicht">
+        <img src="../assets/img/u-logo.webp" alt="Kunz AG, Ihr Gipser." width="420" height="146">
+        <span class="top-tag">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="../">Übersicht</a>
+        <a href="../design-a/" target="_blank" rel="noopener">Design A</a>
+        <a href="../design-b/" target="_blank" rel="noopener">Design B</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <p class="kicker">Wunschliste</p>
+      <h1>Ihre Wunschliste für die neue Website</h1>
+      <p>Wählen Sie Ihr Lieblingsdesign und die Seiten und Funktionen, die Sie sich für die Kunz AG wünschen. Der Preis rechnet automatisch mit und gilt für die ganze neue Website mit allen gewählten Seiten, nicht nur für die Startseite. Am Schluss senden Sie mir Ihre Auswahl mit einem Klick.</p>
+    </div>
+
+    <div class="layout">
+      <form class="wish" id="wish" novalidate>
+
+        <!-- 1 Design -->
+        <section class="block" aria-labelledby="h-design">
+          <div class="block-head">
+            <span class="block-no">1</span>
+            <div>
+              <h2 id="h-design">Welches Design gefällt Ihnen?</h2>
+              <p>Mit «Ansehen» öffnet sich das Design in einem neuen Fenster.</p>
+            </div>
+          </div>
+          <div class="designs" id="designs">
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design A: Ihr Gipser.">
+                <img src="../assets/img/vorschau-a.webp" width="960" height="600" alt="Vorschau Design A">
+                <span class="design-text"><strong>Design A</strong><span>«Ihr Gipser.», hell in Rot und Gipsgrau mit Leistungskarten und roter Teamwand</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-a/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+            <div class="design">
+              <label class="design-pick">
+                <input type="radio" name="design" value="Design B: Innen. Aussen. Trockenbau.">
+                <img src="../assets/img/vorschau-b.webp" width="960" height="600" alt="Vorschau Design B">
+                <span class="design-text"><strong>Design B</strong><span>«Innen. Aussen. Trockenbau.», dunkel mit drei Kapiteln und der Käserei zum Durchschalten</span></span>
+                <span class="radio" aria-hidden="true"></span>
+              </label>
+              <a class="design-view" href="../design-b/" target="_blank" rel="noopener">Ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+            </div>
+          </div>
+          <label class="opt opt-mix">
+            <input type="radio" name="design" value="Mischung aus beiden, gerne besprechen">
+            <span class="opt-box opt-box-round" aria-hidden="true"></span>
+            <span class="opt-text"><strong>Eine Mischung aus beiden</strong><small>Zum Beispiel das helle Design A mit den Arbeits-Kapiteln und dem Umschalter für die Alte Käserei aus B. Das besprechen wir dann gemeinsam.</small></span>
+          </label>
+          <p class="error" id="design-error" hidden>Bitte wählen Sie ein Design aus.</p>
+        </section>
+
+        <!-- 2 Grundpaket -->
+        <section class="block" aria-labelledby="h-base">
+          <div class="block-head">
+            <span class="block-no">2</span>
+            <div>
+              <h2 id="h-base">Grundpaket</h2>
+              <p>Ist immer dabei, damit die Website sauber funktioniert.</p>
+            </div>
+          </div>
+          <ul class="base" id="base">
+            <li data-hours="6"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Konzept und zwei Designentwürfe</span><span class="cost">CHF 270.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ausarbeitung des gewählten Designs</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="4"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Startseite mit Ihren Leistungen, Referenzen, Team und den Knöpfen «Anrufen» und «Offerte anfragen»</span><span class="cost">CHF 180.00</span></li>
+            <li data-hours="5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Texte und Fotos von Ihrer bisherigen Website übernehmen, sprachlich glätten und Tippfehler korrigieren</span><span class="cost">CHF 225.00</span></li>
+            <li data-hours="1"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ihr Logo in Rot und Weiss, auf jedem Bildschirm scharf</span><span class="cost">CHF 45.00</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Gebaut für Smartphone, Tablet und Computer, ohne Fenster, das beim ersten Besuch die Seite verdeckt</span><span class="cost">CHF 135.00</span></li>
+            <li data-hours="1.5"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Impressum und Datenschutzerklärung mit Ihren Firmenangaben und der richtigen Postleitzahl 6206</span><span class="cost">CHF 67.50</span></li>
+            <li data-hours="2"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Aufschalten und Hosting einrichten, Ihre Internetadresse bleibt gleich</span><span class="cost">CHF 90.00</span></li>
+            <li data-hours="3"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Einführung und eine Korrekturrunde</span><span class="cost">CHF 135.00</span></li>
+          </ul>
+        </section>
+
+        <!-- 3 Seiten -->
+        <section class="block" aria-labelledby="h-pages">
+          <div class="block-head">
+            <span class="block-no">3</span>
+            <div>
+              <h2 id="h-pages">Welche Seiten wünschen Sie?</h2>
+              <p>Vorausgewählt sind die Seiten aus Ihrem bisherigen Menü. Trockenbau und Renovation bekommen je eine eigene Seite. Jede Seite lässt sich an- oder abwählen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Seiten">
+            <label class="opt"><input type="checkbox" name="seite" value="Innere Gipserarbeiten" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Innere Gipserarbeiten</strong><small>Nassputze, Lehmputze, Isolationen, verschiedene Abriebe, Sanierungen und Stuckaturen, mit passenden Referenzfotos und Stefan Kunz als Ansprechperson</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Trockenbau / Leichtbau" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Trockenbau / Leichtbau</strong><small>Wände, Vorsatzschalen, abgehängte Decken und Akustikdecken mit Ihrem Text zu Bauzeit und Schutz. Heute steht der Trockenbau mit auf der Seite der Gipserarbeiten</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Renovation" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Renovation</strong><small>Schall- und Wärmedämmung sowie Endbeschichtungen von Stucco-Wänden und Magnetputzen über biologische Putze bis zum Brandschutz</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Aussenbereich / Fassade" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Aussenbereich / Fassade</strong><small>Verputzte Aussenwärmedämmungen, Fassadenisolationen, Fassadensanierungen und Fassadenverputze, mit Mathias Kunz als Ansprechperson</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Referenz-Objekte" data-hours="3" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Referenz-Objekte</strong><small>Alle Referenzfotos nach Innen, Trockenbau und Fassade geordnet, jedes mit kurzer Beschriftung, dazu die Alte Käserei in Altbüron als eigenes Projekt mit Vorher, Arbeit und Nachher</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Unternehmen" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Unternehmen</strong><small>Familienbetrieb in zweiter Generation mit rund 20 Mitarbeitenden, tätig in der ganzen Zentralschweiz, mit Ihren Eckdaten im Überblick</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Geschäftsleitung" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Geschäftsleitung</strong><small>Stefan, Mathias, Monika und Brigitte Kunz sowie Firmengründer Meinrad Kunz mit Foto, Ausbildung und direkter E-Mail</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Team" data-hours="2" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Team</strong><small>Rund 20 Porträts im KUNZ-T-Shirt vor Dunkelrot, geordnet nach Gipserteam innen, Trockenbau, Gipserteam aussen und Büro</small></span><span class="cost">CHF 90.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Geschichte" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Geschichte</strong><small>Von der Gründung 1978 als Einmannbetrieb über das Einkaufszentrum Stäg und die Jahre in Sempach Station bis zur Kunz AG und den Medaillen, als übersichtliche Zeitleiste</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Partner" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Partner</strong><small>Ihre Architekten und Lieferanten als übersichtliche Liste, mit Link zu jedem</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Aktuelles" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Aktuelles</strong><small>Neuigkeiten wie Lehrabschlüsse, Medaillen oder Ihr Büro zur Miete, mit Datum. Die Beiträge aus Ihrem Archiv bleiben erhalten</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Kontakt und Anfahrt" data-hours="1.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Kontakt und Anfahrt</strong><small>Telefon, das beim Antippen direkt anruft, Bürozeiten, Ansprechpersonen und Ihr Formular mit Objektadresse</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="seite" value="Ausbildung und Lehrstellen" data-hours="2"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Ausbildung und Lehrstellen</strong><small>Lehrbetrieb seit 2003: Gipser-Trockenbauer EFZ und Gipserpraktiker EBA, die Erfolge an Berufs-WM, SwissSkills und EuroSkills und wie man sich für eine Lehrstelle meldet</small></span><span class="cost">CHF 90.00</span></label>
+          </div>
+        </section>
+
+        <!-- 4 Funktionen -->
+        <section class="block" aria-labelledby="h-features">
+          <div class="block-head">
+            <span class="block-no">4</span>
+            <div>
+              <h2 id="h-features">Welche Funktionen wünschen Sie?</h2>
+              <p>Extras, die Bauherren, Architekten und künftigen Lernenden den Weg zu Ihnen leichter machen.</p>
+            </div>
+          </div>
+          <div class="opts" data-group="Funktionen">
+            <label class="opt"><input type="checkbox" name="funktion" value="Offertanfrage mit Objektadresse und Fotos" data-hours="3.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Offertanfrage mit Objektadresse und Fotos</strong><small>Ihr heutiges Formular mit Objektadresse, neu mit Auswahl der Leistung und Fotos vom Objekt als Anhang. Die Anfrage kommt per E-Mail zu Ihnen, mit Spamschutz</small></span><span class="cost">CHF 157.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Optimierung" data-hours="2.5" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Optimierung</strong><small>Damit man Sie bei «Gipser Neuenkirch», «Gipser Sempach» oder «Trockenbau Luzern» gut findet, mit klaren Seitentiteln und Beschreibungen</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Schnellkontakt-Leiste" data-hours="1" checked><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Schnellkontakt-Leiste</strong><small>«Anrufen» und «Offerte anfragen» mit einem Tipp, auf dem Smartphone immer sichtbar</small></span><span class="cost">CHF 45.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Referenz-Galerie mit Filter" data-hours="2.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Referenz-Galerie mit Filter</strong><small>Fotos nach Innen, Trockenbau und Fassade filtern und gross ansehen, auf dem Smartphone zum Wischen</small></span><span class="cost">CHF 112.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Vorher und Nachher für weitere Objekte" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Vorher und Nachher für weitere Objekte</strong><small>Weitere Sanierungen wie die Alte Käserei mit Vorher, Arbeit und Nachher zum Durchschalten, sobald Sie Fotos davon haben</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Beiträge selbst erfassen" data-hours="4"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Beiträge selbst erfassen</strong><small>Neue Beiträge unter «Aktuelles» mit Text und Fotos erfassen Sie selbst im Browser, ohne Programmierkenntnisse</small></span><span class="cost">CHF 180.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Bewerbungsformular" data-hours="3"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Bewerbungsformular</strong><small>Bewerbungen für eine Lehrstelle oder Stelle mit Lebenslauf und Zeugnissen als PDF direkt über die Website, sie kommen per E-Mail zu Ihnen</small></span><span class="cost">CHF 135.00</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Google-Unternehmensprofil" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Google-Unternehmensprofil</strong><small>Ihr Eintrag in Google Maps mit Fotos, Telefon, Bürozeiten und Link zur neuen Website ergänzt</small></span><span class="cost">CHF 67.50</span></label>
+            <label class="opt"><input type="checkbox" name="funktion" value="Karte mit Standort" data-hours="1.5"><span class="opt-box" aria-hidden="true"></span><span class="opt-text"><strong>Karte mit Standort</strong><small>Ihr Firmensitz am Maiengrün 2 in Neuenkirch auf einer Karte, direkt auf der Kontaktseite</small></span><span class="cost">CHF 67.50</span></label>
+          </div>
+        </section>
+
+        <!-- 5 Weitere Angaben -->
+        <section class="block" aria-labelledby="h-more">
+          <div class="block-head">
+            <span class="block-no">5</span>
+            <div>
+              <h2 id="h-more">Noch ein paar Fragen</h2>
+              <p>Damit ich gut planen kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-when">Wann soll die neue Website online sein?</label>
+              <select id="f-when" name="termin">
+                <option>So bald wie möglich</option>
+                <option>Bis Ende 2026</option>
+                <option>Bis Frühling 2027</option>
+                <option>Kein fester Termin</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-orte">Dürfen bei den Referenzfotos Orte stehen?</label>
+              <select id="f-orte" name="orte">
+                <option>Gerne besprechen</option>
+                <option>Ja, Ortsnamen sind in Ordnung</option>
+                <option>Nein, nur beschreiben, was gemacht wurde</option>
+              </select>
+            </div>
+            <fieldset class="field field-full">
+              <legend>Fotos</legend>
+              <label class="mini"><input type="radio" name="fotos" value="Vorhandene Fotos verwenden" checked> Vorhandene Fotos verwenden, also Ihre Referenzfotos und Teamporträts</label>
+              <label class="mini"><input type="radio" name="fotos" value="Ich liefere neue Fotos"> Ich liefere neue Fotos, zum Beispiel von aktuellen Objekten</label>
+              <label class="mini"><input type="radio" name="fotos" value="Neue Fotos wären schön, bitte beraten"> Neue Fotos wären schön, bitte beraten</label>
+            </fieldset>
+            <div class="field field-full">
+              <label for="f-notes">Weitere Wünsche oder Bemerkungen</label>
+              <textarea id="f-notes" name="bemerkungen" rows="4" placeholder="Was ist Ihnen sonst noch wichtig?"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 Kontakt -->
+        <section class="block" aria-labelledby="h-contact">
+          <div class="block-head">
+            <span class="block-no">6</span>
+            <div>
+              <h2 id="h-contact">Ihre Kontaktangaben</h2>
+              <p>Damit ich mich bei Ihnen melden kann.</p>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telefon</label>
+              <input id="f-phone" name="telefon" type="tel" autocomplete="tel">
+            </div>
+            <div class="field field-full">
+              <label for="f-mail">E-Mail</label>
+              <input id="f-mail" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <aside class="summary" id="summary" aria-labelledby="h-summary">
+        <h2 id="h-summary">Ihre Auswahl</h2>
+        <dl class="sum-lines">
+          <div><dt>Design</dt><dd id="s-design" class="sum-design">noch nicht gewählt</dd></div>
+          <div><dt>Grundpaket</dt><dd id="s-base">CHF 1’327.50</dd></div>
+          <div><dt>Seiten <span id="s-pages-n">(12)</span></dt><dd id="s-pages">CHF 877.50</dd></div>
+          <div><dt>Funktionen <span id="s-feat-n">(3)</span></dt><dd id="s-feat">CHF 315.00</dd></div>
+        </dl>
+        <div class="sum-total">
+          <span>Total</span>
+          <strong id="s-total">CHF 2’520.00</strong>
+        </div>
+        <p class="sum-hours"><span id="s-hours">56</span> Stunden à CHF 45</p>
+        <div class="sum-actions no-print">
+          <button class="btn btn-rot btn-block" type="submit" form="wish">Auswahl senden <svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+          <button class="btn btn-line btn-block" type="button" id="print"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg> Drucken oder als PDF</button>
+        </div>
+        <div class="status" id="status" role="status" aria-live="polite" hidden></div>
+        <p class="sum-note">Der Preis gilt für die ganze neue Website mit allen gewählten Seiten, nicht nur für die Startseite.</p>
+        <p class="sum-note">Alle Preise sind unverbindliche Richtpreise. Zusätzliche Wünsche berechne ich mit CHF 45 pro Stunde.</p>
+        <p class="sum-note">Beim Senden werden Ihre Angaben über den Dienst Web3Forms per E-Mail an mich übermittelt und nur für dieses Projekt verwendet.</p>
+      </aside>
+    </div>
+  </main>
+
+  <div class="mbar no-print">
+    <span>Total <strong id="m-total">CHF 2’520.00</strong></span>
+    <a class="btn btn-rot" href="#summary">Zur Auswahl</a>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter · November 2026</span>
+      <a data-mail href="#">E-Mail an Jonas Grüter</a>
+    </div>
+  </footer>
+</body>
+</html>

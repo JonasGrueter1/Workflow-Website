@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website Malergeschäft Marc Bollhalder GmbH, Steinhausen</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website des Malergeschäfts Marc Bollhalder GmbH, Familienbetrieb seit 1987 an der Hasenbergstrasse 36 in Steinhausen.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#009d3d">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/u-apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    .hero { padding: 64px 0 44px; max-width: 790px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--red); color: #fff; font-weight: 800; font-size: .95rem; }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(29 29 27 / 12%); background: var(--white); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(29 29 27 / 30%); background: var(--white); }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+    /* Design A: hell und frisch, zartes Hellgrün mit grüner Linie wie unter Ihrer Kopfzeile */
+    .option-a .shots { background: var(--soft); background-image: linear-gradient(180deg, var(--gruen-logo) 0 6px, transparent 6px); }
+    .option-a .option-tag { color: var(--red); }
+    .option-a .chips li { background: var(--soft); color: #05582a; }
+    /* Design B: das Schwarz der Wortmarke, helles Grün als Licht */
+    .option-b .shots { background: var(--ink); background-image: linear-gradient(180deg, var(--gruen-logo) 0 6px, transparent 6px); }
+    .option-b .shot-desk { box-shadow: 0 -2px 24px rgb(0 0 0 / 35%); }
+    .option-b .shot-mob { border-color: #000; box-shadow: 0 10px 30px rgb(0 0 0 / 45%); }
+    .option-b .option-tag { color: var(--ink); }
+    .option-b .chips li { background: #262624; color: #7fe0a3; }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #b9cfc0; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
+
+    .next { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px 34px 48px; border-radius: var(--r-lg); background: var(--ink); background-image: linear-gradient(90deg, var(--gruen-logo) 0 8px, transparent 8px); color: #fff; }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .next p { color: rgb(255 255 255 / 80%); max-width: 640px; }
+    .nobr { white-space: nowrap; }
+
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .option-a .shots, .option-b .shots { padding-top: 20px; }
+      .shot-mob { right: 16px; }
+      .next { padding: 26px 22px 26px 32px; }
+      .next .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./" aria-label="Bollhalder Maler: Übersicht">
+        <img src="assets/img/logo.webp" alt="Bollhalder Maler" width="572" height="252">
+        <span>Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite des Malergeschäfts Marc Bollhalder zwei unterschiedliche Designs entworfen, mit Ihrem ganzen Logo samt Malerfigur, Ihren eigenen Texten und im Bollhalder-Grün Ihres heutigen Auftritts. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Ihr Maler im Zugerbiet</h2>
+          <p>Hell, frisch und freundlich in Ihrem Grün: oben Ihr Logo mit der Malerfigur, «Ihr Maler im Zugerbiet.» und Ihr Firmenbus, darunter die sechs Dienstleistungen als Karten, die sich beim Überfahren grün füllen. Herzstück sind die «Farbigen Ideen»: Ein gezeichnetes Haus lässt sich mit Farbmustern für Fassade, Fensterläden und Tür selbst einfärben, so wie Sie es mit dem Foto eines Hauses am PC machen.</p>
+          <ul class="chips"><li>Hell in Bollhalder-Grün</li><li>Haus zum Einfärben</li><li>Anfrage mit Fotos</li></ul>
+          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Mehr als Malen</h2>
+          <p>Dunkel und selbstbewusst wie das Schwarz Ihrer Wortmarke: «Maler sein ist unsere Berufung.» steht gross neben einer Karte des Zugerbiets, auf der sich von Steinhausen aus die Wege nach Baar, Zug, Cham und Rotkreuz zeichnen. Danach folgen Ihre Dienstleistungen als nummerierte Liste, Ihre Techniken von der Lasur bis zum Spachtel, die Kundenstimmen gross und der Familienbetrieb seit 1987 mit dem Firmenbus.</p>
+          <ul class="chips"><li>Dunkel mit hellem Grün</li><li>Karte des Zugerbiets</li><li>Techniken im Überblick</li></ul>
+          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Dienstleistungen, Referenzen, Vorher / Nachher, Techniken oder Über uns werden nach der Designwahl als eigene Seiten umgesetzt, dazu ein vollständiges Impressum und eine Datenschutzerklärung. Die Texte stammen von Ihrer bisherigen Website und Ihrem Eintrag im Online-Telefonbuch, die Kundenstimmen von Google. Fotos Ihrer Arbeiten gibt es auf der heutigen Seite noch nicht, darum zeigen die Entwürfe weder Stockfotos noch fremde Arbeiten. Sobald Sie Fotos haben, kommen sie in die Referenzen und ins Vorher / Nachher. Das Haus in Design A ist ein Beispiel zur Veranschaulichung, die Musterflächen zu den Techniken sind in beiden Designs am Computer erzeugt. Ihre bisherige Webagentur kann die neue Website gerne weiter pflegen. Gerne zeige ich Ihnen die Entwürfe auch persönlich in Steinhausen.</span>
+    </p>
+
+    <div class="next">
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn btn-red" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter · <span class="nobr">November 2026</span></span>
+    </div>
+  </footer>
+</body>
+</html>

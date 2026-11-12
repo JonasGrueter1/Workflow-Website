@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website Kunz AG Gipsergeschäft, Neuenkirch</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website der Kunz AG Gipsergeschäft am Maiengrün 2 in Neuenkirch: Gipserarbeiten innen und aussen, Trockenbau und Fassaden seit 1978.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#e3001a">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    .hero { padding: 64px 0 44px; max-width: 780px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--rot); color: #fff; font-weight: 800; font-size: .95rem; }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(31 31 33 / 12%); background: var(--white); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(31 31 33 / 30%); background: var(--white); }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { color: var(--red); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+    /* Design A: hell, Weiss und Gipsgrau, rote Linie wie die Menüleiste heute */
+    .option-a .shots { background: #ecebe8; box-shadow: inset 0 4px 0 var(--rot); }
+    .option-a .chips li { background: var(--red-soft); color: var(--red-dark); }
+    /* Design B: Kohle, damit weisser Putz und Licht leuchten, Rot als Signal */
+    .option-b .shots { background: var(--kohle); box-shadow: inset 0 4px 0 var(--rot); }
+    .option-b .shot-desk { box-shadow: 0 -2px 24px rgb(0 0 0 / 45%); background: var(--kohle); }
+    .option-b .shot-mob { border-color: #000; background: var(--kohle); box-shadow: 0 10px 30px rgb(0 0 0 / 50%); }
+    .option-b .chips li { background: #e9e9e7; color: var(--ink); }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #cbcbc6; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
+
+    .next { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px; border-radius: var(--r-lg); background: var(--kohle); background-image: linear-gradient(90deg, var(--rot) 0 6px, transparent 6px); color: #fff; }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .next p { color: rgb(255 255 255 / 78%); max-width: 620px; }
+
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .shot-mob { right: 16px; }
+      .next { padding: 26px 22px 26px 28px; }
+      .next .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./" aria-label="Kunz AG, Ihr Gipser: Übersicht">
+        <img src="assets/img/u-logo.webp" alt="Kunz AG, Ihr Gipser." width="420" height="146">
+        <span class="top-tag">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite der Kunz AG Gipsergeschäft zwei unterschiedliche Designs entworfen, mit Ihren eigenen Texten, Ihren Fotos von innen, aussen und aus dem Trockenbau, Ihrem Team und Ihrem Rot. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Ihr Gipser.</h2>
+          <p>Hell in Weiss, Gipsgrau und Ihrem Rot, aufgebaut auf Ihrem heutigen Auftritt: oben das Schwarzweiss-Foto der Gipserhände mit Kelle, über das einmal ein Glanz fährt wie eine Kelle über frischen Putz. Gleich darunter Ihre vier Leistungen als Karten, danach die Alte Käserei in drei Bildern, beschriftete Referenzen, Ihre Kundenstimmen, die ganze Mannschaft als rote Teamwand mit Ihrer Geschichte seit 1978 und die Medaillen Ihrer Lernenden.</p>
+          <ul class="chips"><li>Hell und Rot</li><li>Leistungen zuerst</li><li>Rote Teamwand</li></ul>
+          <a class="btn btn-rot" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Innen. Aussen. Trockenbau.</h2>
+          <p>Dunkel wie ein Architektur-Portfolio, damit weisser Putz und Licht leuchten. Im ersten Bild eine Ihrer Lichtdecken, die drei Worte gross darüber. Danach Ihre Eckdaten, drei Kapitel mit grossem Foto und einer wischbaren Reihe beschrifteter Details, die Alte Käserei zum Durchschalten, die Medaillen Ihrer Lernenden, Ihre Geschichte seit 1978 und die Familie Kunz.</p>
+          <ul class="chips"><li>Dunkel und Rot</li><li>Drei Kapitel</li><li>Käserei zum Durchschalten</li></ul>
+          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Dienstleistungen, Referenz-Objekte, Team oder Geschichte werden nach der Designwahl als eigene Seiten umgesetzt. Texte, Fotos und Kundenstimmen stammen von Ihrer bisherigen Website. Die Bildunterschriften beschreiben nur, was zu sehen ist oder in Ihren Bildbeschreibungen steht. Einen Ort nenne ich nur bei der Alten Käserei, weil Sie ihn selbst angeben. Angerufen wird überall Ihre Büronummer <span class="nobr">041 467 18 14</span>. Von Sempach bin ich schnell in Neuenkirch: Gerne zeige ich Ihnen die Entwürfe auch persönlich.</span>
+    </p>
+
+    <div class="next">
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn btn-rot" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter · November 2026</span>
+    </div>
+  </footer>
+</body>
+</html>

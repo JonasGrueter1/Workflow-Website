@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Designvorschläge | Neue Website R. Müller Gartengestaltung GmbH, Emmen</title>
+  <meta name="description" content="Zwei Designvorschläge für die neue Website der R. Müller Gartengestaltung GmbH in der Rosenau, Emmen: Gartenbau, Gartenpflege und Grabpflege seit 1980.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#019853">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/basis.css">
+  <style>
+    .hero { padding: 64px 0 44px; max-width: 780px; }
+    .hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -0.04em; margin-bottom: 16px; }
+    .hero p:not(.kicker) { color: var(--muted); font-size: 1.175rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border-radius: var(--r); background: var(--white); border: 1px solid var(--line); }
+    .steps span { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--red); color: #fff; font-weight: 800; font-size: .95rem; }
+    .steps strong { display: block; }
+    .steps small { display: block; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .option { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .shots { position: relative; display: block; padding: 22px 22px 0; background: var(--soft); }
+    .shot-desk { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -2px 20px rgb(16 38 26 / 14%); background: var(--white); }
+    .shot-mob { position: absolute; right: 22px; bottom: -1px; width: 22%; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 5px solid var(--ink); border-bottom: 0; box-shadow: 0 10px 30px rgb(16 38 26 / 30%); background: var(--white); }
+    .option-body { display: flex; flex-direction: column; gap: 14px; flex: 1; padding: 26px 28px 30px; }
+    .option-tag { color: var(--red); font-size: .8125rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .option h2 { font-size: 1.75rem; margin-top: -8px; }
+    .option p { color: var(--ink-2); }
+    .option .btn { align-self: flex-start; margin-top: auto; }
+    /* Design A: Graugrün als Rahmen wie die heutige Website, Hausgrün-Balken oben */
+    .option-a .shots { background: var(--graugruen); box-shadow: inset 0 8px 0 var(--hausgruen); padding-top: 30px; }
+    .option-a .chips li { background: var(--red-soft); color: #00552e; }
+    /* Design B: tiefes Waldgrün wie ein Garten-Magazin */
+    .option-b .shots { background: var(--wald); background-image: radial-gradient(120% 90% at 85% 0%, rgb(60 194 126 / 18%), transparent 60%); }
+    .option-b .shot-desk { box-shadow: 0 -2px 24px rgb(0 0 0 / 45%); background: var(--wald); }
+    .option-b .shot-mob { border-color: #07120c; background: var(--wald); box-shadow: 0 10px 30px rgb(0 0 0 / 50%); }
+    .option-b .chips li { background: var(--wald-2); color: #eaf1ec; }
+
+    .note { display: flex; gap: 14px; align-items: flex-start; margin: 32px 0 0; padding: 18px 22px; border-radius: var(--r); background: var(--white); border: 1px dashed #bfccc5; color: var(--ink-2); font-size: .975rem; }
+    .note .i { color: var(--red); width: 22px; height: 22px; margin-top: 2px; }
+
+    .next { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 40px 0 24px; padding: 34px 38px 34px 46px; border-radius: var(--r-lg); background: var(--wald); background-image: linear-gradient(90deg, var(--hausgruen) 0 8px, transparent 8px); color: #fff; }
+    .next h2 { font-size: 1.6rem; margin-bottom: 6px; }
+    .next p { color: rgb(255 255 255 / 80%); max-width: 620px; }
+    .next .btn-red { background: var(--gruen-hell); color: var(--wald); }
+    .next .btn-red:hover { background: #5fd496; color: var(--wald); }
+
+    @media (max-width: 860px) {
+      .steps, .options { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 28px; }
+      .option-body { padding: 22px 20px 24px; }
+      .shots { padding: 16px 16px 0; }
+      .option-a .shots { padding-top: 24px; }
+      .shot-mob { right: 16px; }
+      .next { padding: 26px 22px 26px 30px; }
+      .next .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icons: Tabler Icons (MIT), https://tabler.io/icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-info-circle" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="top-brand" href="./" aria-label="R. Müller Gartengestaltung GmbH: Übersicht">
+        <img src="assets/img/u-zeichen.png" alt="" width="157" height="112">
+        <span class="top-name"><span>R. Müller</span> <span>Gartengestaltung GmbH</span></span>
+        <span class="top-tag">Neue Website</span>
+      </a>
+      <nav class="top-links" aria-label="Designvorschläge">
+        <a href="design-a/">Design A</a>
+        <a href="design-b/">Design B</a>
+        <a href="wunschliste/">Wunschliste</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <p class="kicker">Designvorschläge</p>
+      <h1>Zwei Designs für Ihre neue Website</h1>
+      <p>Ich habe für die Startseite der R.&nbsp;Müller Gartengestaltung GmbH zwei unterschiedliche Designs entworfen, mit Ihrem Logo, Ihren eigenen Texten und Fotos aus Ihren Gärten und im Grün Ihres heutigen Auftritts. Schauen Sie sich beide in Ruhe an, am besten auch auf dem Smartphone. Danach wählen Sie in der Wunschliste Ihr Lieblingsdesign, die Seiten und die gewünschten Funktionen.</p>
+    </div>
+
+    <ol class="steps">
+      <li><span>1</span><div><strong>Designs ansehen</strong><small>Beide Startseiten anklicken und durchscrollen</small></div></li>
+      <li><span>2</span><div><strong>Wunschliste ausfüllen</strong><small>Design, Seiten und Funktionen wählen</small></div></li>
+      <li><span>3</span><div><strong>Ganze Website entsteht</strong><small>Ich setze alle Seiten im gewählten Design um</small></div></li>
+    </ol>
+
+    <div class="options">
+      <article class="option option-a">
+        <a class="shots" href="design-a/" aria-label="Design A ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-a.webp" width="960" height="600" alt="Startseite Design A am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-a-mobil.webp" width="390" height="780" alt="Startseite Design A auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design A</span>
+          <h2>Willkommen im Garten</h2>
+          <p>Ihr heutiger Auftritt, hell und modern weitergedacht: Graugrün als Rahmen, weisse Flächen wie Beete, oben das Band aus Ihren fünf Blüten-Nahaufnahmen und darunter «Willkommen im Garten.» mit Ihren vier Zeilen. Danach folgen Planen, Bauen, Pflegen mit allen Leistungen, eine Galerie mit Beschriftungen, die Grabpflege, Ihre Geschichte seit 1980, das Team und ein Anfrageformular.</p>
+          <ul class="chips"><li>Hell in Graugrün</li><li>Blütenband</li><li>Beschriftete Galerie</li></ul>
+          <a class="btn btn-red" href="design-a/">Design A ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+
+      <article class="option option-b">
+        <a class="shots" href="design-b/" aria-label="Design B ansehen">
+          <img class="shot-desk" src="assets/img/vorschau-b.webp" width="960" height="600" alt="Startseite Design B am Computer">
+          <img class="shot-mob" src="assets/img/vorschau-b-mobil.webp" width="390" height="780" alt="Startseite Design B auf dem Smartphone">
+        </a>
+        <div class="option-body">
+          <span class="option-tag">Design B</span>
+          <h2>Planen, Bauen, Pflegen</h2>
+          <p>Ein dunkelgrünes Garten-Magazin: Zuerst Ihr Formschnittgarten gross mit Ihrem Leitsatz, dann zeichnet sich ein Gartenplan, dessen Nummern zu Ihren Fotos von Teich, Kräuterspirale, Pergola, Sitzplatz und Natursteinmauer führen. Es folgen die Kapitel Wasser, Stein und Pflanzen, die Pflege, eine ruhige Grabpflege, das Team und der Kontakt.</p>
+          <ul class="chips"><li>Dunkles Waldgrün</li><li>Gartenplan zum Antippen</li><li>Drei Kapitel</li></ul>
+          <a class="btn btn-dark" href="design-b/">Design B ansehen <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="note">
+      <svg class="i" aria-hidden="true"><use href="#i-info-circle"/></svg>
+      <span>Es handelt sich um Entwürfe der Startseite. Menüpunkte wie Gartenpflege, Gartenbau, Grabpflege, Über uns oder Kontakt werden nach der Designwahl als eigene Seiten umgesetzt, dazu Impressum und Datenschutzerklärung. Texte und Fotos stammen von Ihrer bisherigen Website. Die Bildbeschriftungen nennen nur, was zu sehen ist, keine Kunden und keine Orte. Der Gartenplan in Design B ist eine Skizze zur Veranschaulichung, kein echtes Projekt. Ihre bisherige Webdesignerin kann die neue Website gerne weiter pflegen. Von Sempach bin ich schnell in Emmen: Gerne zeige ich Ihnen die Entwürfe auch persönlich.</span>
+    </p>
+
+    <div class="next">
+      <div>
+        <h2>Gefällt Ihnen eines der Designs?</h2>
+        <p>In der Wunschliste wählen Sie Design, Seiten und Funktionen. Der Preis gilt für die ganze neue Website, nicht nur für die Startseite.</p>
+      </div>
+      <a class="btn btn-red" href="wunschliste/">Zur Wunschliste <svg class="i" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Ein Vorschlag von Codani, Jonas Grüter · November 2026</span>
+    </div>
+  </footer>
+</body>
+</html>
